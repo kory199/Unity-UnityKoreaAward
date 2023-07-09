@@ -1,0 +1,2 @@
+Hi
+Unity Korea Award Project는 Micro Soft 일반 C# 코드 명명 규칙을 따릅니다.
