@@ -1,0 +1,87 @@
+// 버전
+POST http://localhost:11500/Version
+
+{
+  "Version": "Get Version"
+}
+
+
+// 계정 생성
+POST http://localhost:11500/CreateAccount
+
+{
+  "ID":"ParkHyeWon",
+  "Password": "1234"
+}
+
+// 로그인
+POST http://localhost:11500/Login
+
+{
+  "ID":"ParkHyeWon",
+  "Password": "1234"
+}
+
+// 게임 정보 로드
+POST http://localhost:11500/CreateGameData
+
+{
+  "Id":"ParkHyeWon",
+  "AuthToken": "muhy86d4gr88hhqjd85jlx74y"
+}
+
+// 메일 로드
+POST http://localhost:11500/LoadMail
+{
+  "Id":"ParkHyeWon",
+  "AuthToken": "g3ro4p989j6lr6jbf3k6ukdi3",
+  "PageNum" : 1
+}
+
+// 메일 내용 읽기
+POST http://localhost:11500/MailContent
+
+{
+  "Id":"ParkHyeWon",
+  "AuthToken": "g3ro4p989j6lr6jbf3k6ukdi3",
+  "PageNum" : 1,
+  "PageIndex" : 1
+}
+
+// 출석부
+POST http://localhost:11500/Attendance
+
+{
+  "Id":"ParkHyeWon",
+  "AuthToken": "g3ro4p989j6lr6jbf3k6ukdi3",
+  "Day" : 1
+}
+
+// 인앱 결제
+POST http://localhost:11500/PayInApp
+
+{
+  "Id":"ParkHyeWon",
+  "AuthToken": "g3ro4p989j6lr6jbf3k6ukdi3",
+  "ReceipteNo" : 1234,
+  "Code" : 1
+}
+
+
+// 강화
+POST http://localhost:11500/Enhance
+
+{
+  "Id":"ParkHyeWon",
+  "AuthToken": "09xruy3l21jjaie760gjyowkt",
+  "ItemCode" : 2,
+  "EnhanceCount"  : 1
+}
+
+// 던전
+// 스테이즈 클릭
+POST http://localhost:11500/DungeonStage
+{
+  "Id":"ParkHyeWon",
+  "AuthToken": "09xruy3l21jjaie760gjyowkt"
+}
