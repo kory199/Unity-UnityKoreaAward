@@ -4,6 +4,7 @@
 
 개발 시작일 23.07.10(월)
 
+### 데이터베이스
 ```mermaid
 graph TD;
     AccountDb-->Redis;
