@@ -1,0 +1,13 @@
+﻿// 계정 생성
+POST http://localhost:44376/CreateAccount
+{
+  "ID":"ParkHyeWon",
+  "Password": "1234"
+}
+
+// 로그인
+POST http://localhost:44376/Login
+{
+  "ID":"ParkHyeWon",
+  "Password": "1234"
+}
