@@ -7,5 +7,5 @@
 ```mermaid
 graph TD;
     AccountDb-->Redis;
-    Redis-->Authon;
+    Redis-->AuthToken;
 ```
