@@ -56,7 +56,7 @@ public class UIManager : UIBase
         }
     }
 
-    public UIBase CreateUI(string path, LayoutType type)
+    public UIBase CreateUIBaseObject(string path, LayoutType type)
     {
         if (false == _canvases.ContainsKey(type))
         {
@@ -70,8 +70,21 @@ public class UIManager : UIBase
         newUIInstance.transform.SetParent(targetCanvas.transform);
         return newUIInstance.GetComponent<UIBase>();
     }
+    public GameObject CreateUIObject(string path, LayoutType type)
+    {
+        if (false == _canvases.ContainsKey(type))
+        {
+            CreateCanvas(type);
+        }
+        var targetCanvas = _canvases[type];
+        //string ss = Path.Combine("UI",path);
+        string ss = $"UI/{path}";
+        GameObject newUI = Resources.Load<GameObject>(ss);
+        GameObject newUIInstance = Instantiate(newUI);
+        newUIInstance.transform.SetParent(targetCanvas.transform);
+        return newUIInstance;
+    }
 
-    
     private void CreateCanvas(LayoutType type)
     {
         if (true == _canvases.ContainsKey(type))
