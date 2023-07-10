@@ -32,7 +32,7 @@ public class AccountDb : IAccountDb
         _queryFactory = new SqlKata.Execution.QueryFactory(_dbConn, _compiler);
     }
 
-    public async Task<ErrorCode> CreateAccountAsync(String id, String pw)
+    public async Task<ResultCode> CreateAccountAsync(String id, String pw)
     {
         try
         {
@@ -51,20 +51,20 @@ public class AccountDb : IAccountDb
 
             if (count != 1)
             {
-                return ErrorCode.CreateAccountFailInsert;
+                return ResultCode.CreateAccountFailInsert;
             }
 
-            return ErrorCode.None;
+            return ResultCode.None;
         }
         catch (Exception e)
         {
-            _logger.ZLogError(e, $"[AccountDb.CreateAccountAsync] ErrorCode : {ErrorCode.CreateAccountFailException}");
+            _logger.ZLogError(e, $"[AccountDb.CreateAccountAsync] ResultCode : {ResultCode.FailedtoCreateAccount}");
 
-            return ErrorCode.CreateAccountFailException;
+            return ResultCode.FailedtoCreateAccount;
         }
     }
 
-    public async Task<ErrorCode> VerifyAccountAsync(String id, String pw)
+    public async Task<ResultCode> VerifyAccountAsync(String id, String pw)
     {
         try
         {
@@ -72,25 +72,25 @@ public class AccountDb : IAccountDb
 
             if (accountInfo is null || accountInfo.account_id == 0)
             {
-                return ErrorCode.LoginFailUserNotExist;
+                return ResultCode.LoginFailUserNotExist;
             }
 
             var hashingPassword = Security.MakeHashingPassWord(accountInfo.salt_value, pw);
 
             if (accountInfo.hashed_password != hashingPassword)
             {
-                _logger.ZLogError($"[AccountDb.VerifyAccountAsync] ErrorCode : {ErrorCode.LoginFailPwNotMatch}, ID : {id}");
+                _logger.ZLogError($"[AccountDb.VerifyAccountAsync] ResultCode : {ResultCode.LoginFailPwNotMatch}, ID : {id}");
 
-                return ErrorCode.LoginFailPwNotMatch;
+                return ResultCode.LoginFailPwNotMatch;
             }
 
-            return ErrorCode.None;
+            return ResultCode.None;
         }
         catch (Exception e)
         {
-            _logger.ZLogError(e, $"[AccountDb.VerifyAccountAsync] ErrorCode : {ErrorCode.LoginFailException}, ID : {id}");
+            _logger.ZLogError(e, $"[AccountDb.VerifyAccountAsync] ResultCode : {ResultCode.LoginFailException}, ID : {id}");
 
-            return ErrorCode.LoginFailException;
+            return ResultCode.LoginFailException;
         }
     }
 

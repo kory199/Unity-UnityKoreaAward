@@ -24,14 +24,16 @@ public class CreateAccountController : ControllerBase
         var response = new PkResPonse();
         var errorCode = await _accountDb.CreateAccountAsync(request.ID, request.Password);
 
-        if (errorCode != ErrorCode.None)
+        if (errorCode != ResultCode.None)
         {
             response.Result = errorCode;
+            response.Message = errorCode.ToString();
             return response;
         }
 
         // TODO: 클래스 만들 예정 ZLogInformationWithPayLoad 변경
         _logger.ZLogDebug($"CreateAccount Success");
+        response.Message = ResultCode.CreateAccountSuccess.ToString();
 
         return response;
     }

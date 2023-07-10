@@ -4,5 +4,6 @@ namespace APIServer.ReqResMondel;
 
 public class PkResPonse
 {
-    [Required] public ErrorCode Result { get; set; } = ErrorCode.None;
+    [Required] public ResultCode Result { get; set; } = ResultCode.None;
+    public string Message { get; set; } = string.Empty;
 }

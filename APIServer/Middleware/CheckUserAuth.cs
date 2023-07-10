@@ -86,7 +86,7 @@ public class CheckUserAuth
 
         var errorJsonResponse = JsonSerializer.Serialize(new MiddlewareResponse
         {
-            Result = ErrorCode.InValidRequestHttpBody
+            Result = ResultCode.InValidRequestHttpBody
         });
 
         var bytes = Encoding.UTF8.GetBytes(errorJsonResponse);
@@ -109,7 +109,7 @@ public class CheckUserAuth
 
             var errorJsonResponse = JsonSerializer.Serialize(new MiddlewareResponse
             {
-                Result = ErrorCode.AuthTokenFailWrongAuthToken
+                Result = ResultCode.AuthTokenFailWrongAuthToken
             });
 
             var bytes = Encoding.UTF8.GetBytes(errorJsonResponse);
@@ -127,7 +127,7 @@ public class CheckUserAuth
 
         var errorJsonResponse = JsonSerializer.Serialize(new MiddlewareResponse
         {
-            Result = ErrorCode.AuthTokenFailWrongAuthToken
+            Result = ResultCode.AuthTokenFailWrongAuthToken
         });
 
         var bytes = Encoding.UTF8.GetBytes(errorJsonResponse);
@@ -144,7 +144,7 @@ public class CheckUserAuth
 
         var errorJsonResponse = JsonSerializer.Serialize(new MiddlewareResponse
         {
-            Result = ErrorCode.AuthTokenFailSetNx
+            Result = ResultCode.AuthTokenFailSetNx
         });
 
         var bytes = Encoding.UTF8.GetBytes(errorJsonResponse);

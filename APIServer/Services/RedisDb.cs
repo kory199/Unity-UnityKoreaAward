@@ -21,10 +21,10 @@ public class RedisDb : IMemoryDb
         s_logger.ZLogDebug($"UserDbAddress : {address}");
     }
 
-    public async Task<ErrorCode> RegistUserAsync(String id, String authToken)
+    public async Task<ResultCode> RegistUserAsync(String id, String authToken)
     {
         var key = MemoryDbKeyMaker.MakeUIDKey(id);
-        var result = ErrorCode.None;
+        var result = ResultCode.None;
 
         var user = new AuthUser
         {
@@ -43,7 +43,7 @@ public class RedisDb : IMemoryDb
                 s_logger.ZLogError(LogManager.EventIdDic[EventType.LoginAddRedis],
                     $"ID : {id}, AuthToken : {authToken}, ErrorMessage : UserBasicAuth, RedisString Set Error");
 
-                result = ErrorCode.LoginFailAddRedis;
+                result = ResultCode.LoginFailAddRedis;
             }
         }
         catch (Exception e) 
@@ -51,16 +51,16 @@ public class RedisDb : IMemoryDb
             s_logger.ZLogError(LogManager.EventIdDic[EventType.LoginAddRedis], e,
                 $"ID : {id}, AuthToken : {authToken}, ErrorMessage : Redis Connection Error");
 
-            result = ErrorCode.LoginFailAddRedisException;
+            result = ResultCode.LoginFailAddRedisException;
         }
 
         return result;
     }
 
-    public async Task<ErrorCode> CheckUserAuthAsync(string id, string authToken)
+    public async Task<ResultCode> CheckUserAuthAsync(string id, string authToken)
     {
         var key = MemoryDbKeyMaker.MakeUIDKey(id);
-        var result = ErrorCode.None;
+        var result = ResultCode.None;
 
         try
         {
@@ -73,7 +73,7 @@ public class RedisDb : IMemoryDb
                     $"[RedisDb.CheckUserAuthAsync] ID : {id}, AuthToken : {authToken}, " +
                     "ErrorMessage : ID Dose Not Exist");
 
-                result = ErrorCode.CheckAuthFailNotExist;
+                result = ResultCode.CheckAuthFailNotExist;
 
                 return result;
             }
@@ -84,7 +84,7 @@ public class RedisDb : IMemoryDb
                     $"[RedisDb.CheckUserAuthAsync], ID ; {id}, AuthToken : {authToken}, " +
                     "ErrorMessage : Wrong ID Or Auth Token");
 
-                result = ErrorCode.CheckAuthFailNotExist;
+                result = ResultCode.CheckAuthFailNotExist;
                 return result;
             }
 
@@ -95,7 +95,7 @@ public class RedisDb : IMemoryDb
             s_logger.ZLogError(LogManager.EventIdDic[EventType.Login], e,
                 $"[RedisDb.CheckUserAuthAsync], ID ; {id}, AuthToken : {authToken}, ErrorMessage : Redis Connection Error");
 
-            result = ErrorCode.CheckAuthFailNotExist;
+            result = ResultCode.CheckAuthFailNotExist;
             return result;
         }
     }
@@ -146,7 +146,7 @@ public class RedisDb : IMemoryDb
         }
     }
 
-    public async Task<ErrorCode> DelectUserAsync(String id)
+    public async Task<ResultCode> DelectUserAsync(String id)
     {
         try
         {
@@ -154,13 +154,13 @@ public class RedisDb : IMemoryDb
             var redis = new RedisString<AuthUser>(redisConn, key, LoginTimeSpan());
             var result = await redis.DeleteAsync();
 
-            return ErrorCode.None;
+            return ResultCode.None;
         }
         catch (Exception e) 
         {
             s_logger.ZLogError(e, $"ErrorMessage : Redis Delect User Data !");
 
-            return ErrorCode.RedisDelectFailException;
+            return ResultCode.RedisDelectFailException;
         }
     }
 

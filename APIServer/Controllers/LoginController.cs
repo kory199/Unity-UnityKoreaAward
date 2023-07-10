@@ -30,7 +30,7 @@ public class LoginController : ControllerBase
 
         errorCode = await _memoryDb.RegistUserAsync(request.ID, authToken);
 
-        if (errorCode != ErrorCode.None)
+        if (errorCode != ResultCode.None)
         {
             response.Result = errorCode;
             return response;

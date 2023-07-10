@@ -4,5 +4,5 @@ namespace APIServer.ReqResMondel;
 
 public class MiddlewareResponse
 {
-    [Required] public ErrorCode Result { get; set; } = ErrorCode.None;
+    [Required] public ResultCode Result { get; set; } = ResultCode.None;
 }
