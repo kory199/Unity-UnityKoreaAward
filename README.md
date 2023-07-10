@@ -27,7 +27,7 @@
 4. 테스터 용이성을 위해 LocalTunnel 이용해 서브 도메인으로 APIURL 생성하기
 
 ```mermaid
-//graph TD;
+graph TD;
     AccountDb-->Redis;
     Redis-->AuthToken;
 ```
