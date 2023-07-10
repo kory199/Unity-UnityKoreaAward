@@ -6,8 +6,6 @@
 
 ```mermaid
 graph TD;
-    A-->B;
-    A-->C;
-    B-->D;
-    C-->D;
+    AccountDb-->Redis;
+    Redis-->Authon;
 ```
