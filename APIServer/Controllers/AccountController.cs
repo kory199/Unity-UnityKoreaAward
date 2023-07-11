@@ -1,26 +1,60 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using System.Security.Claims;
+using ZLogger;
 
 namespace APIServer.Controllers;
 
-[AllowAnonymous]
+[ApiController]
+[Route("[controller]")]
 public class AccountController : ControllerBase
 {
-    [HttpGet]
-    public IActionResult Login(string returnUrl = "/")
+    private readonly ILogger<AccountController> _logger;
+
+    public AccountController(ILogger<AccountController> logger)
     {
-        return Challenge(new AuthenticationProperties() { RedirectUri = returnUrl }, GoogleDefaults.AuthenticationScheme);
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
-    [Authorize]
     [HttpGet]
-    public async Task<IActionResult> Logout()
+    public IActionResult SigninGoogle()
     {
-        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        return RedirectToPage("/"); // 로그아웃 후 리다이렉트 될 페이지를 지정합니다.
+        _logger.LogInformation("GoogleLogin action was called");
+
+        var properties = new AuthenticationProperties { RedirectUri = Url.Action(nameof(GoogleResponse)) };
+        return Challenge(properties, GoogleDefaults.AuthenticationScheme);
+    }
+
+    [HttpGet("GoogleResponse")]
+    public async Task<IActionResult> GoogleResponse()
+    {
+        var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+        if (result?.Succeeded != true)
+        {
+            _logger.LogWarning("GoogleResponse failure: result not succeeded");
+            return BadRequest();
+        }
+
+        var emailClaim = result.Principal.Identities
+                                .FirstOrDefault()?.Claims
+                                .FirstOrDefault(x => x.Type == ClaimTypes.Email);
+
+        if (emailClaim == null)
+        {
+            _logger.LogWarning("GoogleResponse failure: email claim not found");
+            return BadRequest();
+        }
+
+        // You got user's email here.
+        // You can register it or update it in your database
+        string userEmail = emailClaim.Value;
+
+        // TODO : other user data processing
+
+        return Ok(result);
     }
 }

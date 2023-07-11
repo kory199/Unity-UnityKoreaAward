@@ -1,6 +1,7 @@
 ﻿using APIServer.DbModel;
 using APIServer.ReqResMondel;
 using APIServer.Services;
+using System.Net;
 using System.Text;
 using System.Text.Json;
 
@@ -21,7 +22,9 @@ public class CheckUserAuth
     {
         var formString = context.Request.Path.Value;
 
-        if (string.Compare(formString, "/Login", StringComparison.OrdinalIgnoreCase) == 0 ||
+        if (string.Compare(formString, "/Account", StringComparison.OrdinalIgnoreCase) == 0 ||
+            string.Compare(formString, "/Account/GoogleResponse", StringComparison.OrdinalIgnoreCase) == 0 ||
+            string.Compare(formString, "/Login", StringComparison.OrdinalIgnoreCase) == 0 ||
            string.Compare(formString, "/CreateAccount", StringComparison.OrdinalIgnoreCase) == 0)
         {
             await _next(context);
@@ -84,13 +87,15 @@ public class CheckUserAuth
             return false;
         }
 
-        var errorJsonResponse = JsonSerializer.Serialize(new MiddlewareResponse
-        {
-            Result = ResultCode.InValidRequestHttpBody
-        });
+        //var errorJsonResponse = JsonSerializer.Serialize(new MiddlewareResponse
+        //{
+        //Result = ResultCode.InValidRequestHttpBody
+        //});
 
-        var bytes = Encoding.UTF8.GetBytes(errorJsonResponse);
-        await context.Response.Body.WriteAsync(bytes, 0, bytes.Length);
+        //var bytes = Encoding.UTF8.GetBytes(errorJsonResponse);
+        //await context.Response.Body.WriteAsync(bytes, 0, bytes.Length);
+
+        await SendErrorAsync(context, ResultCode.InValidRequestHttpBody, HttpStatusCode.BadRequest).ConfigureAwait(false);
         return true;
     }
 
@@ -99,7 +104,7 @@ public class CheckUserAuth
         try
         {
             id = document.RootElement.GetProperty("ID").GetString();
-            authToken = document.RootElement.GetProperty("AUthToken").GetString();
+            authToken = document.RootElement.GetProperty("AuthToken").GetString();
             return false;
         }
         catch
@@ -107,13 +112,15 @@ public class CheckUserAuth
             id = "";
             authToken = "";
 
-            var errorJsonResponse = JsonSerializer.Serialize(new MiddlewareResponse
-            {
-                Result = ResultCode.AuthTokenFailWrongAuthToken
-            });
+            //var errorJsonResponse = JsonSerializer.Serialize(new MiddlewareResponse
+            //{
+            //    Result = ResultCode.AuthTokenFailWrongAuthToken
+            //});
+            //
+            //var bytes = Encoding.UTF8.GetBytes(errorJsonResponse);
+            //context.Response.Body.Write(bytes, 0, bytes.Length);
 
-            var bytes = Encoding.UTF8.GetBytes(errorJsonResponse);
-            context.Response.Body.Write(bytes, 0, bytes.Length);
+            SendErrorAsync(context, ResultCode.AuthTokenFailWrongAuthToken, HttpStatusCode.Unauthorized).GetAwaiter().GetResult();  // Do not await here
             return true;
         }
     }
@@ -129,7 +136,7 @@ public class CheckUserAuth
         {
             Result = ResultCode.AuthTokenFailWrongAuthToken
         });
-
+        
         var bytes = Encoding.UTF8.GetBytes(errorJsonResponse);
         await context.Response.Body.WriteAsync(bytes, 0, bytes.Length);
         return true;
@@ -150,5 +157,18 @@ public class CheckUserAuth
         var bytes = Encoding.UTF8.GetBytes(errorJsonResponse);
         await context.Response.Body.WriteAsync(bytes, 0, bytes.Length);
         return true;
+    }
+
+    private async Task SendErrorAsync(HttpContext context, ResultCode errorCode, HttpStatusCode statusCode)
+    {
+        context.Response.StatusCode = (int)statusCode;
+
+        var errorJsonResponse = JsonSerializer.Serialize(new MiddlewareResponse
+        {
+            Result = errorCode
+        });
+
+        var bytes = Encoding.UTF8.GetBytes(errorJsonResponse);
+        await context.Response.Body.WriteAsync(bytes, 0, bytes.Length).ConfigureAwait(false);
     }
 }

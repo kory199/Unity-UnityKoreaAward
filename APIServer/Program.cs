@@ -3,6 +3,7 @@ using APIServer.Services;
 using APIServer.Middleware;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.HttpOverrides;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +15,7 @@ builder.Services.AddTransient<IAccountDb, AccountDb>();
 builder.Services.AddSingleton<IMemoryDb, RedisDb>();
 builder.Services.AddControllers();
 
-// TODO : google 인증 구성
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -26,7 +27,9 @@ builder.Services.AddAuthentication(options =>
     {
         googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
         googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
+        googleOptions.CallbackPath = "/Account/GoogleResponse"; // 리디렉션 URI 설정
     });
+
 
 builder.Services.AddControllersWithViews();
 
@@ -39,12 +42,10 @@ app.UseRouting();
 
 app.UseMiddleware<CheckUserAuth>();
 
-// 미들웨어
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-//app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
 var redisDb = app.Services.GetRequiredService<IMemoryDb>();
 var redisAddress = configuration.GetSection("DbConfig")["Redis"];
