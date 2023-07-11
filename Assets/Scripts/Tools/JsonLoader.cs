@@ -5,6 +5,7 @@ using UnityEngine;
 using System.IO;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using Cysharp.Threading.Tasks;
 
 public class JsonLoader
 {
@@ -20,12 +21,15 @@ public class JsonLoader
 
         foreach (FileInfo file in directoryInfo.GetFiles("*.json"))
         {
-            string jsonFileName = Path.GetFileNameWithoutExtension(file.Name);
-            string jsonFileContent = Resources.Load<TextAsset>(Path.Combine("ResourcesTable", jsonFileName)).text;
-
-            DeserializeAndAddToList(jsonFileName, jsonFileContent);
-            Debug.Log($"Load Successed {jsonFileName}.json");
+            _ = LoadJsonFile(file);
         }
+    }
+    private async UniTask LoadJsonFile(FileInfo file)
+    {
+        var jsonFileName = Path.GetFileNameWithoutExtension(file.Name);
+        var jsonFileContentResource = await Resources.LoadAsync<TextAsset>(Path.Combine("ResourcesTable", jsonFileName)) as TextAsset;
+        DeserializeAndAddToList(jsonFileName, jsonFileContentResource.text);
+        Debug.Log($"Load Successed {jsonFileName}.json");
     }
 
     private void DeserializeAndAddToList(string className, string jsonFileContent)
