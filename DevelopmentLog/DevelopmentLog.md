@@ -1,5 +1,3 @@
-<img src="https://capsule-render.vercel.app/api?type=waving&color=auto&height=200&section=header&text=개발 일지&fontSize=90" />
-
 ## 7월 10일(월) 개발일지
 ### 개발 사항 : 
 1. 게임 기획 초안 미완성으로, 우선 CreateAccountAPI 및 LoginAPI 기본 구현
