@@ -8,8 +8,8 @@ public static class EnumTypes
 
     public enum PlayerStateType
     {
-        None,
         Death,
         LevelUp,
+        MAX
     }    
 }

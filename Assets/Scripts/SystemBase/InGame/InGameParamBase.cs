@@ -43,17 +43,16 @@ public abstract class InGameParamBase
 
 public class InGamePlayerParams : InGameParamBase
 {
-    private UnityAction OnPlayerDeath = null;
-    private UnityAction OnPlayerLevelUp = null;
-
     public InGamePlayerParams() : base()
     {
     }
 
     protected override void RegisterCallbacks()
     {
-        _callbacks.Add(OnPlayerDeath);
-        _callbacks.Add(OnPlayerLevelUp);
+        for(int i = 0; i < (int)EnumTypes.PlayerStateType.MAX; i++)
+        {
+            _callbacks.Add(null);
+        }
     }
 
 }
