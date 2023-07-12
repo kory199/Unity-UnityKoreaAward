@@ -18,7 +18,6 @@ public abstract class InGameParamBase
         {
             return;
         }
-
         _callbacks[_index]?.Invoke();
     }
 
