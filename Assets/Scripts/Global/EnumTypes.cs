@@ -1,6 +1,6 @@
 public static class EnumTypes
 {
-    public enum InGameParamType 
+    public enum InGameParamType
     {
         Player,
         MAX
@@ -11,5 +11,11 @@ public static class EnumTypes
         Death,
         LevelUp,
         MAX
-    }    
+    }
+    public enum PlayerSkiils
+    {
+        DoubleShot,
+        TripleShot,
+        MAX
+    }
 }
