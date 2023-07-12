@@ -29,4 +29,9 @@ public class Monster : CharacterBase
     {
         // 몬스터 죽음
     }
+
+    private void init()
+    {
+
+    }
 }
