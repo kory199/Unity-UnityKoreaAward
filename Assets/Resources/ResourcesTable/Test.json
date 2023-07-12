@@ -7,7 +7,10 @@
     "De2": "aaa",
     "name": 1,
     "fuck": 0.2,
-    "bo2": false
+    "bo2": false,
+    "PlayerStateType": "Death",
+    "PlayerSkiils": "DoubleShot",
+    "InGameParamType": "Player"
   },
   {
     "ID": 2,
@@ -17,7 +20,10 @@
     "De2": "aaa",
     "name": 2,
     "fuck": 1.2,
-    "bo2": false
+    "bo2": false,
+    "PlayerStateType": "Death",
+    "PlayerSkiils": "DoubleShot",
+    "InGameParamType": "Player"
   },
   {
     "ID": 3,
@@ -27,7 +33,10 @@
     "De2": "aaa",
     "name": 3,
     "fuck": 2.2,
-    "bo2": false
+    "bo2": false,
+    "PlayerStateType": "Death",
+    "PlayerSkiils": "DoubleShot",
+    "InGameParamType": "Player"
   },
   {
     "ID": 4,
@@ -37,7 +46,10 @@
     "De2": "aaa",
     "name": 4,
     "fuck": 3.2,
-    "bo2": false
+    "bo2": false,
+    "PlayerStateType": "Death",
+    "PlayerSkiils": "DoubleShot",
+    "InGameParamType": "Player"
   },
   {
     "ID": 5,
@@ -47,7 +59,10 @@
     "De2": "aaa",
     "name": 5,
     "fuck": 4.2,
-    "bo2": false
+    "bo2": false,
+    "PlayerStateType": "Death",
+    "PlayerSkiils": "DoubleShot",
+    "InGameParamType": "Player"
   },
   {
     "ID": 6,
@@ -57,7 +72,10 @@
     "De2": "aaa",
     "name": 6,
     "fuck": 5.2,
-    "bo2": false
+    "bo2": false,
+    "PlayerStateType": "LevelUp",
+    "PlayerSkiils": "DoubleShot",
+    "InGameParamType": "Player"
   },
   {
     "ID": 7,
@@ -67,7 +85,10 @@
     "De2": "aaa",
     "name": 7,
     "fuck": 6.2,
-    "bo2": false
+    "bo2": false,
+    "PlayerStateType": "LevelUp",
+    "PlayerSkiils": "DoubleShot",
+    "InGameParamType": "Player"
   },
   {
     "ID": 8,
@@ -77,7 +98,10 @@
     "De2": "aaa",
     "name": 8,
     "fuck": 7.2,
-    "bo2": false
+    "bo2": false,
+    "PlayerStateType": "LevelUp",
+    "PlayerSkiils": "TripleShot",
+    "InGameParamType": "MAX"
   },
   {
     "ID": 9,
@@ -87,7 +111,10 @@
     "De2": "aaa",
     "name": 9,
     "fuck": 8.2,
-    "bo2": false
+    "bo2": false,
+    "PlayerStateType": "LevelUp",
+    "PlayerSkiils": "TripleShot",
+    "InGameParamType": "MAX"
   },
   {
     "ID": 10,
@@ -97,7 +124,10 @@
     "De2": "aaa",
     "name": 10,
     "fuck": 9.2,
-    "bo2": false
+    "bo2": false,
+    "PlayerStateType": "LevelUp",
+    "PlayerSkiils": "TripleShot",
+    "InGameParamType": "MAX"
   },
   {
     "ID": 11,
@@ -107,7 +137,10 @@
     "De2": "aaa",
     "name": 11,
     "fuck": 10.2,
-    "bo2": false
+    "bo2": false,
+    "PlayerStateType": "MAX",
+    "PlayerSkiils": "TripleShot",
+    "InGameParamType": "MAX"
   },
   {
     "ID": 12,
@@ -117,7 +150,10 @@
     "De2": "aaa",
     "name": 12,
     "fuck": 11.2,
-    "bo2": false
+    "bo2": false,
+    "PlayerStateType": "MAX",
+    "PlayerSkiils": "TripleShot",
+    "InGameParamType": "MAX"
   },
   {
     "ID": 13,
@@ -127,7 +163,10 @@
     "De2": "aaa",
     "name": 13,
     "fuck": 12.2,
-    "bo2": false
+    "bo2": false,
+    "PlayerStateType": "MAX",
+    "PlayerSkiils": "MAX",
+    "InGameParamType": "MAX"
   },
   {
     "ID": 14,
@@ -137,6 +176,9 @@
     "De2": "aaa",
     "name": 14,
     "fuck": 13.2,
-    "bo2": false
+    "bo2": false,
+    "PlayerStateType": "MAX",
+    "PlayerSkiils": "MAX",
+    "InGameParamType": "MAX"
   }
 ]

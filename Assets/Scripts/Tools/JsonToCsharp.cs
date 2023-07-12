@@ -8,6 +8,7 @@ using static Unity.PlasticSCM.Editor.WebApi.CredentialsResponse;
 using Newtonsoft.Json;
 using System;
 using System.Collections;
+using System.Reflection;
 
 public class JsonToCSharp : EditorWindow
 {
@@ -64,28 +65,51 @@ public class JsonToCSharp : EditorWindow
             return string.Empty;
         }
 
+        bool isEnum = false;
         List<string> properties = new List<string>();
         foreach (var property in firstObject.Properties())
         {
-            string type = "object";
-
-            if (property.Value.Type == JTokenType.String)
+            string candidatePropertyName = property.Name.EndsWith("Type") ? property.Name : null;
+            // Check if property has a corresponding Enum type
+            Type enumType = null;
+            if (!string.IsNullOrEmpty(candidatePropertyName))
             {
-                type = "string";
-            }
-            else if (property.Value.Type == JTokenType.Integer)
-            {
-                type = "int";
-            }
-            else if (property.Value.Type == JTokenType.Float)
-            {
-                type = "float";
+                enumType = typeof(EnumTypes).GetNestedType(candidatePropertyName, BindingFlags.Public);
             }
 
-            properties.Add($"    public {type} {property.Name};");
+            // If an Enum type is found and the value is a string, try converting
+            if (enumType != null && property.Value.Type == JTokenType.String)
+            {
+                string type = enumType.Name;
+                properties.Add($"    public {type} {property.Name};");
+                isEnum = true;
+            }
+            else
+            {
+                string type = "object";
+
+                if (property.Value.Type == JTokenType.String)
+                {
+                    type = "string";
+                }
+                else if (property.Value.Type == JTokenType.Integer)
+                {
+                    type = "int";
+                }
+                else if (property.Value.Type == JTokenType.Float)
+                {
+                    type = "float";
+                }
+                else if (property.Value.Type == JTokenType.Boolean)
+                {
+                    type = "bool";
+                }
+                properties.Add($"    public {type} {property.Name};");
+            }
         }
-
+        string usingEnum = true == isEnum ? "using static EnumTypes;" : string.Empty;
         string classTemplate = $@"using System.Collections.Generic;
+{usingEnum}
 
 [System.Serializable]
 public class {className}

@@ -1,5 +1,9 @@
 public static class EnumTypes
 {
+    public enum PropertyType // Å×ÀÌ÷ם
+    {
+
+    }
     public enum InGameParamType
     {
         Player,
