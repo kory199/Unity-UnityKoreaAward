@@ -1,9 +1,8 @@
 using APIServer;
-using APIServer.Services;
 using APIServer.Middleware;
+using APIServer.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
-using Microsoft.AspNetCore.HttpOverrides;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +11,7 @@ IConfiguration configuration = builder.Configuration;
 builder.Services.Configure<DbConfig>(configuration.GetSection(nameof(DbConfig)));
 
 builder.Services.AddTransient<IAccountDb, AccountDb>();
+//builder.Services.AddTransient<IGameDb, GameDb>();
 builder.Services.AddSingleton<IMemoryDb, RedisDb>();
 builder.Services.AddControllers();
 

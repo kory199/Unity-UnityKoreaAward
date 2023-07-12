@@ -9,24 +9,18 @@ namespace APIServer.Services;
 
 public class AccountDb : IAccountDb
 {
-    private readonly IOptions<DbConfig> _dbConfig;
     private readonly ILogger<AccountDb> _logger;
     private IDbConnection _dbConn;
+    private readonly IDbConnectionHandler _dbConnectionHandler;
 
     private SqlKata.Compilers.MySqlCompiler _compiler;
     private QueryFactory _queryFactory;
 
     public AccountDb(ILogger<AccountDb> logger, IOptions<DbConfig> dbConfig)
     {
-        _dbConfig = dbConfig;
         _logger = logger;
-
-        Open();
-
-        if (_dbConn == null)
-        {
-            throw new Exception("_dbConn Is Still Null After Calling Open()");
-        }
+        _dbConnectionHandler = new MySqlConnectionHandler(dbConfig.Value.AccountDb);
+        _dbConn = _dbConnectionHandler.GetConnection();
 
         _compiler = new SqlKata.Compilers.MySqlCompiler();
         _queryFactory = new SqlKata.Execution.QueryFactory(_dbConn, _compiler);
@@ -94,13 +88,5 @@ public class AccountDb : IAccountDb
         }
     }
 
-    private void Open()
-    {
-        _dbConn = new MySqlConnection(_dbConfig.Value.AccountDb);
-        _dbConn.Open();
-    }
-
-    private void Close() => _dbConn.Close();
-
-    public void Dispose() => Close();
+    public void Dispose() => _dbConnectionHandler.Dispose();
 }
