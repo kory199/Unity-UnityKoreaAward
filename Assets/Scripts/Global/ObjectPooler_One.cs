@@ -41,7 +41,7 @@ public class ObjectPooler_One : MonoBehaviour
     [SerializeField] private Pool[] pools;
     private List<GameObject> spawnObjcets;
     Dictionary<string, Queue<GameObject>> dictionaryPool;
-    //지울 부분
+    //나중에 필요시 초기화 값으로 변경할 수 있음
     readonly string INFO = 
         " 풀링될 오브젝트의 OnDisable() 안에 다음을 적으세용~ " +
         "\nvoid OnDisable()\n" +
@@ -156,6 +156,7 @@ public class ObjectPooler_One : MonoBehaviour
         inst.dictionaryPool[obj.name].Enqueue(obj);
     }
 
+    //풀의 오브젝트 정보를 보기위해서 에디터에 버튼 만드는 것
     [ContextMenu("GetSpawnObjectsInfo")]
     void GetSpawnObjectInfo()
     {
@@ -181,13 +182,17 @@ public class ObjectPooler_One : MonoBehaviour
         return obj;
     }
     #region ArrangePool overroding
+    /// <summary>
+    /// 오브젝트 풀링에 의해 생성된 객체들을 이름별로 하이어라키뷰에 정리해주는 함수
+    /// </summary>
+    /// <param name="obj"></param>
     private void ArrangePool(GameObject obj)
     {
         //추가된 오브젝트 묶어서 정렬
         bool isFind = false;
         for (int i = 0; i < transform.childCount; i++)
         {
-            if (i == transform.childCount - 1)
+            if (i == transform.childCount - 1) //마지막인 경우
             {
                 obj.transform.SetSiblingIndex(i);
                 spawnObjcets.Insert(i, obj);
