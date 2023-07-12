@@ -10,7 +10,16 @@
     "bo2": false,
     "PlayerStateType": "Death",
     "PlayerSkiils": "DoubleShot",
-    "InGameParamType": "Player"
+    "InGameParamType": "Player",
+    "InA": [
+      1,
+      2
+    ],
+    "FloA": [
+      0.1,
+      0.2,
+      0.3
+    ]
   },
   {
     "ID": 2,
@@ -23,7 +32,16 @@
     "bo2": false,
     "PlayerStateType": "Death",
     "PlayerSkiils": "DoubleShot",
-    "InGameParamType": "Player"
+    "InGameParamType": "Player",
+    "InA": [
+      1,
+      2
+    ],
+    "FloA": [
+      0.1,
+      0.2,
+      0.3
+    ]
   },
   {
     "ID": 3,
@@ -36,7 +54,16 @@
     "bo2": false,
     "PlayerStateType": "Death",
     "PlayerSkiils": "DoubleShot",
-    "InGameParamType": "Player"
+    "InGameParamType": "Player",
+    "InA": [
+      1,
+      2
+    ],
+    "FloA": [
+      0.1,
+      0.2,
+      0.3
+    ]
   },
   {
     "ID": 4,
@@ -49,7 +76,16 @@
     "bo2": false,
     "PlayerStateType": "Death",
     "PlayerSkiils": "DoubleShot",
-    "InGameParamType": "Player"
+    "InGameParamType": "Player",
+    "InA": [
+      1,
+      2
+    ],
+    "FloA": [
+      0.1,
+      0.2,
+      0.3
+    ]
   },
   {
     "ID": 5,
@@ -62,7 +98,16 @@
     "bo2": false,
     "PlayerStateType": "Death",
     "PlayerSkiils": "DoubleShot",
-    "InGameParamType": "Player"
+    "InGameParamType": "Player",
+    "InA": [
+      1,
+      2
+    ],
+    "FloA": [
+      0.1,
+      0.2,
+      0.3
+    ]
   },
   {
     "ID": 6,
@@ -75,7 +120,16 @@
     "bo2": false,
     "PlayerStateType": "LevelUp",
     "PlayerSkiils": "DoubleShot",
-    "InGameParamType": "Player"
+    "InGameParamType": "Player",
+    "InA": [
+      1,
+      2
+    ],
+    "FloA": [
+      0.1,
+      0.2,
+      0.3
+    ]
   },
   {
     "ID": 7,
@@ -88,7 +142,16 @@
     "bo2": false,
     "PlayerStateType": "LevelUp",
     "PlayerSkiils": "DoubleShot",
-    "InGameParamType": "Player"
+    "InGameParamType": "Player",
+    "InA": [
+      1,
+      2
+    ],
+    "FloA": [
+      0.1,
+      0.2,
+      0.3
+    ]
   },
   {
     "ID": 8,
@@ -101,7 +164,16 @@
     "bo2": false,
     "PlayerStateType": "LevelUp",
     "PlayerSkiils": "TripleShot",
-    "InGameParamType": "MAX"
+    "InGameParamType": "MAX",
+    "InA": [
+      1,
+      2
+    ],
+    "FloA": [
+      0.1,
+      0.2,
+      0.3
+    ]
   },
   {
     "ID": 9,
@@ -114,7 +186,16 @@
     "bo2": false,
     "PlayerStateType": "LevelUp",
     "PlayerSkiils": "TripleShot",
-    "InGameParamType": "MAX"
+    "InGameParamType": "MAX",
+    "InA": [
+      1,
+      2
+    ],
+    "FloA": [
+      0.1,
+      0.2,
+      0.3
+    ]
   },
   {
     "ID": 10,
@@ -127,7 +208,16 @@
     "bo2": false,
     "PlayerStateType": "LevelUp",
     "PlayerSkiils": "TripleShot",
-    "InGameParamType": "MAX"
+    "InGameParamType": "MAX",
+    "InA": [
+      1,
+      2
+    ],
+    "FloA": [
+      0.1,
+      0.2,
+      0.3
+    ]
   },
   {
     "ID": 11,
@@ -140,7 +230,16 @@
     "bo2": false,
     "PlayerStateType": "MAX",
     "PlayerSkiils": "TripleShot",
-    "InGameParamType": "MAX"
+    "InGameParamType": "MAX",
+    "InA": [
+      1,
+      2
+    ],
+    "FloA": [
+      0.1,
+      0.2,
+      0.3
+    ]
   },
   {
     "ID": 12,
@@ -153,7 +252,16 @@
     "bo2": false,
     "PlayerStateType": "MAX",
     "PlayerSkiils": "TripleShot",
-    "InGameParamType": "MAX"
+    "InGameParamType": "MAX",
+    "InA": [
+      1,
+      2
+    ],
+    "FloA": [
+      0.1,
+      0.2,
+      0.3
+    ]
   },
   {
     "ID": 13,
@@ -166,7 +274,16 @@
     "bo2": false,
     "PlayerStateType": "MAX",
     "PlayerSkiils": "MAX",
-    "InGameParamType": "MAX"
+    "InGameParamType": "MAX",
+    "InA": [
+      1,
+      2
+    ],
+    "FloA": [
+      0.1,
+      0.2,
+      0.3
+    ]
   },
   {
     "ID": 14,
@@ -179,6 +296,15 @@
     "bo2": false,
     "PlayerStateType": "MAX",
     "PlayerSkiils": "MAX",
-    "InGameParamType": "MAX"
+    "InGameParamType": "MAX",
+    "InA": [
+      1,
+      2
+    ],
+    "FloA": [
+      0.1,
+      0.2,
+      0.3
+    ]
   }
 ]
