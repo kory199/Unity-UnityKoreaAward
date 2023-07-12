@@ -25,7 +25,7 @@ public class Player : CharacterBase
 
     protected override void Die()
     {
-        // player die
+        // player Die
     }
 
     public override void Move(float moveSpeed)
