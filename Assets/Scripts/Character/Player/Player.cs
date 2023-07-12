@@ -6,7 +6,7 @@ public class Player : CharacterBase
 {
     float playerSpeed;
 
-    void Start()
+    protected override void Start()
     {
         // 기타 초기화 항목 추가
         base.Start();

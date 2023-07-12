@@ -5,7 +5,7 @@ using UnityEngine;
 public class Monster : CharacterBase
 {
     float monsterSpeed;
-    private void Start()
+    protected override void Start()
     {
         base.Start();
     }
