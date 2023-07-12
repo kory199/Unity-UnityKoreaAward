@@ -2,22 +2,19 @@
 <img src="https://capsule-render.vercel.app/api?type=waving&color=auto&height=200&section=header&text=UnityKoreaAward&fontSize=60" />
 
 ### ASP.NET Core 7버전으로 작성한 Web API 입니다.
+### 개발 시작일 23.07.10(월)
 
-개발 시작일 23.07.10(월)
-## 7월 11일(화) 개발일지
+## 7월 12일(수) 개발일지
 ### 개발 사항 : 
-1. ASP.NET Core Web API 구글 로그인 연동
+1. MySQL Connection Handler 클래스 추가
+   (목적 : DB 연결 비용 비용을 줄이기, 중복 코드 줄이기, 재사용성 높이기)
    
 ### 오늘 개발 이슈 : 
-1. API 호출 후 리디렉션 팝업 생성 안됨 (해결 방법 : AddAuthentication() 설정 함)
-2. 리디렉션 설정이 다름으로 인한 액세스 허용 문제 (해결 방법 : googleOptions.CallbackPath 리디렉션 URI 코드로 설정 )
+1. 구글 로그인 연동 테스트 오류 발생
+2. 개인 사정으로 인한 개발 시간 부족으로 인해 오늘 개발 목표 미달성
 
-### 받은 피드백 : 
-
-
-### 7월 12일(화) (예정)
-1. 페이스북 로그인 연동(시간 있으면^^)
-2. 오늘 구글 로그인 연동 다시 공부 하면서 블로그 작성
+### 7월 13일(화) (예정)
+1. 로그인 후 유저 게임 데이터 전달 API 작성
 
 ```mermaid
 graph TD;
