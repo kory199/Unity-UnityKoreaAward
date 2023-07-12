@@ -1,0 +1,25 @@
+public static class EnumTypes
+{
+    public enum PropertyType // Å×ÀÌºí
+    {
+
+    }
+    public enum InGameParamType
+    {
+        Player,
+        MAX
+    }
+
+    public enum PlayerStateType
+    {
+        Death,
+        LevelUp,
+        MAX
+    }
+    public enum PlayerSkiils
+    {
+        DoubleShot,
+        TripleShot,
+        MAX
+    }
+}
