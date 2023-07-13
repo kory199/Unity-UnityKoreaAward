@@ -2,20 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : CharacterBase
+public partial class Player : CharacterBase
 {
-    float playerSpeed;
+    [Header("User Setting")]
+    [SerializeField] float playerSpeed;
+
+    Rigidbody playerRb;
 
     protected override void Start()
     {
         // 기타 초기화 항목 추가
         base.Start();
-        init();
+    }
+
+    private void Awake()
+    {
+        InitComponent();
+        InitSetting();
     }
 
     void Update()
     {
-        Move(playerSpeed);
+        Move();
     }
 
     public override void Attack()
@@ -26,15 +34,5 @@ public class Player : CharacterBase
     protected override void Die()
     {
         // player Die
-    }
-
-    public override void Move(float moveSpeed)
-    {
-        base.Move(moveSpeed);
-    }
-
-    private void init()
-    {
-        // 초기화 항목
     }
 }

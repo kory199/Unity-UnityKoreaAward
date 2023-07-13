@@ -12,12 +12,10 @@ public class Monster : CharacterBase
 
     private void Update()
     {
-        Move(monsterSpeed);
     }
 
-    public override void Move(float moveSpeed)
+    public override void Move()
     {
-        base.Move(moveSpeed);
     }
 
     public override void Attack()

@@ -32,10 +32,8 @@ public abstract class CharacterBase : MonoBehaviour
     // player, monster 별로 개별 구현
     public abstract void Attack();
 
-    public virtual void Move(float moveSpeed)
-    {
-        // 이동 동작 구현
-    }
+    public abstract void Move();
+
 
     // player, monster 별로 개별 구현
     protected abstract void Die();
