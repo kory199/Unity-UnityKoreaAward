@@ -39,7 +39,7 @@ public class ObjectPooler_One : MonoBehaviour
     }
     [SerializeField] private RectTransform _uiCanvasPooler;
     [SerializeField] private Pool[] _pools;
-    private List<GameObject> _spawnObjcets;
+    private List<GameObject> _spawnObjects;
     private Dictionary<string, Queue<GameObject>> _dictionaryPool;
     //나중에 필요시 초기화 값으로 변경할 수 있음
     readonly string INFO = 
@@ -50,7 +50,7 @@ public class ObjectPooler_One : MonoBehaviour
 
     private void Start()
     {
-        _spawnObjcets = new List<GameObject>();
+        _spawnObjects = new List<GameObject>();
         _dictionaryPool = new Dictionary<string, Queue<GameObject>>();
 
         foreach (Pool pool in _pools)
@@ -138,7 +138,7 @@ public class ObjectPooler_One : MonoBehaviour
         if (!s_inst._dictionaryPool.ContainsKey(name))
             throw new Exception($"Pool with name {name} doesn't exist");
 
-        return s_inst._spawnObjcets.FindAll(x => x.name == name);
+        return s_inst._spawnObjects.FindAll(x => x.name == name);
     }
 
     public static List<T> GetAllPools<T>(string name) where T : Component
@@ -162,7 +162,7 @@ public class ObjectPooler_One : MonoBehaviour
     {
         foreach (var pool in _pools)
         {
-            int count = _spawnObjcets.FindAll(x => x.name == pool.Name).Count; //리스트의 개수 
+            int count = _spawnObjects.FindAll(x => x.name == pool.Name).Count; //리스트의 개수 
             Debug.Log($"{pool.Name} Count : {count}");
         }
     }
@@ -195,7 +195,7 @@ public class ObjectPooler_One : MonoBehaviour
             if (i == transform.childCount - 1) //마지막인 경우
             {
                 obj.transform.SetSiblingIndex(i);
-                _spawnObjcets.Insert(i, obj);
+                _spawnObjects.Insert(i, obj);
                 break;
             }
             else if (transform.GetChild(i).name == obj.name)
@@ -203,7 +203,7 @@ public class ObjectPooler_One : MonoBehaviour
             else if (isFind)
             {
                 obj.transform.SetSiblingIndex(i);
-                _spawnObjcets.Insert(i, obj);
+                _spawnObjects.Insert(i, obj);
             }
         }
     }
@@ -217,7 +217,7 @@ public class ObjectPooler_One : MonoBehaviour
             if (i == parent.transform.childCount - 1)
             {
                 obj.transform.SetSiblingIndex(i);
-                _spawnObjcets.Insert(i, obj);
+                _spawnObjects.Insert(i, obj);
                 break;
             }
             else if (parent.transform.GetChild(i).name == obj.name)
@@ -225,7 +225,7 @@ public class ObjectPooler_One : MonoBehaviour
             else if (isFind)
             {
                 obj.transform.SetSiblingIndex(i);
-                _spawnObjcets.Insert(i, obj);
+                _spawnObjects.Insert(i, obj);
             }
         }
     }

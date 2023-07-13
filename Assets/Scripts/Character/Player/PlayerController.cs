@@ -18,6 +18,7 @@ public partial class Player
 
         // 마우스 위치를 월드 좌표로 변환
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
+
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
         {
             // 플레이어의 위치와 마우스 위치 간의 벡터를 계산하여 플레이어를 회전시킴

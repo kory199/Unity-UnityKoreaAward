@@ -230,7 +230,7 @@ GameObject:
   - component: {fileID: 617345862}
   - component: {fileID: 617345861}
   m_Layer: 0
-  m_Name: Plane
+  m_Name: TestMap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -437,7 +437,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8516200050958493884, guid: 447dfd2202628a04a9c407b170214b88, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.586
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8516200050958493884, guid: 447dfd2202628a04a9c407b170214b88, type: 3}
       propertyPath: m_LocalPosition.z
