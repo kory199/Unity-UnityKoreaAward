@@ -6,7 +6,7 @@ public interface IMemoryDb
 {
     public void Init(String address);
 
-    public Task<ResultCode> RegistUserAsync(String id, String authToken);
+    public Task<ResultCode> RegistUserAsync(String id, String authToken, Int64 accountId);
 
     public Task<ResultCode> CheckUserAuthAsync(String id, String authToken);
 

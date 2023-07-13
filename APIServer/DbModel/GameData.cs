@@ -9,8 +9,9 @@ public class GameData
     public Int32 level { get; set; }
     public Int32 status { get; set; }
 
-    public GameData()
+    public GameData(Int64 uid)
     {
+        player_uid = uid;
         exp = 1;
         hp = 10;
         score = 0;

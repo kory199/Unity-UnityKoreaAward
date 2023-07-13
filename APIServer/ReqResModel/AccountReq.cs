@@ -6,7 +6,7 @@ public class AccountReq
 {
     [Required]
     [MinLength(2, ErrorMessage = "ID CONNOT BE EMPTY")]
-    [StringLength(11, ErrorMessage = "ID IS SO LONG")]
+    [StringLength(20, ErrorMessage = "ID IS SO LONG")]
     public String ID { get; set; } = "";
 
     [Required]

@@ -8,27 +8,24 @@ namespace APIServer.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class LoginController : ControllerBase
+public class LoginController : BaseApiController
 {
     private readonly IAccountDb _accountDb;
-    private readonly IMemoryDb _memoryDb;
-    private ILogger<LoginController> _logger;
 
-    public LoginController(ILogger<LoginController> logger, IAccountDb accountDb, IMemoryDb memoryDb)
+    public LoginController(ILogger<BaseApiController> logger, IAccountDb accountDb, IMemoryDb memoryDb)
+        : base (logger, memoryDb)
     {
-        _logger = logger;
         _accountDb = accountDb;
-        _memoryDb = memoryDb;
     }
 
     [HttpPost]
     public async Task<LoginRes> Post(AccountReq request)
     {
         var response = new LoginRes();
-        var errorCode = await _accountDb.VerifyAccountAsync(request.ID, request.Password);
+        var (errorCode, account_id) = await _accountDb.VerifyAccountAsync(request.ID, request.Password);
         var authToken = Security.CreateAuthToken();
 
-        errorCode = await _memoryDb.RegistUserAsync(request.ID, authToken);
+        errorCode = await _memoryDb.RegistUserAsync(request.ID, authToken, account_id);
 
         if (errorCode != ResultCode.None)
         {

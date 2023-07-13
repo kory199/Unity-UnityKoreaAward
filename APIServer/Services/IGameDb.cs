@@ -1,10 +1,12 @@
-﻿namespace APIServer.Services;
+﻿using APIServer.DbModel;
+
+namespace APIServer.Services;
 
 public interface IGameDb
 {
-    public Task<ResultCode> CreateDefaultGameData(Int64 account_id);
+    public Task<(ResultCode, GameData)> CreateDefaultGameData(Int64 account_id);
 
-    public Task<ResultCode> VerifyGameData(Int64 account_id);
+    public Task<(ResultCode, GameData)> VerifyGameData(Int64 account_id);
 
     // TODO : UpdateGameData 
 

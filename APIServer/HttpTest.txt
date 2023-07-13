@@ -11,3 +11,10 @@ POST https://localhost:44376/Login
   "ID":"ParkHyeWon",
   "Password": "1234"
 }
+
+// 게임 데이터 받아오기
+POST https://localhost:44376/GameData
+{
+  "ID":"ParkHyeWon",
+  "AuthToken": ""
+}

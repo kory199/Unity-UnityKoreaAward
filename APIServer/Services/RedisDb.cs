@@ -21,7 +21,7 @@ public class RedisDb : IMemoryDb
         s_logger.ZLogDebug($"UserDbAddress : {address}");
     }
 
-    public async Task<ResultCode> RegistUserAsync(String id, String authToken)
+    public async Task<ResultCode> RegistUserAsync(String id, String authToken, Int64 accountId)
     {
         var key = MemoryDbKeyMaker.MakeUIDKey(id);
         var result = ResultCode.None;
@@ -30,7 +30,7 @@ public class RedisDb : IMemoryDb
         {
             Id = id,
             AuthToken = authToken,
-            //AccountId = accountId,
+            AccountId = accountId,
             State = UserState.Default.ToString(),
         };
 

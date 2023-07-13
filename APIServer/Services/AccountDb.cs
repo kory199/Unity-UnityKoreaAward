@@ -7,10 +7,10 @@ using ZLogger;
 
 namespace APIServer.Services;
 
-public class AccountDb : BaseDb, IAccountDb
+public class AccountDb : BaseDb<Account>, IAccountDb
 {
     public AccountDb(ILogger<AccountDb> logger, IOptions<DbConfig> dbConfig)
-        : base(logger, dbConfig.Value.AccountDb)
+        : base(logger, dbConfig.Value.AccountDb, AccountDbTable.Account)
     {
     }
 
@@ -19,60 +19,55 @@ public class AccountDb : BaseDb, IAccountDb
         try
         {
             var saltValue = Security.SaltString();
-
             var hashingPassword = Security.MakeHashingPassWord(saltValue, pw);
 
-            _logger.ZLogDebug($"[CreateAccount] ID: {id}, SaltValue : {saltValue}, HashingPassword:{hashingPassword}");
+            _logger.ZLogDebug($"[{GetType().Name}.CreateAccountAsync] ID: {id}, SaltValue : {saltValue}, HashingPassword:{hashingPassword}");
 
-            var count = await _queryFactory.Query(AccountDbTable.Account).InsertAsync(new
+            var account = new Account
             {
                 id = id,
                 salt_value = saltValue,
                 hashed_password = hashingPassword
-            });
+            };
 
-            if (count != 1)
-            {
-                return ResultCode.CreateAccountFailInsert;
-            }
-
-            return ResultCode.None;
+            return await ExecuteInsertAsync(account);
         }
         catch (Exception e)
         {
-            _logger.ZLogError(e, $"[AccountDb.CreateAccountAsync] ResultCode : {ResultCode.FailedtoCreateAccount}");
+            _logger.ZLogError(e, $"[{GetType().Name}.CreateAccountAsync] ResultCode : {ResultCode.FailedtoCreateAccount}");
 
             return ResultCode.FailedtoCreateAccount;
         }
     }
 
-    public async Task<ResultCode> VerifyAccountAsync(String id, String pw)
+    public async Task<(ResultCode, Int64)> VerifyAccountAsync(String id, String pw)
     {
         try
         {
-            var accountInfo = await _queryFactory.Query(AccountDbTable.Account).Where(AccountDbTable.id).FirstOrDefaultAsync<Account>();
+            var accountInfo = await ExecuteGetByAsync(AccountDbTable.id, id);
 
-            if (accountInfo is null || accountInfo.account_id == 0)
+            await Console.Out.WriteLineAsync($"accountInfo.account_id {accountInfo.account_id}");
+            if (accountInfo == null || accountInfo.account_id == 0)
             {
-                return ResultCode.LoginFailUserNotExist;
+                return (ResultCode.LoginFailUserNotExist, 0 );
             }
 
             var hashingPassword = Security.MakeHashingPassWord(accountInfo.salt_value, pw);
-
+            
             if (accountInfo.hashed_password != hashingPassword)
             {
-                _logger.ZLogError($"[AccountDb.VerifyAccountAsync] ResultCode : {ResultCode.LoginFailPwNotMatch}, ID : {id}");
+                _logger.ZLogError($"[{GetType().Name}.VerifyAccountAsync] ResultCode : {ResultCode.LoginFailPwNotMatch}, ID : {id}");
 
-                return ResultCode.LoginFailPwNotMatch;
+                return (ResultCode.LoginFailPwNotMatch, 0);
             }
 
-            return ResultCode.None;
+            return (ResultCode.None, accountInfo.account_id);
         }
         catch (Exception e)
         {
-            _logger.ZLogError(e, $"[AccountDb.VerifyAccountAsync] ResultCode : {ResultCode.LoginFailException}, ID : {id}");
+            _logger.ZLogError(e, $"[{GetType().Name}.VerifyAccountAsync] ResultCode : {ResultCode.LoginFailException}, ID : {id}");
 
-            return ResultCode.LoginFailException;
+            return (ResultCode.LoginFailException, 0);
         }
     }
 

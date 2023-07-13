@@ -4,6 +4,11 @@ public enum ResultCode
 {
     None = 0,
 
+    InsertFail = 10,
+    InsertException = 11,
+    DeleteException = 12,
+    GetByException = 13,
+
     // === Common Error 100 ~ ===             
     UnhandleException = 101,
     RedisFailException = 102,
