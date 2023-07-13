@@ -104,6 +104,27 @@ public class JsonToCSharp : EditorWindow
                 {
                     type = "bool";
                 }
+                else if (property.Value.Type == JTokenType.Array) // 추가된 배열 처리 부분
+                {
+                    JArray arrayValue = (JArray)property.Value;
+                    JToken firstArrayElement = arrayValue.FirstOrDefault();
+
+                    if (firstArrayElement != null)
+                    {
+                        if (firstArrayElement.Type == JTokenType.Integer)
+                            type = "List<int>";
+                        else if (firstArrayElement.Type == JTokenType.Float)
+                            type = "List<float>";
+                        else if (firstArrayElement.Type == JTokenType.String)
+                            type = "List<string>";
+                        else
+                            throw new NotSupportedException($"지원되지 않는 배열 요소 형식: {firstArrayElement.Type}");
+                    }
+                    else
+                    {
+                        type = "List<object>";
+                    }
+                }
                 properties.Add($"    public {type} {property.Name};");
             }
         }

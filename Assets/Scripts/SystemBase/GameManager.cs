@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -14,4 +15,5 @@ public class GameManager : MonoBehaviour
         var uiManager = new GameObject().AddComponent<UIManager>();
         uiManager.name = "UIManager";
     }
+
 }

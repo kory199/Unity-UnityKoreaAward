@@ -25,22 +25,22 @@ public class ObjectPoolerEditor : Editor
 [System.Serializable]
 public class Pool
 {
-    public string name;
-    public GameObject prefab;
-    public int number;
-    public bool isUi;
+    public string Name;
+    public GameObject Prefab;
+    public int Number;
+    public bool IsUi;
 }
 public class ObjectPooler_One : MonoBehaviour
 {
-    private static ObjectPooler_One inst;
+    private static ObjectPooler_One s_inst;
     private void Awake()
     {
-        inst = this;
+        s_inst = this;
     }
-    [SerializeField] private RectTransform Ui_CanvasPooler;
-    [SerializeField] private Pool[] pools;
-    private List<GameObject> spawnObjcets;
-    Dictionary<string, Queue<GameObject>> dictionaryPool;
+    [SerializeField] private RectTransform _uiCanvasPooler;
+    [SerializeField] private Pool[] _pools;
+    private List<GameObject> _spawnObjcets;
+    private Dictionary<string, Queue<GameObject>> _dictionaryPool;
     //나중에 필요시 초기화 값으로 변경할 수 있음
     readonly string INFO = 
         " 풀링될 오브젝트의 OnDisable() 안에 다음을 적으세용~ " +
@@ -50,43 +50,43 @@ public class ObjectPooler_One : MonoBehaviour
 
     private void Start()
     {
-        spawnObjcets = new List<GameObject>();
-        dictionaryPool = new Dictionary<string, Queue<GameObject>>();
+        _spawnObjcets = new List<GameObject>();
+        _dictionaryPool = new Dictionary<string, Queue<GameObject>>();
 
-        foreach (Pool pool in pools)
+        foreach (Pool pool in _pools)
         {
-            dictionaryPool.Add(pool.name, new Queue<GameObject>());
-            for (int i = 0; i < pool.number; i++)
+            _dictionaryPool.Add(pool.Name, new Queue<GameObject>());
+            for (int i = 0; i < pool.Number; i++)
             {
                 GameObject obj;
                 //Ingame 오브젝트와 UI 오브젝트 구분
-                if (pool.isUi == false)
-                    obj = CreateNewObject(pool.name, pool.prefab);
+                if (pool.IsUi == false)
+                    obj = CreateNewObject(pool.Name, pool.Prefab);
                 else
-                    obj = CreateNewObject(pool.name, pool.prefab, Ui_CanvasPooler);
+                    obj = CreateNewObject(pool.Name, pool.Prefab, _uiCanvasPooler);
 
-                if (pool.isUi == false)
+                if (pool.IsUi == false)
                     ArrangePool(obj);
                 else
-                    ArrangePool(obj, Ui_CanvasPooler);
+                    ArrangePool(obj, _uiCanvasPooler);
             }
             //OnDisable에 ReturnToPool 구현 여부중복 구현 검사
-            if (dictionaryPool[pool.name].Count <= 0)
-                Debug.LogError($"{pool.name}{INFO}");
-            else if (dictionaryPool[pool.name].Count != pool.number)
-                Debug.LogError($"{pool.name}에 returnToPool이 중복됩니다");
+            if (_dictionaryPool[pool.Name].Count <= 0)
+                Debug.LogError($"{pool.Name}{INFO}");
+            else if (_dictionaryPool[pool.Name].Count != pool.Number)
+                Debug.LogError($"{pool.Name}에 returnToPool이 중복됩니다");
         }
     }
 
     //변수에 따른 오버로딩
     public static GameObject SpawnFromPool(string name, Vector3 position) =>
-        inst._SpawnFromPool(name, position, Quaternion.identity);
+        s_inst._SpawnFromPool(name, position, Quaternion.identity);
     public static GameObject SpawnFromPool(string name, Vector3 position, Quaternion rotation) =>
-        inst._SpawnFromPool(name, position, rotation);
+        s_inst._SpawnFromPool(name, position, rotation);
 
     public static T SpawnFromPool<T>(string name, Vector3 position) where T : Component
     {
-        GameObject obj = inst._SpawnFromPool(name, position, Quaternion.identity);
+        GameObject obj = s_inst._SpawnFromPool(name, position, Quaternion.identity);
         if (obj.TryGetComponent(out T component))
             return component;
         else
@@ -97,7 +97,7 @@ public class ObjectPooler_One : MonoBehaviour
     }
     public static T SpawnFromPool<T>(string name, Vector3 position, Quaternion rotation) where T : Component
     {
-        GameObject obj = inst._SpawnFromPool(name, position, rotation);
+        GameObject obj = s_inst._SpawnFromPool(name, position, rotation);
         if (obj.TryGetComponent(out T component))
             return component;
         else
@@ -106,24 +106,24 @@ public class ObjectPooler_One : MonoBehaviour
             throw new Exception($"Component not found");
         }
     }
-    GameObject _SpawnFromPool(string name, Vector3 position, Quaternion rotation)
+    private GameObject _SpawnFromPool(string name, Vector3 position, Quaternion rotation)
     {
-        if (!dictionaryPool.ContainsKey(name))
+        if (!_dictionaryPool.ContainsKey(name))
             throw new Exception($"pool with name {name} doesn't exist");
         //큐에 없으면 새로 추가
-        Queue<GameObject> poolQueue = dictionaryPool[name];
+        Queue<GameObject> poolQueue = _dictionaryPool[name];
         if (poolQueue.Count == 0)
         {
-            Pool pool = Array.Find(pools, x => x.name == name);
+            Pool pool = Array.Find(_pools, x => x.Name == name);
             GameObject obj;
-            if (pool.isUi == false)
-                obj = CreateNewObject(pool.name, pool.prefab);
+            if (pool.IsUi == false)
+                obj = CreateNewObject(pool.Name, pool.Prefab);
             else
-                obj = CreateNewObject(pool.name, pool.prefab, Ui_CanvasPooler);
-            if (pool.isUi == false)
+                obj = CreateNewObject(pool.Name, pool.Prefab, _uiCanvasPooler);
+            if (pool.IsUi == false)
                 ArrangePool(obj);
             else
-                ArrangePool(obj, Ui_CanvasPooler);
+                ArrangePool(obj, _uiCanvasPooler);
 
         }
         //큐에서 꺼내서 사용
@@ -135,10 +135,10 @@ public class ObjectPooler_One : MonoBehaviour
     }
     public static List<GameObject> GetAllPools(string name)
     {
-        if (!inst.dictionaryPool.ContainsKey(name))
+        if (!s_inst._dictionaryPool.ContainsKey(name))
             throw new Exception($"Pool with name {name} doesn't exist");
 
-        return inst.spawnObjcets.FindAll(x => x.name == name);
+        return s_inst._spawnObjcets.FindAll(x => x.name == name);
     }
 
     public static List<T> GetAllPools<T>(string name) where T : Component
@@ -150,31 +150,31 @@ public class ObjectPooler_One : MonoBehaviour
     }
     public static void ReturnToPool(GameObject obj)
     {
-        if (inst.dictionaryPool.ContainsKey(obj.name) == false)
+        if (s_inst._dictionaryPool.ContainsKey(obj.name) == false)
             throw new Exception($"Pool with name{obj.name} dosen't exist");
 
-        inst.dictionaryPool[obj.name].Enqueue(obj);
+        s_inst._dictionaryPool[obj.name].Enqueue(obj);
     }
 
     //풀의 오브젝트 정보를 보기위해서 에디터에 버튼 만드는 것
     [ContextMenu("GetSpawnObjectsInfo")]
-    void GetSpawnObjectInfo()
+    private void GetSpawnObjectInfo()
     {
-        foreach (var pool in pools)
+        foreach (var pool in _pools)
         {
-            int count = spawnObjcets.FindAll(x => x.name == pool.name).Count; //리스트의 개수 
-            Debug.Log($"{pool.name} Count : {count}");
+            int count = _spawnObjcets.FindAll(x => x.name == pool.Name).Count; //리스트의 개수 
+            Debug.Log($"{pool.Name} Count : {count}");
         }
     }
 
-    GameObject CreateNewObject(string name, GameObject prefab)
+    private GameObject CreateNewObject(string name, GameObject prefab)
     {
         var obj = Instantiate(prefab, transform);
         obj.name = name;
         obj.SetActive(false); //비활성화시 ReturnToPool을 하기 때문에 enqueue된다.
         return obj;
     }
-    GameObject CreateNewObject(string name, GameObject prefab, RectTransform trans)
+    private GameObject CreateNewObject(string name, GameObject prefab, RectTransform trans)
     {
         var obj = Instantiate(prefab, trans);
         obj.name = name;
@@ -195,7 +195,7 @@ public class ObjectPooler_One : MonoBehaviour
             if (i == transform.childCount - 1) //마지막인 경우
             {
                 obj.transform.SetSiblingIndex(i);
-                spawnObjcets.Insert(i, obj);
+                _spawnObjcets.Insert(i, obj);
                 break;
             }
             else if (transform.GetChild(i).name == obj.name)
@@ -203,7 +203,7 @@ public class ObjectPooler_One : MonoBehaviour
             else if (isFind)
             {
                 obj.transform.SetSiblingIndex(i);
-                spawnObjcets.Insert(i, obj);
+                _spawnObjcets.Insert(i, obj);
             }
         }
     }
@@ -217,7 +217,7 @@ public class ObjectPooler_One : MonoBehaviour
             if (i == parent.transform.childCount - 1)
             {
                 obj.transform.SetSiblingIndex(i);
-                spawnObjcets.Insert(i, obj);
+                _spawnObjcets.Insert(i, obj);
                 break;
             }
             else if (parent.transform.GetChild(i).name == obj.name)
@@ -225,7 +225,7 @@ public class ObjectPooler_One : MonoBehaviour
             else if (isFind)
             {
                 obj.transform.SetSiblingIndex(i);
-                spawnObjcets.Insert(i, obj);
+                _spawnObjcets.Insert(i, obj);
             }
         }
     }
