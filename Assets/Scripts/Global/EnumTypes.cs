@@ -1,9 +1,17 @@
 public static class EnumTypes
 {
-    public enum PropertyType // 테이블
+    public enum Language // 테이블
     {
-
+        Kor,
+        Eng
     }
+    public enum LayoutType
+    {
+        First,
+        Middle,
+        Global  // popup
+    }
+
     public enum InGameParamType
     {
         Player,

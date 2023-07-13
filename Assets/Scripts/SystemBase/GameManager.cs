@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour
 {
+
     private void Awake()
     {
         JsonLoader loader = new JsonLoader();

@@ -6,19 +6,14 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static EnumTypes;
 
 public class UIManager : UIBase
 {
-    public enum LayoutType
-    {
-        First,
-        Middle,
-        Global  // popup
-    }
-
     public static UIManager Instance { get { return _instance; } }
     public static bool isExistence = false;
     public ProcessManager processManager { get { return _processManager; } }
+    public Language language { get; set; } = Language.Eng;
 
     #region GET UI OBJECTS
 
@@ -27,6 +22,7 @@ public class UIManager : UIBase
     private static UIManager _instance = null;
     private ProcessManager _processManager = null;
     private Dictionary<LayoutType, GameObject> _canvases = new();
+
 
     private int _sortingOrder = 0;
     private string _basePath = "UI/";
