@@ -6,7 +6,7 @@ using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 
-[CustomEditor(typeof(ObjectPooler_One))]
+[CustomEditor(typeof(ObjectPooler))]
 public class ObjectPoolerEditor : Editor
 {
     const string INFO = 
@@ -30,9 +30,9 @@ public class Pool
     public int Number;
     public bool IsUi;
 }
-public class ObjectPooler_One : MonoBehaviour
+public class ObjectPooler : MonoBehaviour
 {
-    private static ObjectPooler_One s_inst;
+    private static ObjectPooler s_inst;
     private void Awake()
     {
         s_inst = this;

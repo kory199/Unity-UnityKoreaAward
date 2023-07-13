@@ -24,11 +24,7 @@ public partial class Player : CharacterBase
     void Update()
     {
         Move();
-    }
-
-    public override void Attack()
-    {
-        // 공격 동작 및 추가 항목
+        Attack();
     }
 
     protected override void Die()
