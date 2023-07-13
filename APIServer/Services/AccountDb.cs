@@ -1,29 +1,17 @@
 ﻿using APIServer.DbModel;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using MySqlConnector;
 using SqlKata.Execution;
 using System.Data;
 using ZLogger;
 
 namespace APIServer.Services;
 
-public class AccountDb : IAccountDb
+public class AccountDb : BaseDb, IAccountDb
 {
-    private readonly ILogger<AccountDb> _logger;
-    private IDbConnection _dbConn;
-    private readonly IDbConnectionHandler _dbConnectionHandler;
-
-    private SqlKata.Compilers.MySqlCompiler _compiler;
-    private QueryFactory _queryFactory;
-
     public AccountDb(ILogger<AccountDb> logger, IOptions<DbConfig> dbConfig)
+        : base(logger, dbConfig.Value.AccountDb)
     {
-        _logger = logger;
-        _dbConnectionHandler = new MySqlConnectionHandler(dbConfig.Value.AccountDb);
-        _dbConn = _dbConnectionHandler.GetConnection();
-
-        _compiler = new SqlKata.Compilers.MySqlCompiler();
-        _queryFactory = new SqlKata.Execution.QueryFactory(_dbConn, _compiler);
     }
 
     public async Task<ResultCode> CreateAccountAsync(String id, String pw)

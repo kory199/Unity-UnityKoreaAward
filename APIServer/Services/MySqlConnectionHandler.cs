@@ -11,6 +11,7 @@ public class MySqlConnectionHandler : IDbConnectionHandler
 
     public MySqlConnectionHandler(String connectionString)
     {
+        _dbConn = new MySqlConnection(connectionString);
         _connectionString = connectionString;
     }
 
@@ -40,5 +41,9 @@ public class MySqlConnectionHandler : IDbConnectionHandler
         }
     }
 
-    public void Dispose() => Close();
+    public void Dispose()
+    {
+        Close();
+        _dbConn?.Dispose();
+    }
 }

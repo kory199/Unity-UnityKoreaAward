@@ -2,6 +2,12 @@
 
 public class AccountDbTable
 {
-    public const string Account = "account";
-    public const string id = "id";
+    public const String Account = "account";
+    public const String id = "id";
+}
+
+public class GameDbTable
+{
+    public const String player_data = "player_data";
+    public const String player_uid = "player_uid";
 }

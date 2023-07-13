@@ -27,5 +27,13 @@ public enum ResultCode
     CheckAuthFailNotExist = 200,
     AuthTokenFailSetNx = 206,
 
-    // === User Game Data ===
+    // === User Game Data 300 ~ ===
+    CreateDefaultGameDataFailInsert = 301,
+    CreateGameDataFailInsert = 302,
+    CreateDefaultGameDataFailException = 303,
+    CreateGameDataFailException = 304,
+    PlayerGameDataNotFound = 305,
+    LoadGameDataFailException = 306,
+    DeleteGameDataFailException = 307,
+
 }
