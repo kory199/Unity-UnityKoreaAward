@@ -32,9 +32,7 @@ public class InGameManager : MonoSingleton<InGameManager>
                 _players.InvokeCallBack(_callBakcIndex);
                 break;
         }
-
     }
-
 }
 
 

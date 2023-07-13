@@ -22,7 +22,7 @@ public static class EnumTypes
     {
         Death,
         LevelUp,
-        MAX
+        MAX //¸¶Áö¸· Enum => Const´À³¦
     }
     public enum PlayerSkiils
     {
