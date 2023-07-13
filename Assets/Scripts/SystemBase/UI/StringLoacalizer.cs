@@ -9,7 +9,7 @@ using static EnumTypes;
 
 public class StringLoacalizer : MonoBehaviour
 {
-    public Action onChangeLanguage { get; private set; } = null;
+    
     public int id = -1;
 
     private TextMeshProUGUI _textMeshProUGUI = null;
@@ -25,7 +25,7 @@ public class StringLoacalizer : MonoBehaviour
         _stringData = StringData.table;
         _uiManager = UIManager.Instance;
 
-        onChangeLanguage += StringUpdate;
+        _uiManager.onChangeLanguage += StringUpdate;
         _isInit = true;
     }
 
