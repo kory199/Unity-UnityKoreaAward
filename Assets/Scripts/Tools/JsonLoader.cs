@@ -14,6 +14,21 @@ public class JsonLoader
         LoadAllJsonFiles();
     }
 
+    public void Load(string argFileName)
+    {
+        string resourcesPath = Path.Combine(Application.dataPath, "Resources", "ResourcesTable");
+        DirectoryInfo directoryInfo = new DirectoryInfo(resourcesPath);
+
+        foreach (FileInfo file in directoryInfo.GetFiles("*.json"))
+        {
+            if (argFileName == Path.GetFileNameWithoutExtension(file.Name))
+            {
+                _ = LoadJsonFile(file);
+                return;
+            }
+        }
+    }
+
     private void LoadAllJsonFiles()
     {
         string resourcesPath = Path.Combine(Application.dataPath, "Resources", "ResourcesTable");
@@ -51,7 +66,7 @@ public class JsonLoader
             items.Clear();
             foreach (var deserializedItem in deserializedItems)
             {
-                var idField = deserializedItem.GetType().GetField("ID");
+                var idField = deserializedItem.GetType().GetField("Id");
                 var idValue = (int)idField.GetValue(deserializedItem);
                 items.Add(idValue, deserializedItem);
             }

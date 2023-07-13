@@ -4,7 +4,7 @@ using static EnumTypes;
 [System.Serializable]
 public class Test
 {
-    public int ID;
+    public int Id;
     public string Def;
     public float Float;
     public bool Bool;
