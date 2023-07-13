@@ -9,6 +9,7 @@ using static EnumTypes;
 
 public class StringLoacalizer : MonoBehaviour
 {
+    public Action onChangeLanguage { get; private set; } = null;
     public int id = -1;
 
     private TextMeshProUGUI _textMeshProUGUI = null;
@@ -23,6 +24,8 @@ public class StringLoacalizer : MonoBehaviour
         _textMeshProUGUI = GetComponent<TextMeshProUGUI>();
         _stringData = StringData.table;
         _uiManager = UIManager.Instance;
+
+        onChangeLanguage += StringUpdate;
         _isInit = true;
     }
 
@@ -32,7 +35,6 @@ public class StringLoacalizer : MonoBehaviour
     {
         id = argId;
         await UniTask.WaitUntil(() => false != _isInit);
-        Debug.Log("stringUpdate");
         var text = CheckLanguage(argId);
         if (true == string.IsNullOrEmpty(text))
         {
@@ -43,6 +45,20 @@ public class StringLoacalizer : MonoBehaviour
         }
         _textMeshProUGUI.text = text;
         return true;
+    }
+
+    public async void StringUpdate()
+    {
+        await UniTask.WaitUntil(() => false != _isInit);
+        var text = CheckLanguage(id);
+        if (true == string.IsNullOrEmpty(text))
+        {
+            string nullString = IfNullData();
+            _textMeshProUGUI.text = nullString;
+            Debug.LogError($"{GetType()} NullReferenceException :: Can not found string :: Id : {id}");
+            return ;
+        }
+        _textMeshProUGUI.text = text;
     }
 
     private string IfNullData()
