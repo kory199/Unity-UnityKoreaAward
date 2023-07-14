@@ -1,17 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
     [SerializeField] float bulletSpeed;
-    [SerializeField] GameObject playerAim;
+    [SerializeField] GameObject player;
+    Transform bulletSpawner;
     Rigidbody bulletRb;
-    Vector2 dirBullet;
+    short lifeTime = 5;
+    Vector3 dirBullet;
 
     private void Awake()
     {
-        BulletInit();
     }
 
     void Start()
@@ -20,6 +23,7 @@ public class Bullet : MonoBehaviour
 
     void Update()
     {
+        
     }
 
     private void BulletInit()
@@ -29,22 +33,59 @@ public class Bullet : MonoBehaviour
         else
             bulletRb = gameObject.AddComponent<Rigidbody>();
 
-        bulletSpeed = 1f;
+        bulletSpawner = player.transform.GetChild(0);
+
+        bulletSpeed = 5f;
+
+        // 마우스 방향에 따른 방향 벡터 계산
         DirBullet();
     }
 
     private void DirBullet()
     {
-        
+
+        // 게임 뷰의 마우스 포인트
+        Vector3 mousePosition = Input.mousePosition;
+        // 마우스 좌표를 월드좌표 기준으로 변환
+        Ray ray = Camera.main.ScreenPointToRay(mousePosition);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+        {
+            // 방향벡터 구하기
+            dirBullet = hit.point - bulletSpawner.position;
+        }
+        Debug.Log("player position : " + player.transform.position);
+        Debug.Log("ray hit position : " + hit.point);
+        Debug.Log("mouse position : " + mousePosition);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // 몬스터 충돌 체크 & 충돌 시 동작
+        if (other.tag == "Monster")
+        {
+
+
+            // 몬스터와 충돌 시 Bullet 반환
+            ReturnBullet();
+        }
+    }
+
+    private void ReturnBullet() => gameObject.SetActive(false);
 
     private void OnEnable()
     {
+        BulletInit();
+
         bulletRb.velocity = dirBullet * bulletSpeed;
+
+        // 발사 후 5초 뒤 Bullet 비활성화
+        Invoke("ReturnBullet", lifeTime);
     }
 
     private void OnDisable()
     {
         ObjectPooler.ReturnToPool(gameObject);
+        CancelInvoke();
     }
 }

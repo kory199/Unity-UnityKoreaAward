@@ -8,6 +8,7 @@ public partial class Player : CharacterBase
     [SerializeField] float playerSpeed;
 
     Rigidbody playerRb;
+    
 
     protected override void Start()
     {
@@ -19,6 +20,7 @@ public partial class Player : CharacterBase
     {
         InitComponent();
         InitSetting();
+        InitPlayer();
     }
 
     void Update()
