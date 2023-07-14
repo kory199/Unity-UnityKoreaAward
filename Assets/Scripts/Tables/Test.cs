@@ -15,5 +15,7 @@ public class Test
     public PlayerStateType PlayerStateType;
     public string PlayerSkiils;
     public InGameParamType InGameParamType;
+    public List<int> InA;
+    public List<float> FloA;
     public static Dictionary<int, Test> table = new Dictionary<int, Test> ();   
 }
