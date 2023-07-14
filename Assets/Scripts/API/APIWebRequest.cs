@@ -1,8 +1,8 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -10,41 +10,46 @@ public class APIWebRequest
 {
     public static async UniTask<APIResponse<T>> PostAsync<T>(string url, object requestBody)
     {
-        string jsonBody = JsonConvert.SerializeObject(requestBody);
+        byte[] bodyRaw = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(requestBody));
 
         using (var request = new UnityWebRequest(url, "POST"))
         {
-            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonBody);
             request.uploadHandler = new UploadHandlerRaw(bodyRaw);
             request.downloadHandler = new DownloadHandlerBuffer();
-
             request.SetRequestHeader("Content-Type", "application/json");
 
             await request.SendWebRequest();
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError(request.error);
+                Debug.LogError($"error :{request.error}");
                 return null;
             }
 
-            string responseBody = request.downloadHandler.text;
-            APIResponse<T> response = APIResponse<T>.FromJson(responseBody);
-
-            if (response != null)
+            APIResponse<T> response = new()
             {
-                var responseDict = JsonConvert.DeserializeObject<Dictionary<string, object>>(responseBody);
-                responseDict.Remove("Result");
-                responseDict.Remove("ResultMessage");
-                APIDataDic.SetResponseData(typeof(T).Name, responseDict);
-
-                if (response.Data is Dictionary<string, object> data)
-                {
-                    response.Data = (T)(object)data;
-                }
-            }
+                responseBody = request.downloadHandler.text,
+                Data = JsonConvert.DeserializeObject<T>(request.downloadHandler.text),
+            };
 
             return response;
         }
+    }
+
+    public static T ParseResponseBodyToModel<T> (string responseBody, string key)
+    {
+        var temporaryResponse = JsonConvert.DeserializeObject<Dictionary<string, object>>(responseBody);
+        var dataArray = JArray.Parse(temporaryResponse[key].ToString());
+
+        T data = default;
+        foreach (var dataT in dataArray)
+        {
+            data = dataT.ToObject<T>();
+        }
+
+        APIDataDic.SetResponseData(key, data);
+        T getData = APIDataDic.GetValueByKey<T>(key);
+
+        return data;
     }
 }
