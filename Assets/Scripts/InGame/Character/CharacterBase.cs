@@ -18,10 +18,10 @@ public abstract class CharacterBase : MonoBehaviour
     private PlayerInfo _playerInfo;
 
     // 추후 서버를 통해 받은 캐릭터명 혹은 몬스터명
-    public string CharacterName;
-    public int hp;
-    public int mp;
-    public int lv;
+    protected string CharacterName;
+    protected int hp;
+    protected int mp;
+    protected int lv;
 
 
     protected virtual void Start()
