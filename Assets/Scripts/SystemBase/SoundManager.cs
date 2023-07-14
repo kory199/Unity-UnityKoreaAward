@@ -2,64 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundManager : MonoBehaviour
+public class SoundManager : MonoSingleton<SoundManager>
 {
-    #region Singloton
-    private static SoundManager _inst;
-    public static SoundManager Inst
-    {
-        get
-        {
-            if (_inst == null)
-            {
-                _inst = FindObjectOfType<SoundManager>();
-                if (_inst == null)
-                {
-                    _inst = new GameObject().AddComponent<SoundManager>();
-                }
-            }
-            return _inst;
-        }
-    }
-    #endregion
-    public enum EffectSoundType
-    {
-        None,
-        Attack,
-        AttackSkill,
-        Defence,
-        DefenceSkill,
-        Hit,
-        Die,
-        Button,
-    }
-    public enum StageBGM
-    {
-        Title,
-        Lobby,
-        Stage1,
-        Stage2,
-        Stage3,
-        Stage4,
-        Stage5,
-        Stage6,
-    }
-
     [System.Serializable]
     public class EffSoundInfo
     {
         public AudioClip AudioClip;
-        public EffectSoundType EffectSoundType;
+        public EnumTypes.EffectSoundType EffectSoundType;
     }
 
     [System.Serializable]
     public class BGMSoundInfo
     {
         public AudioClip AudioClip;
-        public StageBGM StageBGM;
+        public EnumTypes.StageBGM StageBGM;
     }
-    Dictionary<EffectSoundType, AudioClip> _effSoundSourec = new Dictionary<EffectSoundType, AudioClip>();
-    Dictionary<StageBGM, AudioClip> _bgmSoundSourec = new Dictionary<StageBGM, AudioClip>();
+    Dictionary<EnumTypes.EffectSoundType, AudioClip> _effSoundSourec = new Dictionary<EnumTypes.EffectSoundType, AudioClip>();
+    Dictionary<EnumTypes.StageBGM, AudioClip> _bgmSoundSourec = new Dictionary<EnumTypes.StageBGM, AudioClip>();
     [SerializeField] private List<EffSoundInfo> _effSoundClips = null;
     [SerializeField] private List<BGMSoundInfo> _bgmSoundClips = null;
     private AudioSource _audioSource = null;
@@ -82,8 +41,8 @@ public class SoundManager : MonoBehaviour
             _bgmSoundSourec[sound.StageBGM] = sound.AudioClip;
         }
     }
-    public void TurnOnPlayerOneShot(EffectSoundType type) => _audioSource.PlayOneShot(_effSoundSourec[type]);
-    public void TurnOnStageBGM(StageBGM stageBGM)
+    public void TurnOnPlayerOneShot(EnumTypes.EffectSoundType type) => _audioSource.PlayOneShot(_effSoundSourec[type]);
+    public void TurnOnStageBGM(EnumTypes.StageBGM stageBGM)
     {
         _audioSource.Stop();
         _audioSource.clip = _bgmSoundSourec[stageBGM];
