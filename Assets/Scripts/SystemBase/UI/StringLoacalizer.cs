@@ -65,9 +65,9 @@ public class StringLoacalizer : MonoBehaviour
     {
         switch (_uiManager.language)
         {
-            case EnumTypes.Language.Eng:
+            case Language.Eng:
                 return _stringData[1].Eng;
-            case EnumTypes.Language.Kor:
+            case Language.Kor:
                 return _stringData[1].Kor;
         }
         return _stringData[1].Eng;
@@ -80,9 +80,9 @@ public class StringLoacalizer : MonoBehaviour
 
         switch (_uiManager.language)
         {
-            case EnumTypes.Language.Eng:
+            case Language.Eng:
                 return _stringData[argId].Eng;
-            case EnumTypes.Language.Kor:
+            case Language.Kor:
                 return _stringData[argId].Kor;
         }
 

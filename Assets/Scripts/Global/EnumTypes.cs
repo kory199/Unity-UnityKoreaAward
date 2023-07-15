@@ -9,7 +9,8 @@ public static class EnumTypes
     {
         First,
         Middle,
-        Global  // popup
+        Global,  // popup
+        MAX
     }
 
     public enum InGameParamType

@@ -15,24 +15,29 @@ public class InGameManager : MonoSingleton<InGameManager>
     private void RegisterParams()
     {
         _parameters.Add(EnumTypes.InGameParamType.Player, new InGamePlayerParams());
+        _parameters[EnumTypes.InGameParamType.Player].AddCallBack((int)EnumTypes.PlayerStateType.Death,()=> { });
     }
-
-    public void InvokeCallBacks(EnumTypes.InGameParamType _type, int _callBakcIndex)
+    public void InvokeCallBacks(EnumTypes.InGameParamType type, int callBackIndex)
     {
-        InGameParamBase _param = null;
+        InGameParamBase param = null;
 
-        switch (_type)
+        switch (type)
         {
             case EnumTypes.InGameParamType.Player:
-                if(_parameters.TryGetValue(_type, out _param) == false)
+                if(_parameters.TryGetValue(type, out param) == false)
                 {
                     return;
                 }
-                InGamePlayerParams _players = _param as InGamePlayerParams;
-                _players.InvokeCallBack(_callBakcIndex);
+                InGamePlayerParams players = param as InGamePlayerParams;
+                players.InvokeCallBack(callBackIndex);
                 break;
         }
     }
+    public void AddActionType(EnumTypes.InGameParamType type,UnityAction action)
+    {
+        _parameters[EnumTypes.InGameParamType.Player].AddCallBack((int)EnumTypes.PlayerStateType.Death, action);
+    }
+
 }
 
 

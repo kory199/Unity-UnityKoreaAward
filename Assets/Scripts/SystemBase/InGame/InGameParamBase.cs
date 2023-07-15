@@ -20,7 +20,7 @@ public abstract class InGameParamBase
         }
         _callbacks[_index]?.Invoke();
     }
-
+    #region callback 함수 관리
     public virtual void AddCallBack(int _index, UnityAction _callbackFunc)
     {
         _callbacks[_index] += _callbackFunc;
@@ -38,6 +38,7 @@ public abstract class InGameParamBase
             _callbacks[i] = null;
         }
     }
+    #endregion
 }
 
 public class InGamePlayerParams : InGameParamBase

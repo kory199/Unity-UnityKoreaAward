@@ -40,7 +40,6 @@ public class UIManager : UIBase
     }
 
     protected override void Start() => SetUp();
-
     private void SetUp()
     {
         _processManager = this.gameObject.AddComponent<ProcessManager>();
@@ -50,7 +49,7 @@ public class UIManager : UIBase
             CreateCanvas((LayoutType)type);
         }
     }
-    
+
     public T CreateObject<T>(string argPath, LayoutType type)
     {
         if (false == _canvases.ContainsKey(type))
@@ -90,7 +89,7 @@ public class UIManager : UIBase
         ++_sortingOrder;
         newCanvas.AddComponent<CanvasScaler>();
         newCanvas.AddComponent<GraphicRaycaster>();
-        newCanvas.name = string.Concat(type," Canvas");
+        newCanvas.name = string.Concat(type, " Canvas");
         newCanvas.transform.SetParent(transform);
         _canvases.Add(type, newCanvas.gameObject);
     }
