@@ -1,9 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 public partial class Player
 {
+    public int playerHp;
+    public int playerLv;
+    public int playerMp;
+
     private void InitComponent()
     {
         if (gameObject.TryGetComponent<Rigidbody>(out Rigidbody rigidbody))
@@ -18,5 +23,12 @@ public partial class Player
 
         // Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
+    }
+
+    private void InitPlayer()
+    {
+        playerHp = hp;
+        playerMp = mp;
+        playerLv = lv;
     }
 }

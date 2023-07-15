@@ -13,8 +13,10 @@ public class UIManager : UIBase
     public static UIManager Instance { get { return _instance; } }
     public static bool isExistence = false;
     public ProcessManager processManager { get { return _processManager; } }
+    #region Language ETC
+    public Action onChangeLanguage { get; set; } = null;
     public Language language { get; set; } = Language.Eng;
-
+    #endregion
     #region GET UI OBJECTS
 
     #endregion
