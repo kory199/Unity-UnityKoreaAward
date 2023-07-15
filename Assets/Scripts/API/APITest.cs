@@ -37,7 +37,7 @@ public class APITest : MonoBehaviour
     private async void TestAPI()
     {
         await CallAPI<Dictionary<string, object>, GameData>(APIUrls.GameDataApi,
-            new GameData { ID = "ParkHyeWon", AuthToken = "5hl31tlfmuxphy43u6q8b8qze" });
+            new GameData { ID = "ParkHyeWon", AuthToken = "259p7hwkupdbqnp47paifxv38" });
     }
 
     private async UniTask CallAPI<T, TRequest>(string apiUrl, TRequest requestBody)

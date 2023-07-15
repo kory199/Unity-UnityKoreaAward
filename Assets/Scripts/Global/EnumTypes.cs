@@ -10,7 +10,6 @@ public static class EnumTypes
         First,
         Middle,
         Global,  // popup
-        MAX
     }
 
     public enum InGameParamType
