@@ -42,7 +42,6 @@ public class InGameManager : MonoSingleton<InGameManager>
     {
         int idx = GetEnumNumber(actionType);
         _parameters[param].AddCallBack(idx, action);
-        Debug.Log(_parameters[EnumTypes.InGameParamType.Player].GetActionCount());
     }
     private void Start()
     {
