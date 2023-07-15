@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-
+using static EnumTypes;
 public class InGameManager : MonoSingleton<InGameManager>
 {
     private Dictionary<EnumTypes.InGameParamType, InGameParamBase> _parameters = new();
@@ -15,7 +16,6 @@ public class InGameManager : MonoSingleton<InGameManager>
     private void RegisterParams()
     {
         _parameters.Add(EnumTypes.InGameParamType.Player, new InGamePlayerParams());
-        _parameters[EnumTypes.InGameParamType.Player].AddCallBack((int)EnumTypes.PlayerStateType.Death,()=> { });
     }
     public void InvokeCallBacks(EnumTypes.InGameParamType type, int callBackIndex)
     {
@@ -24,7 +24,7 @@ public class InGameManager : MonoSingleton<InGameManager>
         switch (type)
         {
             case EnumTypes.InGameParamType.Player:
-                if(_parameters.TryGetValue(type, out param) == false)
+                if (_parameters.TryGetValue(type, out param) == false)
                 {
                     return;
                 }
@@ -33,11 +33,20 @@ public class InGameManager : MonoSingleton<InGameManager>
                 break;
         }
     }
-    public void AddActionType(EnumTypes.InGameParamType type,UnityAction action)
+    /// <summary>
+    /// 게임 변수 타입에 맞춰 action 지정
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="action"></param>
+    public void AddActionType<TEnum>(EnumTypes.InGameParamType param, TEnum actionType, UnityAction action)
     {
-        _parameters[EnumTypes.InGameParamType.Player].AddCallBack((int)EnumTypes.PlayerStateType.Death, action);
+        int idx = GetEnumNumber(actionType);
+        _parameters[param].AddCallBack(idx, action);
+        Debug.Log(_parameters[EnumTypes.InGameParamType.Player].GetActionCount());
     }
-
+    private void Start()
+    {
+        AddActionType(EnumTypes.InGameParamType.Player, AAAA.a, () => Debug.Log("더블샷"));
+        _parameters[EnumTypes.InGameParamType.Player].InvokeCallBack(EnumTypes.PlayerSkiils.DoubleShot);
+    }
 }
-
-
