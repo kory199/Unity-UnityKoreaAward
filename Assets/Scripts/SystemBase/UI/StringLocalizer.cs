@@ -7,7 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static EnumTypes;
 
-public class StringLoacalizer : MonoBehaviour
+public class StringLocalizer : MonoBehaviour
 {
     
     public int id = -1;
