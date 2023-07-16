@@ -1,4 +1,6 @@
-public static class EnumTypes
+using System;
+
+public static partial class EnumTypes
 {
     public enum Language // 테이블
     {
@@ -9,7 +11,7 @@ public static class EnumTypes
     {
         First,
         Middle,
-        Global  // popup
+        Global,  // popup
     }
 
     public enum InGameParamType
@@ -17,12 +19,17 @@ public static class EnumTypes
         Player,
         MAX
     }
+    public enum AAAA
+    {
+        a,
+        b
+    }
 
     public enum PlayerStateType
     {
         Death,
         LevelUp,
-        MAX
+        MAX //마지막 Enum => Const느낌
     }
     public enum PlayerSkiils
     {
@@ -53,5 +60,20 @@ public static class EnumTypes
         Stage4,
         Stage5,
         Stage6,
+    }
+
+}
+public static partial class EnumTypes
+{
+    public static int GetEnumNumber<TEnum>(TEnum tenum)
+    {
+        Type enumType = typeof(TEnum);
+        int idx = -1;
+        foreach (var type in Enum.GetValues(enumType))
+        {
+            idx++;
+            if (type.ToString() == tenum.ToString()) break;
+        }
+        return idx;
     }
 }
