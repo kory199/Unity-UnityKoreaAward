@@ -17,8 +17,10 @@ public class UIManager : UIBase
     public Action onChangeLanguage { get; set; } = null;
     public Language language { get; set; } = Language.Eng;
     #endregion
-    #region GET UI OBJECTS
 
+    #region GET UI OBJECTS
+    // 여기 Getset으로 특정 UI 매니저급 스크립트는 프로퍼티로 가져갈 수 있게 만들면 됩니당
+    public StringLocalizer stringLocallizer { get; set; } // 이건 매니저급 UI에 대한 예시 추후 삭제 예정
     #endregion
 
     private static UIManager _instance = null;
