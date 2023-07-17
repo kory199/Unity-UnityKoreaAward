@@ -13,6 +13,7 @@ public class UIManager : UIBase
     public static UIManager Instance { get { return _instance; } }
     public static bool isExistence = false;
     public ProcessManager processManager { get { return _processManager; } }
+
     #region Language ETC
     public Action onChangeLanguage { get; set; } = null;
     public Language language { get; set; } = Language.Eng;
@@ -27,9 +28,20 @@ public class UIManager : UIBase
     private ProcessManager _processManager = null;
     private Dictionary<LayoutType, GameObject> _canvases = new();
 
-
     private int _sortingOrder = 0;
     private string _basePath = "UI/";
+
+    
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void InstUIManager()
+    {
+        JsonLoader loader = new JsonLoader();
+        loader.Load();
+
+        var uiManager = new GameObject().AddComponent<UIManager>();
+        uiManager.name = "UIManager";
+    }
+
     protected override void Awake()
     {
         if (_instance != null && Instance != this)
@@ -56,6 +68,7 @@ public class UIManager : UIBase
         }
     }
 
+    // 오브젝트에 스크립트가 있어야 합니다
     public T CreateObject<T>(string argPath, LayoutType type)
     {
         if (false == _canvases.ContainsKey(type))
@@ -67,9 +80,11 @@ public class UIManager : UIBase
         GameObject newUI = Resources.Load<GameObject>(path);
         GameObject newUIInstance = Instantiate(newUI);
         newUIInstance.transform.SetParent(targetCanvas.transform);
+        var targetComponent = newUIInstance.GetComponent<T>();
         return newUIInstance.GetComponent<T>();
     }
 
+    // GameObject를 생성 반환 합니다.
     public GameObject CreateUIObject(string argPath, LayoutType type)
     {
         if (false == _canvases.ContainsKey(type))
@@ -84,6 +99,7 @@ public class UIManager : UIBase
         return newUIInstance;
     }
 
+    // enum 타입에 정의된 수 만큼 캔버스를 생성합니다.
     private void CreateCanvas(LayoutType type)
     {
         if (true == _canvases.ContainsKey(type))
