@@ -92,8 +92,7 @@ public class StringLocalizer : MonoBehaviour
     #region Custom Editor
     public async UniTask OnClickEditorButton()
     {
-        JsonLoader loader = new JsonLoader();
-        loader.Load(nameof(StringData));
+        JsonLoader.Instance.Load(nameof(StringData));
 
         await UniTask.WaitUntil(() => 0 != StringData.table.Count);
         _textMeshProUGUI = GetComponent<TextMeshProUGUI>();

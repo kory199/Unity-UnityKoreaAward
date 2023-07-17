@@ -6,9 +6,30 @@ using System.IO;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using Cysharp.Threading.Tasks;
+using Unity.VisualScripting;
 
 public class JsonLoader
 {
+    public static JsonLoader Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                lock (_instanceLock)
+                {
+                    if (_instance == null)
+                        _instance = new JsonLoader();
+                }
+            }
+            return _instance;
+        }
+    }
+
+    private static JsonLoader _instance;
+    private static readonly object _instanceLock = new object();
+    private JsonLoader() {}
+
     public void Load()
     {
         LoadAllJsonFiles();

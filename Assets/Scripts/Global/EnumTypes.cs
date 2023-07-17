@@ -4,8 +4,8 @@ public static partial class EnumTypes
 {
     public enum Language // Å×ÀÌ÷ם
     {
-        Kor,
-        Eng
+        Kor = 0,
+        Eng = 1
     }
     public enum LayoutType
     {

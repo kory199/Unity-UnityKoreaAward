@@ -28,15 +28,15 @@ public class UIManager : UIBase
     private ProcessManager _processManager = null;
     private Dictionary<LayoutType, GameObject> _canvases = new();
 
-    private int _sortingOrder = 0;
-    private string _basePath = "UI/";
+    private const string _languageKey = "LANGUAGE";
 
+    private int     _sortingOrder = 0;
+    private string  _basePath = "UI/";
     
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void InstUIManager()
     {
-        JsonLoader loader = new JsonLoader();
-        loader.Load();
+        JsonLoader.Instance.Load();
 
         var uiManager = new GameObject().AddComponent<UIManager>();
         uiManager.name = "UIManager";
@@ -66,6 +66,20 @@ public class UIManager : UIBase
         {
             CreateCanvas((LayoutType)type);
         }
+
+        GetLanguageData();
+    }
+
+    private void GetLanguageData()
+    {
+        int languagePrefData = PlayerPrefs.GetInt(_languageKey, -1);
+        if (-1 == languagePrefData)
+        {
+            language = Language.Eng;
+            Debug.LogError($"languagePrefData is -1 - language set {nameof(language)}");
+            return;
+        }
+        language = (Language)languagePrefData;
     }
 
     // 오브젝트에 스크립트가 있어야 합니다
