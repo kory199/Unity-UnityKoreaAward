@@ -13,6 +13,7 @@ public class SoundTest : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
+            if(!SoundManager.Instacne.BGMPlayeState())
             SoundManager.Instacne.TurnOnStageBGM(EnumTypes.StageBGM.Title);
         }
     }

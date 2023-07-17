@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Audio;
+using UnityEngine.UI;
 public class SoundManager : MonoSingleton<SoundManager>
 {
     [System.Serializable]
@@ -21,11 +22,16 @@ public class SoundManager : MonoSingleton<SoundManager>
     Dictionary<EnumTypes.StageBGM, AudioClip> _bgmSoundSourec = new Dictionary<EnumTypes.StageBGM, AudioClip>();
     [SerializeField] private List<EffSoundInfo> _effSoundClips = null;
     [SerializeField] private List<BGMSoundInfo> _bgmSoundClips = null;
-    private AudioSource _audioSource = null;
+    [SerializeField] private AudioSource _audioSource = null;
+    [Header("Sound Bar")]
+    [SerializeField] private Slider _bgmSoundSlider = null;
+    [SerializeField] private Slider _bgmSoundSlider2 = null;
+    [Header("Audio Mixer")]
+    [SerializeField] private AudioMixer _bgmMixer = null;
     private void Awake()
     {
-        _audioSource = gameObject.AddComponent<AudioSource>();
         SetSoundSourceToDic();
+        _bgmSoundSlider.onValueChanged.AddListener(BgmSoundControl);
     }
     /// <summary>
     /// 모든 사운드 딕셔너리 넣기
@@ -49,4 +55,20 @@ public class SoundManager : MonoSingleton<SoundManager>
         _audioSource.loop = true;
         _audioSource.Play();
     }
+    public void BgmSoundControlMixer()
+    {
+        float sound = _bgmSoundSlider2.value;
+
+        if (sound == -40f) _bgmMixer.SetFloat("BGMSoundValue", -80f);
+        else _bgmMixer.SetFloat("BGMSoundValue", sound);
+    }
+    private void Update()
+    {
+        BgmSoundControlMixer();
+    }
+    public void BgmSoundControl(float value)
+    {
+        _audioSource.volume = value;
+    }
+    public bool BGMPlayeState() => _audioSource.isPlaying;
 }

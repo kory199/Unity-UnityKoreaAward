@@ -33,7 +33,10 @@ public abstract class InGameParamBase
     #region callback 함수 관리
     public virtual void AddCallBack(int _index, UnityAction _callbackFunc)
     {
-        _callbacks[_index] = _callbackFunc;
+        if (_callbacks[_index] == null)
+            _callbacks[_index] = _callbackFunc;
+        else
+            _callbacks[_index] += _callbackFunc;
     }
 
     public virtual void SubCallBack(int _index, UnityAction _callbackFunc)
