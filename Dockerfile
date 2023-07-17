@@ -1,17 +1,19 @@
-# 이미지의 베이스를 설정합니다. dotnet sdk를 사용합니다.
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build-env
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS base
+ENV ASPNETCORE_URLS=http://+:44376
 WORKDIR /app
 
-# 프로젝트 파일을 복사합니다.
-COPY *.csproj ./
-RUN dotnet restore
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+WORKDIR /src
+COPY ["APIServer/APIServer.csproj", "APIServer/"]
+RUN dotnet restore "APIServer/APIServer.csproj"
+COPY . .
+WORKDIR "/src/APIServer"
+RUN dotnet build "APIServer.csproj" -c Release -o /app/build
 
-# 소스 코드를 복사합니다.
-COPY . ./
-RUN dotnet publish -c Release -o out
+FROM build AS publish
+RUN dotnet publish "APIServer.csproj" -c Release -o /app/publish
 
-# 런타임 이미지를 빌드합니다.
-FROM mcr.microsoft.com/dotnet/aspnet:5.0
+FROM base AS final
 WORKDIR /app
-COPY --from=build-env /app/out .
+COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "APIServer.dll"]
