@@ -13,31 +13,24 @@ public static class APIDataDic
 
     public static T GetValueByKey<T>(string key)
     {
-        if (responseDataDic.ContainsKey(key))
+        if (responseDataDic.TryGetValue(key, out object value) && value is T tValue)
         {
-            object value = responseDataDic[key];
-
-            if (value is T tValue)
-            {
-                StringBuilder sb = new StringBuilder();
-                foreach (var property in typeof(T).GetProperties())
-                {
-                    sb.Append($"{property.Name}: {property.GetValue(tValue)}, ");
-                }
-
-                Debug.Log(sb.ToString());
-                return tValue;
-            }
-            else
-            {
-                Debug.LogError($"The object for key '{key}' is not of the expected type");
-                return default;
-            }
+            PrintValueProperties(tValue);
+            return tValue;
         }
-        else
+
+        Debug.LogError($"Error with '{key}'");
+        return default;
+    }
+
+    private static void PrintValueProperties<T>(T value)
+    {
+        StringBuilder sb = new StringBuilder();
+        foreach (var property in typeof(T).GetProperties())
         {
-            Debug.LogError($"The key '{key}' does not exist in the dictionary");
-            return default;
+            sb.Append($"{property.Name}: {property.GetValue(value)}, ");
         }
+
+        Debug.Log(sb.ToString());
     }
 }
