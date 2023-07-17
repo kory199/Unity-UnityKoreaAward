@@ -7,7 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static EnumTypes;
 
-public class StringLoacalizer : MonoBehaviour
+public class StringLocalizer : MonoBehaviour
 {
     
     public int id = -1;
@@ -65,9 +65,9 @@ public class StringLoacalizer : MonoBehaviour
     {
         switch (_uiManager.language)
         {
-            case EnumTypes.Language.Eng:
+            case Language.Eng:
                 return _stringData[1].Eng;
-            case EnumTypes.Language.Kor:
+            case Language.Kor:
                 return _stringData[1].Kor;
         }
         return _stringData[1].Eng;
@@ -80,9 +80,9 @@ public class StringLoacalizer : MonoBehaviour
 
         switch (_uiManager.language)
         {
-            case EnumTypes.Language.Eng:
+            case Language.Eng:
                 return _stringData[argId].Eng;
-            case EnumTypes.Language.Kor:
+            case Language.Kor:
                 return _stringData[argId].Kor;
         }
 
@@ -92,8 +92,7 @@ public class StringLoacalizer : MonoBehaviour
     #region Custom Editor
     public async UniTask OnClickEditorButton()
     {
-        JsonLoader loader = new JsonLoader();
-        loader.Load(nameof(StringData));
+        JsonLoader.Instance.Load(nameof(StringData));
 
         await UniTask.WaitUntil(() => 0 != StringData.table.Count);
         _textMeshProUGUI = GetComponent<TextMeshProUGUI>();

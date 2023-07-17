@@ -36,7 +36,7 @@ public class APIWebRequest
         }
     }
 
-    public static T ParseResponseBodyToModel<T> (string responseBody, string key)
+    public static T ParseResponseBodyToModel<T>(string responseBody, string key)
     {
         var temporaryResponse = JsonConvert.DeserializeObject<Dictionary<string, object>>(responseBody);
         var dataArray = JArray.Parse(temporaryResponse[key].ToString());

@@ -34,6 +34,11 @@ public abstract class CharacterBase : MonoBehaviour
 
     public abstract void Move();
 
+    public void Udate()
+    {
+
+
+    }
 
     // player, monster 별로 개별 구현
     protected abstract void Die();

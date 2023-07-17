@@ -9,7 +9,7 @@ public abstract class UIBase : MonoBehaviour, IProcess
     private ProcessManager _processManager { get { return UIManager.Instance.processManager; } }
     protected virtual void Awake()
     {
-
+        
     }
     protected virtual void Start()
     {

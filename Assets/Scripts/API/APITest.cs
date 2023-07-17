@@ -2,52 +2,51 @@ using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
+using UnityEditor.Purchasing;
 using UnityEngine;
-
-public class AccountRequest
-{
-    public string ID { get; set; }
-    public string Password { get; set; }
-}
-
-public class GameData
-{
-    public string ID { get; set; }
-    public string AuthToken { get; set; }
-}
-
-public class PlayerData
-{
-    public long player_uid { get; set; }
-    public int exp { get; set; }
-    public int hp { get; set; }
-    public int score { get; set; }
-    public int level { get; set; }
-    public int status { get; set; }
-}
+using System;
+using APIModels;
 
 public class APITest : MonoBehaviour
 {
     private void Awake()
     {
-        TestAPI();
+        //await LoginAPI();
     }
 
-    private async void TestAPI()
+    private async UniTask LoginAPI()
     {
-        await CallAPI<Dictionary<string, object>, GameData>(APIUrls.GameDataApi,
-            new GameData { ID = "ParkHyeWon", AuthToken = "xokcfv2lctt22vol91asio0gx" });
-    }
+        var accountRequest = new AccountRequest { ID = "ParkHyeWon", Password = "1234" };
+        var apiResponse = await CallAPI<AccountRequest, Dictionary<string, object>>(APIUrls.LoginApi, accountRequest);
 
-    private async UniTask CallAPI<T, TRequest>(string apiUrl, TRequest requestBody)
-    {
-        //Debug.Log($"Calling API: {apiUrl} with body: {JsonConvert.SerializeObject(requestBody)}");
-        var apiResponse = await APIWebRequest.PostAsync<APIResponse<T>>(apiUrl, requestBody);
-
-        if(apiResponse != null)
+        if (apiResponse != null && apiResponse.TryGetValue("authToken", out var tokenObject))
         {
-            //Debug.Log($"API Response: {JsonConvert.SerializeObject(requestBody)}");
-            PlayerData player = APIWebRequest.ParseResponseBodyToModel<PlayerData>(apiResponse.responseBody, "playerData");
+            string authToken = tokenObject as string;
+            TokenManager.Instacne.SaveToken(authToken);
+            await GetGameDataAPI(authToken);
         }
     }
+
+    private async UniTask GetGameDataAPI(string authToken)
+    {
+        var gameDataRequest = new GameData { ID = "ParkHyeWon", AuthToken = authToken };
+        var playerData = await CallAPI<GameData, PlayerData>(APIUrls.GameDataApi, gameDataRequest);
+    }
+
+    private async UniTask<TResponse> CallAPI<TRequest, TResponse>(string apiUrl, TRequest requestBody)
+    {
+        var apiResponse = await APIWebRequest.PostAsync<APIResponse<Dictionary<string, object>>>(apiUrl, requestBody);
+
+        TResponse data = default;
+
+        if (apiResponse != null)
+        {
+            data = APIWebRequest.ParseResponseBodyToModel<TResponse>(apiResponse.responseBody, "data");
+        }
+
+        return data;
+    }
+
+    private string GetLowerClassName(object className) => className.GetType().Name.ToLower();
+
 }

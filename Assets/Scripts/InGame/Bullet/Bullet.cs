@@ -35,7 +35,7 @@ public class Bullet : MonoBehaviour
 
         bulletSpawner = player.transform.GetChild(0);
 
-        bulletSpeed = 5f;
+        bulletSpeed = 500f;
 
         // 마우스 방향에 따른 방향 벡터 계산
         DirBullet();
@@ -43,7 +43,6 @@ public class Bullet : MonoBehaviour
 
     private void DirBullet()
     {
-
         // 게임 뷰의 마우스 포인트
         Vector3 mousePosition = Input.mousePosition;
         // 마우스 좌표를 월드좌표 기준으로 변환
@@ -52,11 +51,8 @@ public class Bullet : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
         {
             // 방향벡터 구하기
-            dirBullet = hit.point - bulletSpawner.position;
+            dirBullet = (hit.point - bulletSpawner.position).normalized;
         }
-        Debug.Log("player position : " + player.transform.position);
-        Debug.Log("ray hit position : " + hit.point);
-        Debug.Log("mouse position : " + mousePosition);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -64,8 +60,6 @@ public class Bullet : MonoBehaviour
         // 몬스터 충돌 체크 & 충돌 시 동작
         if (other.tag == "Monster")
         {
-
-
             // 몬스터와 충돌 시 Bullet 반환
             ReturnBullet();
         }

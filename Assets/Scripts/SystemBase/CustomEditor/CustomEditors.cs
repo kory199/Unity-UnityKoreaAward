@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(StringLoacalizer))]
+[CustomEditor(typeof(StringLocalizer))]
 public class CustomStringLoacalizerEditors : Editor
 {
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
 
-        StringLoacalizer updateTrigger = (StringLoacalizer)target;
+        StringLocalizer updateTrigger = (StringLocalizer)target;
 
         EditorGUILayout.BeginHorizontal();  
         GUILayout.FlexibleSpace(); 
