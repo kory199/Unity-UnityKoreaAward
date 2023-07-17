@@ -19,11 +19,6 @@ public static partial class EnumTypes
         Player,
         MAX
     }
-    public enum AAAA
-    {
-        a,
-        b
-    }
 
     public enum PlayerStateType
     {
