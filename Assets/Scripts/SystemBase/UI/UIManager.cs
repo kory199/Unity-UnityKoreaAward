@@ -48,6 +48,8 @@ public class UIManager : UIBase
     {
         _processManager = this.gameObject.AddComponent<ProcessManager>();
         _processManager.processingUIStack.Push(this);
+
+        // Typeº° Canvas »ý¼º
         foreach (var type in Enum.GetValues(typeof(LayoutType)))
         {
             CreateCanvas((LayoutType)type);
