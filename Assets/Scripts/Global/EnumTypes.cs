@@ -64,6 +64,13 @@ public static partial class EnumTypes
         Stage6,
     }
 
+    public enum Scenes
+    { 
+        SceneTitle,
+        SceneLobby,
+        SceneInGame
+    }
+
 }
 public static partial class EnumTypes
 {
