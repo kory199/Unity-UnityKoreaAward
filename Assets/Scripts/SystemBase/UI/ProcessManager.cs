@@ -21,15 +21,6 @@ public class ProcessManager : MonoBehaviour
     private EventSystem _eventSystem;
     private void Start()
     {
-        // 이미 이벤트 시스템이 씬에 존재하는지 확인
-        EventSystem existingEventSystem = FindObjectOfType<EventSystem>();
-        if (existingEventSystem != null)
-        {
-            // 이미 이벤트 시스템이 존재하는 경우, 추가 생성 필요 없음
-            return;
-        }
-
-        // 이벤트 시스템이 존재하지 않는 경우, 새로운 이벤트 시스템 생성
         _eventSystem = new GameObject().AddComponent<EventSystem>();
         _eventSystem.AddComponent<StandaloneInputModule>();
         _eventSystem.name = nameof(EventSystem);
