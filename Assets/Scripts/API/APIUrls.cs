@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class APIUrls
 {
-    public static readonly string CreateAccountApi = "";
-    public static readonly string LoginApi = "";
-    public static readonly string GameDataApi = "https://27cf-211-193-61-77.ngrok-free.app/GameData";
+    public static readonly string CreateAccountApi = "https://27fd-121-66-146-108.ngrok-free.app/CreateAccount";
+    public static readonly string LoginApi = "https://27fd-121-66-146-108.ngrok-free.app/Login";
+    public static readonly string GameDataApi = "https://27fd-121-66-146-108.ngrok-free.app/GameData";
 }

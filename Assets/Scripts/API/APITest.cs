@@ -11,42 +11,60 @@ public class APITest : MonoBehaviour
 {
     private void Awake()
     {
-        //await LoginAPI();
+        LoginAPI();
     }
 
     private async UniTask LoginAPI()
     {
-        var accountRequest = new AccountRequest { ID = "ParkHyeWon", Password = "1234" };
-        var apiResponse = await CallAPI<AccountRequest, Dictionary<string, object>>(APIUrls.LoginApi, accountRequest);
+        AccountRequest newPlayer = new AccountRequest { ID = "ParkHyeWon", Password = "1234" };
+        TokenManager.Instacne.SaveID(newPlayer.ID);
 
-        if (apiResponse != null && apiResponse.TryGetValue("authToken", out var tokenObject))
-        {
-            string authToken = tokenObject as string;
-            TokenManager.Instacne.SaveToken(authToken);
-            await GetGameDataAPI(authToken);
-        }
+        await CallLogainAPI<Dictionary<string, object>, AccountRequest>(APIUrls.LoginApi, newPlayer);
     }
 
-    private async UniTask GetGameDataAPI(string authToken)
+    private async UniTask CallLogainAPI<T, TRequest>(string apiUrl, TRequest requestBody)
     {
-        var gameDataRequest = new GameData { ID = "ParkHyeWon", AuthToken = authToken };
-        var playerData = await CallAPI<GameData, PlayerData>(APIUrls.GameDataApi, gameDataRequest);
-    }
-
-    private async UniTask<TResponse> CallAPI<TRequest, TResponse>(string apiUrl, TRequest requestBody)
-    {
-        var apiResponse = await APIWebRequest.PostAsync<APIResponse<Dictionary<string, object>>>(apiUrl, requestBody);
-
-        TResponse data = default;
+        var apiResponse = await APIWebRequest.PostAsync<APIResponse<T>>(apiUrl, requestBody);
 
         if (apiResponse != null)
         {
-            data = APIWebRequest.ParseResponseBodyToModel<TResponse>(apiResponse.responseBody, "data");
-        }
+            //Debug.Log($"API Response: {JsonConvert.SerializeObject(apiResponse)}");
 
-        return data;
+            var responseBody = JsonConvert.DeserializeObject<Dictionary<string, object>>(apiResponse.responseBody);
+            if (responseBody.TryGetValue("authToken", out var authTokenObj))
+            {
+                string authToken = authTokenObj as string;
+                if (!string.IsNullOrEmpty(authToken))
+                {
+                    TokenManager.Instacne.SaveToken(authToken);
+                }
+            }
+
+            GetGameDataAPI();
+        }
+    }
+
+    private async UniTask GetGameDataAPI()
+    {
+        GameData gameData = new GameData
+        {
+            ID = TokenManager.Instacne.GetID(),
+            AuthToken = TokenManager.Instacne.GetToken()
+        };
+
+        await CallGameDataAPI<Dictionary<string, object>, GameData>(APIUrls.GameDataApi, gameData);
+    }
+
+    private async UniTask CallGameDataAPI<T, TRequest>(string apiUrl, TRequest requestBody)
+    {
+        var apiResponse = await APIWebRequest.PostAsync<APIResponse<T>>(apiUrl, requestBody);
+
+        if (apiResponse != null)
+        {
+            //Debug.Log($"API Response: {JsonConvert.SerializeObject(apiResponse)}");
+            PlayerData player = APIWebRequest.ParseResponseBodyToModel<PlayerData>(apiResponse.responseBody, "playerData");
+        }
     }
 
     private string GetLowerClassName(object className) => className.GetType().Name.ToLower();
-
 }
