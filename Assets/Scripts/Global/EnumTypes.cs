@@ -14,13 +14,6 @@ public static partial class EnumTypes
         Global,  // popup
     }
 
-    public enum SceneInfo
-    {
-        Lobby,
-        InGame,
-        Ending
-    }
-
     public enum InGameParamType
     {
         Player,
