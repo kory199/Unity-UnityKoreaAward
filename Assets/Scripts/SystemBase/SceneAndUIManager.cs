@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using Unity.VisualScripting;
 
-public class SceneAndUIManager : UIManager
+public class SceneAndUIManager : UIBase
 {
     private EventSystem _eventSystem;
 
@@ -96,5 +96,10 @@ public class SceneAndUIManager : UIManager
     private void InitTitleUI()
     {
 
+    }
+
+    public override IProcess.NextProcess ProcessInput()
+    {
+        return IProcess.NextProcess.Continue;
     }
 }
