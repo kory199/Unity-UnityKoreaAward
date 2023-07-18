@@ -22,16 +22,17 @@ public class SoundManager : MonoSingleton<SoundManager>
     Dictionary<EnumTypes.StageBGM, AudioClip> _bgmSoundSourec = new Dictionary<EnumTypes.StageBGM, AudioClip>();
     [SerializeField] private List<EffSoundInfo> _effSoundClips = null;
     [SerializeField] private List<BGMSoundInfo> _bgmSoundClips = null;
-    [SerializeField] private AudioSource _audioSource = null;
+    [SerializeField] private AudioSource _bgmSource = null;
+    [SerializeField] private AudioSource _sfxSource = null;
     [Header("Sound Bar")]
+    [SerializeField] private Slider _masterSoundSlider = null;
     [SerializeField] private Slider _bgmSoundSlider = null;
-    [SerializeField] private Slider _bgmSoundSlider2 = null;
+    [SerializeField] private Slider _sfxSoundSlider = null;
     [Header("Audio Mixer")]
-    [SerializeField] private AudioMixer _bgmMixer = null;
+    [SerializeField] private AudioMixer _soundMixer = null;
     private void Awake()
     {
         SetSoundSourceToDic();
-        _bgmSoundSlider.onValueChanged.AddListener(BgmSoundControl);
     }
     /// <summary>
     /// 모든 사운드 딕셔너리 넣기
@@ -47,28 +48,45 @@ public class SoundManager : MonoSingleton<SoundManager>
             _bgmSoundSourec[sound.StageBGM] = sound.AudioClip;
         }
     }
-    public void TurnOnPlayerOneShot(EnumTypes.EffectSoundType type) => _audioSource.PlayOneShot(_effSoundSourec[type]);
+    public void TurnOnPlayerOneShot(EnumTypes.EffectSoundType type)
+    {
+        _sfxSource.outputAudioMixerGroup = _soundMixer.outputAudioMixerGroup;
+        _sfxSource.PlayOneShot(_effSoundSourec[type]);
+    }
     public void TurnOnStageBGM(EnumTypes.StageBGM stageBGM)
     {
-        _audioSource.Stop();
-        _audioSource.clip = _bgmSoundSourec[stageBGM];
-        _audioSource.loop = true;
-        _audioSource.Play();
+        _bgmSource.Stop();
+        _bgmSource.clip = _bgmSoundSourec[stageBGM];
+        _bgmSource.outputAudioMixerGroup = _soundMixer.outputAudioMixerGroup;
+        _bgmSource.loop = true;
+        _bgmSource.Play();
     }
-    public void BgmSoundControlMixer()
+    /// <summary>
+    /// 슬라이더바 볼륨 믹서 세팅
+    /// </summary>
+    /// <param name="type"></param>
+    public void SetSoundMixer(string type)
     {
-        float sound = _bgmSoundSlider2.value;
-
-        if (sound == -40f) _bgmMixer.SetFloat("BGMSoundValue", -80f);
-        else _bgmMixer.SetFloat("BGMSoundValue", sound);
+        float sound = -20f;
+        switch (type)
+        {
+            case "MasterSoundValue":
+                sound = _masterSoundSlider.value;
+                if (sound == -40f) _soundMixer.SetFloat(type, -80f);
+                else _soundMixer.SetFloat(type, sound);
+                break;
+            case "BGMSoundValue":
+                Debug.Log(_bgmSoundSlider.value);
+                sound = _bgmSoundSlider.value;
+                if (sound == -40f) _soundMixer.SetFloat(type, -80f);
+                else _soundMixer.SetFloat(type, sound);
+                break;
+            case "SFXSoundValue":
+                sound = _sfxSoundSlider.value;
+                if (sound == -40f) _soundMixer.SetFloat(type, -80f);
+                else _soundMixer.SetFloat(type, sound);
+                break;
+        }
     }
-    private void Update()
-    {
-        BgmSoundControlMixer();
-    }
-    public void BgmSoundControl(float value)
-    {
-        _audioSource.volume = value;
-    }
-    public bool BGMPlayeState() => _audioSource.isPlaying;
+    public bool BGMPlayeState() => _bgmSource.isPlaying;
 }

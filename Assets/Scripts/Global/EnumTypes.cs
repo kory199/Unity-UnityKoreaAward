@@ -56,7 +56,6 @@ public static partial class EnumTypes
         Stage5,
         Stage6,
     }
-
     public enum Scenes
     { 
         SceneTitle,
