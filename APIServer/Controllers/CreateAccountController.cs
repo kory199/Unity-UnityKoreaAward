@@ -1,4 +1,5 @@
-﻿using APIServer.ReqResMondel;
+﻿using APIServer.ReqResModel;
+using APIServer.ReqResMondel;
 using APIServer.Services;
 using Microsoft.AspNetCore.Mvc;
 using ZLogger;
@@ -7,34 +8,27 @@ namespace APIServer.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class CreateAccountController : ControllerBase
+public class CreateAccountController : BaseApiController
 {
-    private readonly IAccountDb _accountDb;
-    private readonly ILogger<CreateAccountController> _logger;
-
-    public CreateAccountController(ILogger<CreateAccountController> logger, IAccountDb accountDb)
+    public CreateAccountController(ILogger<CreateAccountController> logger, IAccountDb accountDb, IMemoryDb memoryDb)
+        :base(logger, memoryDb, accountDb)
     {
-        _logger = logger;
-        _accountDb = accountDb;
     }
 
     [HttpPost]
-    public async Task<PkResPonse> Post(AccountReq request)
+    public async Task<PkResponse> Post(AccountReq request)
     {
-        var response = new PkResPonse();
-        var errorCode = await _accountDb.CreateAccountAsync(request.ID, request.Password);
+        var resultCode = await _accountDb.CreateAccountAsync(request.ID, request.Password);
 
-        if (errorCode != ResultCode.None)
+        if (resultCode != ResultCode.None)
         {
-            response.Result = errorCode;
-            response.Message = errorCode.ToString();
-            return response;
+            return CreateResponse<PkResponse>(resultCode);
         }
 
         // TODO: 클래스 만들 예정 ZLogInformationWithPayLoad 변경
         _logger.ZLogDebug($"CreateAccount Success");
-        response.Message = ResultCode.CreateAccountSuccess.ToString();
 
+        var response = CreateResponse<PkResponse>(ResultCode.CreateAccountSuccess);
         return response;
     }
 }

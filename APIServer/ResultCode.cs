@@ -9,6 +9,12 @@ public enum ResultCode
     DeleteException = 12,
     GetByException = 13,
 
+    // === SuccessCode 50 ~ ===
+    CreateAccountSuccess = 50,
+    LoginSuccess = 51,
+    CreateGameDataSuccess = 52,
+    LoadGameDataSuccess = 53,
+
     // === Common Error 100 ~ ===             
     UnhandleException = 101,
     RedisFailException = 102,
@@ -16,12 +22,10 @@ public enum ResultCode
     InValidRequestHttpBody = 104,
     AuthTokenFailWrongAuthToken = 106,
 
-    // === Account SuccessCode 150 ~ ===
-    CreateAccountSuccess = 150,
-
     // === Account ErrorCode 200~ ===
     CreateAccountFailInsert = 200,
     FailedtoCreateAccount = 201,
+
     //CreateAccountFailException = 201,
     LoginFailUserNotExist = 202,
     LoginFailException = 203,

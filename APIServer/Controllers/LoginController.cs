@@ -1,4 +1,5 @@
-﻿using APIServer.ReqResMondel;
+﻿using APIServer.ReqResModel;
+using APIServer.ReqResMondel;
 using APIServer.Services;
 using APIServer.StateType;
 using Microsoft.AspNetCore.Mvc;
@@ -10,32 +11,28 @@ namespace APIServer.Controllers;
 [Route("[controller]")]
 public class LoginController : BaseApiController
 {
-    private readonly IAccountDb _accountDb;
-
     public LoginController(ILogger<BaseApiController> logger, IAccountDb accountDb, IMemoryDb memoryDb)
-        : base (logger, memoryDb)
+        : base (logger, memoryDb, accountDb)
     {
-        _accountDb = accountDb;
     }
 
     [HttpPost]
     public async Task<LoginRes> Post(AccountReq request)
     {
-        var response = new LoginRes();
-        var (errorCode, account_id) = await _accountDb.VerifyAccountAsync(request.ID, request.Password);
+        var (resultCode, account_id) = await _accountDb.VerifyAccountAsync(request.ID, request.Password);
         var authToken = Security.CreateAuthToken();
 
-        errorCode = await _memoryDb.RegistUserAsync(request.ID, authToken, account_id);
+        resultCode = await _memoryDb.RegistUserAsync(request.ID, authToken, account_id);
 
-        if (errorCode != ResultCode.None)
+        if (resultCode != ResultCode.None)
         {
-            response.Result = errorCode;
-            return response;
+            return CreateResponse<LoginRes>(resultCode);
         }
 
         _logger.ZLogInformationWithPayload(LogManager.EventIdDic[EventType.Login],
             new { ID = request.ID, AuthToken = authToken }, "Login Success");
 
+        var response = CreateResponse<LoginRes>(ResultCode.LoginSuccess);
         response.AuthToken = authToken;
         return response;
     }

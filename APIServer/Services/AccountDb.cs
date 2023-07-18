@@ -46,7 +46,6 @@ public class AccountDb : BaseDb<Account>, IAccountDb
         {
             var accountInfo = await ExecuteGetByAsync(AccountDbTable.id, id);
 
-            await Console.Out.WriteLineAsync($"accountInfo.account_id {accountInfo.account_id}");
             if (accountInfo == null || accountInfo.account_id == 0)
             {
                 return (ResultCode.LoginFailUserNotExist, 0 );

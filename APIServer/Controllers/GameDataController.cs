@@ -11,8 +11,8 @@ public class GameDataController : BaseApiController
 {
     private readonly IGameDb _gameDb;
 
-    public GameDataController(ILogger<BaseApiController> logger, IGameDb gameDb, IMemoryDb memoryDb)
-        : base(logger, memoryDb)
+    public GameDataController(ILogger<BaseApiController> logger, IGameDb gameDb, IMemoryDb memoryDb, IAccountDb accountDb)
+        : base(logger, memoryDb, accountDb)
     {
         _gameDb = gameDb;
     }
@@ -21,23 +21,20 @@ public class GameDataController : BaseApiController
     public async Task<GameDataRes> Post(PlayerInfoReq request)
     {
         var userInfo = (AuthUser)HttpContext.Items[nameof(AuthUser)]!;
-        var response = new GameDataRes();
-
         var (resultCode, gameData) = await _gameDb.VerifyGameData(userInfo.AccountId);
     
         if(gameData == null)
         {
             gameData = new GameData(userInfo.AccountId);
-
             (resultCode, gameData) = await _gameDb.CreateDefaultGameData(userInfo.AccountId);
 
             if(resultCode != ResultCode.None)
             {
-                response.Result = resultCode;
-                return response;
+                return CreateResponse<GameDataRes>(resultCode);
             }
         }
 
+        var response = CreateResponse<GameDataRes>(ResultCode.LoadGameDataSuccess);
         response.PlayerData.Add(gameData);
         return response;
     }
