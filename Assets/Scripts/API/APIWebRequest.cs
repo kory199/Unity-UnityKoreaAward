@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Cysharp.Threading.Tasks;
@@ -22,7 +23,7 @@ public class APIWebRequest
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"error :{request.error}");
+                Debug.LogError($"Error :{request.error}");
                 return null;
             }
 

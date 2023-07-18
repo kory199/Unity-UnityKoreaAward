@@ -24,24 +24,33 @@ public class APITest : MonoBehaviour
 
     private async UniTask CallLogainAPI<T, TRequest>(string apiUrl, TRequest requestBody)
     {
-        var apiResponse = await APIWebRequest.PostAsync<APIResponse<T>>(apiUrl, requestBody);
-
-        if (apiResponse != null)
+        try
         {
-            //Debug.Log($"API Response: {JsonConvert.SerializeObject(apiResponse)}");
+            var apiResponse = await APIWebRequest.PostAsync<APIResponse<T>>(apiUrl, requestBody);
 
-            var responseBody = JsonConvert.DeserializeObject<Dictionary<string, object>>(apiResponse.responseBody);
-            if (responseBody.TryGetValue("authToken", out var authTokenObj))
+            if (apiResponse != null)
             {
-                string authToken = authTokenObj as string;
-                if (!string.IsNullOrEmpty(authToken))
-                {
-                    TokenManager.Instacne.SaveToken(authToken);
-                }
-            }
+                //Debug.Log($"API Response: {JsonConvert.SerializeObject(apiResponse)}");
 
-            GetGameDataAPI();
+                var responseBody = JsonConvert.DeserializeObject<Dictionary<string, object>>(apiResponse.responseBody);
+                if (responseBody.TryGetValue("authToken", out var authTokenObj))
+                {
+                    string authToken = authTokenObj as string;
+                    if (!string.IsNullOrEmpty(authToken))
+                    {
+                        TokenManager.Instacne.SaveToken(authToken);
+                    }
+                }
+
+                GetGameDataAPI();
+            }
         }
+        catch(UnityWebRequestException e)
+        {
+            Debug.LogError($"API request failed : {e.Message}");
+        }
+
+        
     }
 
     private async UniTask GetGameDataAPI()
@@ -57,13 +66,21 @@ public class APITest : MonoBehaviour
 
     private async UniTask CallGameDataAPI<T, TRequest>(string apiUrl, TRequest requestBody)
     {
-        var apiResponse = await APIWebRequest.PostAsync<APIResponse<T>>(apiUrl, requestBody);
-
-        if (apiResponse != null)
+        try
         {
-            //Debug.Log($"API Response: {JsonConvert.SerializeObject(apiResponse)}");
-            PlayerData player = APIWebRequest.ParseResponseBodyToModel<PlayerData>(apiResponse.responseBody, "playerData");
+            var apiResponse = await APIWebRequest.PostAsync<APIResponse<T>>(apiUrl, requestBody);
+
+            if (apiResponse != null)
+            {
+                //Debug.Log($"API Response: {JsonConvert.SerializeObject(apiResponse)}");
+                PlayerData player = APIWebRequest.ParseResponseBodyToModel<PlayerData>(apiResponse.responseBody, "playerData");
+            }
         }
+        catch(UnityWebRequestException e)
+        {
+            Debug.LogError($"API request failed : {e.Message}");
+        }
+        
     }
 
     private string GetLowerClassName(object className) => className.GetType().Name.ToLower();
