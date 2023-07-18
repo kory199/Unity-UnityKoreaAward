@@ -1,9 +1,13 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+using Unity.VisualScripting;
 
-public class SceneAndUIManager : MonoSingleton<SceneAndUIManager>
+public class SceneAndUIManager : UIManager
 {
+    private EventSystem _eventSystem;
+
     // 런타임 초기화 시점에 SceneManager 생성
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void InstSceneManager()
@@ -12,9 +16,23 @@ public class SceneAndUIManager : MonoSingleton<SceneAndUIManager>
         sceneAndUIManager.name = "SceneAndUIManager";
     }
 
-    private void Awake()
+    protected override void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
+
+        // 이미 이벤트 시스템이 씬에 존재하는지 확인
+        EventSystem existingEventSystem = FindObjectOfType<EventSystem>();
+        if (existingEventSystem != null)
+        {
+            // 이미 이벤트 시스템이 존재하는 경우, 추가 생성 필요 없음
+            return;
+        }
+
+        // 이벤트 시스템이 존재하지 않는 경우, 새로운 이벤트 시스템 생성
+        _eventSystem = new GameObject().AddComponent<EventSystem>();
+        _eventSystem.AddComponent<StandaloneInputModule>();
+        _eventSystem.name = nameof(EventSystem);
+        DontDestroyOnLoad(_eventSystem);
     }
 
     // Unitask를 활용한 비동기 씬 로드 및 비동기 UI 생성
@@ -50,6 +68,7 @@ public class SceneAndUIManager : MonoSingleton<SceneAndUIManager>
                 Debug.LogError("Require scene name resolution");
                 break;
         }
+        await UniTask.CompletedTask;
     }
 
     private async UniTask LoadScene(EnumTypes.Scenes scene)
@@ -66,7 +85,7 @@ public class SceneAndUIManager : MonoSingleton<SceneAndUIManager>
 
     private void InitGameUI()
     {
-
+        UIManager.Instance.CreateUIObject("InGame", EnumTypes.LayoutType.Middle);
     }
 
     private void InitLobbyUI()
