@@ -20,11 +20,11 @@ public class SkillTree : MonoBehaviour
 
     private void ActiveSkills()
     {
-        parentSkill = new ParentSkillNode(EnumTypes.PlayerSkiils.DoubleShot, 10, 0);
+        parentSkill = new ParentSkillNode(EnumTypes.PlayerSkiilsType.DoubleShot, 10, 0);
 
-        chilrenSkill1 = new ChildrenSkillNode(EnumTypes.PlayerSkiils.DoubleShot, 1, 5, parentSkill);
+        chilrenSkill1 = new ChildrenSkillNode(EnumTypes.PlayerSkiilsType.DoubleShot, 1, 5, parentSkill);
         parentSkill.children.Add(chilrenSkill1);
-        childrenSkill2 = new ChildrenSkillNode(EnumTypes.PlayerSkiils.MultiShot, 1, 5, parentSkill);
+        childrenSkill2 = new ChildrenSkillNode(EnumTypes.PlayerSkiilsType.MultiShot, 1, 5, parentSkill);
         parentSkill.children.Add(childrenSkill2);
     }
 

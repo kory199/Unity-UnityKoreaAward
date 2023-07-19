@@ -45,7 +45,7 @@ public class InGameManager : MonoSingleton<InGameManager>
     }
     private void Start()
     {
-        AddActionType(EnumTypes.InGameParamType.Player, PlayerSkiils.DoubleShot, () => Debug.Log("´õºí¼¦"));
-        _parameters[EnumTypes.InGameParamType.Player].InvokeCallBack(EnumTypes.PlayerSkiils.DoubleShot);
+        AddActionType(EnumTypes.InGameParamType.Player, PlayerSkiilsType.DoubleShot, () => Debug.Log("´õºí¼¦"));
+        _parameters[EnumTypes.InGameParamType.Player].InvokeCallBack(EnumTypes.PlayerSkiilsType.DoubleShot);
     }
 }

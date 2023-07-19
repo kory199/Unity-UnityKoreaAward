@@ -15,10 +15,10 @@ public class SoundManager : MonoSingleton<SoundManager>
     public class BGMSoundInfo
     {
         public AudioClip AudioClip;
-        public EnumTypes.StageBGM StageBGM;
+        public EnumTypes.StageBGMType StageBGM;
     }
     Dictionary<EnumTypes.EffectSoundType, AudioClip> _effSoundSourec = new Dictionary<EnumTypes.EffectSoundType, AudioClip>();
-    Dictionary<EnumTypes.StageBGM, AudioClip> _bgmSoundSourec = new Dictionary<EnumTypes.StageBGM, AudioClip>();
+    Dictionary<EnumTypes.StageBGMType, AudioClip> _bgmSoundSourec = new Dictionary<EnumTypes.StageBGMType, AudioClip>();
     [SerializeField] private List<EffSoundInfo> _effSoundClips = null;
     [SerializeField] private List<BGMSoundInfo> _bgmSoundClips = null;
     private AudioSource _audioSource = null;
@@ -42,7 +42,7 @@ public class SoundManager : MonoSingleton<SoundManager>
         }
     }
     public void TurnOnPlayerOneShot(EnumTypes.EffectSoundType type) => _audioSource.PlayOneShot(_effSoundSourec[type]);
-    public void TurnOnStageBGM(EnumTypes.StageBGM stageBGM)
+    public void TurnOnStageBGM(EnumTypes.StageBGMType stageBGM)
     {
         _audioSource.Stop();
         _audioSource.clip = _bgmSoundSourec[stageBGM];

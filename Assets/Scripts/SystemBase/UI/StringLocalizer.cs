@@ -65,9 +65,9 @@ public class StringLocalizer : MonoBehaviour
     {
         switch (_uiManager.language)
         {
-            case Language.Eng:
+            case LanguageType.Eng:
                 return _stringData[1].Eng;
-            case Language.Kor:
+            case LanguageType.Kor:
                 return _stringData[1].Kor;
         }
         return _stringData[1].Eng;
@@ -80,9 +80,9 @@ public class StringLocalizer : MonoBehaviour
 
         switch (_uiManager.language)
         {
-            case Language.Eng:
+            case LanguageType.Eng:
                 return _stringData[argId].Eng;
-            case Language.Kor:
+            case LanguageType.Kor:
                 return _stringData[argId].Kor;
         }
 
