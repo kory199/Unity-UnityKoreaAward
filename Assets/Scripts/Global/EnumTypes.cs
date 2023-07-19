@@ -30,6 +30,7 @@ public static partial class EnumTypes
     {
         DoubleShot,
         TripleShot,
+        MultiShot,
         MAX
     }
 
