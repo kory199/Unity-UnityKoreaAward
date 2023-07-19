@@ -1,9 +1,13 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+using Unity.VisualScripting;
 
-public class SceneAndUIManager : MonoSingleton<SceneAndUIManager>
+public class SceneAndUIManager : UIBase
 {
+    private EventSystem _eventSystem;
+
     // 런타임 초기화 시점에 SceneManager 생성
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void InstSceneManager()
@@ -12,7 +16,7 @@ public class SceneAndUIManager : MonoSingleton<SceneAndUIManager>
         sceneAndUIManager.name = "SceneAndUIManager";
     }
 
-    private void Awake()
+    protected override void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
     }
@@ -50,6 +54,7 @@ public class SceneAndUIManager : MonoSingleton<SceneAndUIManager>
                 Debug.LogError("Require scene name resolution");
                 break;
         }
+        await UniTask.CompletedTask;
     }
 
     private async UniTask LoadScene(EnumTypes.Scenes scene)
@@ -66,7 +71,7 @@ public class SceneAndUIManager : MonoSingleton<SceneAndUIManager>
 
     private void InitGameUI()
     {
-
+        UIManager.Instance.CreateUIObject("InGame", EnumTypes.LayoutType.Middle);
     }
 
     private void InitLobbyUI()
@@ -77,5 +82,10 @@ public class SceneAndUIManager : MonoSingleton<SceneAndUIManager>
     private void InitTitleUI()
     {
 
+    }
+
+    public override IProcess.NextProcess ProcessInput()
+    {
+        return IProcess.NextProcess.Continue;
     }
 }
