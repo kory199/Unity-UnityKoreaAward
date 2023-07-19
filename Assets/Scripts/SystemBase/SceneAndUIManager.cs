@@ -22,7 +22,7 @@ public class SceneAndUIManager : UIBase
     }
 
     // Unitask를 활용한 비동기 씬 로드 및 비동기 UI 생성
-    public async UniTask LoadAsync(EnumTypes.Scenes scene)
+    public async UniTask LoadAsync(EnumTypes.ScenesType scene)
     {
         // UI 비동기 생성
         UniTask creatUIUnitask = CreatUI(scene);
@@ -34,19 +34,19 @@ public class SceneAndUIManager : UIBase
         await UniTask.WhenAll(creatUIUnitask, loadSceneUnitask);
     }
 
-    private async UniTask CreatUI(EnumTypes.Scenes scene)
+    private async UniTask CreatUI(EnumTypes.ScenesType scene)
     {
         switch (scene)
         {
-            case EnumTypes.Scenes.SceneInGame:
+            case EnumTypes.ScenesType.SceneInGame:
                 // SceneInGame UI 생성 함수 호출
                 InitGameUI();
                 break;
-            case EnumTypes.Scenes.SceneLobby:
+            case EnumTypes.ScenesType.SceneLobby:
                 // SceneLobby UI 생성 함수 호출
                 InitLobbyUI();
                 break;
-            case EnumTypes.Scenes.SceneTitle:
+            case EnumTypes.ScenesType.SceneTitle:
                 // SceneTitle UI 생성 함수 호출
                 InitTitleUI();
                 break;
@@ -57,7 +57,7 @@ public class SceneAndUIManager : UIBase
         await UniTask.CompletedTask;
     }
 
-    private async UniTask LoadScene(EnumTypes.Scenes scene)
+    private async UniTask LoadScene(EnumTypes.ScenesType scene)
     {
         AsyncOperation sceneLoad = SceneManager.LoadSceneAsync(scene.ToString());
 

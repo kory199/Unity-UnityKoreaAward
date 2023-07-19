@@ -13,7 +13,7 @@ public class UIManager : UIBase
 
     #region Language ETC
     public Action onChangeLanguage { get; set; } = null;
-    public Language language { get; set; } = Language.Eng;
+    public LanguageType language { get; set; } = LanguageType.Eng;
     #endregion
 
     #region GET UI OBJECTS
@@ -72,11 +72,11 @@ public class UIManager : UIBase
         int languagePrefData = PlayerPrefs.GetInt(_languageKey, -1);
         if (-1 == languagePrefData)
         {
-            language = Language.Eng;
+            language = LanguageType.Eng;
             Debug.LogError($"languagePrefData is -1 - language set {nameof(language)}");
             return;
         }
-        language = (Language)languagePrefData;
+        language = (LanguageType)languagePrefData;
     }
 
     // 오브젝트에 스크립트가 있어야 합니다
