@@ -9,7 +9,7 @@ public class Skills : MonoBehaviour
     public int maxSkillLevel;
     public int requiredUnlockSkillLevel;
 
-    public Skills(EnumTypes.PlayerSkiils skillName, int maxLv, int reqLv)
+    public Skills(EnumTypes.PlayerSkiilsType skillName, int maxLv, int reqLv)
     {
         this.skillName = skillName.ToString();
         curSkillLevel = 0;
