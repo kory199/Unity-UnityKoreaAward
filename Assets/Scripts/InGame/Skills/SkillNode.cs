@@ -7,7 +7,7 @@ public partial class ParentSkillNode : Skills
     public List<ChildrenSkillNode> children;
 
     // 입력받은 매개 변수를 기준으로 부모 클래스의 생성자 초기화
-    public ParentSkillNode(EnumTypes.PlayerSkiils skiils, int maxLv, int reqLb) : base(skiils, maxLv, reqLb)
+    public ParentSkillNode(EnumTypes.PlayerSkiilsType skiils, int maxLv, int reqLb) : base(skiils, maxLv, reqLb)
     {
         children = new List<ChildrenSkillNode>();
     }
@@ -18,7 +18,7 @@ public partial class ChildrenSkillNode : Skills
     public ParentSkillNode parent;
 
     // 부모 클래스 생성자 초기화 및 ParentSkillNode 연결
-    public ChildrenSkillNode(EnumTypes.PlayerSkiils skiils, int maxLv, int reqLb, ParentSkillNode parentNode) : base(skiils, maxLv, reqLb)
+    public ChildrenSkillNode(EnumTypes.PlayerSkiilsType skiils, int maxLv, int reqLb, ParentSkillNode parentNode) : base(skiils, maxLv, reqLb)
     {
         parent = parentNode;
     }
