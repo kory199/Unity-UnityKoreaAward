@@ -23,3 +23,8 @@ public class GameDataRes : BaseResponse
 {
     [Required] public List<GameData> PlayerData { get; set; } = new List<GameData>();
 }
+
+public class RankingDataRes : BaseResponse
+{
+    [Required] public List<Ranking> RankingData { get; set; } = new List<Ranking>();
+}

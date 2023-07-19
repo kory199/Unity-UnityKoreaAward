@@ -33,7 +33,7 @@ public class AccountController : ControllerBase
     {
         var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-        if (result?.Succeeded != true)
+        if (result.Succeeded != true)
         {
             _logger.LogWarning("GoogleResponse failure: result not succeeded");
             return BadRequest();

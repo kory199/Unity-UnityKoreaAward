@@ -4,8 +4,8 @@ namespace APIServer;
 
 public class LogManager
 {
-    private static ILoggerFactory s_loggerFactory;
-    public static ILogger Logger { get; private set; }
+    private static ILoggerFactory? s_loggerFactory;
+    public static ILogger? Logger { get; private set; }
 
     public static Dictionary<EventType, EventId> EventIdDic = new()
     {
@@ -22,6 +22,11 @@ public class LogManager
 
     public static ILogger<T> GetLogger<T>() where T : class
     {
+        if(s_loggerFactory == null)
+        {
+            throw new InvalidOperationException("LoggerFactory Has Not Been Set.");
+        }
+
         return s_loggerFactory.CreateLogger<T>();
     }
 }

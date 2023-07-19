@@ -11,7 +11,7 @@ public class GameDataController : BaseApiController
 {
     private readonly IGameDb _gameDb;
 
-    public GameDataController(ILogger<BaseApiController> logger, IGameDb gameDb, IMemoryDb memoryDb, IAccountDb accountDb)
+    public GameDataController(ILogger<GameDataController> logger, IGameDb gameDb, IMemoryDb memoryDb, IAccountDb accountDb)
         : base(logger, memoryDb, accountDb)
     {
         _gameDb = gameDb;
@@ -25,12 +25,17 @@ public class GameDataController : BaseApiController
     
         if(gameData == null)
         {
-            gameData = new GameData(userInfo.AccountId);
-            (resultCode, gameData) = await _gameDb.CreateDefaultGameData(userInfo.AccountId);
+            gameData = new GameData(userInfo.AccountId, userInfo.Id);
+            (resultCode, gameData) = await _gameDb.CreateDefaultGameData(userInfo.AccountId, userInfo.Id);
 
             if(resultCode != ResultCode.None)
             {
                 return CreateResponse<GameDataRes>(resultCode);
+            }
+
+            if(gameData == null)
+            {
+                return CreateResponse<GameDataRes>(ResultCode.PlayerGameDataNotFound);
             }
         }
 

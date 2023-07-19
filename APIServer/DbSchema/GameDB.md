@@ -13,6 +13,7 @@ DROP TABLE IF EXISTS gameDb.`player_data`;
 CREATE TABLE IF NOT EXISTS gameDb.`player_data`
 (
     player_uid BIGINT NOT NULL PRIMARY KEY COMMENT '고유 번호', 
+    id VARCHAR(50) NOT NULL UNIQUE COMMENT '아이디',
     exp INT NOT NULL COMMENT  '경험치',
     hp INT NOT NULL COMMENT '현재 체력',
     score INT NOT NULL COMMENT '점수',

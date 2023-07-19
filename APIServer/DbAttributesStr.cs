@@ -10,4 +10,6 @@ public class GameDbTable
 {
     public const String player_data = "player_data";
     public const String player_uid = "player_uid";
+    public const String id = "id";
+    public const String score = "score";
 }

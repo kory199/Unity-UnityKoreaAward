@@ -14,6 +14,7 @@ public enum ResultCode
     LoginSuccess = 51,
     CreateGameDataSuccess = 52,
     LoadGameDataSuccess = 53,
+    LoadRankingDataSuccess = 55,
 
     // === Common Error 100 ~ ===             
     UnhandleException = 101,
@@ -44,5 +45,9 @@ public enum ResultCode
     PlayerGameDataNotFound = 305,
     LoadGameDataFailException = 306,
     DeleteGameDataFailException = 307,
+
+    // === Ranking Data 400 ~ ===
+    LoadRankingDataFail = 400,
+    LoadRankingDataFailException = 401,
 
 }

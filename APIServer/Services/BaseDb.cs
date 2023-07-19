@@ -65,21 +65,41 @@ public abstract class BaseDb<T> where T : class
         }
     }
 
-    protected async Task<T> ExecuteGetByAsync(String columnName, object value)
+    protected async Task<T?> ExecuteGetByAsync(String columnName, object value)
     {
         try
         {
-            var item = await _queryFactory.Query(_tableName)
+            var query = await _queryFactory.Query(_tableName)
                 .Where(columnName, value)
                 .FirstOrDefaultAsync<T>();
 
-            return item;
+            return query;
         }
         catch (Exception e)
         {
             _logger.ZLogError(e, $"[{GetType().Name}.GetByAsync] ResultCode : {ResultCode.GetByException}");
 
             return null;
+        }
+    }
+
+    protected async Task<List<T>> SortGetByAsync(String columnName)
+    {
+        try
+        {
+            var query = await _queryFactory.Query(_tableName)
+                .Select(GameDbTable.player_uid, GameDbTable.id, GameDbTable.score)
+                .OrderByDesc(columnName)
+                .Limit(10)
+                .GetAsync<T>();
+
+            return query.ToList();
+
+        }
+        catch(Exception e)
+        {
+            _logger.ZLogError(e, $"[{GetType().Name}.GetByAsync] ResultCode : {ResultCode.GetByException}");
+            return new List<T>();
         }
     }
 }
