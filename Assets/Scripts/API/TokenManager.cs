@@ -9,8 +9,22 @@ public class TokenManager : MonoSingleton<TokenManager>
     private const string IdKey = "ID";
     private const string AuthTokenKey = "AuthToken";
 
-    private void Save(string key, string value) => PlayerPrefs.SetString(key, value);
-    private string Get(string key) => PlayerPrefs.GetString(key);
+    private void Save(string key, string value)
+    {
+        string encryptedValue = Convert.ToBase64String(SecureAES.Encrypt(value));
+        PlayerPrefs.SetString(key, encryptedValue);
+    }
+
+    private string Get(string key)
+    {
+        string encryptedValue = PlayerPrefs.GetString(key);
+
+        if(string.IsNullOrEmpty(encryptedValue)) return null;
+
+        byte[] encryptedBytes = Convert.FromBase64String(encryptedValue);
+        return SecureAES.Decrypt(encryptedBytes);
+    }
+
     private void Delete(string key) => PlayerPrefs.DeleteKey(key);
 
     // === ID ===

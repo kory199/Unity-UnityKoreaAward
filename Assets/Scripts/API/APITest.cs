@@ -22,28 +22,12 @@ public class APITest : MonoBehaviour
         await CallAPI<Dictionary<string, object>, AccountRequest>(APIUrls.LoginApi, newPlayer, HandleLoginResponse);
     }
 
-    private async UniTask CallAPI<T, TRequest>(string apiUrl, TRequest requestBody, Action<APIResponse<T>> handler)
-    {
-        try
-        {
-            var apiResponse = await APIWebRequest.PostAsync<T>(apiUrl, requestBody);
-
-            if(apiResponse == null)
-            {
-                Debug.LogError("API Response is null");
-            }
-
-            handler?.Invoke(apiResponse);
-        }
-        catch (UnityWebRequestException e)
-        {
-            Debug.LogError($"API request failed : {e.Message}");
-        }
-    }
-
     private void HandleLoginResponse(APIResponse<Dictionary<string, object>> apiResponse)
     {
         var responseBody = JsonConvert.DeserializeObject<Dictionary<string, object>>(apiResponse.responseBody);
+
+        DebugUtility.Log("Login responseBody", responseBody);
+
         if (responseBody.TryGetValue("authToken", out var authTokenObj))
         {
             string authToken = authTokenObj as string;
@@ -65,6 +49,26 @@ public class APITest : MonoBehaviour
         };
 
         await CallAPI<Dictionary<string, object>, GameData>(APIUrls.GameDataApi, gameData, HandleGameDataResponse);
+    }
+
+    private async UniTask CallAPI<T, TRequest>(string apiUrl, TRequest requestBody, Action<APIResponse<T>> handler)
+    {
+        try
+        {
+            var apiResponse = await APIWebRequest.PostAsync<T>(apiUrl, requestBody);
+            DebugUtility.Log("apiResponse", apiResponse);
+
+            if (apiResponse == null)
+            {
+                Debug.LogError("API Response is null");
+            }
+
+            handler?.Invoke(apiResponse);
+        }
+        catch (UnityWebRequestException e)
+        {
+            Debug.LogError($"API request failed : {e.Message}");
+        }
     }
 
     private void HandleGameDataResponse(APIResponse<Dictionary<string, object>> apiResponse)
