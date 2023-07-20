@@ -38,32 +38,33 @@ public class APITest : MonoBehaviour
             }
         }
 
-        GetRanking();
 
+        //GetGameDataAPI();
+        GetRanking();
 
     }
 
     private async UniTask GetGameDataAPI()
     {
-       GameData gameData = new GameData
-       {
-           ID = TokenManager.Instacne.GetID(),
-           AuthToken = TokenManager.Instacne.GetToken()
-       };
+       //GameData gameData = new GameData
+       //{
+       //    ID = TokenManager.Instacne.GetID(),
+       //    AuthToken = TokenManager.Instacne.GetToken()
+       //};
 
         
-        await CallAPI<Dictionary<string, object>, GameData>(APIUrls.GameDataApi, gameData, HandleGameDataResponse);
+        await CallAPI<Dictionary<string, object>, GameData>(APIUrls.GameDataApi, NewGameData(), HandleGameDataResponse);
     }
 
     private async UniTask GetRanking()
     {
-        GameData gameData = new GameData
-        {
-            ID = TokenManager.Instacne.GetID(),
-            AuthToken = TokenManager.Instacne.GetToken()
-        };
+        //GameData gameData = new GameData
+        //{
+        //    ID = TokenManager.Instacne.GetID(),
+        //    AuthToken = TokenManager.Instacne.GetToken()
+        //};
 
-        await CallAPI<Dictionary<string, object>, GameData>(APIUrls.RankingApi, gameData, HandleRankingDataResponse);
+        await CallAPI<Dictionary<string, object>, GameData>(APIUrls.RankingApi, NewGameData(), HandleRankingDataResponse);
     }
 
     private GameData NewGameData()
