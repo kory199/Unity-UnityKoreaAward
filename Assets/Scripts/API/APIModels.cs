@@ -25,4 +25,11 @@ namespace APIModels
         public int level { get; set; }
         public int status { get; set; }
     }
+
+    public class RankingData
+    {
+        public string id { get; set; }
+        public int score { get; set; }
+        public int ranking { get; set; }
+    }
 }

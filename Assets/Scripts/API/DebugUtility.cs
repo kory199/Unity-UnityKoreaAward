@@ -12,19 +12,9 @@ public class DebugUtility
         {
             LogDictionary(title, dictionary);
         }
-        else if (message is APIResponse<T> apiResponse)
+        else
         {
-            if (apiResponse.Data is IDictionary dataDictionary)
-            {
-                LogDictionary($"{title} Data", dataDictionary);
-            }
-            else
-            {
-                Debug.Log($"{title} Data: {apiResponse.Data.ToString()}");
-            }
-
-            var responseBodyDictionary = JsonConvert.DeserializeObject<Dictionary<string, object>>(apiResponse.responseBody);
-            LogDictionary($"{title} responseBody", responseBodyDictionary);
+            Debug.Log($"{title} : {message}");
         }
     }
 

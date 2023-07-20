@@ -11,6 +11,8 @@ public static class APIDataDic
 
     public static bool CheckIfKeyExists(string key) => responseDataDic.ContainsKey(key);
 
+    public static int GetCount() => responseDataDic.Count;
+
     public static T GetValueByKey<T>(string key)
     {
         if (responseDataDic.TryGetValue(key, out object value) && value is T tValue)

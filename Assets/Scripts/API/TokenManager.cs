@@ -7,6 +7,7 @@ using UnityEngine;
 public class TokenManager : MonoSingleton<TokenManager>
 {
     private const string IdKey = "ID";
+    private const string Passwrod = "Password";
     private const string AuthTokenKey = "AuthToken";
 
     private void Save(string key, string value)

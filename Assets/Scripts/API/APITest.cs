@@ -26,21 +26,36 @@ public class APITest : MonoBehaviour
     {
         var responseBody = JsonConvert.DeserializeObject<Dictionary<string, object>>(apiResponse.responseBody);
 
-        DebugUtility.Log("Login responseBody", responseBody);
+        //DebugUtility.Log("Login responseBody", responseBody);
 
         if (responseBody.TryGetValue("authToken", out var authTokenObj))
         {
             string authToken = authTokenObj as string;
+
             if (!string.IsNullOrEmpty(authToken))
             {
                 TokenManager.Instacne.SaveToken(authToken);
             }
         }
 
-        GetGameDataAPI();
+        GetRanking();
+
+
     }
 
     private async UniTask GetGameDataAPI()
+    {
+       GameData gameData = new GameData
+       {
+           ID = TokenManager.Instacne.GetID(),
+           AuthToken = TokenManager.Instacne.GetToken()
+       };
+
+        
+        await CallAPI<Dictionary<string, object>, GameData>(APIUrls.GameDataApi, gameData, HandleGameDataResponse);
+    }
+
+    private async UniTask GetRanking()
     {
         GameData gameData = new GameData
         {
@@ -48,7 +63,18 @@ public class APITest : MonoBehaviour
             AuthToken = TokenManager.Instacne.GetToken()
         };
 
-        await CallAPI<Dictionary<string, object>, GameData>(APIUrls.GameDataApi, gameData, HandleGameDataResponse);
+        await CallAPI<Dictionary<string, object>, GameData>(APIUrls.RankingApi, gameData, HandleRankingDataResponse);
+    }
+
+    private GameData NewGameData()
+    {
+        GameData gameData = new GameData
+        {
+            ID = TokenManager.Instacne.GetID(),
+            AuthToken = TokenManager.Instacne.GetToken()
+        };
+
+        return gameData;
     }
 
     private async UniTask CallAPI<T, TRequest>(string apiUrl, TRequest requestBody, Action<APIResponse<T>> handler)
@@ -56,7 +82,9 @@ public class APITest : MonoBehaviour
         try
         {
             var apiResponse = await APIWebRequest.PostAsync<T>(apiUrl, requestBody);
-            DebugUtility.Log("apiResponse", apiResponse);
+#if UNITY_EDITOR
+            //DebugUtility.Log("ApiResponse", apiResponse);
+#endif
 
             if (apiResponse == null)
             {
@@ -73,6 +101,11 @@ public class APITest : MonoBehaviour
 
     private void HandleGameDataResponse(APIResponse<Dictionary<string, object>> apiResponse)
     {
-        PlayerData player = APIWebRequest.ParseResponseBodyToModel<PlayerData>(apiResponse.responseBody, "playerData");
+        APIWebRequest.ParseResponseBodyToModel<PlayerData>(apiResponse.responseBody, "playerData");
+    }
+
+    private void HandleRankingDataResponse(APIResponse<Dictionary<string, object>> apiResponse)
+    {
+        APIWebRequest.ParseResponseBodyToModel<RankingData[]>(apiResponse.responseBody, "rankingData");
     }
 }
