@@ -25,8 +25,8 @@ public class Global : MonoBehaviour
     private Global() { }
     #endregion
 
-    public bool isSceneTitle { get { return SceneManager.GetActiveScene().name == nameof(Scenes.SceneTitle); } }
-    public bool isSceneLobby { get { return SceneManager.GetActiveScene().name == nameof(Scenes.SceneLobby); } }
-    public bool isSceneInGame { get { return SceneManager.GetActiveScene().name == nameof(Scenes.SceneInGame); } }
+    public bool isSceneTitle { get { return SceneManager.GetActiveScene().name == nameof(ScenesType.SceneTitle); } }
+    public bool isSceneLobby { get { return SceneManager.GetActiveScene().name == nameof(ScenesType.SceneLobby); } }
+    public bool isSceneInGame { get { return SceneManager.GetActiveScene().name == nameof(ScenesType.SceneInGame); } }
 
 }

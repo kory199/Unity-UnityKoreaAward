@@ -2,7 +2,7 @@ using System;
 
 public static partial class EnumTypes
 {
-    public enum Language // 테이블
+    public enum LanguageType // 테이블
     {
         Kor = 0,
         Eng = 1
@@ -26,7 +26,7 @@ public static partial class EnumTypes
         LevelUp,
         MAX //마지막 Enum => Const느낌
     }
-    public enum PlayerSkiils
+    public enum PlayerSkiilsType
     {
         DoubleShot,
         TripleShot,
@@ -46,7 +46,7 @@ public static partial class EnumTypes
         Button,
     }
 
-    public enum StageBGM
+    public enum StageBGMType
     {
         Title,
         Lobby,
@@ -57,7 +57,8 @@ public static partial class EnumTypes
         Stage5,
         Stage6,
     }
-    public enum Scenes
+
+    public enum ScenesType
     { 
         SceneTitle,
         SceneLobby,
