@@ -1,22 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
-public class InGameOption : MonoBehaviour
+public class InGameOption : UIBase
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    //UI DepthControll
+    private IProcess.NextProcess _optionProcess = IProcess.NextProcess.Continue;
 
-    // Update is called once per frame
-    void Update()
+    // Start is called before the first frame update
+    protected override void Start()
     {
-        
+        base.Start();
+        UIManager.Instance.processManager.processingUIStack.Push(this);
     }
     public void OnClickInGameOptionButton()
     {
         Debug.Log("Clicked InGameOptionButton");
+        if (_optionProcess == IProcess.NextProcess.Continue)
+        {
+            _optionProcess = IProcess.NextProcess.Break;
+        }
+        else
+        {
+            _optionProcess = IProcess.NextProcess.Continue;
+        }
+    }
+   
+    public override IProcess.NextProcess ProcessInput()
+    {
+        return _optionProcess;
     }
 }
