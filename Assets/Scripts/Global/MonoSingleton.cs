@@ -10,9 +10,9 @@ public class MonoSingleton<T>  : MonoBehaviour where T : MonoSingleton<T>
         {
             if(_instance == null)
             {
-                _instance = FindAnyObjectByType<T>();
+                _instance = GameManager.FindObjectOfType<T>();
 
-                if(_instance == null)
+                if (_instance == null)
                 {
                     _instance = new GameObject(typeof(T).ToString()).AddComponent<T>();
                 }
