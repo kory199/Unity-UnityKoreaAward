@@ -25,7 +25,8 @@ public class CheckUserAuth
         if (string.Compare(formString, "/Account", StringComparison.OrdinalIgnoreCase) == 0 ||
             string.Compare(formString, "/Account/GoogleResponse", StringComparison.OrdinalIgnoreCase) == 0 ||
             string.Compare(formString, "/Login", StringComparison.OrdinalIgnoreCase) == 0 ||
-           string.Compare(formString, "/CreateAccount", StringComparison.OrdinalIgnoreCase) == 0)
+           string.Compare(formString, "/CreateAccount", StringComparison.OrdinalIgnoreCase) == 0 ||
+                string.Compare(formString, "/Message", StringComparison.OrdinalIgnoreCase) == 0)
         {
             await _next(context);
             return;
@@ -60,14 +61,14 @@ public class CheckUserAuth
                 return;
             }
 
-            if(await IsInvalidUserAuthTokenThenSendError(context, userInfo, AuthToken))
+            if (await IsInvalidUserAuthTokenThenSendError(context, userInfo, AuthToken))
             {
                 return;
             }
 
             userLockKey = MemoryDbKeyMaker.MakeUserLockKey(userInfo.Id);
 
-            if(await SetLoackAndIsFailThenSEndError(context, AuthToken))
+            if (await SetLoackAndIsFailThenSEndError(context, AuthToken))
             {
                 return;
             }
@@ -99,7 +100,7 @@ public class CheckUserAuth
         return true;
     }
 
-    private bool IsInvalidJsonFormatThenSendError(HttpContext context, JsonDocument document, out String id, out String authToken )
+    private bool IsInvalidJsonFormatThenSendError(HttpContext context, JsonDocument document, out String id, out String authToken)
     {
         try
         {
@@ -127,7 +128,7 @@ public class CheckUserAuth
 
     private static async Task<bool> IsInvalidUserAuthTokenThenSendError(HttpContext context, AuthUser userInfo, String authToken)
     {
-        if(string.CompareOrdinal(userInfo.AuthToken, authToken) == 0)
+        if (string.CompareOrdinal(userInfo.AuthToken, authToken) == 0)
         {
             return false;
         }
@@ -137,7 +138,7 @@ public class CheckUserAuth
             Result = ResultCode.AuthTokenFailWrongAuthToken,
             ResultMessage = ResultCode.AuthTokenFailWrongAuthToken.ToString(),
         });
-        
+
         var bytes = Encoding.UTF8.GetBytes(errorJsonResponse);
         await context.Response.Body.WriteAsync(bytes, 0, bytes.Length);
         return true;
@@ -145,7 +146,7 @@ public class CheckUserAuth
 
     private async Task<bool> SetLoackAndIsFailThenSEndError(HttpContext context, String AuthToken)
     {
-        if(await _memoryDb.SetUserReqLockAsync(AuthToken))
+        if (await _memoryDb.SetUserReqLockAsync(AuthToken))
         {
             return false;
         }
