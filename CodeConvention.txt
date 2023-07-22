@@ -1,2 +1,21 @@
 Hi
-Unity Korea Award Project는 Micro Soft 일반 C# 코드 명명 규칙을 따릅니다.
+unity Korea Award Project는 Micro Soft 일반 C# 코드 명명 규칙을 따릅니다.
+
+private AClass _slider_hi
+public Bclass Pacal
+static int s_int
+
+프로토 타입
+로그인(ID, Pass) 회원 가입, 로그인 =성환
+	ui
+플레이어 조작 완료 (액터, 서버데이터, 초기 스텟)=성환
+	+skill tree
+몬스터 생성 및 소멸(서버데이터) = 종훈
+	+base status
+스테이지 업,스테이지 종료 (스테이터스, 서버데이터)=나
+	+boss pattern 1,2
+
+API, data table, 서버 공유 => 혜원
+token작업
+
+서버데이터->로컬 excel -> ingame override : 무혁
