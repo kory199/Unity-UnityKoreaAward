@@ -11,7 +11,7 @@ public class APITest : MonoBehaviour
 {
     private void Awake()
     {
-        LoginAPI();
+        //LoginAPI();
     }
 
     private async UniTask LoginAPI()
@@ -40,7 +40,7 @@ public class APITest : MonoBehaviour
 
 
         //GetGameDataAPI();
-        GetRanking();
+        //GetRanking();
 
     }
 
