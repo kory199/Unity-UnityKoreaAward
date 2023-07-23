@@ -26,7 +26,7 @@ public class InGameOption : UIBase
             _optionProcess = IProcess.NextProcess.Continue;
         }
     }
-   
+
     public override IProcess.NextProcess ProcessInput()
     {
         return _optionProcess;

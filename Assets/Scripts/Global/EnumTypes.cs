@@ -17,6 +17,7 @@ public static partial class EnumTypes
     public enum InGameParamType
     {
         Player,
+        Stage,
         MAX
     }
 
@@ -55,7 +56,6 @@ public static partial class EnumTypes
         Stage3,
         Stage4,
         Stage5,
-        Stage6,
     }
 
     public enum ScenesType
@@ -65,6 +65,13 @@ public static partial class EnumTypes
         SceneInGame
     }
 
+    public enum StageStateType
+    {
+        Start, //시작
+        Next, //다음
+        End, //끝 => 보스맵
+        Max
+    }
 }
 public static partial class EnumTypes
 {

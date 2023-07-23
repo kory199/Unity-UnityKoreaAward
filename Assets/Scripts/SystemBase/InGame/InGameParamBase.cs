@@ -5,12 +5,12 @@ public abstract class InGameParamBase
 {
     protected List<UnityAction> _callbacks = null;
 
-    public InGameParamBase()
+    public InGameParamBase(int num)
     {
         _callbacks = new();
-        RegisterCallbacks();
+        RegisterCallbacks(num);
     }
-    protected abstract void RegisterCallbacks();
+    protected abstract void RegisterCallbacks(int num);
 
     public int GetActionCount() => _callbacks.Count;
     public int GetEnumTypeNum<TEnum>(TEnum tenum) => GetEnumNumber(tenum);
@@ -30,13 +30,21 @@ public abstract class InGameParamBase
         }
         _callbacks[_index]?.Invoke();
     }
-    #region callback 窃荐 包府
-    public virtual void AddCallBack(int _index, UnityAction _callbackFunc)
+    public virtual void InvokeCallBack(int index)
     {
-        if (_callbacks[_index] == null)
-            _callbacks[_index] = _callbackFunc;
+        if (index < 0 || index >= _callbacks.Count)
+        {
+            return;
+        }
+        _callbacks[index]?.Invoke();
+    }
+    #region callback 窃荐 包府
+    public virtual void AddCallBack(int index, UnityAction callbackFunc)
+    {
+        if (_callbacks[index] == null)
+            _callbacks[index] = callbackFunc;
         else
-            _callbacks[_index] += _callbackFunc;
+            _callbacks[index] += callbackFunc;
     }
 
     public virtual void SubCallBack(int _index, UnityAction _callbackFunc)
@@ -56,13 +64,13 @@ public abstract class InGameParamBase
 
 public class InGamePlayerParams : InGameParamBase
 {
-    public InGamePlayerParams() : base()
+    public InGamePlayerParams(int num) : base(num)
     {
     }
 
-    protected override void RegisterCallbacks()
+    protected override void RegisterCallbacks(int num)
     {
-        for (int i = 0; i < (int)EnumTypes.PlayerStateType.MAX; i++)
+        for (int i = 0; i < num; i++)
         {
             _callbacks.Add(null);
         }
