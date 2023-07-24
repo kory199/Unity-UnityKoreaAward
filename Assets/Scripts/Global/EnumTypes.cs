@@ -79,6 +79,7 @@ public static partial class EnumTypes
         Move,   // 플레이어추적 or 무작위 이동
         Attack, // 공격
         Death,  // 죽음
+        Dance,  // 플레이어 죽었을때 킹받게 하기용 State
         Max     
     }
 }

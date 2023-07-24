@@ -8,6 +8,7 @@ public partial class Player
     public int playerHp;
     public int playerLv;
     public int playerMp;
+    public bool IsDeath;
 
     private void InitComponent()
     {
@@ -30,5 +31,6 @@ public partial class Player
         playerHp = hp;
         playerMp = mp;
         playerLv = lv;
+        IsDeath = false;
     }
 }
