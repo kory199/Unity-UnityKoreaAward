@@ -6,8 +6,8 @@ public partial class Player
 {
     public override void  Move()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
+        float verticalInput = Input.GetAxisRaw("Vertical");
         float mouseX = Input.GetAxis("Mouse X");
 
         Vector3 moveDir = new Vector3(horizontalInput, 0, verticalInput).normalized;
