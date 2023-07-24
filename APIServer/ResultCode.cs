@@ -49,5 +49,6 @@ public enum ResultCode
     // === Ranking Data 400 ~ ===
     LoadRankingDataFail = 400,
     LoadRankingDataFailException = 401,
+    LoadRankingDataforUserFail = 402,
 
 }

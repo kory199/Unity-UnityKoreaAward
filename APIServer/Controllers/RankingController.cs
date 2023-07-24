@@ -1,7 +1,6 @@
 ﻿using APIServer.DbModel;
 using APIServer.ReqResModel;
 using APIServer.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIServer.Controllers;
@@ -22,7 +21,7 @@ public class RankingController : BaseApiController
     public async Task<RankingDataRes> Post(PlayerInfoReq request)
     {
         var userInfo = (AuthUser)HttpContext.Items[nameof(AuthUser)]!;
-        var (resultCode, rankingData) = await _gameDb.LoadRankingDataAsync(userInfo.AccountId);
+        var (resultCode, rankingData) = await _gameDb.LoadRankingDataAsync(userInfo.AccountId, userInfo.Id);
 
         if (resultCode != ResultCode.None)
         {

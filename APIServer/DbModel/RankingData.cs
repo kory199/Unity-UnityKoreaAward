@@ -7,7 +7,7 @@ public class Ranking
     public Int32 ranking { get; set; }
 }
 
-public class RankingData
+public class RankingInfo : Ranking
 {
-    public List<Ranking> rankingList { get; set; } = new();
+    public DateTime created_at { get; set; }
 }

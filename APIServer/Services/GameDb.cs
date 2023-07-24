@@ -54,7 +54,7 @@ public class GameDb : BaseDb<GameData>, IGameDb
         }
     }
 
-    public async Task<(ResultCode, List<Ranking>?)> LoadRankingDataAsync(Int64 account_id)
+    public async Task<(ResultCode, List<Ranking>?)> LoadRankingDataAsync(Int64 account_id, String id)
     {
         try
         {
@@ -72,10 +72,12 @@ public class GameDb : BaseDb<GameData>, IGameDb
             }
 
             int rank = 0;
+            bool isUserInList = false;
 
             foreach (var gameData in gameDataList)
             {
                 rank++;
+                
                 Ranking ranks = new Ranking
                 {
                     id = gameData.id,
@@ -83,8 +85,35 @@ public class GameDb : BaseDb<GameData>, IGameDb
                     ranking = rank
                 };
 
+                if(gameData.id == id)
+                {
+                    isUserInList = true;
+                }
 
                 rankingList.Add(ranks);
+            }
+
+            if(isUserInList == false)
+            {
+                var userData = await _queryFactory.Query(_tableName)
+                .Where(GameDbTable.player_uid, account_id)
+                .FirstOrDefaultAsync<Ranking>();
+
+                if (userData != null)
+                {
+                    Ranking ranks = new Ranking
+                    {
+                        id = userData.id,
+                        score = userData.score,
+                        ranking = 0
+                    };
+
+                    rankingList.Add(ranks);
+                }
+                else
+                {
+                    return (ResultCode.LoadRankingDataforUserFail, null);
+                }
             }
 
             return (ResultCode.None, rankingList);
