@@ -4,12 +4,6 @@ using UnityEngine;
 
 namespace APIModels
 {
-    public class AccountRequest
-    {
-        public string ID { get; set; }
-        public string Password { get; set; }
-    }
-
     public class GameData
     {
         public string ID { get; set; }
@@ -24,5 +18,12 @@ namespace APIModels
         public int score { get; set; }
         public int level { get; set; }
         public int status { get; set; }
+    }
+
+    public class RankingData
+    {
+        public string id { get; set; }
+        public int score { get; set; }
+        public int ranking { get; set; }
     }
 }

@@ -1,8 +1,11 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -22,7 +25,7 @@ public class APIWebRequest
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"error :{request.error}");
+                Debug.LogError($"Error :{request.error}");
                 return null;
             }
 
@@ -32,24 +35,11 @@ public class APIWebRequest
                 Data = JsonConvert.DeserializeObject<T>(request.downloadHandler.text),
             };
 
+#if UNITY_EDITOR
+            Debug.Log($"responseBody : {request.downloadHandler.text}");
+#endif
+
             return response;
         }
-    }
-
-    public static T ParseResponseBodyToModel<T>(string responseBody, string key)
-    {
-        var temporaryResponse = JsonConvert.DeserializeObject<Dictionary<string, object>>(responseBody);
-        var dataArray = JArray.Parse(temporaryResponse[key].ToString());
-
-        T data = default;
-        foreach (var dataT in dataArray)
-        {
-            data = dataT.ToObject<T>();
-        }
-
-        APIDataDic.SetResponseData(key, data);
-        T getData = APIDataDic.GetValueByKey<T>(key);
-
-        return data;
     }
 }
