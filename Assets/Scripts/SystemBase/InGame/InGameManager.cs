@@ -10,17 +10,18 @@ public class InGameManager : MonoSingleton<InGameManager>
 
     private void Awake()
     {
-        RegisterParams();
+        //
+        RegisterParams(EnumTypes.InGameParamType.Player,(int)EnumTypes.PlayerSkiilsType.MAX);
     }
 
-    private void RegisterParams()
+    public void RegisterParams(EnumTypes.InGameParamType paramType, int maxTypeNum)
     {
-        _parameters.Add(EnumTypes.InGameParamType.Player, new InGamePlayerParams());
+        if (_parameters.ContainsKey(paramType)) return;
+        _parameters.Add(paramType, new InGamePlayerParams(maxTypeNum));
     }
     public void InvokeCallBacks(EnumTypes.InGameParamType type, int callBackIndex)
     {
         InGameParamBase param = null;
-
         switch (type)
         {
             case EnumTypes.InGameParamType.Player:
@@ -30,6 +31,14 @@ public class InGameManager : MonoSingleton<InGameManager>
                 }
                 InGamePlayerParams players = param as InGamePlayerParams;
                 players.InvokeCallBack(callBackIndex);
+                break;
+            case EnumTypes.InGameParamType.Stage:
+                if (_parameters.TryGetValue(type, out param) == false)
+                {
+                    return;
+                }
+                InGamePlayerParams stages = param as InGamePlayerParams;
+                stages.InvokeCallBack(callBackIndex);
                 break;
         }
     }
@@ -41,6 +50,12 @@ public class InGameManager : MonoSingleton<InGameManager>
     public void AddActionType<TEnum>(EnumTypes.InGameParamType param, TEnum actionType, UnityAction action)
     {
         int idx = GetEnumNumber(actionType);
+        if (idx < 0)
+        {
+            Debug.LogError("This Enum Type is not exist");
+            return;
+        }
+        Debug.Log("actionType : " + actionType.ToString()+" " + _parameters[param].GetActionCount());
         _parameters[param].AddCallBack(idx, action);
     }
     private void Start()
