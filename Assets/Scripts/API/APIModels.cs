@@ -4,12 +4,6 @@ using UnityEngine;
 
 namespace APIModels
 {
-    public class AccountRequest
-    {
-        public string ID { get; set; }
-        public string Password { get; set; }
-    }
-
     public class GameData
     {
         public string ID { get; set; }

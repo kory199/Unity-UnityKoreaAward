@@ -6,13 +6,16 @@ using UnityEngine.UI;
 
 public class LoginTest : MonoBehaviour
 {
-    [SerializeField] TMP_InputField inputField_ID;
-    [SerializeField] TMP_InputField inputField_PW;
-    [SerializeField] Button createIDButton;
-    [SerializeField] Button loginButton;
+    [Header("Account")]
+    [SerializeField] TMP_InputField inputField_ID = null;
+    [SerializeField] TMP_InputField inputField_PW = null;
+    [SerializeField] Button createIDButton = null;
+    [SerializeField] Button loginButton = null;
 
     string input_ID;
     string input_PW;
+
+    private int currentIndex = 0;
 
     private void Start()
     {
@@ -30,12 +33,12 @@ public class LoginTest : MonoBehaviour
         Debug.Log(input_PW);
     }
 
-    // ¼­¹ö °ü·Ã »ý¼º, ·Î±×ÀÎ ·ÎÁ÷ ¼ö¿äÀÏ Ãß°¡ ¿¹Á¤
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void CreateID()
     {
         input_ID = inputField_ID.text;
         input_PW = inputField_PW.text;
-        Debug.Log($"ID »ý¼º ¿Ï·á : {input_ID}");
+        Debug.Log($"ID ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½ : {input_ID}");
     }
 
     public void Login()
@@ -43,8 +46,6 @@ public class LoginTest : MonoBehaviour
         input_ID = inputField_ID.text;
         input_PW = inputField_PW.text;
 
-        Debug.Log($"Login ¿Ï·á : {input_ID}");
+        Debug.Log($"Login ï¿½Ï·ï¿½ : {input_ID}");
     }
-
-
 }
