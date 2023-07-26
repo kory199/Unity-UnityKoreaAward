@@ -12,7 +12,7 @@ namespace APIServer.Controllers;
 public class LoginController : BaseApiController
 {
     public LoginController(ILogger<BaseApiController> logger, IAccountDb accountDb, IMemoryDb memoryDb)
-        : base (logger, memoryDb, accountDb)
+        : base(logger, memoryDb, accountDb)
     {
     }
 
@@ -20,20 +20,24 @@ public class LoginController : BaseApiController
     public async Task<LoginRes> Post(AccountReq request)
     {
         var (resultCode, account_id) = await _accountDb.VerifyAccountAsync(request.ID, request.Password);
-        var authToken = Security.CreateAuthToken();
 
-        resultCode = await _memoryDb.RegistUserAsync(request.ID, authToken, account_id);
-
-        if (resultCode != ResultCode.None)
+        if (resultCode != ResultCode.None || account_id == 0)
         {
             return CreateResponse<LoginRes>(resultCode);
         }
+        else
+        {
+            var authToken = Security.CreateAuthToken();
 
-        _logger.ZLogInformationWithPayload(LogManager.EventIdDic[EventType.Login],
-            new { ID = request.ID, AuthToken = authToken }, "Login Success");
+            resultCode = await _memoryDb.RegistUserAsync(request.ID, authToken, account_id);
 
-        var response = CreateResponse<LoginRes>(ResultCode.LoginSuccess);
-        response.AuthToken = authToken;
-        return response;
+            _logger.ZLogInformationWithPayload(LogManager.EventIdDic[EventType.Login],
+                    new { ID = request.ID, AuthToken = authToken }, "Login Success");
+
+            var response = CreateResponse<LoginRes>(ResultCode.LoginSuccess);
+            response.AuthToken = authToken;
+
+            return response;
+        }
     }
 }

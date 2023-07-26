@@ -1,6 +1,5 @@
 ﻿// 계정 생성
 POST https://localhost:44376/CreateAccount
-ID 최소입력 : 1, 최대 입력 : 20
 {
   "ID":"ParkHyeWon",
   "Password": "1234"
@@ -8,17 +7,29 @@ ID 최소입력 : 1, 최대 입력 : 20
 
 // 로그인
 POST https://localhost:44376/Login
-* 로그인 api 호출 할때마다 Token 변경됨
 {
   "ID":"ParkHyeWon",
   "Password": "1234"
 }
 
 // 게임 데이터 받아오기
-** 로그인 후 GameData API 호출 가능
-** 로그인 후 받은 authToken을 기입
 POST https://localhost:44376/GameData
 {
   "ID":"ParkHyeWon",
   "AuthToken": ""
+}
+
+// 게임 랭킹
+POST https://localhost:44376/Ranking
+{
+  "ID":"ParkHyeWon",
+  "AuthToken": ""
+}
+
+// 게임 데이터 점수 업데이트
+POST https://localhost:44376/SocreUpdate
+{
+  "ID":"ParkHyeWon",
+  "AuthToken": "",
+  "Score" : 5
 }

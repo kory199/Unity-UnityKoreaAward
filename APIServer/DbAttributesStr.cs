@@ -12,5 +12,4 @@ public class GameDbTable
     public const String player_uid = "player_uid";
     public const String id = "id";
     public const String score = "score";
-    public const String created_at = "created_at";
 }

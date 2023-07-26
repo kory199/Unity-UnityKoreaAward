@@ -15,6 +15,7 @@ public enum ResultCode
     CreateGameDataSuccess = 52,
     LoadGameDataSuccess = 53,
     LoadRankingDataSuccess = 55,
+    UpdateScoreSuccess = 56,
 
     // === Common Error 100 ~ ===             
     UnhandleException = 101,
@@ -51,4 +52,8 @@ public enum ResultCode
     LoadRankingDataFailException = 401,
     LoadRankingDataforUserFail = 402,
 
+    // === UpdatScore 500 ===
+    UpdateScoreDataFail = 501,
+    UpdateScoreDataNullException = 502,
+    UpdateScoreDataFailException = 503,
 }

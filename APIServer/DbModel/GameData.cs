@@ -1,4 +1,7 @@
-﻿namespace APIServer.DbModel;
+﻿using System.Security.Cryptography;
+using static System.Formats.Asn1.AsnWriter;
+
+namespace APIServer.DbModel;
 
 public class GameData
 {
@@ -9,15 +12,4 @@ public class GameData
     public Int32 score { get; set; }
     public Int32 level { get; set; }
     public Int32 status { get; set; }
-
-    public GameData(Int64 uid, String _id)
-    {
-        player_uid = uid;
-        id = _id;
-        exp = 1;
-        hp = 10;
-        score = 0;
-        level = 0;
-        status = 0;
-    }
 }

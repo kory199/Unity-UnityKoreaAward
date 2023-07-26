@@ -1,6 +1,7 @@
 ﻿using APIServer.DbModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using SqlKata;
 using SqlKata.Execution;
 using System.Data;
 using ZLogger;
@@ -44,7 +45,9 @@ public class AccountDb : BaseDb<Account>, IAccountDb
     {
         try
         {
-            var accountInfo = await ExecuteGetByAsync(AccountDbTable.id, id);
+            var accountInfo = await _queryFactory.Query(_tableName)
+                .Where(AccountDbTable.id, id)
+                .FirstOrDefaultAsync<Account>();
 
             if (accountInfo == null || accountInfo.account_id == 0)
             {

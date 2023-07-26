@@ -25,7 +25,6 @@ public class GameDataController : BaseApiController
     
         if(gameData == null)
         {
-            gameData = new GameData(userInfo.AccountId, userInfo.Id);
             (resultCode, gameData) = await _gameDb.CreateDefaultGameData(userInfo.AccountId, userInfo.Id);
 
             if(resultCode != ResultCode.None)

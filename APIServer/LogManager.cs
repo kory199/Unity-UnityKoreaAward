@@ -11,6 +11,7 @@ public class LogManager
     {
         { EventType.CreateAccount, new EventId((Int32)EventType.CreateAccount, "CreateAccount") },
         { EventType.Login, new EventId((Int32)EventType.Login, "Login") },
+        { EventType.UpdateScore, new EventId((Int32)EventType.UpdateScore, "UpdateScore")},
         { EventType.LogOut, new EventId((Int32)EventType.LogOut, "LogOut")},
     };
 
