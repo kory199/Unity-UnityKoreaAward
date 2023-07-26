@@ -2,27 +2,8 @@ using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
-[SerializeField]
-public class User
-{
-    public string ID;
-    public string Password;
-}
-
-public class RankInfo
-{
-    public string Score;
-    public string Ranking;
-    public string ID;
-}
-
-public class GameDataInfo
-{
-    public string ID;
-    public string HP;
-    public string EXP;
-}
+using APIModels;
+using System.Collections.Generic;
 
 public class AccountManager : MonoBehaviour
 {
@@ -30,28 +11,50 @@ public class AccountManager : MonoBehaviour
     [SerializeField] TMP_InputField[] inputFields = null;
     [SerializeField] Button createIdBut = null;
     [SerializeField] Button loginBut = null;
-    [SerializeField] Button gameDataBut = null;
-    [SerializeField] Button rankBut = null;
     [SerializeField] TextMeshProUGUI infotext = null;
+
+    [Header("[Game Data]")]
+    [SerializeField] Button gameDataBut = null;
+    [SerializeField] Button closeGameDataBut = null;
     [SerializeField] TextMeshProUGUI playerID = null;
     [SerializeField] TextMeshProUGUI playerEXP = null;
     [SerializeField] TextMeshProUGUI playerHP = null;
-    [SerializeField] TextMeshProUGUI score = null;
-    [SerializeField] TextMeshProUGUI rank = null;
-    [SerializeField] GameObject serverData = null;
+
+    [Header("[Ranking]")]
+    [SerializeField] Button rankBut = null;
+    [SerializeField] Button closeRankBut = null;
+    [SerializeField] TextMeshProUGUI[] RankInfo = null;
+
+    [Header("[PanelObj]")]
+    [SerializeField] GameObject accountPanel = null;
+    [SerializeField] GameObject userDataPanel = null;
+    [SerializeField] GameObject rankingPanel = null;
+
+    [SerializeField] APIDataSO apidata = null;
 
     private int _currentIndex = 0;
+    private GameObject curPanel = null;
 
     private void Awake()
     {
-        // UI init
+        if (apidata == null)
+        {
+            apidata = Resources.Load<APIDataSO>("APIData");
+        }
+
         InitUI();
+
+        curPanel = accountPanel;
+        ShowUI(curPanel);
 
         // button event 
         createIdBut.onClick.AddListener(delegate { CreareID(); });
         loginBut.onClick.AddListener(delegate { Login(); });
-        gameDataBut.onClick.AddListener(() => GameData());
-        rankBut.onClick.AddListener(() => Rank());
+
+        gameDataBut.onClick.AddListener(delegate { GameData(); ShowUI(userDataPanel); });
+        rankBut.onClick.AddListener(delegate { Rank(); ShowUI(rankingPanel); });
+        closeGameDataBut.onClick.AddListener(delegate { ShowUI(accountPanel);});
+        closeRankBut.onClick.AddListener(delegate { ShowUI(accountPanel);} );
 
         // Set Password Type
         inputFields[1].contentType = TMP_InputField.ContentType.Password;
@@ -102,11 +105,40 @@ public class AccountManager : MonoBehaviour
     private async void GameData()
     {
         await APIManager.Instacne.GetGameDataAPI();
+
+        List<PlayerData> playerDataList = apidata.GetValueByKey<List<PlayerData>>("PlayerData");
+
+        if (playerDataList != null && playerDataList.Count > 0)
+        {
+            PlayerData playerData = playerDataList[0];
+            playerID.text = $"{playerData.id}";
+            playerEXP.text = $"{playerData.exp}";
+            playerHP.text = $"{playerData.hp}";
+        }
+        else
+        {
+            Debug.LogError("No player data found in APIDataSO.");
+        }
     }
 
     private async void Rank()
     {
         await APIManager.Instacne.GetRanking();
+
+        List<RankingData> rankingDataList = apidata.GetValueByKey<List<RankingData>>("RankingData");
+
+        if (rankingDataList != null && rankingDataList.Count > 0)
+        {
+            for (int i = 0; i < rankingDataList.Count && i < RankInfo.Length; i++)
+            {
+                RankingData rankingData = rankingDataList[i];
+                RankInfo[i].text = $"ID: {rankingData.id}, Score: {rankingData.score}, Rank: {rankingData.ranking}";
+            }
+        }
+        else
+        {
+            Debug.LogError("No ranking data found in APIDataSO.");
+        }
     }
 
 
@@ -170,9 +202,21 @@ public class AccountManager : MonoBehaviour
         return true;
     }
 
+    private void ShowUI(GameObject targetUIObj)
+    {
+        if(curPanel.activeSelf)
+        {
+            curPanel.SetActive(false);
+        }
+
+        curPanel = targetUIObj;
+        curPanel.SetActive(true);
+    }
+
     private void InitUI()
     {
         infotext.gameObject.SetActive(false);
-        serverData.SetActive(false);
+        userDataPanel.gameObject.SetActive(false);
+        rankingPanel.gameObject.SetActive(false);
     }
 }

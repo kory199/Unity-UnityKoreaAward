@@ -4,6 +4,13 @@ using UnityEngine;
 
 namespace APIModels
 {
+    [SerializeField]
+    public class User
+    {
+        public string ID;
+        public string Password;
+    }
+
     public class GameData
     {
         public string ID { get; set; }
@@ -12,7 +19,7 @@ namespace APIModels
 
     public class PlayerData
     {
-        public long player_uid { get; set; }
+        public string id { get; set; }
         public int exp { get; set; }
         public int hp { get; set; }
         public int score { get; set; }
@@ -22,8 +29,8 @@ namespace APIModels
 
     public class RankingData
     {
-        public string rankId { get; set; }
-        public int rankScore { get; set; }
+        public string id { get; set; }
+        public int score { get; set; }
         public int ranking { get; set; }
     }
 }

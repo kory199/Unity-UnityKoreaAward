@@ -1,11 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Text;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -13,6 +8,11 @@ public class APIWebRequest
 {
     public static async UniTask<APIResponse<T>> PostAsync<T>(string url, object requestBody)
     {
+        if(APIUrls.IsValidUrl(url) == false)
+        {
+            Debug.LogError($"Invalid URL: {url}. Please check APIUrls.");
+        }
+
         byte[] bodyRaw = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(requestBody));
 
         using (var request = new UnityWebRequest(url, "POST"))

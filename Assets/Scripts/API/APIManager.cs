@@ -12,22 +12,8 @@ public class APIManager : MonoSingleton<APIManager>
 {
     public APIDataSO apidata = null;
 
-    // Game Data
     private string _id;
     private string _authToken;
-
-    // Player Data
-    private long _player_uid;
-    private int _exp;
-    private int _hp;
-    private int _score;
-    private int _level;
-    private int _status;
-
-    // Ranking Data
-    private List<string> _rankIdList = new List<string>();
-    private List<int> _rankScoreList = new List<int>();
-    private List<int> _rankingList = new List<int>();
 
     private void Awake()
     {
@@ -61,30 +47,14 @@ public class APIManager : MonoSingleton<APIManager>
             _authToken = authTokenObj as string;
         }
 
-        if (_authToken != null)
+        if (_authToken != null && _authToken != string.Empty)
         {
             apidata.SetResponseData("GameData", NewGameData());
         }
-
         else
         {
             Debug.LogError("Failed to retrieve authToken from API response.");
         }
-    }
-
-    public async UniTask GetGameDataAPI()
-    {
-        await CallAPI<Dictionary<string, object>, GameData>(APIUrls.GameDataApi, NewGameData(), null);
-    }
-
-    public async UniTask GetRanking()
-    {
-        await CallAPI<Dictionary<string, object>, GameData>(APIUrls.RankingApi, NewGameData(), null);
-    }
-
-    private void HandleRankingDataResponse(APIResponse<Dictionary<string, object>> apiResponse)
-    {
-        // APIWebRequest.ParseResponseBodyToModel<RankingData[]>(apiResponse.responseBody, "rankingData");
     }
 
     private GameData NewGameData()
@@ -97,6 +67,74 @@ public class APIManager : MonoSingleton<APIManager>
         return gameData;
     }
 
+    public GameData GetApiSODicUerData()
+    {
+        GameData curUserInfo = apidata.GetValueByKey<GameData>("GameData");
+
+        if (curUserInfo == null)
+        {
+            Debug.LogError("No GameData found in APIDataSO.");
+        }
+
+        return curUserInfo;
+    }
+
+    public async UniTask GetGameDataAPI()
+    {
+        try
+        {
+            await CallAPI<Dictionary<string, object>, GameData>(APIUrls.GameDataApi, GetApiSODicUerData(), HandleGameDataResponse);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Error calling GameData API: {e.Message}");
+        }
+    }
+
+    private void HandleGameDataResponse(APIResponse<Dictionary<string, object>> apiResponse)
+    {
+        var responseBody = JsonConvert.DeserializeObject<Dictionary<string, object>>(apiResponse.responseBody);
+
+        if (responseBody.TryGetValue("playerData", out var playerDataObj) && playerDataObj is JArray)
+        {
+            List<PlayerData> playerDataList = new List<PlayerData>();
+
+            foreach (var playerDataJToken in playerDataObj as JArray)
+            {
+                PlayerData playerData = playerDataJToken.ToObject<PlayerData>();
+                playerDataList.Add(playerData);
+            }
+
+            apidata.SetResponseData("PlayerData", playerDataList);
+        }
+        else
+        {
+            Debug.LogError("Failed PlayerData from API response.");
+        }
+    }
+
+    public async UniTask GetRanking()
+    {
+        await CallAPI<Dictionary<string, object>, GameData>(APIUrls.RankingApi, GetApiSODicUerData(), HandleRankingDataResponse);
+    }
+
+    private void HandleRankingDataResponse(APIResponse<Dictionary<string, object>> apiResponse)
+    {
+        var responseBody = JsonConvert.DeserializeObject<Dictionary<string, object>>(apiResponse.responseBody);
+
+        if (responseBody.TryGetValue("rankingData", out object rankingDataObj))
+        {
+            List<RankingData> rankingDataList =
+                JsonConvert.DeserializeObject<List<RankingData>>(rankingDataObj.ToString());
+
+            apidata.SetResponseData("RankingData", rankingDataList);
+        }
+        else
+        {
+            Debug.LogError("Failed RankingData from API response.");
+        }
+    }
+
     private async UniTask CallAPI<T, TRequest>(string apiUrl, TRequest requestBody, Action<APIResponse<T>> handler)
     {
         try
@@ -105,23 +143,7 @@ public class APIManager : MonoSingleton<APIManager>
 
             if (apiResponse == null)
             {
-                Debug.LogError("API ÀÀ´äÀÌ nullÀÔ´Ï´Ù");
-            }
-            else
-            {
-                string responseBody = apiResponse.responseBody;
-
-                switch (apiUrl)
-                {
-                    case var url when url == APIUrls.GameDataApi:
-                        
-                        break;
-                    case var url when url == APIUrls.RankingApi:
-                        await AddRankingDataAsync(apiResponse.responseBody);
-                        break;
-                    default:
-                        break;
-                }
+                Debug.LogError("API Response Data is null");
             }
 
             handler?.Invoke(apiResponse);
@@ -132,34 +154,20 @@ public class APIManager : MonoSingleton<APIManager>
             Debug.LogError($"API request failed : {e.Message}");
         }
     }
-    /*
-        private PlayerData NewPlayerData()
-        {
-            PlayerData playerData = new PlayerData
-            {
-                player_uid = _player_uid,
-                exp = _exp,
-                hp = _hp,
-                score = _score,
-                level = _level,
-                status = _status
-            };
-            return playerData;
-        }
-    */
+
     private async UniTask AddRankingDataAsync(string responseBody)
     {
-        // JSON ÀÀ´ä ÆÄ½Ì
+        // JSON ï¿½ï¿½ï¿½ï¿½ ï¿½Ä½ï¿½
         JObject jsonResponse = await UniTask.Run(() => JObject.Parse(responseBody));
         JArray rankingDataArray = (JArray)jsonResponse["rankingData"];
 
         if (rankingDataArray == null)
         {
-            Debug.LogError("·©Å· µ¥ÀÌÅÍ ¹è¿­ÀÌ ºñ¾î ÀÖ½À´Ï´Ù.");
+            Debug.LogError("ï¿½ï¿½Å· ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö½ï¿½ï¿½Ï´ï¿½.");
             return;
         }
 
-        // ·©Å· µ¥ÀÌÅÍ¸¦ °¢ ¸®½ºÆ®¿¡ Ãß°¡
+        // ï¿½ï¿½Å· ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ß°ï¿½
         foreach (JObject rankingData in rankingDataArray)
         {
             string id = (string)rankingData["id"];
@@ -168,14 +176,14 @@ public class APIManager : MonoSingleton<APIManager>
 
             if (id != null && score.HasValue && ranking.HasValue)
             {
-                _rankIdList.Add(id);
-                _rankScoreList.Add(score.Value);
-                _rankingList.Add(ranking.Value);
-                Debug.Log(_rankIdList);
+                //_rankIdList.Add(id);
+                //_rankScoreList.Add(score.Value);
+                //_rankingList.Add(ranking.Value);
+                //Debug.Log(_rankIdList);
             }
             else
             {
-                Debug.LogWarning("·©Å· µ¥ÀÌÅÍ¿¡ nullÀÌ ÀÖ°Å³ª °ª ´©¶ô");
+                Debug.LogWarning("ï¿½ï¿½Å· ï¿½ï¿½ï¿½ï¿½ï¿½Í¿ï¿½ nullï¿½ï¿½ ï¿½Ö°Å³ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
             }
         }
     }
