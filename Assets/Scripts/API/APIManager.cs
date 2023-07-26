@@ -58,7 +58,7 @@ public class APIManager : MonoSingleton<APIManager>
 
     public async UniTask GetGameDataAPI()
     {
-        await CallAPI<Dictionary<string, object>, GameData>(APIUrls.GameDataApi, NewGameData(), HandleGameDataResponse);
+         await CallAPI<Dictionary<string, object>, GameData>(APIUrls.GameDataApi, NewGameData(), HandleGameDataResponse);
     }
 
     private void HandleGameDataResponse(APIResponse<Dictionary<string, object>> apiResponse)
