@@ -10,23 +10,48 @@ public class User
     public string Password;
 }
 
+public class RankInfo
+{
+    public string Score;
+    public string Ranking;
+    public string ID;
+}
+
+public class GameDataInfo
+{
+    public string ID;
+    public string HP;
+    public string EXP;
+}
+
 public class AccountManager : MonoBehaviour
 {
     [Header("[Account]")]
     [SerializeField] TMP_InputField[] inputFields = null;
     [SerializeField] Button createIdBut = null;
     [SerializeField] Button loginBut = null;
+    [SerializeField] Button gameDataBut = null;
+    [SerializeField] Button rankBut = null;
     [SerializeField] TextMeshProUGUI infotext = null;
+    [SerializeField] TextMeshProUGUI playerID = null;
+    [SerializeField] TextMeshProUGUI playerEXP = null;
+    [SerializeField] TextMeshProUGUI playerHP = null;
+    [SerializeField] TextMeshProUGUI score = null;
+    [SerializeField] TextMeshProUGUI rank = null;
+    [SerializeField] GameObject serverData = null;
 
     private int _currentIndex = 0;
 
     private void Awake()
     {
-        infotext.gameObject.SetActive(false);
+        // UI init
+        InitUI();
 
         // button event 
         createIdBut.onClick.AddListener(delegate { CreareID(); });
         loginBut.onClick.AddListener(delegate { Login(); });
+        gameDataBut.onClick.AddListener(() => GameData());
+        rankBut.onClick.AddListener(() => Rank());
 
         // Set Password Type
         inputFields[1].contentType = TMP_InputField.ContentType.Password;
@@ -36,9 +61,9 @@ public class AccountManager : MonoBehaviour
     {
         inputFields[_currentIndex].Select();
 
-        while(true)
+        while (true)
         {
-            if(Input.GetKeyDown(KeyCode.Tab))
+            if (Input.GetKeyDown(KeyCode.Tab))
             {
                 await MoveToNextInputField();
             }
@@ -58,7 +83,7 @@ public class AccountManager : MonoBehaviour
 
     private async void CreareID()
     {
-        if(TryProcessUserInput(out User user))
+        if (TryProcessUserInput(out User user))
         {
             await APIManager.Instacne.CreateAccpuntAPI(user);
             infotext.text = $"새 계정 생성 완료 : {user.ID}, {user.Password}";
@@ -67,12 +92,23 @@ public class AccountManager : MonoBehaviour
 
     private async void Login()
     {
-        if(TryProcessUserInput(out User user))
+        if (TryProcessUserInput(out User user))
         {
             await APIManager.Instacne.LoginAPI(user);
             infotext.text = $"로그인 완료 : {user.ID}, {user.Password}";
         }
     }
+
+    private async void GameData()
+    {
+        await APIManager.Instacne.GetGameDataAPI();
+    }
+
+    private async void Rank()
+    {
+        await APIManager.Instacne.GetRanking();
+    }
+
 
     private bool TryProcessUserInput(out User user)
     {
@@ -132,5 +168,11 @@ public class AccountManager : MonoBehaviour
             return false;
         }
         return true;
+    }
+
+    private void InitUI()
+    {
+        infotext.gameObject.SetActive(false);
+        serverData.SetActive(false);
     }
 }

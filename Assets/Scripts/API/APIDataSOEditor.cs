@@ -17,6 +17,7 @@ public class APIDataSOEditor : Editor
                 EditorGUILayout.LabelField("ID: ", gameData.ID);
                 EditorGUILayout.LabelField("AuthToken: ", gameData.AuthToken);
             }
+
             else if (pair.Value is PlayerData playerData)
             {
                 EditorGUILayout.LabelField("Player UID: ", playerData.player_uid.ToString());
@@ -26,6 +27,14 @@ public class APIDataSOEditor : Editor
                 EditorGUILayout.LabelField("Level: ", playerData.level.ToString());
                 EditorGUILayout.LabelField("Status: ", playerData.status.ToString());
             }
+
+            else if (pair.Value is RankingData rankingData)
+            {
+                EditorGUILayout.LabelField("ID ", rankingData.rankId);
+                EditorGUILayout.LabelField("Score ", rankingData.rankScore.ToString());
+                EditorGUILayout.LabelField("Rank ", rankingData.ranking.ToString());
+            }
+
             else
             {
                 EditorGUILayout.LabelField("Value : ", pair.Value.ToString());

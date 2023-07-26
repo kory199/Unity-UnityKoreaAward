@@ -7,45 +7,36 @@ using UnityEngine.UI;
 public class LoginTest : MonoBehaviour
 {
     [Header("Account")]
-    [SerializeField] TMP_InputField inputField_ID = null;
-    [SerializeField] TMP_InputField inputField_PW = null;
-    [SerializeField] Button createIDButton = null;
-    [SerializeField] Button loginButton = null;
-
-    string input_ID;
-    string input_PW;
-
-    private int currentIndex = 0;
+    [SerializeField] TextMeshPro input_ID = null;
+    [SerializeField] TextMeshPro input_EXP = null;
+    [SerializeField] TextMeshPro input_HP = null;
+    [SerializeField] Button PlayerStatusClosedButton = null;
+    [SerializeField] Button RankingButtonClosedButton = null;
+    [SerializeField] GameObject PlayerInfoPanel = null;
+    [SerializeField] GameObject RankingPanel = null;
 
     private void Start()
     {
-        inputField_ID.characterLimit = 12;
+        PlayerInfoPanel.SetActive(false);
+        RankingPanel.SetActive(false);
     }
 
-    public void OnEndEditID()
+    public void PlayerInfoCloseButton()
     {
-        input_ID = inputField_ID.text;
-        Debug.Log(input_ID);
-    }
-    public void OnEndEditPW()
-    {
-        input_PW = inputField_PW.text;
-        Debug.Log(input_PW);
+        PlayerInfoPanel.SetActive(false);
     }
 
-    // ���� ���� ����, �α��� ���� ������ �߰� ����
-    public void CreateID()
+    public void PlayerInfoButton()
     {
-        input_ID = inputField_ID.text;
-        input_PW = inputField_PW.text;
-        Debug.Log($"ID ���� �Ϸ� : {input_ID}");
+        PlayerInfoPanel.SetActive(true);
     }
 
-    public void Login()
+    public void RankingCloseButton()
     {
-        input_ID = inputField_ID.text;
-        input_PW = inputField_PW.text;
-
-        Debug.Log($"Login �Ϸ� : {input_ID}");
+        RankingPanel.SetActive(false);
+    }
+    public void RankingInfoButton()
+    {
+        RankingPanel.SetActive(true);
     }
 }
