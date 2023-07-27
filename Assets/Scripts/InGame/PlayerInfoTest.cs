@@ -5,11 +5,21 @@ using TMPro;
 
 public class PlayerInfoTest : MonoBehaviour
 {
-    PlayerBaseData playerBaseData;
+    public PlayerBaseData playerBaseData;
 
     [SerializeField] TextMeshProUGUI hp;
     [SerializeField] TextMeshProUGUI lv;
     [SerializeField] TextMeshProUGUI exp;
+
+    private void Start()
+    {
+        playerBaseData = Resources.Load<PlayerBaseData>("PlayerData");
+    }
+
+    private void Update()
+    {
+        PlayerInfo();
+    }
 
     public void PlayerInfo()
     {

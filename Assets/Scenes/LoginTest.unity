@@ -3169,7 +3169,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000010220667, y: 0.000012640991}
+  m_AnchoredPosition: {x: -0.000010220667, y: -0.000045776367}
   m_SizeDelta: {x: -6.080638, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1171604364
@@ -3753,6 +3753,7 @@ MonoBehaviour:
   rankingPanel: {fileID: 2034113961}
   gameStartButton: {fileID: 1717867860}
   apidata: {fileID: 11400000, guid: 4a89ae5313ea34302a571f99e1b467e9, type: 2}
+  playerBaseData: {fileID: 0}
 --- !u!1 &1433011694
 GameObject:
   m_ObjectHideFlags: 0
@@ -4430,8 +4431,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1752117556}
   m_HandleRect: {fileID: 1752117555}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 0.9999976
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4791,6 +4792,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   apidata: {fileID: 11400000, guid: 4a89ae5313ea34302a571f99e1b467e9, type: 2}
+  playerBaseData: {fileID: 11400000, guid: 2f84640ebc608c14796569bdfb369a83, type: 2}
+  isLogin: 0
 --- !u!1 &1672370830
 GameObject:
   m_ObjectHideFlags: 0
