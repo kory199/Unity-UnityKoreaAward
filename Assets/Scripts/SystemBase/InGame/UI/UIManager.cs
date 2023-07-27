@@ -17,8 +17,8 @@ public class UIManager : UIBase
     #endregion
 
     #region GET UI OBJECTS
-    // ¿©±â GetsetÀ¸·Î Æ¯Á¤ UI ¸Å´ÏÀú±Þ ½ºÅ©¸³Æ®´Â ÇÁ·ÎÆÛÆ¼·Î °¡Á®°¥ ¼ö ÀÖ°Ô ¸¸µé¸é µË´Ï´ç
-    public StringLocalizer stringLocallizer { get; set; } // ÀÌ°Ç ¸Å´ÏÀú±Þ UI¿¡ ´ëÇÑ ¿¹½Ã ÃßÈÄ »èÁ¦ ¿¹Á¤
+    // ï¿½ï¿½ï¿½ï¿½ Getsetï¿½ï¿½ï¿½ï¿½ Æ¯ï¿½ï¿½ UI ï¿½Å´ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë´Ï´ï¿½
+    public StringLocalizer stringLocallizer { get; set; } // ï¿½Ì°ï¿½ ï¿½Å´ï¿½ï¿½ï¿½ï¿½ï¿½ UIï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     #endregion
 
     private static UIManager _instance = null;
@@ -58,7 +58,7 @@ public class UIManager : UIBase
         _processManager = this.gameObject.AddComponent<ProcessManager>();
         _processManager.processingUIStack.Push(this);
 
-        // Typeº° Canvas »ý¼º
+        // Typeï¿½ï¿½ Canvas ï¿½ï¿½ï¿½ï¿½
         foreach (var type in Enum.GetValues(typeof(LayoutType)))
         {
             CreateCanvas((LayoutType)type);
@@ -73,13 +73,13 @@ public class UIManager : UIBase
         if (-1 == languagePrefData)
         {
             language = LanguageType.Eng;
-            Debug.LogError($"languagePrefData is -1 - language set {nameof(language)}");
+            //Debug.LogError($"languagePrefData is -1 - language set {nameof(language)}");
             return;
         }
         language = (LanguageType)languagePrefData;
     }
 
-    // ¿ÀºêÁ§Æ®¿¡ ½ºÅ©¸³Æ®°¡ ÀÖ¾î¾ß ÇÕ´Ï´Ù
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ ï¿½Õ´Ï´ï¿½
     public T CreateObject<T>(string argPath, LayoutType type)
     {
         if (false == _canvases.ContainsKey(type))
@@ -95,7 +95,7 @@ public class UIManager : UIBase
         return newUIInstance.GetComponent<T>();
     }
 
-    // GameObject¸¦ »ý¼º ¹ÝÈ¯ ÇÕ´Ï´Ù.
+    // GameObjectï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ ï¿½Õ´Ï´ï¿½.
     public GameObject CreateUIObject(string argPath, LayoutType type)
     {
         if (false == _canvases.ContainsKey(type))
@@ -110,7 +110,7 @@ public class UIManager : UIBase
         return newUIInstance;
     }
 
-    // enum Å¸ÀÔ¿¡ Á¤ÀÇµÈ ¼ö ¸¸Å­ Äµ¹ö½º¸¦ »ý¼ºÇÕ´Ï´Ù.
+    // enum Å¸ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½Çµï¿½ ï¿½ï¿½ ï¿½ï¿½Å­ Äµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
     private void CreateCanvas(LayoutType type)
     {
         if (true == _canvases.ContainsKey(type))
