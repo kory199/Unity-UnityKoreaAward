@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using Unity.VisualScripting;
 
-public class SceneAndUIManager : UIBase
+public class SceneAndUIManager : MonoSingleton<SceneAndUIManager>
 {
     private EventSystem _eventSystem;
 
@@ -16,7 +16,7 @@ public class SceneAndUIManager : UIBase
         sceneAndUIManager.name = "SceneAndUIManager";
     }
 
-    protected override void Awake()
+    protected void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
     }
@@ -34,7 +34,7 @@ public class SceneAndUIManager : UIBase
         await UniTask.WhenAll(creatUIUnitask, loadSceneUnitask);
     }
 
-    private async UniTask CreatUI(EnumTypes.ScenesType scene)
+    public async UniTask CreatUI(EnumTypes.ScenesType scene)
     {
         switch (scene)
         {
@@ -57,7 +57,7 @@ public class SceneAndUIManager : UIBase
         await UniTask.CompletedTask;
     }
 
-    private async UniTask LoadScene(EnumTypes.ScenesType scene)
+    public async UniTask LoadScene(EnumTypes.ScenesType scene)
     {
         AsyncOperation sceneLoad = SceneManager.LoadSceneAsync(scene.ToString());
 
@@ -83,9 +83,10 @@ public class SceneAndUIManager : UIBase
     {
 
     }
-
+/*
     public override IProcess.NextProcess ProcessInput()
     {
         return IProcess.NextProcess.Continue;
     }
+*/
 }
