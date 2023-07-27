@@ -10,20 +10,20 @@ using UnityEngine;
 
 public class APIManager : MonoSingleton<APIManager>
 {
+    [Header("Scriptable Objects")]
     public APIDataSO apidata = null;
+    public PlayerBaseData playerBaseData = null;
 
     private string _id;
     private string _authToken;
 
     private void Awake()
     {
-        if (apidata == null)
-        {
-            apidata = Resources.Load<APIDataSO>("APIData");
-        }
+        if (apidata == null) apidata = Resources.Load<APIDataSO>("APIData");
+        if (playerBaseData == null) playerBaseData = Resources.Load<PlayerBaseData>("PlayerData");
     }
 
-    public async UniTask CreateAccpuntAPI(User user)
+    public async UniTask CreateAccountAPI(User user)
     {
         await CallAPI<Dictionary<string, object>, User>(APIUrls.CreateAccountApi, user, null);
     }

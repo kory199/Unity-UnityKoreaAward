@@ -30,17 +30,21 @@ public class AccountManager : MonoBehaviour
     [SerializeField] GameObject userDataPanel = null;
     [SerializeField] GameObject rankingPanel = null;
 
+    [Header("Game Start")]
+    [SerializeField] Button gameStartButton = null;
+
+    [Header("Scriptable Objects")]
     [SerializeField] APIDataSO apidata = null;
+    [SerializeField] PlayerBaseData playerBaseData = null;
 
     private int _currentIndex = 0;
     private GameObject curPanel = null;
 
     private void Awake()
     {
-        if (apidata == null)
-        {
-            apidata = Resources.Load<APIDataSO>("APIData");
-        }
+        // Laod Scriptabla Objects
+        if (apidata == null) apidata = Resources.Load<APIDataSO>("APIData");
+        if (playerBaseData == null) playerBaseData = Resources.Load<PlayerBaseData>("PlayerData");
 
         InitUI();
 
@@ -55,6 +59,9 @@ public class AccountManager : MonoBehaviour
         rankBut.onClick.AddListener(delegate { Rank(); ShowUI(rankingPanel); });
         closeGameDataBut.onClick.AddListener(delegate { ShowUI(accountPanel); });
         closeRankBut.onClick.AddListener(delegate { ShowUI(accountPanel); });
+
+        // GameStart Test
+        gameStartButton.onClick.AddListener(async() => await SceneAndUIManager.Instacne.LoadScene(EnumTypes.ScenesType.SceneTitle));
 
         // Set Password Type
         inputFields[1].contentType = TMP_InputField.ContentType.Password;
@@ -88,7 +95,7 @@ public class AccountManager : MonoBehaviour
     {
         if (TryProcessUserInput(out User user))
         {
-            await APIManager.Instacne.CreateAccpuntAPI(user);
+            await APIManager.Instacne.CreateAccountAPI(user);
             infotext.text = $"새 계정 생성 완료 : {user.ID}, {user.Password}";
         }
     }
@@ -99,6 +106,7 @@ public class AccountManager : MonoBehaviour
         {
             await APIManager.Instacne.LoginAPI(user);
             infotext.text = $"로그인 완료 : {user.ID}, {user.Password}";
+            gameStartButton.gameObject.SetActive(true);
         }
     }
 
@@ -108,9 +116,19 @@ public class AccountManager : MonoBehaviour
 
         List<PlayerData> playerDataList = apidata.GetValueByKey<List<PlayerData>>("PlayerData");
 
+        // Separate player data
+        if (playerBaseData != null && playerDataList.Count > 0)
+        {
+            playerBaseData.id = playerDataList[0].id;
+            playerBaseData.hp = playerDataList[0].hp;
+            playerBaseData.level = playerDataList[0].level;
+        }
+
         if (playerDataList != null && playerDataList.Count > 0)
         {
             PlayerData playerData = playerDataList[0];
+
+            // Temporary data for verification
             playerID.text = $"{playerData.id}";
             playerEXP.text = $"{playerData.exp}";
             playerHP.text = $"{playerData.hp}";
@@ -218,5 +236,6 @@ public class AccountManager : MonoBehaviour
         infotext.gameObject.SetActive(false);
         userDataPanel.gameObject.SetActive(false);
         rankingPanel.gameObject.SetActive(false);
+        gameStartButton.gameObject.SetActive(false);
     }
 }
