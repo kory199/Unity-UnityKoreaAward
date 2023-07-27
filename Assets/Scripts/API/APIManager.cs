@@ -17,6 +17,8 @@ public class APIManager : MonoSingleton<APIManager>
     private string _id;
     private string _authToken;
 
+    public bool isLogin = false;
+
     private void Awake()
     {
         if (apidata == null) apidata = Resources.Load<APIDataSO>("APIData");
@@ -36,6 +38,7 @@ public class APIManager : MonoSingleton<APIManager>
         Debug.Log($"_id : {_id}");
 #endif
         await CallAPI<Dictionary<string, object>, User>(APIUrls.LoginApi, user, HandleLoginResponse);
+        isLogin = true;
     }
 
     private void HandleLoginResponse(APIResponse<Dictionary<string, object>> apiResponse)

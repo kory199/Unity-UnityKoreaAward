@@ -5,9 +5,12 @@ using UnityEngine;
 
 public partial class Player
 {
+    PlayerBaseData playerBaseData;
+
     public int playerHp;
     public int playerLv;
     public int playerMp;
+    public int playerExp;
     public bool IsDeath;
 
     private void InitComponent()
@@ -28,9 +31,12 @@ public partial class Player
 
     private void InitPlayer()
     {
-        playerHp = hp;
-        playerMp = mp;
-        playerLv = lv;
-        IsDeath = false;
+        if (APIManager.Instacne.isLogin)
+        {
+            playerHp = playerBaseData.hp;
+            playerLv = playerBaseData.level;
+            playerExp = playerBaseData.exp;
+            IsDeath = false;
+        }
     }
 }

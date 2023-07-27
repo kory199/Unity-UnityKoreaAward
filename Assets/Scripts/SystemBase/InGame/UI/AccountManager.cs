@@ -61,7 +61,7 @@ public class AccountManager : MonoBehaviour
         closeRankBut.onClick.AddListener(delegate { ShowUI(accountPanel); });
 
         // GameStart Test
-        gameStartButton.onClick.AddListener(async() => await SceneAndUIManager.Instacne.LoadScene(EnumTypes.ScenesType.SceneTitle));
+        gameStartButton.onClick.AddListener(async () => await SceneAndUIManager.Instacne.LoadScene(EnumTypes.ScenesType.SceneTitle));
 
         // Set Password Type
         inputFields[1].contentType = TMP_InputField.ContentType.Password;
@@ -106,7 +106,11 @@ public class AccountManager : MonoBehaviour
         {
             await APIManager.Instacne.LoginAPI(user);
             infotext.text = $"로그인 완료 : {user.ID}, {user.Password}";
-            gameStartButton.gameObject.SetActive(true);
+
+            if (APIManager.Instacne.isLogin)
+            {
+                gameStartButton.gameObject.SetActive(true);
+            }
         }
     }
 
