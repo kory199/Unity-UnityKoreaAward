@@ -154,37 +154,4 @@ public class APIManager : MonoSingleton<APIManager>
             Debug.LogError($"API request failed : {e.Message}");
         }
     }
-
-    private async UniTask AddRankingDataAsync(string responseBody)
-    {
-        // JSON ���� �Ľ�
-        JObject jsonResponse = await UniTask.Run(() => JObject.Parse(responseBody));
-        JArray rankingDataArray = (JArray)jsonResponse["rankingData"];
-
-        if (rankingDataArray == null)
-        {
-            Debug.LogError("��ŷ ������ �迭�� ��� �ֽ��ϴ�.");
-            return;
-        }
-
-        // ��ŷ �����͸� �� ����Ʈ�� �߰�
-        foreach (JObject rankingData in rankingDataArray)
-        {
-            string id = (string)rankingData["id"];
-            int? score = (int?)rankingData["score"];
-            int? ranking = (int?)rankingData["ranking"];
-
-            if (id != null && score.HasValue && ranking.HasValue)
-            {
-                //_rankIdList.Add(id);
-                //_rankScoreList.Add(score.Value);
-                //_rankingList.Add(ranking.Value);
-                //Debug.Log(_rankIdList);
-            }
-            else
-            {
-                Debug.LogWarning("��ŷ �����Ϳ� null�� �ְų� �� ����");
-            }
-        }
-    }
 }

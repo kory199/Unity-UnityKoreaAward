@@ -53,8 +53,8 @@ public class AccountManager : MonoBehaviour
 
         gameDataBut.onClick.AddListener(delegate { GameData(); ShowUI(userDataPanel); });
         rankBut.onClick.AddListener(delegate { Rank(); ShowUI(rankingPanel); });
-        closeGameDataBut.onClick.AddListener(delegate { ShowUI(accountPanel);});
-        closeRankBut.onClick.AddListener(delegate { ShowUI(accountPanel);} );
+        closeGameDataBut.onClick.AddListener(delegate { ShowUI(accountPanel); });
+        closeRankBut.onClick.AddListener(delegate { ShowUI(accountPanel); });
 
         // Set Password Type
         inputFields[1].contentType = TMP_InputField.ContentType.Password;
@@ -129,7 +129,7 @@ public class AccountManager : MonoBehaviour
 
         if (rankingDataList != null && rankingDataList.Count > 0)
         {
-            for (int i = 0; i < rankingDataList.Count && i < RankInfo.Length; i++)
+            for (int i = 0; i < rankingDataList.Count && i < RankInfo.Length - 1; i++)
             {
                 RankingData rankingData = rankingDataList[i];
                 RankInfo[i].text = $"ID: {rankingData.id}, Score: {rankingData.score}, Rank: {rankingData.ranking}";
@@ -204,7 +204,7 @@ public class AccountManager : MonoBehaviour
 
     private void ShowUI(GameObject targetUIObj)
     {
-        if(curPanel.activeSelf)
+        if (curPanel.activeSelf)
         {
             curPanel.SetActive(false);
         }
