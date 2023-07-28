@@ -73,6 +73,12 @@ public static partial class EnumTypes
         Max
     }
 
+    public enum MonsterType
+    {
+        MeleeMonster,
+        RangedMonster
+    }
+
     public enum MonsterStateType
     {
         None,   // 데이터 초기화 등의 작업

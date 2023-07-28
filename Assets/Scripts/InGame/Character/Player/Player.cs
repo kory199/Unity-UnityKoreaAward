@@ -4,12 +4,6 @@ using UnityEngine;
 
 public partial class Player : CharacterBase
 {
-    [Header("User Setting")]
-    [SerializeField] float playerSpeed;
-
-    Rigidbody playerRb;
-    
-
     protected override void Start()
     {
         // 기타 초기화 항목 추가
@@ -18,8 +12,8 @@ public partial class Player : CharacterBase
 
     private void Awake()
     {
-        InitComponent();
         InitSetting();
+        InitComponent();
         InitPlayer();
     }
 

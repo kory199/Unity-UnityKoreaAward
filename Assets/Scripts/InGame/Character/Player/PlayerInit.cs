@@ -7,6 +7,11 @@ public partial class Player
 {
     PlayerBaseData playerBaseData;
 
+    Rigidbody2D playerRb;
+
+    [Header("User Setting")]
+    [SerializeField] float playerSpeed;
+
     public int playerHp;
     public int playerLv;
     public int playerMp;
@@ -15,15 +20,15 @@ public partial class Player
 
     private void InitComponent()
     {
-        if (gameObject.TryGetComponent<Rigidbody>(out Rigidbody rigidbody))
+        if (gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D rigidbody))
             playerRb = rigidbody;
         else
-            playerRb = gameObject.AddComponent<Rigidbody>();
+            playerRb = gameObject.AddComponent<Rigidbody2D>();
     }
 
     private void InitSetting()
     {
-        playerSpeed = 100f;
+        playerSpeed = 3f;
 
         // Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
