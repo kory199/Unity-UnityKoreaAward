@@ -11,6 +11,7 @@ public class MonsterSpawn : MonoBehaviour
 
     GameObject meleeMonster;
     GameObject rangedMonster;
+
     private void Start()
     {
         meleeMonster = ObjectPooler.SpawnFromPool("MeleeMonster", gameObject.transform.position);

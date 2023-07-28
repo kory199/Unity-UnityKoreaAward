@@ -25,11 +25,17 @@ public class Monster : CharacterBase
 
     protected override void Die()
     {
-        // ¸ó½ºÅÍ Á×À½
+        gameObject.SetActive(false);
     }
 
     private void init()
     {
 
     }
+
+    private void OnDisable()
+    {
+        ObjectPooler.ReturnToPool(gameObject);
+    }
+
 }

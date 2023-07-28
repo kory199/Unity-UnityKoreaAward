@@ -12,10 +12,12 @@ public partial class Player
     [Header("User Setting")]
     [SerializeField] float playerSpeed;
 
-    public int playerHp;
+    public int playerMaxHp;
+    public int playerCurHp;
+
     public int playerLv;
     public int playerMp;
-    public int playerExp;
+    public int playerMaxExp;
     public bool IsDeath;
 
     private void InitComponent()
@@ -38,9 +40,10 @@ public partial class Player
     {
         if (APIManager.Instacne.isLogin)
         {
-            playerHp = playerBaseData.hp;
+            playerMaxHp = playerBaseData.hp;
+            playerCurHp = playerMaxHp;
             playerLv = playerBaseData.level;
-            playerExp = playerBaseData.exp;
+            playerMaxExp = playerBaseData.exp;
             IsDeath = false;
         }
     }

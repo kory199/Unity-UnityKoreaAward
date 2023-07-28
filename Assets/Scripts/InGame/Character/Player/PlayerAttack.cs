@@ -11,4 +11,16 @@ public partial class Player
             GameObject bullet = ObjectPooler.SpawnFromPool("Bullet", gameObject.transform.position);
         }
     }
+    public void PlayerHit(int damageAmount)
+    {
+        playerCurHp -= damageAmount;
+
+        Debug.Log($"Player Hit Cur HP : {playerCurHp}");
+
+        if (playerCurHp <= 0)
+        {
+            Debug.Log("Player Die");
+            Die();
+        }
+    }
 }

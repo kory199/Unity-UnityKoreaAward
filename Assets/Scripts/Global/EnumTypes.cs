@@ -79,6 +79,13 @@ public static partial class EnumTypes
         RangedMonster
     }
 
+    public enum FSMMonsterStateType
+    {
+        Idle,
+        Chasing,
+        Attacking
+    }
+
     public enum MonsterStateType
     {
         None,   // 데이터 초기화 등의 작업
