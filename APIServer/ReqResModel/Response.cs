@@ -6,7 +6,7 @@ namespace APIServer.ReqResModel;
 public abstract class BaseResponse
 {
     [Required] public ResultCode Result { get; set; } = ResultCode.None;
-    [Required] public string ResultMessage { get; set; } = string.Empty;
+    [Required] public string ResultMessage { get; set; } = "";
 }
 
 public class PkResponse : BaseResponse
@@ -27,4 +27,9 @@ public class GameDataRes : BaseResponse
 public class RankingDataRes : BaseResponse
 {
     [Required] public List<Ranking> RankingData { get; set; } = new List<Ranking>();
+}
+
+public class StageDataRes : BaseResponse
+{
+    [Required] public List<Stage> StageData { get; set; } = new List<Stage>();
 }

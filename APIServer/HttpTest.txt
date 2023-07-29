@@ -33,3 +33,8 @@ POST https://localhost:44376/SocreUpdate
   "AuthToken": "",
   "Score" : 5
 }
+
+// 스테이지
+POST https://localhost:44376/Stage
+{
+}

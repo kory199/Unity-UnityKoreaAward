@@ -10,5 +10,10 @@ public class PlayerInfoReq
 
 public class ScoreUpdateReq : PlayerInfoReq
 {
-    [Required] public int Score { get; set; } 
+    [Required] public Int32 Score { get; set; } 
+}
+
+public class StageReq : PlayerInfoReq
+{
+    [Required] public Int32 StageNum { get; set; }
 }

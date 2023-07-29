@@ -72,4 +72,5 @@ public enum ResultCode
     UpdateStageDataFailException = 605,
     CreateStageFailInsert = 606,
     CreateStageFailException = 607,
+    StageNumNotMatch = 608,
 }

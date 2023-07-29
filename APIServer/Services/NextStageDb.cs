@@ -10,7 +10,7 @@ public class NextStageDb : BaseDb<StageInfo>, INextStage
     public static Dictionary<int, int> StageInfoDic = new Dictionary<int, int>();
 
     public NextStageDb(ILogger<NextStageDb> logger, IOptions<DbConfig> dbConfig)
-        : base(logger, dbConfig.Value.GameDb, StageTable.player_stage)
+        : base(logger, dbConfig.Value.GameDb, StageInfoTable.stage)
     {
     }
 
@@ -19,8 +19,7 @@ public class NextStageDb : BaseDb<StageInfo>, INextStage
         try
         {
             var stageInfo = await _queryFactory.Query(_tableName)
-                .Where(StageInfoTable.prev_stage_id)
-                .GetAsync<StageInfo>();
+                .GetAsync();
 
             if(stageInfo == null)
             {

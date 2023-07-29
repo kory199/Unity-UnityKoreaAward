@@ -30,6 +30,7 @@ public class StageDb : BaseDb<Stage>, IStageDb
             {
                 return (ResultCode.CreateDefaultStageFailInsert, null);
             }
+
             return (ResultCode.None, defaultStage);
         }
         catch (Exception e)

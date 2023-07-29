@@ -29,6 +29,7 @@ public class StageTable
 
 public class StageInfoTable
 {
+    public const String stage = "stage";
     public const String stage_id = "stage_id";
     public const String prev_stage_id = "prev_stage_id";
 }

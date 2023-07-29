@@ -38,6 +38,9 @@ var app = builder.Build();
 var loggerFactory = app.Services.GetRequiredService<ILoggerFactory>();
 LogManager.SetLoggerFactory(loggerFactory, "Global");
 
+var getStageInfo = app.Services.GetRequiredService<INextStage>();
+getStageInfo.LoadStageDataAsync();
+
 app.UseRouting();
 
 app.UseMiddleware<CheckUserAuth>();
