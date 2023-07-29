@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using System.Text;
+using UnityEditor;
 using UnityEngine;
 
 
@@ -22,5 +22,14 @@ public class APIDataSO : ScriptableObject
 
         Debug.LogError($"Error with : {key}");
         return default;
+    }
+
+    public void RemoveKey(string key)
+    {
+        if (responseDataDic.ContainsKey(key))
+        {
+            responseDataDic.Remove(key);
+            EditorUtility.SetDirty(this); // Notify Unity that this object has been modified.
+        }
     }
 }

@@ -125,7 +125,6 @@ public class AccountManager : MonoBehaviour
         {
             playerBaseData.id = playerDataList[0].id;
             playerBaseData.hp = playerDataList[0].hp;
-            playerBaseData.level = playerDataList[0].level;
         }
 
         if (playerDataList != null && playerDataList.Count > 0)

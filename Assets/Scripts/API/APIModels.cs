@@ -4,7 +4,11 @@ using UnityEngine;
 
 namespace APIModels
 {
-    [SerializeField]
+    public class GetVersion
+    {
+        public string Version = "GetVersion";
+    }
+
     public class User
     {
         public string ID;
@@ -23,7 +27,6 @@ namespace APIModels
         public int exp { get; set; }
         public int hp { get; set; }
         public int score { get; set; }
-        public int level { get; set; }
         public int status { get; set; }
     }
 

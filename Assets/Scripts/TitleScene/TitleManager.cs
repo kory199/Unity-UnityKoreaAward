@@ -6,24 +6,25 @@ using UnityEngine.UI;
 
 public class TitleManager : MonoBehaviour
 {
-    [Header("PanelObj")]
+    [Header("[PanelObj]")]
     [SerializeField] GameObject[] panels = null; // start : 0, account : 1, rank : 2
 
-    [Header("Start")]
+    [Header("[Start]")]
     [SerializeField] Button accountBut = null;
     [SerializeField] Button rankBut = null;
     [SerializeField] Button startBut = null;
     [SerializeField] Button exitBut = null;
     [SerializeField] TextMeshProUGUI loginInfotext = null;
+    [SerializeField] TextMeshProUGUI versionText = null;
 
-    [Header("Account")]
+    [Header("[Account]")]
     [SerializeField] TMP_InputField[] inputFields = null;
     [SerializeField] Button createAccountBut = null;
     [SerializeField] Button loginBut = null;
     [SerializeField] TextMeshProUGUI infotext = null;
     [SerializeField] Button a_goBackBut = null;
 
-    [Header("Ranking")]
+    [Header("[Ranking]")]
     [SerializeField] Button r_goBackBut = null;
 
     [Space]
@@ -41,6 +42,8 @@ public class TitleManager : MonoBehaviour
         curPanel = panels[0];
         ShowUI(curPanel);
         loginInfotext.gameObject.SetActive(false);
+
+        GetGameVersion();
 
         // === StartPanel Button Event ===
         accountBut.onClick.AddListener(OnAccountButtonClicke);
@@ -86,6 +89,11 @@ public class TitleManager : MonoBehaviour
         inputFields[_currentIndex].ActivateInputField();
 
         await UniTask.WaitUntil(() => inputFields[_currentIndex].isFocused);
+    }
+
+    private async void GetGameVersion()
+    {
+        versionText.text = "Ver :  " +  await APIManager.Instacne.GetGameVersionAPI(); ;
     }
 
     private async void OnClickCreareAccount()
@@ -180,7 +188,7 @@ public class TitleManager : MonoBehaviour
         {
             startBut.interactable = false;
             loginInfotext.gameObject.SetActive(true);
-            loginInfotext.text = "Please Sign in";
+            loginInfotext.text = "Please Log in";
         }
         else
         {
