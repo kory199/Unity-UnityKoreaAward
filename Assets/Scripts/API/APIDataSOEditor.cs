@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using APIModels;
 using UnityEditor;
@@ -35,22 +36,24 @@ public class APIDataSOEditor : Editor
     private void Update()
     {
         APIDataSO myTarget = (APIDataSO)target;
-
         dictionaryElements.Clear();
 
         var gameData = new GameData();
         var defaultPlayerData = new PlayerData();
-        var defaultRankingDataList = new List<RankingData> { new RankingData() };
 
         if (myTarget.responseDataDic != null && myTarget.responseDataDic.Count > 0)
         {
             bool hasGameData = false;
             bool hasPlayerData = false;
-            bool hasRankingData = false;
 
             foreach (KeyValuePair<string, object> pair in myTarget.responseDataDic)
             {
                 string valueTypeName = pair.Value != null ? pair.Value.GetType().Name : "null";
+
+                if (pair.Value is List<RankingData>)
+                {
+                    valueTypeName = "List<RankingData>";
+                }
 
                 if (valueTypeName == "GameData")
                 {
@@ -62,9 +65,8 @@ public class APIDataSOEditor : Editor
                     hasPlayerData = true;
                     dictionaryElements.Add(new InspectorDictionaryElement(pair.Key, valueTypeName, pair.Value));
                 }
-                else if (valueTypeName == "RankingData")
+                else if (valueTypeName == "List<RankingData>")
                 {
-                    hasRankingData = true;
                     dictionaryElements.Add(new InspectorDictionaryElement(pair.Key, valueTypeName, pair.Value));
                 }
             }
@@ -79,18 +81,14 @@ public class APIDataSOEditor : Editor
                 dictionaryElements.Add(new InspectorDictionaryElement("PlayerData", "PlayerData", defaultPlayerData));
             }
 
-            if (!hasRankingData)
-            {
-                dictionaryElements.Add(new InspectorDictionaryElement("RankingData", "RankingData", defaultRankingDataList));
-            }
         }
         else
         {
             dictionaryElements.Add(new InspectorDictionaryElement("GameData", "GameData", gameData));
             dictionaryElements.Add(new InspectorDictionaryElement("PlayerData", "PlayerData", defaultPlayerData));
-            dictionaryElements.Add(new InspectorDictionaryElement("RankingData", "RankingData", defaultRankingDataList));
         }
 
+        EditorApplication.QueuePlayerLoopUpdate();
         Repaint();
     }
 
@@ -99,6 +97,8 @@ public class APIDataSOEditor : Editor
     {
         base.OnInspectorGUI();
         APIDataSO myTarget = (APIDataSO)target;
+
+        serializedObject.Update();
 
         for (int i = 0; i < dictionaryElements.Count; i++)
         {
@@ -127,15 +127,15 @@ public class APIDataSOEditor : Editor
                 playerData.score = EditorGUILayout.IntField("Score", playerData.score);
                 playerData.status = EditorGUILayout.IntField("Status", playerData.status);
             }
-            else if (element.valueName == "RankingData")
+            else if (element.valueName.Contains("List"))
             {
-                var rankingDataList = element.value as List<RankingData>;
+                var dataList = element.value as IList;
 
-                if (rankingDataList != null && rankingDataList.Count > 0)
+                if (dataList != null)
                 {
-                    for (int j = 0; j < rankingDataList.Count; j++)
+                    for (int j = 0; j < dataList.Count; j++)
                     {
-                        RankingData rankingData = rankingDataList[j];
+                        var rankingData = dataList[j] as RankingData;
                         if (rankingData != null)
                         {
                             EditorGUILayout.Space();
@@ -145,20 +145,13 @@ public class APIDataSOEditor : Editor
                         }
                     }
                 }
-                else if(rankingDataList.Count == 0)
-                {
-                    var defaultRankingData = new RankingData { id = "defaultID", score = 0, ranking = 0 };
-                    RankingData rankingData = rankingDataList[0];
-                    EditorGUILayout.Space();
-                    rankingData.id = EditorGUILayout.TextField("ID: ", defaultRankingData.id);
-                    rankingData.score = EditorGUILayout.IntField("Score: ", defaultRankingData.score);
-                    rankingData.ranking = EditorGUILayout.IntField("Rank: ", defaultRankingData.ranking);
-                }
             }
             else
             {
                 EditorGUILayout.LabelField("Value: ", element.value.ToString());
             }
         }
+
+        serializedObject.ApplyModifiedProperties();
     }
 }

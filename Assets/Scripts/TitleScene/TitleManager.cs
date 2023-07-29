@@ -259,34 +259,52 @@ public class TitleManager : MonoBehaviour
         return true;
     }
 
-    private void ShowUI(GameObject targetUIObj)
+    private void ShowUI(GameObject showUIPanel)
     {
-        if (curPanel.activeSelf)
+        foreach (GameObject panel in panels)
         {
-            curPanel.SetActive(false);
+            panel.SetActive(panel == showUIPanel);
         }
-
-        curPanel = targetUIObj;
-        curPanel.SetActive(true);
     }
 
-    private async void GoLobbyScene()
+    private void UpdateStartButtonState()
     {
-        if(APIManager.Instacne.GetApiSODicUerData() == null)
+        if (apidataSO.responseDataDic.Count > 0)
+        {
+            startBut.interactable = true;
+            loginInfotext.gameObject.SetActive(false);
+        }
+        else
         {
             startBut.interactable = false;
             loginInfotext.gameObject.SetActive(true);
             loginInfotext.text = "Please Log in";
         }
-        else
+    }
+
+    private void OnEnable()
+    {
+        UpdateStartButtonState();
+        apidataSO.OnResponseDataChanged += UpdateStartButtonState;
+    }
+
+    private void OnDisable()
+    {
+        apidataSO.OnResponseDataChanged -= UpdateStartButtonState;
+    }
+
+    private async void GoLobbyScene()
+    {
+        if (startBut.interactable)
         {
-            startBut.interactable = true;
             await SceneAndUIManager.Instacne.LoadScene(EnumTypes.ScenesType.SceneLobby);
         }
     }
 
     private void OnExitBut()
     {
+        apidataSO.ClearResponseData();
+
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
