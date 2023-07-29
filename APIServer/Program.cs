@@ -15,7 +15,6 @@ builder.Services.AddTransient<IGameDb, GameDb>();
 builder.Services.AddSingleton<IMemoryDb, RedisDb>();
 builder.Services.AddControllers();
 
-
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -29,7 +28,6 @@ builder.Services.AddAuthentication(options =>
         googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
         googleOptions.CallbackPath = "/Account/GoogleResponse"; // 리디렉션 URI 설정
     });
-
 
 builder.Services.AddControllersWithViews();
 

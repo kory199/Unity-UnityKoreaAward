@@ -102,11 +102,12 @@ public class GameDb : BaseDb<GameData>, IGameDb
     {
         try
         {
-            var gameDataList = await _queryFactory.Query(_tableName)
-                .Select(GameDbTable.player_uid, GameDbTable.id, GameDbTable.score)
-                .OrderByDesc(GameDbTable.score)
-                .OrderByRaw("`created_at` ASC")
-                .GetAsync<Ranking>();
+            var gameDataList = (await _queryFactory.Query(_tableName)
+                        .Select(GameDbTable.player_uid, GameDbTable.id, GameDbTable.score, GameDbTable.created_at)
+                        .OrderByDesc(GameDbTable.score)
+                        .OrderBy(GameDbTable.created_at)
+                        .Limit(10)
+                        .GetAsync<Ranking>()).ToList();
 
             List<Ranking> rankingList = new List<Ranking>();
 
@@ -115,21 +116,17 @@ public class GameDb : BaseDb<GameData>, IGameDb
                 return (ResultCode.LoadRankingDataFail, null);
             }
 
-            int rank = 0;
             bool isUserInList = false;
-
-            foreach (var gameData in gameDataList)
+            for (int rank = 0; rank < gameDataList.Count; rank++)
             {
-                rank++;
-
                 Ranking ranks = new Ranking
                 {
-                    id = gameData.id,
-                    score = gameData.score,
-                    ranking = rank
+                    id = gameDataList[rank].id,
+                    score = gameDataList[rank].score,
+                    ranking = rank + 1
                 };
 
-                if (gameData.id == id)
+                if (gameDataList[rank].id == id)
                 {
                     isUserInList = true;
                 }
@@ -139,11 +136,7 @@ public class GameDb : BaseDb<GameData>, IGameDb
 
             if (isUserInList == false)
             {
-                var userData = await _queryFactory.Query(_tableName)
-                    .Where(GameDbTable.player_uid, account_id)
-                    .OrderByDesc(GameDbTable.score)
-                    .OrderByRaw("`created_at` ASC")
-                    .FirstOrDefaultAsync<Ranking>();
+                var userData = await ExecuteGetByAsync(GameDbTable.player_uid, account_id);
 
                 if (userData != null)
                 {
