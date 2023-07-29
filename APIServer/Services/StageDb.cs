@@ -42,34 +42,6 @@ public class StageDb : BaseDb<Stage>, IStageDb
         }
     }
 
-    public async Task<(ResultCode, Stage?)> CreateStageData(Int64 account_id, Int32 stage_id)
-    {
-        try
-        {
-            var newStage = new Stage
-            {
-                player_uid = account_id,
-                stage_id = stage_id,
-                is_achieved = false,
-            };
-
-            var count = await ExecuteInsertAsync(newStage);
-
-            if (count == 0)
-            {
-                return (ResultCode.CreateDefaultStageFailInsert, null);
-            }
-            return (ResultCode.None, newStage);
-        }
-        catch (Exception e)
-        {
-            _logger.ZLogError(e,
-               $"[{GetType().Name}.CreateDefaultStageData] ErrorCode : {ResultCode.CreateDefaultStageFailException}");
-
-            return (ResultCode.CreateDefaultStageFailException, null);
-        }
-    }
-
     public async Task<(ResultCode, List<Stage>?)> VerifyStageAsync(Int64 account_id)
     {
         try
@@ -92,35 +64,37 @@ public class StageDb : BaseDb<Stage>, IStageDb
         }
     }
 
-    public async Task<(ResultCode, Stage?)> UpdataStageAsync(Int64 account_id, Int32 stage_id)
+    public async Task<ResultCode> UpdataStageAsync(Int64 account_id, Int32 stage_id)
     {
         try
         {
             var stageClear = await _queryFactory.Query(_tableName)
                 .Where(ColumnUid.player_uid, account_id)
+                .Where(StageTable.stage_id, stage_id)
                 .UpdateAsync(new { is_achieved = true });
 
             if(stageClear == 0)
             {
-                return (ResultCode.UpdateStageDataFail, null);
+                return ResultCode.UpdateStageDataFail;
             }
 
             var getNextStage = NextStageDb.StageInfoDic[stage_id];
-            var ( resultcode, addNextStage) = await CreateStageData(account_id, getNextStage);
-
-            if(addNextStage == null)
+            var newStage = new Stage
             {
-                return (ResultCode.UpdateStageDataFail, null);
-            }
+                player_uid = account_id,
+                stage_id = getNextStage,
+                is_achieved = false,
+            };
 
-            return (ResultCode.None, addNextStage);
+            await ExecuteInsertAsync(newStage);
+            return ResultCode.None;
         }
         catch(Exception e)
         {
             _logger.ZLogError(e,
                  $"[{GetType().Name}.UpdataStageAsync] ErrorCode : {ResultCode.UpdateStageDataFailException}");
 
-            return (ResultCode.UpdateStageDataFailException, null);
+            return ResultCode.UpdateStageDataFailException;
         }
     }
 }

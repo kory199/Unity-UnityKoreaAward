@@ -20,29 +20,57 @@ public class StageController : BaseApiController
     [HttpPost]
     public async Task<StageDataRes> Post(StageReq request)
     {
-        var uerInfo = (AuthUser)HttpContext.Items[nameof(AuthUser)]!;
+        var userInfo = (AuthUser)HttpContext.Items[nameof(AuthUser)]!;
 
-        var (resultCode, stageList) = await _stageDb.VerifyStageAsync(uerInfo.AccountId);
-        var response = CreateResponse<StageDataRes>(resultCode);
+        var resultCode = ResultCode.None;
+        var stageList = new List<Stage>();
 
-        if (stageList.Count() == 0)
+
+        if (request.StageNum != 0 && NextStageDb.StageInfoDic.ContainsKey(request.StageNum) == false)
         {
-            (resultCode, var defaultStage) = await _stageDb.CreateDefaultStageData(uerInfo.AccountId);
-            response.StageData.Add(defaultStage);
-
-            if (defaultStage == null || resultCode != ResultCode.None)
-            {
-                return CreateResponse<StageDataRes>(resultCode);
-            }
+            return CreateResponse<StageDataRes>(ResultCode.StageNumNotMatch);
         }
 
-        //if(request.StageNum != NextStageDb.StageInfoDic[request.StageNum])
-        //{
-        //    return CreateResponse<StageDataRes>(ResultCode.StageNumNotMatch);
-        //}
+        if (request.StageNum == 0)
+        {
+            (resultCode, stageList) = await _stageDb.VerifyStageAsync(userInfo.AccountId);
 
+            if (stageList.Count() == 0)
+            {
+                (resultCode, var defaultStage) = await _stageDb.CreateDefaultStageData(userInfo.AccountId);
+                stageList.Add(defaultStage);
+
+                if (defaultStage == null || resultCode != ResultCode.None)
+                {
+                    return CreateResponse<StageDataRes>(resultCode);
+                }
+            }
+
+            resultCode = ResultCode.LoadStageSuccess;
+        }
+        else 
+        {
+
+            if (!stageList.Any(s => s.stage_id == request.StageNum))
+            {
+                resultCode = await _stageDb.UpdataStageAsync(userInfo.AccountId, request.StageNum);
+
+                if (resultCode != ResultCode.None)
+                {
+                    return CreateResponse<StageDataRes>(resultCode);
+                }
+            }
+
+            resultCode = ResultCode.GetNewStageSuccess;
+        }
+
+        var response = CreateResponse<StageDataRes>(resultCode);
         response.StageData = stageList;
-        return CreateResponse<StageDataRes>(ResultCode.LoadStageSuccess);
+        if(response.StageData.Count() == 0)
+        {
+            response.StageData = null;
+        }
+
         return response;
     }
 }

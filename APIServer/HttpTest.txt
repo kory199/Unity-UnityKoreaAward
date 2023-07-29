@@ -37,4 +37,7 @@ POST https://localhost:44376/SocreUpdate
 // 스테이지
 POST https://localhost:44376/Stage
 {
+  "ID":"Wally3",
+  "AuthToken": "",
+  "StageNum" : 1
 }

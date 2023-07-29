@@ -18,6 +18,7 @@ public enum ResultCode
     LoadRankingDataSuccess = 55,
     UpdateScoreSuccess = 56,
     LoadStageSuccess = 57,
+    GetNewStageSuccess = 58,
 
     // === Common Error 100 ~ ===             
     UnhandleException = 101,
@@ -72,5 +73,6 @@ public enum ResultCode
     UpdateStageDataFailException = 605,
     CreateStageFailInsert = 606,
     CreateStageFailException = 607,
-    StageNumNotMatch = 608,
+    CreateNewStageFailInsert = 608,
+    StageNumNotMatch = 609,
 }
