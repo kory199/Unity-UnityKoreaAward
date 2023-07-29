@@ -8,12 +8,14 @@ using UnityEngine.UI;
 public class TitleManager : MonoBehaviour
 {
     [Header("[PanelObj]")]
-    [SerializeField] GameObject[] panels = null; // start : 0, account : 1, rank : 2
+    [SerializeField] GameObject[] panels = null;
+    // start : 0, account : 1, rank : 2, option : 3
 
     [Header("[Start]")]
     [SerializeField] Button accountBut = null;
     [SerializeField] Button rankBut = null;
     [SerializeField] Button startBut = null;
+    [SerializeField] Button optionBut = null;
     [SerializeField] Button exitBut = null;
     [SerializeField] TextMeshProUGUI loginInfotext = null;
     [SerializeField] TextMeshProUGUI versionText = null;
@@ -31,6 +33,9 @@ public class TitleManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI[] rankTopTen = null;
     [SerializeField] TextMeshProUGUI userRank = null;
     [SerializeField] TextMeshProUGUI r_infoText = null;
+
+    [Header("Option")]
+    [SerializeField] Button o_goBackBut = null;
 
     [Space]
     [SerializeField] APIDataSO apidataSO = null;
@@ -54,6 +59,7 @@ public class TitleManager : MonoBehaviour
         accountBut.onClick.AddListener(OnClickeAccount);
         rankBut.onClick.AddListener(OnClickRank);
         startBut.onClick.AddListener(GoLobbyScene);
+        optionBut.onClick.AddListener(delegate { ShowUI(panels[3]);});
         exitBut.onClick.AddListener(delegate { OnExitBut(); });
 
         // === AccountPanel Button Event ===
@@ -63,6 +69,9 @@ public class TitleManager : MonoBehaviour
 
         // === RankingPanel Button Event ===
         r_goBackBut.onClick.AddListener(OnClickRankBackBut);
+
+        // === OptionPanel Button Event ===
+        o_goBackBut.onClick.AddListener(delegate { ShowUI(panels[0]); });
     }
 
     private async void OnClickeAccount()
