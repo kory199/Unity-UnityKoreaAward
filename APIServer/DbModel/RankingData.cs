@@ -2,7 +2,7 @@
 
 public class Ranking
 {
-    public String id { get; set; }
+    public String id { get; set; } = "";
     public Int32 score { get; set; }
     public Int32 ranking { get; set; }
 }

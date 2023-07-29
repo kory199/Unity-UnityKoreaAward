@@ -1,5 +1,5 @@
-﻿using Microsoft.Extensions.Options;
-using SqlKata.Execution;
+﻿using SqlKata.Execution;
+using SqlKata.Extensions;
 using System.Data;
 using ZLogger;
 
@@ -83,6 +83,23 @@ public abstract class BaseDb<T> where T : class
         }
     }
 
+    protected async Task<List<T>> ExecutGetByListAsync(String columnName, object value)
+    {
+        try
+        {
+            var query = await _queryFactory.Query(_tableName)
+                .Where(columnName, value)
+                .GetAsync<T>();
+
+            return query.ToList();
+        }
+        catch(Exception e) 
+        {
+            _logger.ZLogError(e, $"[{GetType().Name}.ExecutGetByListAsync] ResultCode : {ResultCode.GetByListException}");
+            return new List<T>();
+        }
+    }
+
     protected async Task<List<T>> SortGetByAsync(String columnName)
     {
         try
@@ -96,7 +113,7 @@ public abstract class BaseDb<T> where T : class
             return query.ToList();
 
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             _logger.ZLogError(e, $"[{GetType().Name}.GetByAsync] ResultCode : {ResultCode.GetByException}");
             return new List<T>();

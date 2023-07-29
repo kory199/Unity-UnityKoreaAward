@@ -8,6 +8,7 @@ public enum ResultCode
     InsertException = 11,
     DeleteException = 12,
     GetByException = 13,
+    GetByListException = 14,
 
     // === SuccessCode 50 ~ ===
     CreateAccountSuccess = 50,
@@ -16,6 +17,7 @@ public enum ResultCode
     LoadGameDataSuccess = 53,
     LoadRankingDataSuccess = 55,
     UpdateScoreSuccess = 56,
+    LoadStageSuccess = 57,
 
     // === Common Error 100 ~ ===             
     UnhandleException = 101,
@@ -56,4 +58,18 @@ public enum ResultCode
     UpdateScoreDataFail = 501,
     UpdateScoreDataNullException = 502,
     UpdateScoreDataFailException = 503,
+
+    // === Stage Info 550 ===
+    LoadStageInfoFail = 550,
+    LoadStageInfoFailException = 551,
+
+    // === Stage 600 ===
+    CreateDefaultStageFailInsert = 600,
+    CreateDefaultStageFailException = 601,
+    LoadStageDataNotFound = 602,
+    LoadStageDataFailException = 603,
+    UpdateStageDataFail = 604,
+    UpdateStageDataFailException = 605,
+    CreateStageFailInsert = 606,
+    CreateStageFailException = 607,
 }
