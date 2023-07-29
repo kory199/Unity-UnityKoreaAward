@@ -126,7 +126,7 @@ public class APIManager : MonoSingleton<APIManager>
         }
     }
 
-    public async UniTask GetRanking()
+    public async UniTask GetRankingAPI()
     {
         await CallAPI<Dictionary<string, object>, GameData>(APIUrls.RankingApi, GetApiSODicUerData(), HandleRankingDataResponse);
     }

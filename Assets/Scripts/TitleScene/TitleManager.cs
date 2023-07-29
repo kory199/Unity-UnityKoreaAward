@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using APIModels;
 using Cysharp.Threading.Tasks;
 using TMPro;
@@ -26,6 +27,10 @@ public class TitleManager : MonoBehaviour
 
     [Header("[Ranking]")]
     [SerializeField] Button r_goBackBut = null;
+    [SerializeField] TextMeshProUGUI[] rankTopThreeName = null;
+    [SerializeField] TextMeshProUGUI[] rankTopTen = null;
+    [SerializeField] TextMeshProUGUI userRank = null;
+    [SerializeField] TextMeshProUGUI r_infoText = null;
 
     [Space]
     [SerializeField] APIDataSO apidataSO = null;
@@ -46,23 +51,24 @@ public class TitleManager : MonoBehaviour
         GetGameVersion();
 
         // === StartPanel Button Event ===
-        accountBut.onClick.AddListener(OnAccountButtonClicke);
-        rankBut.onClick.AddListener(delegate { ShowUI(panels[2]); });
+        accountBut.onClick.AddListener(OnClickeAccount);
+        rankBut.onClick.AddListener(OnClickRank);
         startBut.onClick.AddListener(GoLobbyScene);
         exitBut.onClick.AddListener(delegate { OnExitBut(); });
 
         // === AccountPanel Button Event ===
-        a_goBackBut.onClick.AddListener(delegate { ShowUI(panels[0]); });
+        a_goBackBut.onClick.AddListener(OnClickAccountBackBut);
         createAccountBut.onClick.AddListener(delegate { OnClickCreareAccount(); });
         loginBut.onClick.AddListener(delegate { OnClickLogin(); });
 
         // === RankingPanel Button Event ===
-        r_goBackBut.onClick.AddListener(delegate { ShowUI(panels[0]); });
+        r_goBackBut.onClick.AddListener(OnClickRankBackBut);
     }
 
-    private async void OnAccountButtonClicke()
+    private async void OnClickeAccount()
     {
         ShowUI(panels[1]);
+        infotext.gameObject.SetActive(false);
         await CursorMoveCheck();
     }
 
@@ -112,6 +118,85 @@ public class TitleManager : MonoBehaviour
             await APIManager.Instacne.LoginAPI(user);
             infotext.text = $"Login Successful {user.ID}, {user.Password}";
         }
+    }
+
+    private void OnClickAccountBackBut()
+    {
+        ShowUI(panels[0]);
+
+        for(int i = 0; i < inputFields.Length; ++i)
+        {
+            inputFields[i].text = "";
+        }
+    }
+
+    private void OnClickRankBackBut()
+    {
+        ShowUI(panels[0]);
+
+        for(int i = 0; i < rankTopThreeName.Length; ++i)
+        {
+            rankTopThreeName[i].text = "";
+            rankTopThreeName[i].text = "";
+            userRank.text = "";
+        }
+    }
+
+    private async void OnClickRank()
+    {
+        ShowUI(panels[2]);
+        r_infoText.gameObject.SetActive(false);
+
+        await APIManager.Instacne.GetRankingAPI();
+
+        GameData userInfo = APIManager.Instacne.GetApiSODicUerData();
+        if(userInfo == null)
+        {
+            r_infoText.gameObject.SetActive(true);
+            r_infoText.text = "Please Log in";
+        }
+
+        List<RankingData> rankingDataList = apidataSO.GetValueByKey<List<RankingData>>("RankingData");
+
+        if (rankingDataList != null && rankingDataList.Count > 0)
+        {
+            for (int i = 0; i < rankingDataList.Count; i++)
+            {
+                RankingData rankingData = rankingDataList[i];
+
+                if (i < rankTopThreeName.Length)
+                {
+                    rankTopThreeName[i].text = rankingData.id;
+                }
+
+                if (i < rankTopTen.Length)
+                {
+                    rankTopTen[i].text = $"ID: {rankingData.id}, Score: {rankingData.score}, Rank: {rankingData.ranking}";
+                }
+
+                if(rankingDataList.Count == 11)
+                {
+                    userRank.text = $"ID: {rankingData.id}, Score: {rankingData.score}, Rank: {rankingData.ranking}";
+                }
+                else if (rankingDataList.Count == 10)
+                {
+                    RankingData userRankingData = rankingDataList.Find(r => r.id == userInfo.ID);
+                    if (userRankingData != null)
+                    {
+                        userRank.text = $"ID: {userRankingData.id}, Score: {userRankingData.score}, Rank: {userRankingData.ranking}";
+                    }
+                    else
+                    {
+                        Debug.LogError("User's ranking data not found.");
+                    }
+                }
+            }
+        }
+        else
+        {
+            Debug.LogError("No ranking data found in APIDataSO.");
+        }
+
     }
 
     private bool TryProcessUserInput(out User user)
@@ -174,12 +259,15 @@ public class TitleManager : MonoBehaviour
         return true;
     }
 
-    private void ShowUI(GameObject showUIPanel)
+    private void ShowUI(GameObject targetUIObj)
     {
-        foreach(GameObject panel in panels)
+        if (curPanel.activeSelf)
         {
-            panel.SetActive(panel == showUIPanel);
+            curPanel.SetActive(false);
         }
+
+        curPanel = targetUIObj;
+        curPanel.SetActive(true);
     }
 
     private async void GoLobbyScene()
