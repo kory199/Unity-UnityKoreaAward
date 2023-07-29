@@ -13,6 +13,10 @@ public class PkResponse : BaseResponse
 {
 }
 
+public class VersionRes : BaseResponse
+{
+    [Required] public String GameVer { get; set; } = "";
+}
 
 public class LoginRes : BaseResponse
 {

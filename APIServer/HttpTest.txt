@@ -1,4 +1,10 @@
-﻿// 계정 생성
+﻿// 게임 버전
+POST https://localhost:44376/Version
+{
+	"Version" : "GetVersion"
+}
+
+// 계정 생성
 POST https://localhost:44376/CreateAccount
 {
   "ID":"ParkHyeWon",

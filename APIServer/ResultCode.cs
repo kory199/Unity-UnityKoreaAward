@@ -11,14 +11,20 @@ public enum ResultCode
     GetByListException = 14,
 
     // === SuccessCode 50 ~ ===
-    CreateAccountSuccess = 50,
-    LoginSuccess = 51,
-    CreateGameDataSuccess = 52,
-    LoadGameDataSuccess = 53,
+    LoadGameVersionSuccess = 50,
+    CreateAccountSuccess = 51,
+    LoginSuccess = 52,
+    CreateGameDataSuccess = 53,
+    LoadGameDataSuccess = 54,
     LoadRankingDataSuccess = 55,
     UpdateScoreSuccess = 56,
     LoadStageSuccess = 57,
     GetNewStageSuccess = 58,
+
+    // === GameVersion 80~ ===
+    LoadGameVersionFail = 80,
+    LoadGameVersionFailException = 81,
+    GameVersionResqustStringCheck = 82,
 
     // === Common Error 100 ~ ===             
     UnhandleException = 101,

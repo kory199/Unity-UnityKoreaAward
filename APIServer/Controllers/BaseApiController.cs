@@ -1,8 +1,6 @@
-﻿using APIServer.Services;
+﻿using APIServer.ReqResModel;
+using APIServer.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using APIServer.ReqResModel;
-using APIServer.DbModel;
 
 namespace APIServer.Controllers;
 

@@ -2,9 +2,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 using System.Security.Claims;
-using ZLogger;
 
 namespace APIServer.Controllers;
 

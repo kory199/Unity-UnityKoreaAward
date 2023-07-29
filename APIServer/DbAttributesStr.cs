@@ -1,5 +1,11 @@
 ﻿namespace APIServer;
 
+public class MasterData_GameVersion
+{
+    public const String game_ver = "game_ver";
+    public const String version = "version";
+}
+
 public class AccountDbTable
 {
     public const String Account = "account";

@@ -10,6 +10,7 @@ IConfiguration configuration = builder.Configuration;
 
 builder.Services.Configure<DbConfig>(configuration.GetSection(nameof(DbConfig)));
 
+builder.Services.AddSingleton<IMasterDataDb, MasterDataDb>();
 builder.Services.AddTransient<IAccountDb, AccountDb>();
 builder.Services.AddTransient<IGameDb, GameDb>();
 builder.Services.AddTransient<IStageDb, StageDb>();
