@@ -80,6 +80,9 @@ public static partial class EnumTypes
         Attack, // 공격
         Death,  // 죽음
         Dance,  // 플레이어 죽었을때 킹받게 하기용 State
+        Phase1,
+        Phase2,
+        Phase3,
         Max     
     }
 }

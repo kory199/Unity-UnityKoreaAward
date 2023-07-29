@@ -4,12 +4,13 @@ using static EnumTypes;
 
 public class MonsterBase : MonoBehaviour
 {
-    // private MonsterData monsterData; => 나중에 스크립터블 오브젝트 or 엑셀파일로 정보 받아온 클래스 등등
-    private MonsterStateType state;
-    private Player player;
+    protected MonsterData monsterData; //=> 나중에 스크립터블 오브젝트 or 엑셀파일로 정보 받아온 클래스 등등
+    protected MonsterStateType state;
+    protected Player player;
+    protected MonsterInfo _monsterInfo = null;
 
     public bool Death { get { return curHP <= 0; } }
-    private float curHP;
+    protected float curHP;
 
     private void OnEnable()
     {
@@ -26,7 +27,7 @@ public class MonsterBase : MonoBehaviour
         }
     }
 
-    private void DeathProcess()
+    protected void DeathProcess()
     {
         // 몬스터가 죽었을때 처리해줄 로직 작성
         // ex) 점수를올린다, 경험치를 올린다 등등
@@ -34,7 +35,7 @@ public class MonsterBase : MonoBehaviour
 
     // String형태로 코루틴 함수를 찾으므로 오타나지않게 주의
     // ex) NONE -> X,  None -> O
-    private void TransferState(MonsterStateType Nextstate)
+    protected void TransferState(MonsterStateType Nextstate)
     {
         // 현재 State의 코루틴을 중지시키고
         StopCoroutine("State_" + state);
@@ -94,15 +95,15 @@ public class MonsterBase : MonoBehaviour
         }
     }
 
-    private IEnumerator State_Attack()
+    protected virtual IEnumerator State_Attack()
     {
         // 공격 가능한 상태일때 무한반복
         while (state == MonsterStateType.Attack)
         {
             // 공격가능상태인지 체크
-            // 범위밖이면 Move State로 이동
-
-            yield return new WaitForSeconds(3f); // 3f 대신 monsterData.RateOfFire 등등 만들어서 대체
+            // 범위밖이면 Move State로 이동 
+            Attack();
+            yield return new WaitForSeconds(_monsterInfo.RateOfFire); // 3f 대신 monsterData.RateOfFire 등등 만들어서 대체
         }
     }
 
@@ -114,7 +115,7 @@ public class MonsterBase : MonoBehaviour
         yield return null;
     }
 
-    private void Attack()
+    protected virtual void Attack()
     {
         // 공격로직
     }
