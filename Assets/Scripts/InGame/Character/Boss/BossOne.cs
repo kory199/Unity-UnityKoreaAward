@@ -12,6 +12,8 @@ public class BossOne : BossBase
     [SerializeField] private float lotationSpeed2 = 0.1f;
     [Range(0, 100)]
     [SerializeField] private float tempHP = 100;
+    [Header("BossProjectile")]
+    [SerializeField] private string projectileName;
     void Start()
     {
         //회전 초기값
@@ -49,7 +51,7 @@ public class BossOne : BossBase
     }
     protected override void Attack()
     {
-        ShootProjectile("Bullet");
+        ShootProjectile(projectileName);
     }
     private void RotateAttack()
     {
