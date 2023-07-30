@@ -8,7 +8,7 @@ public class SceneAndUIManager : MonoSingleton<SceneAndUIManager>
 {
     private EventSystem _eventSystem;
 
-    // ·±Å¸ÀÓ ÃÊ±âÈ­ ½ÃÁ¡¿¡ SceneManager »ý¼º
+    // ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½Ê±ï¿½È­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ SceneManager ï¿½ï¿½ï¿½ï¿½
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void InstSceneManager()
     {
@@ -21,16 +21,16 @@ public class SceneAndUIManager : MonoSingleton<SceneAndUIManager>
         DontDestroyOnLoad(this.gameObject);
     }
 
-    // Unitask¸¦ È°¿ëÇÑ ºñµ¿±â ¾À ·Îµå ¹× ºñµ¿±â UI »ý¼º
+    // Unitaskï¿½ï¿½ È°ï¿½ï¿½ï¿½ï¿½ ï¿½ñµ¿±ï¿½ ï¿½ï¿½ ï¿½Îµï¿½ ï¿½ï¿½ ï¿½ñµ¿±ï¿½ UI ï¿½ï¿½ï¿½ï¿½
     public async UniTask LoadAsync(EnumTypes.ScenesType scene)
     {
-        // UI ºñµ¿±â »ý¼º
+        // UI ï¿½ñµ¿±ï¿½ ï¿½ï¿½ï¿½ï¿½
         UniTask creatUIUnitask = CreatUI(scene);
 
-        // ¾À ºñµ¿±â ·Îµå
+        // ï¿½ï¿½ ï¿½ñµ¿±ï¿½ ï¿½Îµï¿½
         UniTask loadSceneUnitask = LoadScene(scene);
 
-        // ÇØ´ç ¾ÀÀÇ ·Îµå ÀÛ¾÷ ¹× UI»ý¼º ÀÛ¾÷ ¿Ï·á ½Ã
+        // ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ ï¿½Û¾ï¿½ ï¿½ï¿½ UIï¿½ï¿½ï¿½ï¿½ ï¿½Û¾ï¿½ ï¿½Ï·ï¿½ ï¿½ï¿½
         await UniTask.WhenAll(creatUIUnitask, loadSceneUnitask);
     }
 
@@ -39,15 +39,15 @@ public class SceneAndUIManager : MonoSingleton<SceneAndUIManager>
         switch (scene)
         {
             case EnumTypes.ScenesType.SceneInGame:
-                // SceneInGame UI »ý¼º ÇÔ¼ö È£Ãâ
+                // SceneInGame UI ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ È£ï¿½ï¿½
                 InitGameUI();
                 break;
             case EnumTypes.ScenesType.SceneLobby:
-                // SceneLobby UI »ý¼º ÇÔ¼ö È£Ãâ
+                // SceneLobby UI ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ È£ï¿½ï¿½
                 InitLobbyUI();
                 break;
             case EnumTypes.ScenesType.SceneTitle:
-                // SceneTitle UI »ý¼º ÇÔ¼ö È£Ãâ
+                // SceneTitle UI ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ È£ï¿½ï¿½
                 InitTitleUI();
                 break;
             default:
@@ -61,7 +61,7 @@ public class SceneAndUIManager : MonoSingleton<SceneAndUIManager>
     {
         AsyncOperation sceneLoad = SceneManager.LoadSceneAsync(scene.ToString());
 
-        // Scene Load°¡ ¿Ï·áµÉ ¶§±îÁö ´ë±â
+        // Scene Loadï¿½ï¿½ ï¿½Ï·ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         while (!sceneLoad.isDone)
         {
             await UniTask.Yield(PlayerLoopTiming.Update);

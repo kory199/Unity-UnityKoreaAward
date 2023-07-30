@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using static EnumTypes;
 
 public class UIManager : UIBase
@@ -29,7 +30,7 @@ public class UIManager : UIBase
 
     private int     _sortingOrder = 0;
     private string  _basePath = "UI/";
-    
+
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void InstUIManager()
     {
@@ -49,10 +50,12 @@ public class UIManager : UIBase
 
         _instance = this;
         isExistence = true;
+
         DontDestroyOnLoad(this.gameObject);
     }
 
-    protected override void Start() => SetUp();
+    protected override void Start() => SetUp();       
+
     private void SetUp()
     {
         _processManager = this.gameObject.AddComponent<ProcessManager>();
@@ -65,6 +68,7 @@ public class UIManager : UIBase
         }
 
         GetLanguageData();
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void GetLanguageData()
@@ -116,7 +120,19 @@ public class UIManager : UIBase
         if (true == _canvases.ContainsKey(type))
             return;
 
-        var newCanvas = new GameObject().AddComponent<Canvas>();
+        Canvas newCanvas;
+
+        if (type == LayoutType.Title)
+        {
+            GameObject prefab = Resources.Load<GameObject>("UI/Title_Canvas");
+            GameObject instance = Instantiate(prefab, transform);
+            newCanvas = instance.GetComponent<Canvas>();
+        }
+        else
+        {
+            newCanvas = new GameObject().AddComponent<Canvas>();
+        }
+
         newCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
         newCanvas.sortingOrder = _sortingOrder;
         ++_sortingOrder;
@@ -127,10 +143,42 @@ public class UIManager : UIBase
         _canvases.Add(type, newCanvas.gameObject);
     }
 
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        switch (scene.name)
+        {
+            case nameof(ScenesType.SceneTitle):
+                ShowUI(LayoutType.Title);
+                break;
+            default:
+                HideUI(LayoutType.Title);
+                break;
+        }
+    }
+
+    private void ShowUI(LayoutType layoutType)
+    {
+        if (_canvases.ContainsKey(layoutType))
+        {
+            _canvases[layoutType].SetActive(true);
+        }
+    }
+
+    private void HideUI(LayoutType layoutType)
+    {
+        if (_canvases.ContainsKey(layoutType))
+        {
+            _canvases[layoutType].SetActive(false);
+        }
+    }
+
+     protected void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
     public override IProcess.NextProcess ProcessInput()
     {
         return IProcess.NextProcess.Continue;
     }
 }
-
-
