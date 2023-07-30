@@ -7,7 +7,7 @@ public partial class Player : CharacterBase
     [Header("User Setting")]
     [SerializeField] float playerSpeed;
 
-    Rigidbody playerRb;
+    Rigidbody2D playerRb;
     
 
     protected override void Start()
@@ -21,6 +21,7 @@ public partial class Player : CharacterBase
         InitComponent();
         InitSetting();
         InitPlayer();
+        playerRb.gravityScale = 0;
     }
 
     void Update()

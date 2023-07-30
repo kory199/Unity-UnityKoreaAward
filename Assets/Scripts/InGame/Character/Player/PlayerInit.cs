@@ -15,10 +15,10 @@ public partial class Player
 
     private void InitComponent()
     {
-        if (gameObject.TryGetComponent<Rigidbody>(out Rigidbody rigidbody))
+        if (gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D rigidbody))
             playerRb = rigidbody;
         else
-            playerRb = gameObject.AddComponent<Rigidbody>();
+            playerRb = gameObject.AddComponent<Rigidbody2D>();
     }
 
     private void InitSetting()
