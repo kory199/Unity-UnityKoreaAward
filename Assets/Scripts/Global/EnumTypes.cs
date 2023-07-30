@@ -2,13 +2,14 @@ using System;
 
 public static partial class EnumTypes
 {
-    public enum LanguageType // Å×ÀÌºí
+    public enum LanguageType // ï¿½ï¿½ï¿½Ìºï¿½
     {
         Kor = 0,
         Eng = 1
     }
     public enum LayoutType
     {
+        Title,
         First,
         Middle,
         Global,  // popup
@@ -25,7 +26,7 @@ public static partial class EnumTypes
     {
         Death,
         LevelUp,
-        MAX //¸¶Áö¸· Enum => Const´À³¦
+        MAX //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Enum => Constï¿½ï¿½ï¿½ï¿½
     }
     public enum PlayerSkiilsType
     {
@@ -67,19 +68,19 @@ public static partial class EnumTypes
 
     public enum StageStateType
     {
-        Start, //½ÃÀÛ
-        Next, //´ÙÀ½
-        End, //³¡ => º¸½º¸Ê
+        Start, //ï¿½ï¿½ï¿½ï¿½
+        Next, //ï¿½ï¿½ï¿½ï¿½
+        End, //ï¿½ï¿½ => ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         Max
     }
 
     public enum MonsterStateType
     {
-        None,   // µ¥ÀÌÅÍ ÃÊ±âÈ­ µîÀÇ ÀÛ¾÷
-        Move,   // ÇÃ·¹ÀÌ¾îÃßÀû or ¹«ÀÛÀ§ ÀÌµ¿
-        Attack, // °ø°Ý
-        Death,  // Á×À½
-        Dance,  // ÇÃ·¹ÀÌ¾î Á×¾úÀ»¶§ Å·¹Þ°Ô ÇÏ±â¿ë State
+        None,   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ ï¿½ï¿½ï¿½ï¿½ ï¿½Û¾ï¿½
+        Move,   // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ï¿½ï¿½ or ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
+        Attack, // ï¿½ï¿½ï¿½ï¿½
+        Death,  // ï¿½ï¿½ï¿½ï¿½
+        Dance,  // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½×¾ï¿½ï¿½ï¿½ï¿½ï¿½ Å·ï¿½Þ°ï¿½ ï¿½Ï±ï¿½ï¿½ State
         Phase1,
         Phase2,
         Phase3,
