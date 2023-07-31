@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    [SerializeField] private List<Vector3> _spawnPos=new List<Vector3>();
+    [SerializeField] private List<Vector3> _spawnPos = new List<Vector3>();
     [SerializeField] private int _meleeMonsterNum;
     [SerializeField] private int _rangedMonsterNum;
     [SerializeField] private int _spawnMonsterTotalNum;
@@ -35,7 +35,7 @@ public class SpawnManager : MonoBehaviour
     IEnumerator Co_MonsterSpawn()
     {
         //풀에서 몬스터 꺼내기
-        while(!Input.GetKeyDown(KeyCode.P))
+        while (!Input.GetKeyDown(KeyCode.P))
         {
             Debug.Log("몬스터 생성중");
             SpawnMonsters();
@@ -55,7 +55,7 @@ public class SpawnManager : MonoBehaviour
         //근접 생성
         for (int i = 0; i < _spawnMonsterTotalNum; i++)
         {
-            int num = RandomChoose(tempNum.Count-1);
+            int num = RandomChoose(tempNum.Count - 1);
             tempNum.Remove(num);
             Debug.Log(num);
             Debug.Log(tempNum[num]);

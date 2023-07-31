@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Build;
 using UnityEngine;
 
 namespace APIModels
@@ -35,5 +36,18 @@ namespace APIModels
         public string id { get; set; }
         public int score { get; set; }
         public int ranking { get; set; }
+    }
+
+    public class MonsterData
+    {
+        public string monsterType { get; set; }
+        public int level { get; set; }
+        public int exp { get; set; }
+        public float hp { get; set; }
+        public float speed { get; set; }
+
+        public float rateOfFire { get; set; }
+
+        public float collisionDamage { get; set; }
     }
 }
