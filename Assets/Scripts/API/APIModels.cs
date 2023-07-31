@@ -43,14 +43,12 @@ namespace APIModels
         public int ranking { get; set; }
     }
 
-<<<<<<< HEAD
     public class StageInfo
     {
         public long player_uid { get; set; }
         public int stage_id { get; set; }
         public bool is_achieved { get; set; }
     }
-=======
     public class MonsterData
     {
         public string monsterType { get; set; }
@@ -63,5 +61,4 @@ namespace APIModels
         public int score { get; set; }
         public float ranged { get; set; }
     }
->>>>>>> main
 }
