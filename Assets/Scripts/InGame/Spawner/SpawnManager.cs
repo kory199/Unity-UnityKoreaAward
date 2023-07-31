@@ -64,7 +64,4 @@ public class SpawnManager : MonoBehaviour
 
     }
     private int RandomChoose(int gap) => Random.Range(0, gap);
-
-
-
 }

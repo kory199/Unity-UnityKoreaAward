@@ -26,6 +26,7 @@ public partial class Player
             playerRb = rigidbody;
         else
             playerRb = gameObject.AddComponent<Rigidbody2D>();
+        playerRb.gravityScale = 0;
     }
 
     private void InitSetting()
