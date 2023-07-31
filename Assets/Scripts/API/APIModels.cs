@@ -21,6 +21,11 @@ namespace APIModels
         public string AuthToken { get; set; }
     }
 
+    public class StageData : GameData
+    {
+        public int StageNum { get; set; }
+    }
+
     public class PlayerData
     {
         public string id { get; set; }
@@ -35,5 +40,12 @@ namespace APIModels
         public string id { get; set; }
         public int score { get; set; }
         public int ranking { get; set; }
+    }
+
+    public class StageInfo
+    {
+        public long player_uid { get; set; }
+        public int stage_id { get; set; }
+        public bool is_achieved { get; set; }
     }
 }

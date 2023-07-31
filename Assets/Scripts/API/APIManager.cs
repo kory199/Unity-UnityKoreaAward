@@ -8,7 +8,6 @@ using UnityEngine;
 
 public class APIManager : MonoSingleton<APIManager>
 {
-    [Header("Scriptable Objects")]
     public APIDataSO apidata = null;
     public PlayerBaseData playerBaseData = null;
 
@@ -21,6 +20,8 @@ public class APIManager : MonoSingleton<APIManager>
     {
         if (apidata == null) apidata = Resources.Load<APIDataSO>("APIData");
         if (playerBaseData == null) playerBaseData = Resources.Load<PlayerBaseData>("PlayerData");
+
+        DontDestroyOnLoad(this.gameObject);
     }
 
     public async UniTask<String> GetGameVersionAPI()
@@ -145,6 +146,35 @@ public class APIManager : MonoSingleton<APIManager>
         else
         {
             Debug.LogError("Failed RankingData from API response.");
+        }
+    }
+
+    public async UniTask GetStageAPI(int stageNum)
+    {
+        StageData stageData = new StageData
+        {
+            ID = GetApiSODicUerData().ID,
+            AuthToken = GetApiSODicUerData().AuthToken,
+            StageNum = stageNum,
+        };
+
+        await CallAPI<Dictionary<string, object>, StageData>(APIUrls.StageApi, stageData, HandleStageDataResponse);
+    }
+
+    private void HandleStageDataResponse(APIResponse<Dictionary<string, object>> apiResponse)
+    {
+        var responseBody = JsonConvert.DeserializeObject<Dictionary<string, object>>(apiResponse.responseBody);
+
+        if(responseBody.TryGetValue("stageData", out object stageDataObj))
+        {
+            List<StageData> stageDataList =
+                JsonConvert.DeserializeObject<List<StageData>>(stageDataObj.ToString());
+
+            apidata.SetResponseData("StageData", stageDataList);
+        }
+        else
+        {
+            Debug.LogError("Failed StageData from API response.");
         }
     }
 
