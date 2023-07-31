@@ -8,7 +8,7 @@ public partial class Player
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            GameObject bullet = ObjectPooler.SpawnFromPool("Bullet", gameObject.transform.position);
+           // GameObject bullet = ObjectPooler.SpawnFromPool("Bullet", gameObject.transform.position);
         }
     }
     public void PlayerHit(int damageAmount)

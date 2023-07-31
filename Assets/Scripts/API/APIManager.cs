@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using APIModels;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
@@ -25,6 +23,25 @@ public class APIManager : MonoSingleton<APIManager>
         if (playerBaseData == null) playerBaseData = Resources.Load<PlayerBaseData>("PlayerData");
     }
 
+    public async UniTask<String> GetGameVersionAPI()
+    {
+        string gameVersion = null;
+        GetVersion requestBody = new GetVersion();
+
+        await CallAPI<Dictionary<string, object>, GetVersion>(APIUrls.VersionApi, requestBody, apiResponse =>
+        {
+            if (apiResponse?.Data is Dictionary<string, object> data)
+            {
+                if (data.ContainsKey("gameVer"))
+                {
+                    gameVersion = data["gameVer"].ToString();
+                }
+            }
+        });
+
+        return gameVersion;
+    }
+
     public async UniTask CreateAccountAPI(User user)
     {
         await CallAPI<Dictionary<string, object>, User>(APIUrls.CreateAccountApi, user, null);
@@ -34,9 +51,6 @@ public class APIManager : MonoSingleton<APIManager>
     {
         _id = user.ID;
 
-#if UNITY_EDITOR
-        Debug.Log($"_id : {_id}");
-#endif
         await CallAPI<Dictionary<string, object>, User>(APIUrls.LoginApi, user, HandleLoginResponse);
         isLogin = true;
     }
@@ -100,15 +114,11 @@ public class APIManager : MonoSingleton<APIManager>
 
         if (responseBody.TryGetValue("playerData", out var playerDataObj) && playerDataObj is JArray)
         {
-            List<PlayerData> playerDataList = new List<PlayerData>();
-
             foreach (var playerDataJToken in playerDataObj as JArray)
             {
                 PlayerData playerData = playerDataJToken.ToObject<PlayerData>();
-                playerDataList.Add(playerData);
+                apidata.SetResponseData("PlayerData", playerData);
             }
-
-            apidata.SetResponseData("PlayerData", playerDataList);
         }
         else
         {
@@ -116,7 +126,7 @@ public class APIManager : MonoSingleton<APIManager>
         }
     }
 
-    public async UniTask GetRanking()
+    public async UniTask GetRankingAPI()
     {
         await CallAPI<Dictionary<string, object>, GameData>(APIUrls.RankingApi, GetApiSODicUerData(), HandleRankingDataResponse);
     }

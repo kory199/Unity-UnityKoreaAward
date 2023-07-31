@@ -55,12 +55,12 @@ public class InGameManager : MonoSingleton<InGameManager>
             Debug.LogError("This Enum Type is not exist");
             return;
         }
-        Debug.Log("actionType : " + actionType.ToString()+" " + _parameters[param].GetActionCount());
+        //Debug.Log("actionType : " + actionType.ToString()+" " + _parameters[param].GetActionCount());
         _parameters[param].AddCallBack(idx, action);
     }
     private void Start()
     {
-        AddActionType(EnumTypes.InGameParamType.Player, PlayerSkiilsType.DoubleShot, () => Debug.Log("´õºí¼¦"));
-        _parameters[EnumTypes.InGameParamType.Player].InvokeCallBack(EnumTypes.PlayerSkiilsType.DoubleShot);
+       // AddActionType(EnumTypes.InGameParamType.Player, PlayerSkiilsType.DoubleShot, () => Debug.Log("´õºí¼¦"));
+       // _parameters[EnumTypes.InGameParamType.Player].InvokeCallBack(EnumTypes.PlayerSkiilsType.DoubleShot);
     }
 }
