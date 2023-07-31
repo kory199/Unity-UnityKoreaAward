@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Build;
 using UnityEngine;
 
 namespace APIModels
@@ -42,10 +43,25 @@ namespace APIModels
         public int ranking { get; set; }
     }
 
+<<<<<<< HEAD
     public class StageInfo
     {
         public long player_uid { get; set; }
         public int stage_id { get; set; }
         public bool is_achieved { get; set; }
     }
+=======
+    public class MonsterData
+    {
+        public string monsterType { get; set; }
+        public int level { get; set; }
+        public int exp { get; set; }
+        public float hp { get; set; }
+        public float speed { get; set; }
+        public float rateOfFire { get; set; }
+        public float collisionDamage { get; set; }
+        public int score { get; set; }
+        public float ranged { get; set; }
+    }
+>>>>>>> main
 }

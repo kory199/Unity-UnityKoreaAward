@@ -12,6 +12,8 @@ public class BossOne : BossBase
     [SerializeField] private float lotationSpeed2 = 0.1f;
     [Range(0, 100)]
     [SerializeField] private float tempHP = 100;
+    [Header("BossProjectile")]
+    [SerializeField] private string projectileName;
     void Start()
     {
         //회전 초기값
@@ -24,7 +26,7 @@ public class BossOne : BossBase
 
         monsterData = new MonsterData();
         monsterData.InsertMonsterInfo();
-        if (monsterData.TryGetMonsterInfo("BossOne", out _monsterInfo))
+        if (monsterData.TryGetMonsterInfo(MonsterName, out _monsterInfo))
         {
             Debug.Log("Insert Data");
         }
@@ -49,7 +51,7 @@ public class BossOne : BossBase
     }
     protected override void Attack()
     {
-        ShootProjectile("Bullet");
+        ShootProjectile(projectileName);
     }
     private void RotateAttack()
     {
@@ -77,6 +79,17 @@ public class BossOne : BossBase
             spawner.transform.position = newPos;
             transedDegree += lotationSpeed;
             i += lotationSpeed;
+        }
+    }
+    protected override IEnumerator State_Attack()
+    {
+        // 공격 가능한 상태일때 무한반복
+        while (state == MonsterStateType.Attack)
+        {
+            // 공격가능상태인지 체크
+            // 범위밖이면 Move State로 이동 
+            Attack();
+            yield return new WaitForSeconds(_monsterInfo.RateOfFire); // 3f 대신 monsterData.RateOfFire 등등 만들어서 대체
         }
     }
     IEnumerator State_Phase1()
@@ -125,4 +138,10 @@ public class BossOne : BossBase
             yield return new WaitForSeconds(0.3f);*/
         }
     }
+
+    protected override void SetMonsterName()
+    {
+        MonsterName = "BossOne";
+    }
+
 }

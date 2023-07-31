@@ -4,32 +4,31 @@ using UnityEngine;
 
 public partial class Player
 {
-    public override void  Move()
+    public override void Move()
     {
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
-        float verticalInput = Input.GetAxisRaw("Vertical");
+        if (playerRb == null)
+        {
+            Debug.LogError("playerRb (Rigidbody2D) is not initialized properly.");
+            return;
+        }
+
+        float moveHorizontal = Input.GetAxisRaw("Horizontal");
+        float moveVertical = Input.GetAxisRaw("Vertical");
         float mouseX = Input.GetAxis("Mouse X");
 
-        Vector3 moveDir = new Vector3(horizontalInput, 0, verticalInput).normalized;
+        Vector2 moveDir = new Vector2(moveHorizontal, moveVertical).normalized;
         playerRb.velocity = moveDir * playerSpeed;
 
-        // 게임 뷰에 보이는 마우스 위치를 가져옴
         Vector3 mousePosition = Input.mousePosition;
+        mousePosition.z = 10;
+        Vector3 targetPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+        Vector3 targetDirection = targetPosition - transform.position;
 
-        // 마우스 위치를 월드 좌표로 변환
-        Ray ray = Camera.main.ScreenPointToRay(mousePosition);
-
-        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+        if (targetDirection != Vector3.zero)
         {
-            // 플레이어의 위치와 마우스 위치 간의 벡터를 계산하여 플레이어를 회전시킴
-            Vector3 targetDirection = hit.point - transform.position;
-            targetDirection.y = 0f; // y 축 회전 방지
-
-            if (targetDirection != Vector3.zero)
-            {
-                Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
-                playerRb.MoveRotation(targetRotation);
-            }
+            float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
+            Quaternion targetRotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            playerRb.SetRotation(targetRotation);
         }
     }
 }

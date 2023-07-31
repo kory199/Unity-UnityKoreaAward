@@ -56,7 +56,7 @@ public class TitleManager : MonoBehaviour
         GetGameVersion();
 
         // === StartPanel Button Event ===
-        accountBut.onClick.AddListener(OnClickeAccount);
+        accountBut.onClick.AddListener(OnClickAccount);
         rankBut.onClick.AddListener(OnClickRank);
         startBut.onClick.AddListener(GoLobbyScene);
         optionBut.onClick.AddListener(delegate { ShowUI(panels[3]);});
@@ -74,7 +74,7 @@ public class TitleManager : MonoBehaviour
         o_goBackBut.onClick.AddListener(delegate { ShowUI(panels[0]); });
     }
 
-    private async void OnClickeAccount()
+    private async void OnClickAccount()
     {
         ShowUI(panels[1]);
         infotext.gameObject.SetActive(false);

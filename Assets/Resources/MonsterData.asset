@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: MonsterData
   m_EditorClassIdentifier: 
   MonsterDataList:
-  - Name: 
-    Exp: 0
-    Score: 0
-    Hp: 0
-    RateOfFire: 0
+  - Name: BasicMeleeMonster
+    Exp: 10
+    Score: 10
+    Hp: 100
+    RateOfFire: 3
+    Range: 3
+    MoveSpeed: 0.5

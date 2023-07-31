@@ -74,6 +74,19 @@ public static partial class EnumTypes
         Max
     }
 
+    public enum MonsterType
+    {
+        MeleeMonster,
+        RangedMonster
+    }
+
+    public enum FSMMonsterStateType
+    {
+        Idle,
+        Chasing,
+        Attacking
+    }
+
     public enum MonsterStateType
     {
         None,   // ������ �ʱ�ȭ ���� �۾�

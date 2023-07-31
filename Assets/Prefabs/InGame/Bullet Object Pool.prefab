@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &511879090827133546
 MonoBehaviour:
@@ -47,6 +47,14 @@ MonoBehaviour:
   _uiCanvasPooler: {fileID: 0}
   _pools:
   - Name: Bullet
-    Prefab: {fileID: 8961962909162185871, guid: 54183e2573780f843b50d32cb6780418, type: 3}
+    Prefab: {fileID: 4010791524929188743, guid: ed54ded7b6f3eb842acb98c188ef2ae2, type: 3}
     Number: 50
+    IsUi: 0
+  - Name: MeleeMonster
+    Prefab: {fileID: 5345714286809512649, guid: 1bbfb5512b9ae9a4e9f95012f1f61023, type: 3}
+    Number: 5
+    IsUi: 0
+  - Name: RangedMonster
+    Prefab: {fileID: 739570210054639162, guid: 077f8cdf593ccab4a93bf37afcb4bc4b, type: 3}
+    Number: 5
     IsUi: 0

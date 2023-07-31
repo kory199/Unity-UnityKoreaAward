@@ -22,6 +22,7 @@ public abstract class CharacterBase : MonoBehaviour
     protected int hp;
     protected int mp;
     protected int lv;
+    protected float moveSpeed;
 
 
     protected virtual void Start()
