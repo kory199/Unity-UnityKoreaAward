@@ -45,9 +45,9 @@ namespace APIModels
         public int exp { get; set; }
         public float hp { get; set; }
         public float speed { get; set; }
-
         public float rateOfFire { get; set; }
-
         public float collisionDamage { get; set; }
+        public int score { get; set; }
+        public float ranged { get; set; }
     }
 }
