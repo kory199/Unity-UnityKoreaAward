@@ -4,13 +4,25 @@ using UnityEngine;
 
 public class MonsterSpawn : MonoBehaviour
 {
-    [SerializeField] GameObject monsterPrefab; // 스폰할 몬스터 프리팹
-    [SerializeField] private int maxMonstersPerSpawnArea = 3; // 한 스폰 지역당 최대 몬스터 스폰 개수
-    [SerializeField] private float spawnDelay = 2f; // 몬스터 스폰 간격
-    [SerializeField] private float spawnRadius = 5f; // 몬스터 스폰 반경
+    GameObject meleeMonster; // 스폰할 몬스터 프리팹
+    GameObject rangedMonster; // 스폰할 몬스터 프리팹
+    private int maxMonstersPerSpawnArea; // 한 스폰 지역당 최대 몬스터 스폰 개수
+    public float spawnDelay; // 몬스터 스폰 간격
+    public float spawnRadius; // 몬스터 스폰 반경
+    public int meleeMonsterSpawnNum; // 몬스터 스폰 개수
+    public int rangedMonsterSpawnNum; // 몬스터 스폰 개수
 
-    GameObject meleeMonster;
-    GameObject rangedMonster;
+
+
+
+    private void Awake()
+    {
+        maxMonstersPerSpawnArea = 3;
+        spawnDelay = 2f;
+        spawnRadius = 5f;
+        meleeMonsterSpawnNum = 3;
+        rangedMonsterSpawnNum = 3;
+    }
 
     private void Start()
     {
@@ -28,7 +40,18 @@ public class MonsterSpawn : MonoBehaviour
         for (int i = 0; i < maxMonstersPerSpawnArea; i++)
         {
             Vector2 randomPosition = (Vector2)randomSpawnArea.position + Random.insideUnitCircle * spawnRadius;
-            Instantiate(monsterPrefab, randomPosition, Quaternion.identity);
+
+            switch (monster)
+            {
+                case EnumTypes.MonsterType.MeleeMonster:
+                    ObjectPooler.SpawnFromPool("MeleeMonster", randomPosition);
+                    break;
+                case EnumTypes.MonsterType.RangedMonster:
+                    ObjectPooler.SpawnFromPool("RangedMonster", randomPosition);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

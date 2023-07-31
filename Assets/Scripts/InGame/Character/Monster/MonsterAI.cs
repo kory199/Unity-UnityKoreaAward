@@ -49,6 +49,9 @@ public class MonsterAI : MonoBehaviour
         rangedDetectionRange = 100f;
         rangedAttackRange = 15f;
         rangedAttackDamage = 5;
+
+        // Player와의 거리 계산
+        distanceToPlayer = Mathf.Infinity;
     }
     private void Start()
     {
@@ -92,8 +95,6 @@ public class MonsterAI : MonoBehaviour
                 UpdateAttackingState();
                 break;
         }
-
-        Debug.Log($"isAttackingCooldown : {isAttackingCooldown}");
     }
 
     private void MoveTowardsPlayer()
@@ -157,7 +158,6 @@ public class MonsterAI : MonoBehaviour
                 Attack();
             }
         }
-
     }
 
     private float GetMoveSpeed()
@@ -208,17 +208,19 @@ public class MonsterAI : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         // 공격 범위에 플레이어가 들어오면 공격
-        if (!isAttacking && other.CompareTag("Player"))
+        if (!isAttacking && distanceToPlayer < GetAttackRange() && other.CompareTag("Player"))
         {
-            Debug.Log("공격");
             if (monsterType == EnumTypes.MonsterType.MeleeMonster)
             {
+                Debug.Log("Melee Monster Attack");
+
                 other.GetComponent<Player>().PlayerHit(meleeAttackDamage);
             }
             else if (monsterType == EnumTypes.MonsterType.RangedMonster)
             {
                 other.GetComponent<Player>().PlayerHit(rangedAttackDamage);
             }
+
             isAttacking = true;
         }
     }

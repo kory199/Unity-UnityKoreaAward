@@ -12,8 +12,8 @@ public partial class Player
     [Header("User Setting")]
     [SerializeField] float playerSpeed;
 
-    public int playerMaxHp;
-    public int playerCurHp;
+    [SerializeField] public int playerMaxHp;
+    [SerializeField] public int playerCurHp;
 
     public int playerLv;
     public int playerMp;
@@ -38,9 +38,14 @@ public partial class Player
 
     private void InitPlayer()
     {
+        // Test
+        playerMaxHp = 100;
+        playerCurHp = playerMaxHp;
+
         if (APIManager.Instacne.isLogin)
         {
             playerMaxHp = playerBaseData.hp;
+            playerMaxHp = 100;
             playerCurHp = playerMaxHp;
             playerLv = playerBaseData.level;
             playerMaxExp = playerBaseData.exp;
