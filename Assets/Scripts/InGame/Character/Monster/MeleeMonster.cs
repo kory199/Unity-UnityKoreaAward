@@ -20,6 +20,7 @@ public class MeleeMonster : MonsterBase
     protected override void Attack()
     {
         transform.Rotate(0, 0, 30);
+
     }
 
     protected override void SetMonsterName()

@@ -9,6 +9,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private int _rangedMonsterNum;
     [SerializeField] private int _spawnMonsterTotalNum;
     [SerializeField] private float _spawnTime = 3f;
+    [SerializeField] private float _SpawnRandomFactor = 2f;
     WaitForSeconds spawnDelay;
 
     #region Unity Life Cycle
@@ -59,7 +60,10 @@ public class SpawnManager : MonoBehaviour
             tempNum.Remove(num);
             Debug.Log(num);
             Debug.Log(tempNum[num]);
-            GameObject monster = ObjectPooler.SpawnFromPool("BasicMeleeMonster", _spawnPos[tempNum[num]]);
+
+            Vector3 spawnRandomArea = _spawnPos[tempNum[num]] + (Vector3)Random.insideUnitCircle * _SpawnRandomFactor;
+
+            GameObject monster = ObjectPooler.SpawnFromPool("BasicMeleeMonster", spawnRandomArea);
         }
 
     }

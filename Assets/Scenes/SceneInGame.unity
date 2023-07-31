@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 453152199}
   - component: {fileID: 453152198}
   m_Layer: 0
-  m_Name: dataManager
+  m_Name: DataManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -759,10 +759,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSpeed: 0
-  playerHp: 0
+  playerMaxHp: 0
+  playerCurHp: 0
   playerLv: 0
   playerMp: 0
-  playerExp: 0
+  playerMaxExp: 0
   IsDeath: 0
 --- !u!212 &2117676744
 SpriteRenderer:
