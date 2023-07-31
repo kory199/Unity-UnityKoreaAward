@@ -41,7 +41,6 @@ public class MonsterData : ScriptableObject
         {
             if (info.Name == name)
             {
-
                 monsterInfo = info;
                 return true;
             }
