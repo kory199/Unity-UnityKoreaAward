@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 739570210054639164}
   - component: {fileID: 739570210054639165}
   - component: {fileID: 1191585310}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RangedMonster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c28d77d02a5cee44aca9c38f2ef8695, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0
-  attackRange: 0
-  attackDelay: 0
+  monsterType: 0
+  fsmMonsterStateType: 0
+  meleeMoveSpeed: 0
+  meleeAttackCooldown: 0
+  meleeDetectionRange: 0
+  meleeAttackRange: 0
+  meleeAttackDamage: 0
+  rangedMoveSpeed: 0
+  rangedAttackCooldown: 0
+  rangedDetectionRange: 0
+  rangedAttackRange: 0
+  rangedAttackDamage: 0
   player: {fileID: 8516200050958493884, guid: 447dfd2202628a04a9c407b170214b88, type: 3}
+  meleeDetectionCollider: {fileID: 0}
+  rangedDetectionCollider: {fileID: 0}
+  meleeAttackCollider: {fileID: 0}
+  rangedAttackCollider: {fileID: 0}
+  isAttacking: 0

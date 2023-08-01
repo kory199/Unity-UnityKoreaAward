@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5345714286809512655}
   - component: {fileID: 5345714286809512648}
   - component: {fileID: 1027490076}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MeleeMonster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterType: 0
+  fsmMonsterStateType: 0
   meleeMoveSpeed: 3
   meleeAttackCooldown: 1.5
   meleeDetectionRange: 100
@@ -113,3 +114,4 @@ MonoBehaviour:
   rangedDetectionCollider: {fileID: 0}
   meleeAttackCollider: {fileID: 0}
   rangedAttackCollider: {fileID: 0}
+  isAttacking: 0
