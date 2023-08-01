@@ -35,7 +35,8 @@ public partial class Player
                 bulletRb = pullBullet.AddComponent<Rigidbody2D>();
             }
 
-            bulletRb.velocity = targetDirection;
+            // 속도 가중치는 서버 데이터 업로드 후 변경 (5 -> projectileSpeed)
+            bulletRb.velocity = targetDirection * 5;
         }
     }
     public void PlayerHit(int damageAmount)

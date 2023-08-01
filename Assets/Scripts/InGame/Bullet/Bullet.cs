@@ -45,28 +45,16 @@ public class Bullet : MonoBehaviour
         rangedBulletDamage = 10f;
         meleeBulletDamage = 20f;
         playerBulletDamage = 10f;
-
-        // 마우스 방향에 따른 방향 벡터 계산
-        DirBullet();
     }
 
-    private void DirBullet()
-    {
-        // 게임 뷰의 마우스 포인트
-        Vector3 mousePosition = Input.mousePosition;
-        // 마우스 좌표를 월드좌표 기준으로 변환
-        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
-        Vector2 bulletSpawnerPosition = bulletSpawner.position;
-
-        // 방향벡터 구하기 (2D 평면상의 방향을 구하기 위해 Z좌표를 무시)
-        dirBullet = ((Vector2)mouseWorldPosition - bulletSpawnerPosition).normalized;
-    }
 
     public void SetShooter(GameObject shooter)
     {
         setShooter = shooter;
     }
+
     private void ReturnBullet() => gameObject.SetActive(false);
+
     private void OnCollisionEnter2D(Collision2D other)
     {
         // Player Hit
@@ -99,8 +87,6 @@ public class Bullet : MonoBehaviour
 
     private void OnEnable()
     {
-        // bulletRb.velocity = dirBullet * bulletSpeed;
-
         // 발사 후 5초 뒤 Bullet 비활성화
         Invoke("ReturnBullet", bulletLifeTime);
     }
