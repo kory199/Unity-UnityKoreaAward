@@ -44,7 +44,7 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-
+    #region Áßº¹¾ø´Â ·£´ý »Ì±â
     private void SpawnMonsters()
     {
         List<int> tempNum = new List<int>();
@@ -66,4 +66,5 @@ public class SpawnManager : MonoBehaviour
         }
     }
     private int RandomChoose(int gap) => Random.Range(0, gap);
+    #endregion
 }

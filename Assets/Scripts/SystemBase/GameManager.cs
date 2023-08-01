@@ -24,6 +24,11 @@ public class GameManager : MonoSingleton<GameManager>
     }
 
 
+    public void MoveScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+
     public async UniTask LoadAsync(EnumTypes.ScenesType scene)
     {
         UniTask loadSceneUnitask = LoadScene(scene);

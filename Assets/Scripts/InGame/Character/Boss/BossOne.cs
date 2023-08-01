@@ -48,6 +48,12 @@ public class BossOne : BossBase
 
         TransferState(MonsterStateType.Phase3);
         yield return new WaitUntil(() => tempHP == 0);
+
+        StartCoroutine(Co_BossDie());
+    }
+    public void GetDamage(int damage)
+    {
+        curHP -= damage;
     }
     protected override void Attack()
     {
@@ -143,5 +149,12 @@ public class BossOne : BossBase
     {
         MonsterName = "BossOne";
     }
-
+   IEnumerator Co_BossDie()
+    {
+        yield return null;
+        //죽을 경우 나타나는 이펙트 알림 모두 처리
+        Debug.Log("boss die");
+        //스테이지 매니저에 보스 죽음알림
+        FindObjectOfType<StageManager>().BossDeath();
+    }
 }
