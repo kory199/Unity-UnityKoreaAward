@@ -2,40 +2,77 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] float bulletSpeed;
+    [SerializeField] public float bulletSpeed;
+    [SerializeField] public float bulletLifeTime;
+    [SerializeField] public float rangedBulletDamage;
+    [SerializeField] public float meleeBulletDamage;
+    [SerializeField] public float playerBulletDamage;
+    
     [SerializeField] GameObject player;
-    Transform bulletSpawner;
-    Rigidbody2D bulletRb; 
-    float lifeTime = 5f;
+    [SerializeField] GameObject setShooter;
+    
     Vector2 dirBullet;
+
+    private Transform bulletSpawner;
+    private CircleCollider2D bulletCollider;
+    private Rigidbody2D bulletRb;
+
+    private void Start()
+    {
+        BulletInit();
+    }
 
     private void BulletInit()
     {
         if (gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
             bulletRb = rb;
         else
-            bulletRb = gameObject.AddComponent<Rigidbody2D>(); 
+            bulletRb = gameObject.AddComponent<Rigidbody2D>();
+
+        if (gameObject.TryGetComponent<CircleCollider2D>(out CircleCollider2D collider2D))
+            bulletCollider = collider2D;
+        else
+            bulletCollider = gameObject.AddComponent<CircleCollider2D>();
 
         bulletRb.gravityScale = 0;
+        bulletCollider.isTrigger = true;
 
         bulletSpawner = player.transform;
 
-        bulletSpeed = 10f; 
-
-        // 마우스 방향에 따른 방향 벡터 계산
-        DirBullet();
+        // 레벨업 등에 따라 바뀜 (초기 값으로 추후 스크립터블 오브젝트에서 값을 받아와야됨)
+        bulletSpeed = 10f;
+        bulletLifeTime = 5f;
+        rangedBulletDamage = 10f;
+        meleeBulletDamage = 20f;
+        playerBulletDamage = 10f;
     }
 
-    private void DirBullet()
-    {
-        // 게임 뷰의 마우스 포인트
-        Vector3 mousePosition = Input.mousePosition;
-        // 마우스 좌표를 월드좌표 기준으로 변환
-        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
-        Vector2 bulletSpawnerPosition = bulletSpawner.position;
 
-        // 방향벡터 구하기 (2D 평면상의 방향을 구하기 위해 Z좌표를 무시)
-        dirBullet = ((Vector2)mouseWorldPosition - bulletSpawnerPosition).normalized;
+    public void SetShooter(GameObject shooter)
+    {
+        setShooter = shooter;
+    }
+
+    private void ReturnBullet() => gameObject.SetActive(false);
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        // Player Hit
+        if (other.gameObject.layer == LayerMask.GetMask("Player"))
+        {
+            // 플레이어 충돌 처리
+            Player hitPlayer = other.gameObject.GetComponent<Player>();
+            //hitPlayer.PlayerHit()
+        }
+        // Monster Hit
+        else if (other.gameObject.layer == LayerMask.GetMask("Monster"))
+        {
+            // 몬스터 충돌 처리
+        }
+        else
+        {
+            // 벽 or 다른 collider 충돌처리
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other) 
@@ -48,16 +85,10 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    private void ReturnBullet() => gameObject.SetActive(false);
-
     private void OnEnable()
     {
-        BulletInit();
-
-        bulletRb.velocity = dirBullet * bulletSpeed;
-
         // 발사 후 5초 뒤 Bullet 비활성화
-        Invoke("ReturnBullet", lifeTime);
+        Invoke("ReturnBullet", bulletLifeTime);
     }
 
     private void OnDisable()

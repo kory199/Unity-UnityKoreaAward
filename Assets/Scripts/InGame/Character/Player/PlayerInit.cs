@@ -14,10 +14,13 @@ public partial class Player
 
     [SerializeField] public int playerMaxHp;
     [SerializeField] public int playerCurHp;
-
+    public float playerMovementSpeed;
+    public int playerAttackPower;
+    public float rateOfFire;
+    public float projectileSpeed;
     public int playerLv;
-    public int playerMp;
     public int playerMaxExp;
+
     public bool IsDeath;
 
     private void InitComponent()
