@@ -52,7 +52,6 @@ public class SpawnManager : MonoBehaviour
         {
             tempNum.Add(i);
         }
-
         //근접 생성
         for (int i = 0; i < _spawnMonsterTotalNum; i++)
         {
@@ -65,7 +64,6 @@ public class SpawnManager : MonoBehaviour
 
             GameObject monster = ObjectPooler.SpawnFromPool("BasicMeleeMonster", spawnRandomArea);
         }
-
     }
     private int RandomChoose(int gap) => Random.Range(0, gap);
 }
