@@ -134,16 +134,8 @@ public class UIManager : UIBase
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        //switch (scene.name)
-        //{
-        //    case nameof(ScenesType.SceneTitle):
-        //        ShowUI(LayoutType.Title);
-        //        break;
-        //    default:
-        //        HideUI(LayoutType.Title);
-        //        break;
-        //}
-    }   //
+        
+    }
 
     private void ShowUI(LayoutType layoutType)
     {
