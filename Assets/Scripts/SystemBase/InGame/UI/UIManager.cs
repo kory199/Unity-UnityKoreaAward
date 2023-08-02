@@ -68,7 +68,6 @@ public class UIManager : UIBase
         }
 
         GetLanguageData();
-        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void GetLanguageData()
@@ -132,11 +131,6 @@ public class UIManager : UIBase
         _canvases.Add(type, newCanvas.gameObject);
     }
 
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        
-    }
-
     private void ShowUI(LayoutType layoutType)
     {
         if (_canvases.ContainsKey(layoutType))
@@ -153,13 +147,9 @@ public class UIManager : UIBase
         }
     }
 
-     protected void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
     public override IProcess.NextProcess ProcessInput()
     {
         return IProcess.NextProcess.Continue;
+
     }
 }
