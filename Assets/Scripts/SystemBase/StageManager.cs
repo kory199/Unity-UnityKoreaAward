@@ -7,6 +7,9 @@ public class StageManager : MonoBehaviour
     [SerializeField] private int _stageNum = 0;
     [SerializeField] private int _spawnMeleeNum = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
     [SerializeField] private int _spawnRangedNum = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
+    [SerializeField] private int _score = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
+    [SerializeField] private int _deathMonsters = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
+    [SerializeField] private float _time = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
     [SerializeField] private SpawnManager _spawnManager;
     #region Uinity lifeCycle
     private void Awake()
@@ -61,7 +64,54 @@ public class StageManager : MonoBehaviour
     private void SetMeleeMonster() => _spawnMeleeNum = StageDataTest.Instacne.GetMeleeMonsterNum(_stageNum);
     private void SetRangedMonster() => _spawnRangedNum = StageDataTest.Instacne.GetRangedMonsterNum(_stageNum);
     private void SetMonsterSpawn() => _spawnManager.SettingMonsterSpawnNum(_spawnMeleeNum, _spawnRangedNum);
-    private void SendStageData() => Debug.Log("Send StageEndData to Server ...");
+    private async void SendStageData()
+    {
+        Debug.Log("Send StageEndData to Server ...");
+        await APIManager.Instacne.StageUpToServer("nickname",_stageNum, _score, _time);
+    }
+
+    public void PlayerDeath()
+    {
+        //게임 오버 코루틴
+        StartCoroutine(Co_GameOverUI());
+                
+        //서버 데이터 전달 
+        SendStageData();
+
+        //씬 이동
+        GameManager.Instacne.MoveScene("SceneLobby");
+    }
+    public void MonsterDeath()
+    {
+        _deathMonsters++;
+        if(_deathMonsters>=(_spawnMeleeNum+_spawnRangedNum)*1*60 )
+        {
+            SetStageNum();
+            CallStage(EnumTypes.StageStateType.Start);
+            _deathMonsters = 0;
+        }
+    }
+    public void BossDeath()
+    {
+        //게임 클리어 코루틴
+        StartCoroutine(Co_GameOverUI());
+
+        //서버 데이터 전달 
+        SendStageData();
+
+        //씬 이동
+        GameManager.Instacne.MoveScene("SceneLobby");
+    }
+    IEnumerator Co_GameOverUI()
+    {
+        yield return null;
+        //게임 오버시 띄울 창 켜거나 이펙트 만들기
+    }
+    IEnumerator Co_GameClearUI()
+    {
+        yield return null;
+        //보스 클리어시 띄울 창 켜거나 이펙트 만들기
+    }
 }
 public class StageDataTest : MonoSingleton<StageDataTest>
 {

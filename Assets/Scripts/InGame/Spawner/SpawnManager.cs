@@ -35,16 +35,16 @@ public class SpawnManager : MonoBehaviour
     }
     IEnumerator Co_MonsterSpawn()
     {
-        //Ç®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        //Ç®¿¡¼­ ¸ó½ºÅÍ ²¨³»±â
         while (!Input.GetKeyDown(KeyCode.P))
         {
-            Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+            Debug.Log("¸ó½ºÅÍ »ý¼ºÁß");
             SpawnMonsters();
             yield return spawnDelay;
         }
     }
 
-
+    #region Áßº¹¾ø´Â ·£´ý »Ì±â
     private void SpawnMonsters()
     {
         List<int> tempNum = new List<int>();
@@ -52,8 +52,7 @@ public class SpawnManager : MonoBehaviour
         {
             tempNum.Add(i);
         }
-
-        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        //±ÙÁ¢ »ý¼º
         for (int i = 0; i < _spawnMonsterTotalNum; i++)
         {
             int num = RandomChoose(tempNum.Count - 1);
@@ -65,7 +64,7 @@ public class SpawnManager : MonoBehaviour
 
             GameObject monster = ObjectPooler.SpawnFromPool("BasicMeleeMonster", spawnRandomArea);
         }
-
     }
     private int RandomChoose(int gap) => Random.Range(0, gap);
+    #endregion
 }

@@ -4,20 +4,45 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoSingleton<GameManager>
 {
+    // private EventSystem _eventSystem;
 
-
-    private void Start()
+    // Runtume init Gamemanager 
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void InstSceneManager()
     {
-        foreach (var data in SkillData.table.Values)
+        var sceneAndUIManager = new GameObject().AddComponent<GameManager>();
+        sceneAndUIManager.name = "GameManager";
+    }
+
+    protected void Awake()
+    {
+        DontDestroyOnLoad(this.gameObject);
+    }
+
+
+    public void MoveScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+
+    public async UniTask LoadAsync(EnumTypes.ScenesType scene)
+    {
+        UniTask loadSceneUnitask = LoadScene(scene);
+
+        await UniTask.WhenAll(loadSceneUnitask);
+    }
+
+    public async UniTask LoadScene(EnumTypes.ScenesType scene)
+    {
+        AsyncOperation sceneLoad = SceneManager.LoadSceneAsync(scene.ToString());
+
+        while (!sceneLoad.isDone)
         {
-            Debug.Log(data.Id);
-            Debug.Log(data.Description);
-            Debug.Log(data.Name);
-            Debug.Log(data.PlayerSkiilsType);
-            Debug.Log(data.UnlockLevel);
+            await UniTask.Yield(PlayerLoopTiming.Update);
         }
     }
 }

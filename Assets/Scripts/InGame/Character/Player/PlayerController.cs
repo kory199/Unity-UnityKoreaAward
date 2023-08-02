@@ -4,6 +4,8 @@ using UnityEngine;
 
 public partial class Player
 {
+    Vector3 targetDirection;
+
     public override void Move()
     {
         if (playerRb == null)
@@ -14,7 +16,6 @@ public partial class Player
 
         float moveHorizontal = Input.GetAxisRaw("Horizontal");
         float moveVertical = Input.GetAxisRaw("Vertical");
-        float mouseX = Input.GetAxis("Mouse X");
 
         Vector2 moveDir = new Vector2(moveHorizontal, moveVertical).normalized;
         playerRb.velocity = moveDir * playerSpeed;
@@ -22,7 +23,7 @@ public partial class Player
         Vector3 mousePosition = Input.mousePosition;
         mousePosition.z = 10;
         Vector3 targetPosition = Camera.main.ScreenToWorldPoint(mousePosition);
-        Vector3 targetDirection = targetPosition - transform.position;
+        targetDirection = targetPosition - transform.position;
 
         if (targetDirection != Vector3.zero)
         {

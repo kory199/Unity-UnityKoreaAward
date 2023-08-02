@@ -192,4 +192,11 @@ public class APIManager : MonoSingleton<APIManager>
             Debug.LogError($"API request failed : {e.Message}");
         }
     }
+
+    public async UniTask StageUpToServer(string name, int stageNum, int score, float time)
+    {
+        //아래 그냥 ctrl c + v 이므로 새로 작성해야함
+        await CallAPI<Dictionary<string, object>, GameData>(APIUrls.StageApi, GetApiSODicUerData(), HandleRankingDataResponse);
+    }
+
 }
