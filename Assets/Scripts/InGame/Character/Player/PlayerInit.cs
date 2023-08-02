@@ -18,6 +18,7 @@ public partial class Player
     public int playerAttackPower;
     public int playerLv;
     public int playerMaxExp;
+    public int playerCurExp = 0;
     public float playerMovementSpeed;
     public float projectileSpeed = 5f;
     public float rateOfFire = 0.3f;

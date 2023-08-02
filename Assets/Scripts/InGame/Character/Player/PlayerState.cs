@@ -48,4 +48,14 @@ public partial class Player
             Die();
         }
     }
+
+    public void Reward(int exp)
+    {
+        playerCurExp += exp;
+
+        if (playerCurExp >= playerMaxExp)
+        {
+            // Level Up
+        }
+    }
 }
