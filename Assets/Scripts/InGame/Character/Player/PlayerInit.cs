@@ -49,12 +49,12 @@ public partial class Player
         playerMaxHp = 100;
         playerCurHp = playerMaxHp;
 
-        PlayerData player = APIDataSO.Instance.GetValueByKey<PlayerData>(APIDataDicKey.PlayerData);
-
-        playerMaxHp = player.hp;
+        //PlayerData player = APIDataSO.Instance.GetValueByKey<PlayerData>(APIDataDicKey.PlayerData);
+        // TODO : 로그인 후 해당 유저 데이터 추가예정
+        playerMaxHp = hp;
         playerMaxHp = 100;
         playerCurHp = playerMaxHp;
-        playerMaxExp = player.exp;
+        playerMaxExp = playerMaxHp;
         IsDeath = false;
     }
 }
