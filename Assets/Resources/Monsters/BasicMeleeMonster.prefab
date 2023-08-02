@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2311305897999876831}
   - component: {fileID: 2311305897999876830}
   - component: {fileID: 2311305897999876829}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BasicMeleeMonster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
