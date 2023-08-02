@@ -10,7 +10,7 @@ public partial class Player
     public Rigidbody2D playerRb;
     public Bullet bullet;
 
-    // юс╫ц : ╪╜╧Ж╥н╨нем ╧ч╬ф╬ъ╣й
+    // О©╫с╫О©╫ : О©╫О©╫О©╫О©╫О©╫н╨О©╫О©╫О©╫ О©╫ч╬ф╬ъ╣О©╫
     [Header("User Setting")]
     [SerializeField] float playerSpeed;
     [SerializeField] public int playerMaxHp;
@@ -44,6 +44,8 @@ public partial class Player
 
     private void InitPlayer()
     {
+
+
         // Test
         playerMaxHp = 100;
         playerCurHp = playerMaxHp;

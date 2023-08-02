@@ -11,6 +11,8 @@ public class TitleManager : MonoBehaviour
     [SerializeField] GameObject[] panels = null;
     // start : 0, account : 1, rank : 2, option : 3
 
+    [SerializeField] Button test = null;
+
     [Header("[Start]")]
     [SerializeField] Button accountBut = null;
     [SerializeField] Button rankBut = null;
@@ -37,23 +39,18 @@ public class TitleManager : MonoBehaviour
     [Header("Option")]
     [SerializeField] Button o_goBackBut = null;
 
-    [Space]
-    [SerializeField] APIDataSO apidataSO = null;
-    [SerializeField] PlayerBaseData playerBaseData = null;
-
     private int _currentIndex = 0;
     private GameObject curPanel = null;
 
     private void Awake()
     {
-        if (apidataSO == null) apidataSO = Resources.Load<APIDataSO>("APIData");
-        if (playerBaseData == null) playerBaseData = Resources.Load<PlayerBaseData>("PlayerData");
-
         curPanel = panels[0];
         ShowUI(curPanel);
         loginInfotext.gameObject.SetActive(false);
 
         GetGameVersion();
+        GetMasterData();
+        test.onClick.AddListener(() => GetMasterData_t());
 
         // === StartPanel Button Event ===
         accountBut.onClick.AddListener(OnClickAccount);
@@ -97,6 +94,22 @@ public class TitleManager : MonoBehaviour
         }
     }
 
+    private void GetMasterData_t()
+    {
+        MonsterData_res[] monsterData = APIDataSO.Instance.GetValueByKey<MonsterData_res[]>(APIDataDicKey.MeleeMonstser);
+
+        if (monsterData == null)
+        {
+            Debug.LogError("MonsterData list is null!");
+            return;
+        }
+
+        foreach (MonsterData_res a in monsterData)
+        {
+            Debug.Log("Level: " + a.level + "Exp: " + a.exp + "Hp: " + a.hp);
+        }
+    }
+
     private async UniTask MoveToNextInputField()
     {
         inputFields[_currentIndex].DeactivateInputField();
@@ -109,6 +122,11 @@ public class TitleManager : MonoBehaviour
     private async void GetGameVersion()
     {
         versionText.text = "Ver :  " +  await APIManager.Instacne.GetGameVersionAPI(); ;
+    }
+
+    private async void GetMasterData()
+    {
+        await APIManager.Instacne.GetMasterDataAPI();
     }
 
     private async void OnClickCreareAccount()
@@ -165,7 +183,7 @@ public class TitleManager : MonoBehaviour
             r_infoText.text = "Please Log in";
         }
 
-        List<RankingData> rankingDataList = apidataSO.GetValueByKey<List<RankingData>>("RankingData");
+        List<RankingData> rankingDataList = APIDataSO.Instance.GetValueByKey<List<RankingData>>("RankingData");
 
         if (rankingDataList != null && rankingDataList.Count > 0)
         {
@@ -278,7 +296,9 @@ public class TitleManager : MonoBehaviour
 
     private void UpdateStartButtonState()
     {
-        if (apidataSO.responseDataDic.Count > 0)
+        if (APIDataSO.Instance == null) return;
+
+        if (APIDataSO.Instance.GetValueByKey<GameData>(APIDataDicKey.GameData) != null)
         {
             startBut.interactable = true;
             loginInfotext.gameObject.SetActive(false);
@@ -294,12 +314,12 @@ public class TitleManager : MonoBehaviour
     private void OnEnable()
     {
         UpdateStartButtonState();
-        apidataSO.OnResponseDataChanged += UpdateStartButtonState;
+        APIDataSO.Instance.OnResponseDataChanged += UpdateStartButtonState;
     }
 
     private void OnDisable()
     {
-        apidataSO.OnResponseDataChanged -= UpdateStartButtonState;
+        APIDataSO.Instance.OnResponseDataChanged -= UpdateStartButtonState;
     }
 
     private async void GoLobbyScene()
@@ -312,7 +332,7 @@ public class TitleManager : MonoBehaviour
 
     private void OnExitBut()
     {
-        apidataSO.ClearResponseData();
+        APIDataSO.Instance.ClearResponseData();
 
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
