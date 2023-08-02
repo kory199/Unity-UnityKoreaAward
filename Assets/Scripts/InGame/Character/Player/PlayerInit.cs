@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using APIModels;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 public partial class Player
 {
-    public PlayerBaseData playerBaseData;
     public Rigidbody2D bulletRb;
     public Rigidbody2D playerRb;
     public Bullet bullet;
@@ -45,18 +45,16 @@ public partial class Player
 
     private void InitPlayer()
     {
-
-
         // Test
         playerMaxHp = 100;
         playerCurHp = playerMaxHp;
 
+        PlayerData player = APIDataSO.Instance.GetValueByKey<PlayerData>(APIDataDicKey.PlayerData);
 
-            playerMaxHp = playerBaseData.hp;
-            playerMaxHp = 100;
-            playerCurHp = playerMaxHp;
-            playerLv = playerBaseData.level;
-            playerMaxExp = playerBaseData.exp;
-            IsDeath = false;
+        playerMaxHp = player.hp;
+        playerMaxHp = 100;
+        playerCurHp = playerMaxHp;
+        playerMaxExp = player.exp;
+        IsDeath = false;
     }
 }
