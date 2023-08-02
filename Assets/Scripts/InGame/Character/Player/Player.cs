@@ -20,18 +20,7 @@ public partial class Player : CharacterBase
     void Update()
     {
         Move();
-
-        if (Input.GetKey(KeyCode.Mouse0))
-        {
-            if (Time.time - lastAttackTime >= rateOfFire)
-            {
-                Debug.Log("time : " + Time.time);
-                Debug.Log("lastAttack Time  : " + lastAttackTime);
-                Debug.Log("rateOfFire : " + rateOfFire);
-                Attack();
-                lastAttackTime = Time.time;
-            }
-        }
+        Attack();
     }
 
     protected override void Die()

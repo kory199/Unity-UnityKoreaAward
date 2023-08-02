@@ -5,23 +5,21 @@ using UnityEngine;
 
 public partial class Player
 {
-    public PlayerBaseData playerBaseData;
-    public Rigidbody2D bulletRb;
-    public Rigidbody2D playerRb;
-    public Bullet bullet;
+    PlayerBaseData playerBaseData;
 
-    // 임시 : 서버로부터 받아야됨
+    Rigidbody2D playerRb;
+
     [Header("User Setting")]
     [SerializeField] float playerSpeed;
+
     [SerializeField] public int playerMaxHp;
     [SerializeField] public int playerCurHp;
+    public float playerMovementSpeed;
     public int playerAttackPower;
+    public float rateOfFire;
+    public float projectileSpeed;
     public int playerLv;
     public int playerMaxExp;
-    public float playerMovementSpeed;
-    public float projectileSpeed = 5f;
-    public float rateOfFire = 0.3f;
-    public float lastAttackTime = 0;
 
     public bool IsDeath;
 
