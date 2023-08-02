@@ -8,16 +8,19 @@ using UnityEngine;
 
 public class APIManager : MonoSingleton<APIManager>
 {
+    [Header("Scriptable Objects")]
     public APIDataSO apidata = null;
+    public PlayerBaseData playerBaseData = null;
 
     private string _id;
     private string _authToken;
 
+    public bool isLogin = false;
+
     private void Awake()
     {
         if (apidata == null) apidata = Resources.Load<APIDataSO>("APIData");
-
-        DontDestroyOnLoad(this.gameObject);
+        if (playerBaseData == null) playerBaseData = Resources.Load<PlayerBaseData>("PlayerData");
     }
 
     public async UniTask<String> GetGameVersionAPI()
@@ -49,6 +52,7 @@ public class APIManager : MonoSingleton<APIManager>
         _id = user.ID;
 
         await CallAPI<Dictionary<string, object>, User>(APIUrls.LoginApi, user, HandleLoginResponse);
+        isLogin = true;
     }
 
     private void HandleLoginResponse(APIResponse<Dictionary<string, object>> apiResponse)
@@ -141,35 +145,6 @@ public class APIManager : MonoSingleton<APIManager>
         else
         {
             Debug.LogError("Failed RankingData from API response.");
-        }
-    }
-
-    public async UniTask GetStageAPI(int stageNum)
-    {
-        StageData stageData = new StageData
-        {
-            ID = GetApiSODicUerData().ID,
-            AuthToken = GetApiSODicUerData().AuthToken,
-            StageNum = stageNum,
-        };
-
-        await CallAPI<Dictionary<string, object>, StageData>(APIUrls.StageApi, stageData, HandleStageDataResponse);
-    }
-
-    private void HandleStageDataResponse(APIResponse<Dictionary<string, object>> apiResponse)
-    {
-        var responseBody = JsonConvert.DeserializeObject<Dictionary<string, object>>(apiResponse.responseBody);
-
-        if(responseBody.TryGetValue("stageData", out object stageDataObj))
-        {
-            List<StageInfo> stageDataList =
-                JsonConvert.DeserializeObject<List<StageInfo>>(stageDataObj.ToString());
-
-            apidata.SetResponseData("StageData", stageDataList);
-        }
-        else
-        {
-            Debug.LogError("Failed StageData from API response.");
         }
     }
 
