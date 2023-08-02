@@ -20,8 +20,8 @@ public partial class Player
     public int playerMaxExp;
     public float playerMovementSpeed;
     public float projectileSpeed = 5f;
-    public float rateOfFire = 0.3f;
-    public float lastAttackTime = 0;
+    public float rateOfFire = 0.1f;
+    public float lastAttackTime = 0.3f;
 
     public bool IsDeath;
 
