@@ -68,7 +68,6 @@ public class Bullet : MonoBehaviour
         else if (other.gameObject.layer == LayerMask.GetMask("Monster"))
         {
             // 몬스터 충돌 처리
-            other.gameObject.SetActive(false);
         }
         else
         {
