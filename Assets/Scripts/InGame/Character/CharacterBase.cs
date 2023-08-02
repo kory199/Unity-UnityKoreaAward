@@ -8,7 +8,6 @@ public struct PlayerInfo
     public string CharacterName;
     public int NowHP;
     public int MaxHp;
-    public int NowMP;
     public int MaxMp;
     public int Lv;
 }
