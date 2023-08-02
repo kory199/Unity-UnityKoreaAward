@@ -5,9 +5,6 @@ using UnityEngine;
 
 public partial class Player
 {
-    Bullet bullet;
-    Rigidbody2D bulletRb;
-
     public override void Attack()
     {
         if (Input.GetKey(KeyCode.Mouse0))

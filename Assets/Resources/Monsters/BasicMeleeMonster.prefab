@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2311305897999876831}
   - component: {fileID: 2311305897999876830}
   - component: {fileID: 2311305897999876829}
-  - component: {fileID: 1739240092}
+  - component: {fileID: 2423209733993544560}
   m_Layer: 7
   m_Name: BasicMeleeMonster
   m_TagString: Monster
@@ -107,7 +107,7 @@ MonoBehaviour:
     Range: 2
     MoveSpeed: 2
   MonsterName: BasicMeleeMonster
---- !u!61 &1739240092
+--- !u!61 &2423209733993544560
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -117,7 +117,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

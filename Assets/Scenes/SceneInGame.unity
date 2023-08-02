@@ -375,6 +375,9 @@ MonoBehaviour:
   _stageNum: 0
   _spawnMeleeNum: 0
   _spawnRangedNum: 0
+  _score: 0
+  _deathMonsters: 0
+  _time: 0
   _spawnManager: {fileID: 1439512668}
 --- !u!4 &1532666276
 Transform:
