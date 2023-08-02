@@ -9,7 +9,6 @@ public static partial class EnumTypes
     }
     public enum LayoutType
     {
-        Title,
         First,
         Middle,
         Global,  // popup
