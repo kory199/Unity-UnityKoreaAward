@@ -68,7 +68,6 @@ public class UIManager : UIBase
         }
 
         GetLanguageData();
-        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void GetLanguageData()
@@ -121,18 +120,7 @@ public class UIManager : UIBase
             return;
 
         Canvas newCanvas;
-
-        if (type == LayoutType.Title)
-        {
-            GameObject prefab = Resources.Load<GameObject>("UI/Title_Canvas");
-            GameObject instance = Instantiate(prefab, transform);
-            newCanvas = instance.GetComponent<Canvas>();
-        }
-        else
-        {
-            newCanvas = new GameObject().AddComponent<Canvas>();
-        }
-
+        newCanvas = new GameObject().AddComponent<Canvas>();
         newCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
         newCanvas.sortingOrder = _sortingOrder;
         ++_sortingOrder;
@@ -141,19 +129,6 @@ public class UIManager : UIBase
         newCanvas.name = string.Concat(type, " Canvas");
         newCanvas.transform.SetParent(transform);
         _canvases.Add(type, newCanvas.gameObject);
-    }
-
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        switch (scene.name)
-        {
-            case nameof(ScenesType.SceneTitle):
-                ShowUI(LayoutType.Title);
-                break;
-            default:
-                HideUI(LayoutType.Title);
-                break;
-        }
     }
 
     private void ShowUI(LayoutType layoutType)
@@ -172,13 +147,9 @@ public class UIManager : UIBase
         }
     }
 
-     protected void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
     public override IProcess.NextProcess ProcessInput()
     {
         return IProcess.NextProcess.Continue;
+
     }
 }
