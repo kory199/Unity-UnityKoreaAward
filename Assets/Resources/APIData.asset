@@ -12,4 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 462ecf0e55932413092c890966c1b81d, type: 3}
   m_Name: APIData
   m_EditorClassIdentifier: 
-  dictionaryElements: []
+  dictionaryElements:
+  - key: ID
+    valueName: 
+  - key: AuthToken
+    valueName: 

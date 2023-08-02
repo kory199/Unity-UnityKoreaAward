@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using APIModels;
 using UnityEditor;
+using UnityEngine;
 
 [System.Serializable]
 public class InspectorDictionaryElement
@@ -54,6 +55,10 @@ public class APIDataSOEditor : Editor
                 {
                     valueTypeName = "List<RankingData>";
                 }
+                else if (pair.Value is List<StageInfo>)
+                {
+                    valueTypeName = "List<StageInfo>";
+                }
 
                 if (valueTypeName == "GameData")
                 {
@@ -66,6 +71,10 @@ public class APIDataSOEditor : Editor
                     dictionaryElements.Add(new InspectorDictionaryElement(pair.Key, valueTypeName, pair.Value));
                 }
                 else if (valueTypeName == "List<RankingData>")
+                {
+                    dictionaryElements.Add(new InspectorDictionaryElement(pair.Key, valueTypeName, pair.Value));
+                }
+                else if(valueTypeName == "List<StageInfo>")
                 {
                     dictionaryElements.Add(new InspectorDictionaryElement(pair.Key, valueTypeName, pair.Value));
                 }
@@ -127,7 +136,7 @@ public class APIDataSOEditor : Editor
                 playerData.score = EditorGUILayout.IntField("Score", playerData.score);
                 playerData.status = EditorGUILayout.IntField("Status", playerData.status);
             }
-            else if (element.valueName.Contains("List"))
+            else if (element.valueName.Contains("List<RankingData>"))
             {
                 var dataList = element.value as IList;
 
@@ -142,6 +151,24 @@ public class APIDataSOEditor : Editor
                             rankingData.id = EditorGUILayout.TextField("ID: ", rankingData.id);
                             rankingData.score = EditorGUILayout.IntField("Score: ", rankingData.score);
                             rankingData.ranking = EditorGUILayout.IntField("Rank: ", rankingData.ranking);
+                        }
+                    }
+                }
+            }
+            else if (element.valueName.Contains("List<StageInfo>"))
+            {
+                var dataList = element.value as IList;
+
+                if (dataList != null)
+                {
+                    for (int j = 0; j < dataList.Count; j++)
+                    {
+                        var stageInfo = dataList[j] as StageInfo;
+                        if (stageInfo != null)
+                        {
+                            EditorGUILayout.Space();
+                            stageInfo.stage_id = EditorGUILayout.IntField("StageID: ", stageInfo.stage_id);
+                            stageInfo.is_achieved = EditorGUILayout.Toggle("IsAchieved: ", stageInfo.is_achieved);
                         }
                     }
                 }

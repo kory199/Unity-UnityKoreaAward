@@ -1,16 +1,7 @@
 fileFormatVersion: 2
-<<<<<<< Updated upstream
 <<<<<<<< HEAD:Assets/Scripts/TitleScene/LobbyManager.cs.meta
-guid: e14f1ac82c61e4192b6dff804338c546
+guid: c73377eeae4604acf8ea8286c1e2b58a
 ========
-=======
-<<<<<<< Updated upstream
-=======
-<<<<<<<< HEAD:Assets/Scripts/TitleScene/LobbyManager.cs.meta
-guid: f8fe17c52966e4b5e9264c8e7862753c
-========
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 guid: 5e695c8dcf40c4971936bc1ea0f2d1e8
 >>>>>>>> test:Assets/Scripts/API/APIDataDicKey.cs.meta
 MonoImporter:
