@@ -67,7 +67,9 @@ public class Bullet : MonoBehaviour
         // Monster Hit
         else if (other.gameObject.layer == LayerMask.GetMask("Monster"))
         {
+            Debug.LogError("Monster Hit");
             // 몬스터 충돌 처리
+            other.gameObject.SetActive(false);
         }
         else
         {
@@ -77,11 +79,23 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other) 
     {
-        // 몬스터 충돌 체크 & 충돌 시 동작
-        if (other.CompareTag("Monster")) 
+        // Player Hit
+        if (other.gameObject.layer == LayerMask.GetMask("Player"))
         {
-            // 몬스터와 충돌 시 Bullet 반환
-            ReturnBullet();
+            // 플레이어 충돌 처리
+            Player hitPlayer = other.gameObject.GetComponent<Player>();
+            //hitPlayer.PlayerHit()
+        }
+        // Monster Hit
+        else if (other.gameObject.layer == LayerMask.GetMask("Monster"))
+        {
+            Debug.LogError("Monster Hit");
+            // 몬스터 충돌 처리
+            other.gameObject.SetActive(false);
+        }
+        else
+        {
+            // 벽 or 다른 collider 충돌처리
         }
     }
 

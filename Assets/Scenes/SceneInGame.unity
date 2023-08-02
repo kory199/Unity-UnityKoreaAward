@@ -139,14 +139,6 @@ PrefabInstance:
       value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8516200050958493884, guid: 447dfd2202628a04a9c407b170214b88, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8516200050958493884, guid: 447dfd2202628a04a9c407b170214b88, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8516200050958493884, guid: 447dfd2202628a04a9c407b170214b88, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -383,6 +375,9 @@ MonoBehaviour:
   _stageNum: 0
   _spawnMeleeNum: 0
   _spawnRangedNum: 0
+  _score: 0
+  _deathMonsters: 0
+  _time: 0
   _spawnManager: {fileID: 1439512668}
 --- !u!4 &1532666276
 Transform:
