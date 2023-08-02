@@ -9,17 +9,13 @@ using UnityEngine;
 public class APIManager : MonoSingleton<APIManager>
 {
     public APIDataSO apidata = null;
-    public PlayerBaseData playerBaseData = null;
 
     private string _id;
     private string _authToken;
 
-    public bool isLogin = false;
-
     private void Awake()
     {
         if (apidata == null) apidata = Resources.Load<APIDataSO>("APIData");
-        if (playerBaseData == null) playerBaseData = Resources.Load<PlayerBaseData>("PlayerData");
 
         DontDestroyOnLoad(this.gameObject);
     }
@@ -53,7 +49,6 @@ public class APIManager : MonoSingleton<APIManager>
         _id = user.ID;
 
         await CallAPI<Dictionary<string, object>, User>(APIUrls.LoginApi, user, HandleLoginResponse);
-        isLogin = true;
     }
 
     private void HandleLoginResponse(APIResponse<Dictionary<string, object>> apiResponse)
@@ -167,8 +162,8 @@ public class APIManager : MonoSingleton<APIManager>
 
         if(responseBody.TryGetValue("stageData", out object stageDataObj))
         {
-            List<StageData> stageDataList =
-                JsonConvert.DeserializeObject<List<StageData>>(stageDataObj.ToString());
+            List<StageInfo> stageDataList =
+                JsonConvert.DeserializeObject<List<StageInfo>>(stageDataObj.ToString());
 
             apidata.SetResponseData("StageData", stageDataList);
         }

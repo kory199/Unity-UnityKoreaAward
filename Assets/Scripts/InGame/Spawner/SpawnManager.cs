@@ -35,10 +35,10 @@ public class SpawnManager : MonoBehaviour
     }
     IEnumerator Co_MonsterSpawn()
     {
-        //Ç®¿¡¼­ ¸ó½ºÅÍ ²¨³»±â
+        //Ç®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         while (!Input.GetKeyDown(KeyCode.P))
         {
-            Debug.Log("¸ó½ºÅÍ »ý¼ºÁß");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
             SpawnMonsters();
             yield return spawnDelay;
         }
@@ -53,7 +53,7 @@ public class SpawnManager : MonoBehaviour
             tempNum.Add(i);
         }
 
-        //±ÙÁ¢ »ý¼º
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         for (int i = 0; i < _spawnMonsterTotalNum; i++)
         {
             int num = RandomChoose(tempNum.Count - 1);
