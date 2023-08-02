@@ -5,21 +5,23 @@ using UnityEngine;
 
 public partial class Player
 {
-    PlayerBaseData playerBaseData;
+    public PlayerBaseData playerBaseData;
+    public Rigidbody2D bulletRb;
+    public Rigidbody2D playerRb;
+    public Bullet bullet;
 
-    Rigidbody2D playerRb;
-
+    // 임시 : 서버로부터 받아야됨
     [Header("User Setting")]
     [SerializeField] float playerSpeed;
-
     [SerializeField] public int playerMaxHp;
     [SerializeField] public int playerCurHp;
-    public float playerMovementSpeed;
     public int playerAttackPower;
-    public float rateOfFire;
-    public float projectileSpeed = 5f;
     public int playerLv;
     public int playerMaxExp;
+    public float playerMovementSpeed;
+    public float projectileSpeed = 5f;
+    public float rateOfFire = 0.3f;
+    public float lastAttackTime = 0;
 
     public bool IsDeath;
 
@@ -46,11 +48,14 @@ public partial class Player
         playerMaxHp = 100;
         playerCurHp = playerMaxHp;
 
+        if (APIManager.Instacne.isLogin)
+        {
             playerMaxHp = playerBaseData.hp;
             playerMaxHp = 100;
             playerCurHp = playerMaxHp;
             playerLv = playerBaseData.level;
             playerMaxExp = playerBaseData.exp;
             IsDeath = false;
+        }
     }
 }

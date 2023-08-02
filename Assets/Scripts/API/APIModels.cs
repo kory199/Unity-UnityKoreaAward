@@ -38,17 +38,6 @@ namespace APIModels
         public int ranking { get; set; }
     }
 
-    public class StageData : GameData
-    {
-        public int StageNum { get; set; }
-    }
-
-    public class StageInfo
-    {
-        public int stage_id { get; set; }
-        public bool is_achieved { get; set; }
-    }
-
     public class MonsterData
     {
         public string monsterType { get; set; }

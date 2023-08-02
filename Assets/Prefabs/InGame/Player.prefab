@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 226893475}
   - component: {fileID: 226893476}
   - component: {fileID: 226893477}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115,7 +115,7 @@ GameObject:
   - component: {fileID: 6694471686000787052}
   - component: {fileID: 344230256}
   - component: {fileID: 344230255}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -131,7 +131,7 @@ Transform:
   m_GameObject: {fileID: 5329609039082644204}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.586, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 226893475}
@@ -200,11 +200,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e064eb3db55ce8644a74096857052c88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerBaseData: {fileID: 0}
+  bulletRb: {fileID: 0}
+  playerRb: {fileID: 0}
+  bullet: {fileID: 0}
   playerSpeed: 0
-  playerHp: 0
+  playerMaxHp: 0
+  playerCurHp: 0
+  playerAttackPower: 0
   playerLv: 0
-  playerMp: 0
-  playerExp: 0
+  playerMaxExp: 0
+  playerMovementSpeed: 0
+  projectileSpeed: 5
+  rateOfFire: 0.3
+  lastAttackTime: 0
   IsDeath: 0
 --- !u!61 &344230256
 BoxCollider2D:
