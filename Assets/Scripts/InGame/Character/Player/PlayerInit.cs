@@ -51,14 +51,12 @@ public partial class Player
         playerMaxHp = 100;
         playerCurHp = playerMaxHp;
 
-        if (APIManager.Instacne.isLogin)
-        {
+
             playerMaxHp = playerBaseData.hp;
             playerMaxHp = 100;
             playerCurHp = playerMaxHp;
             playerLv = playerBaseData.level;
             playerMaxExp = playerBaseData.exp;
             IsDeath = false;
-        }
     }
 }
