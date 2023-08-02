@@ -1,13 +1,9 @@
 fileFormatVersion: 2
-<<<<<<< Updated upstream
-guid: c73377eeae4604acf8ea8286c1e2b58a
-=======
 <<<<<<<< HEAD:Assets/Scripts/TitleScene/LobbyManager.cs.meta
-guid: 2a62b6f630bfe4ffd99cd2d67877a39e
+guid: c73377eeae4604acf8ea8286c1e2b58a
 ========
 guid: 5e695c8dcf40c4971936bc1ea0f2d1e8
 >>>>>>>> test:Assets/Scripts/API/APIDataDicKey.cs.meta
->>>>>>> Stashed changes
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
