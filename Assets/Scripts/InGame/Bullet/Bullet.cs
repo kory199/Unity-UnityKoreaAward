@@ -9,6 +9,9 @@ public class Bullet : MonoBehaviour
     [SerializeField] public float playerBulletDamage;
     
     [SerializeField] GameObject player;
+    [SerializeField] GameObject bossMonster;
+    [SerializeField] GameObject meleeMonster;
+    [SerializeField] GameObject rangedMonster;
     [SerializeField] GameObject setShooter;
     
     Vector2 dirBullet;
@@ -55,34 +58,25 @@ public class Bullet : MonoBehaviour
 
     private void ReturnBullet() => gameObject.SetActive(false);
 
-    private void OnCollisionEnter2D(Collision2D other)
+    private void OnTriggerEnter2D(Collider2D other) 
     {
         // Player Hit
-        if (other.gameObject.layer == LayerMask.GetMask("Player"))
+        if (other.gameObject.tag == "Player")
         {
             // 플레이어 충돌 처리
             Player hitPlayer = other.gameObject.GetComponent<Player>();
             //hitPlayer.PlayerHit()
         }
         // Monster Hit
-        else if (other.gameObject.layer == LayerMask.GetMask("Monster"))
+        else if (other.gameObject.tag == "Monster" && setShooter.name == "Player")
         {
+            Debug.LogError("Monster Hit");
             // 몬스터 충돌 처리
             other.gameObject.SetActive(false);
         }
         else
         {
             // 벽 or 다른 collider 충돌처리
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D other) 
-    {
-        // 몬스터 충돌 체크 & 충돌 시 동작
-        if (other.CompareTag("Monster")) 
-        {
-            // 몬스터와 충돌 시 Bullet 반환
-            ReturnBullet();
         }
     }
 

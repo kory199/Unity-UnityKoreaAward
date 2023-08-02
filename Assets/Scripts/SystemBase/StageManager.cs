@@ -2,33 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-public class StageManager : MonoBehaviour
+public class StageManager : MonoSingleton<StageManager>
 {
     [SerializeField] private int _stageNum = 0;
-    [SerializeField] private int _spawnMeleeNum = 0; //=>ï¿½ï¿½Å©ï¿½ï¿½ï¿½Íºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½æ¿¹ï¿½ï¿½
-    [SerializeField] private int _spawnRangedNum = 0; //=>ï¿½ï¿½Å©ï¿½ï¿½ï¿½Íºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½æ¿¹ï¿½ï¿½
-    [SerializeField] private int _score = 0; //=>ï¿½ï¿½Å©ï¿½ï¿½ï¿½Íºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½æ¿¹ï¿½ï¿½
-    [SerializeField] private int _deathMonsters = 0; //=>ï¿½ï¿½Å©ï¿½ï¿½ï¿½Íºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½æ¿¹ï¿½ï¿½
-    [SerializeField] private float _time = 0; //=>ï¿½ï¿½Å©ï¿½ï¿½ï¿½Íºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½æ¿¹ï¿½ï¿½
+    [SerializeField] private int _spawnMeleeNum = 0; //=>½ºÅ©¸³ÅÍºí ¿ÀºêÁ§Æ®¿¡¼­ ÀÐ¾î¿À´Â ¹æ½ÄÀ¸·Î º¯°æ¿¹Á¤
+    [SerializeField] private int _spawnRangedNum = 0; //=>½ºÅ©¸³ÅÍºí ¿ÀºêÁ§Æ®¿¡¼­ ÀÐ¾î¿À´Â ¹æ½ÄÀ¸·Î º¯°æ¿¹Á¤
+    [SerializeField] private int _score = 0; //=>½ºÅ©¸³ÅÍºí ¿ÀºêÁ§Æ®¿¡¼­ ÀÐ¾î¿À´Â ¹æ½ÄÀ¸·Î º¯°æ¿¹Á¤
+    [SerializeField] private int _deathMonsters = 0; //=>½ºÅ©¸³ÅÍºí ¿ÀºêÁ§Æ®¿¡¼­ ÀÐ¾î¿À´Â ¹æ½ÄÀ¸·Î º¯°æ¿¹Á¤
+    [SerializeField] private float _time = 0; //=>½ºÅ©¸³ÅÍºí ¿ÀºêÁ§Æ®¿¡¼­ ÀÐ¾î¿À´Â ¹æ½ÄÀ¸·Î º¯°æ¿¹Á¤
     [SerializeField] private SpawnManager _spawnManager;
     #region Uinity lifeCycle
     private void Awake()
     {
-        //Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½
-        InGameManager.Instacne.RegisterParams(EnumTypes.InGameParamType.Stage,(int)EnumTypes.StageStateType.Max);
+        //Ã¼ÀÎ µî·Ï
+        InGameManager.Instacne.RegisterParams(EnumTypes.InGameParamType.Stage, (int)EnumTypes.StageStateType.Max);
     }
     private void Start()
     {
         _stageNum = 1;
-        //start Ã¼ï¿½ï¿½ 
+        //start Ã¼ÀÎ 
         InGameManager.Instacne.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetMeleeMonster);
         InGameManager.Instacne.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetRangedMonster);
         InGameManager.Instacne.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetMonsterSpawn);
-        //Next Ã¼ï¿½ï¿½
+        //Next Ã¼ÀÎ
         InGameManager.Instacne.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Next, SetStageNum);
-        //End Ã¼ï¿½ï¿½ 
+        //End Ã¼ÀÎ 
         InGameManager.Instacne.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.End, SendStageData);
-    
+
     }
     private void Update()
     {
@@ -52,7 +52,7 @@ public class StageManager : MonoBehaviour
     }
     public void SetStageNum()
     {
-        if (_stageNum >= 5) //5 ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        if (_stageNum >= 5) //5 ´ë½Å ¼­¹ö ½ºÅ×ÀÌÁö ¸Æ½º°ª ³Ö¾îÁà¾ßÇÔ
         {
             InGameManager.Instacne.InvokeCallBacks(EnumTypes.InGameParamType.Stage, (int)EnumTypes.StageStateType.End);
             return;
@@ -63,54 +63,62 @@ public class StageManager : MonoBehaviour
     public int GetStageNum() => _stageNum;
     private void SetMeleeMonster() => _spawnMeleeNum = StageDataTest.Instacne.GetMeleeMonsterNum(_stageNum);
     private void SetRangedMonster() => _spawnRangedNum = StageDataTest.Instacne.GetRangedMonsterNum(_stageNum);
-    private void SetMonsterSpawn() => _spawnManager.SettingMonsterSpawnNum(_spawnMeleeNum, _spawnRangedNum);
+    private void SetMonsterSpawn()
+    {
+        if (_stageNum < 4)
+            _spawnManager.SettingMonsterSpawnNum(_spawnMeleeNum, _spawnRangedNum);
+        else
+            _spawnManager.SettingMonsterSpawnNum(_spawnMeleeNum, _spawnRangedNum,true,"BossOne");
+    }
     private async void SendStageData()
     {
         Debug.Log("Send StageEndData to Server ...");
-        await APIManager.Instacne.StageUpToServer("nickname",_stageNum, _score, _time);
+        await APIManager.Instacne.StageUpToServer("nickname", _stageNum, _score, _time);
     }
 
     public void PlayerDeath()
     {
-        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ú·ï¿½Æ¾
+        //°ÔÀÓ ¿À¹ö ÄÚ·çÆ¾
         StartCoroutine(Co_GameOverUI());
-                
-        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
+
+        //¼­¹ö µ¥ÀÌÅÍ Àü´Þ 
         SendStageData();
 
-        //ï¿½ï¿½ ï¿½Ìµï¿½
+        //¾À ÀÌµ¿
         GameManager.Instacne.MoveScene("SceneLobby");
     }
     public void MonsterDeath()
     {
         _deathMonsters++;
-        if(_deathMonsters>=(_spawnMeleeNum+_spawnRangedNum)*1*60 )
+        Debug.Log("DeathMonsterCount : " + _deathMonsters);
+        if (_deathMonsters >= (_spawnMeleeNum + _spawnRangedNum) * 1 * 60)
         {
             SetStageNum();
             CallStage(EnumTypes.StageStateType.Start);
             _deathMonsters = 0;
+            Debug.Log("stageNum : " + _stageNum);
         }
     }
     public void BossDeath()
     {
-        //ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½Ú·ï¿½Æ¾
+        //°ÔÀÓ Å¬¸®¾î ÄÚ·çÆ¾
         StartCoroutine(Co_GameOverUI());
 
-        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
+        //¼­¹ö µ¥ÀÌÅÍ Àü´Þ 
         SendStageData();
 
-        //ï¿½ï¿½ ï¿½Ìµï¿½
+        //¾À ÀÌµ¿
         GameManager.Instacne.MoveScene("SceneLobby");
     }
     IEnumerator Co_GameOverUI()
     {
         yield return null;
-        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Ã¢ ï¿½Ñ°Å³ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½
+        //°ÔÀÓ ¿À¹ö½Ã ¶ç¿ï Ã¢ ÄÑ°Å³ª ÀÌÆåÆ® ¸¸µé±â
     }
     IEnumerator Co_GameClearUI()
     {
         yield return null;
-        //ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Ã¢ ï¿½Ñ°Å³ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½
+        //º¸½º Å¬¸®¾î½Ã ¶ç¿ï Ã¢ ÄÑ°Å³ª ÀÌÆåÆ® ¸¸µé±â
     }
 }
 public class StageDataTest : MonoSingleton<StageDataTest>

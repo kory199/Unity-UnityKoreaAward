@@ -1,9 +1,7 @@
 using TMPro;
 using UnityEditor;
-using UnityEngine;
 using UnityEditor.SceneManagement;
-using UnityEngine.SceneManagement;
-using UnityEditor.Experimental.SceneManagement;
+using UnityEngine;
 
 public class ChangeFont : EditorWindow
 {
@@ -23,52 +21,27 @@ public class ChangeFont : EditorWindow
 
         if(GUILayout.Button("Apply"))
         {
-            Scene currentScene = EditorSceneManager.GetActiveScene();
-            foreach (EditorBuildSettingsScene buildScene in EditorBuildSettings.scenes)
-            {
-                if (buildScene.enabled)
-                {
-                    Scene scene = EditorSceneManager.OpenScene(buildScene.path, OpenSceneMode.Additive);
-                    ChangeFontInScene(scene);
-                    EditorSceneManager.CloseScene(scene, true);
-                }
-            }
-
-            EditorUtility.DisplayDialog("Success", "Font successfully changed!", "OK");
-            EditorSceneManager.OpenScene(currentScene.path);
+            ChangedFont();
         }
     }
 
-    void ChangeFontInScene(Scene scene)
+    void ChangedFont()
     {
-        GameObject[] allGameObjects = scene.GetRootGameObjects();
+        TMP_InputField[] inputFields = Resources.FindObjectsOfTypeAll<TMP_InputField>();
 
-        foreach (GameObject gameObject in allGameObjects)
-        {
-            ChangeFontInGameObject(gameObject);
-        }
-
-        EditorSceneManager.MarkSceneDirty(scene);
-        EditorSceneManager.SaveScene(scene);
-    }
-
-    void ChangeFontInGameObject(GameObject gameObject)
-    {
-        TMP_InputField[] inputFields = gameObject.GetComponentsInChildren<TMP_InputField>();
         foreach (TMP_InputField inputField in inputFields)
         {
             inputField.fontAsset = _changeFont;
         }
 
-        TextMeshProUGUI[] textComponents = gameObject.GetComponentsInChildren<TextMeshProUGUI>();
+        TextMeshProUGUI[] textComponents = Resources.FindObjectsOfTypeAll<TextMeshProUGUI>();
+
         foreach (TextMeshProUGUI textComponent in textComponents)
         {
             textComponent.font = _changeFont;
         }
 
-        for (int i = 0; i < gameObject.transform.childCount; i++)
-        {
-            ChangeFontInGameObject(gameObject.transform.GetChild(i).gameObject);
-        }
+        EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+        EditorUtility.DisplayDialog("Success", "Font successfully changed!", "OK");
     }
 }

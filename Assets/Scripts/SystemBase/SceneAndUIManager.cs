@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using Unity.VisualScripting;
 
 public class SceneAndUIManager : MonoSingleton<SceneAndUIManager>
-{/*
+{
     private EventSystem _eventSystem;
 
     // ��Ÿ�� �ʱ�ȭ ������ SceneManager ����
@@ -15,7 +15,7 @@ public class SceneAndUIManager : MonoSingleton<SceneAndUIManager>
         var sceneAndUIManager = new GameObject().AddComponent<SceneAndUIManager>();
         sceneAndUIManager.name = "SceneAndUIManager";
     }
-*/
+
     protected void Awake()
     {
         DontDestroyOnLoad(this.gameObject);

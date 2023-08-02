@@ -18,10 +18,11 @@ public partial class Player
     public int playerAttackPower;
     public int playerLv;
     public int playerMaxExp;
+    public int playerCurExp = 0;
     public float playerMovementSpeed;
     public float projectileSpeed = 5f;
-    public float rateOfFire = 0.1f;
-    public float lastAttackTime = 0.3f;
+    public float rateOfFire = 0.3f;
+    public float lastAttackTime = 0;
 
     public bool IsDeath;
 
@@ -50,11 +51,14 @@ public partial class Player
         playerMaxHp = 100;
         playerCurHp = playerMaxHp;
 
+        if (APIManager.Instacne.isLogin)
+        {
             playerMaxHp = playerBaseData.hp;
             playerMaxHp = 100;
             playerCurHp = playerMaxHp;
             playerLv = playerBaseData.level;
             playerMaxExp = playerBaseData.exp;
             IsDeath = false;
+        }
     }
 }
