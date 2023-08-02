@@ -10,6 +10,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private int _spawnMonsterTotalNum;
     [SerializeField] private float _spawnTime = 3f;
     [SerializeField] private float _SpawnRandomFactor = 2f;
+    [SerializeField] private bool _isBoss = false;
     WaitForSeconds spawnDelay;
 
     #region Unity Life Cycle
@@ -25,27 +26,28 @@ public class SpawnManager : MonoBehaviour
 
     }
     #endregion
-    public void SettingMonsterSpawnNum(int melee, int ranged)
+    public void SettingMonsterSpawnNum(int melee, int ranged, bool isBoss = false,string name = null)
     {
+        _isBoss = isBoss;
         _meleeMonsterNum = melee;
         _rangedMonsterNum = ranged;
         _spawnMonsterTotalNum = melee + ranged;
         StopCoroutine(Co_MonsterSpawn());
         StartCoroutine(Co_MonsterSpawn());
     }
-    IEnumerator Co_MonsterSpawn()
+    IEnumerator Co_MonsterSpawn(string name=null)
     {
         //풀에서 몬스터 꺼내기
-        while (!Input.GetKeyDown(KeyCode.P))
+        while (!_isBoss)
         {
-            Debug.Log("몬스터 생성중");
             SpawnMonsters();
             yield return spawnDelay;
         }
+        GameObject Boss = ObjectPooler.SpawnFromPool(name,Vector3.up*10);
     }
 
     #region 중복없는 랜덤 뽑기
-    private void SpawnMonsters()
+    private void SpawnMonsters(string name = null)
     {
         List<int> tempNum = new List<int>();
         for (int i = 0; i < _spawnPos.Count; i++)
@@ -57,11 +59,8 @@ public class SpawnManager : MonoBehaviour
         {
             int num = RandomChoose(tempNum.Count - 1);
             tempNum.Remove(num);
-            Debug.Log(num);
-            Debug.Log(tempNum[num]);
 
             Vector3 spawnRandomArea = _spawnPos[tempNum[num]] + (Vector3)Random.insideUnitCircle * _SpawnRandomFactor;
-
             GameObject monster = ObjectPooler.SpawnFromPool("BasicMeleeMonster", spawnRandomArea);
         }
     }

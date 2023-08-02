@@ -11,14 +11,13 @@ public abstract class MonsterBase : MonoBehaviour
     public string MonsterName;
 
     // 임시 Status
-    private int maxHP = 10;
-    private int curHP = 10;
-    public int exp = 10;
+    protected int maxHP = 10;
+    protected int curHP = 10;
+    protected int exp = 10;
 
 
     public bool Death { get { return curHP <= 0; } }
-
-    protected void Start()
+    protected virtual void Start()
     {
         SetMonsterName();
         if ( DataManager.Instacne.MonsterData.TryGetMonsterInfo(MonsterName, out _monsterInfo))
@@ -39,9 +38,10 @@ public abstract class MonsterBase : MonoBehaviour
         state = MonsterStateType.None;
         StartCoroutine("State_" + state);
     }
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         ObjectPooler.ReturnToPool(gameObject);
+        
         //CancelInvoke(); //invoke 함수를 사용하는 경우적어주세요
     }
 
