@@ -39,9 +39,10 @@ public abstract class MonsterBase : MonoBehaviour
         state = MonsterStateType.None;
         StartCoroutine("State_" + state);
     }
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         ObjectPooler.ReturnToPool(gameObject);
+
         //CancelInvoke(); //invoke 함수를 사용하는 경우적어주세요
     }
 
