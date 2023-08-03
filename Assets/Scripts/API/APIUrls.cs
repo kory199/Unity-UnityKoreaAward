@@ -10,6 +10,7 @@ public class APIUrls
     public static readonly string GameDataApi = url + "GameData";
     public static readonly string RankingApi = url + "Ranking";
     public static readonly string StageApi = url + "Stage";
+    public static readonly string StageClear = url + "StageClear";
 
     private static HashSet<string> validUrls = new HashSet<string>
     {
@@ -19,7 +20,8 @@ public class APIUrls
         LoginApi,
         GameDataApi,
         RankingApi,
-        StageApi
+        StageApi,
+        StageClear
     };
 
     public static bool IsValidUrl(string url) => validUrls.Contains(url);

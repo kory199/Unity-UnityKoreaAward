@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class APIDataDicKey
 {
     public static readonly string GameData = "GameData";

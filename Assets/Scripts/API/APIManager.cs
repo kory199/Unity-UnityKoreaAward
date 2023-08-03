@@ -19,7 +19,7 @@ public class APIManager : MonoSingleton<APIManager>
     public async UniTask<String> GetGameVersionAPI()
     {
         string gameVersion = null;
-        Version_req requestBody = new Version_req();
+        Version_req requestBody = new();
 
         await CallAPI<Dictionary<string, object>, Version_req>(APIUrls.VersionApi, requestBody, apiResponse =>
         {
@@ -151,10 +151,6 @@ public class APIManager : MonoSingleton<APIManager>
                 APIDataSO.Instance.SetResponseData(APIDataDicKey.PlayerData, playerData);
             }
         }
-        else
-        {
-            Debug.LogError("Failed PlayerData from API response.");
-        }
     }
 
     public async UniTask GetRankingAPI()
@@ -191,10 +187,18 @@ public class APIManager : MonoSingleton<APIManager>
         await CallAPI<Dictionary<string, object>, StageData>(APIUrls.StageApi, stageData, HandleStageDataResponse);
     }
 
-    public async UniTask StageUpToServer(string name, int stageNum, int score, float time)
+    public async UniTask StageUpToServer(int stageNum, int score, float time)
     {
+        StageData stageData = new StageData
+        {
+            ID = GetApiSODicUerData().ID,
+            AuthToken = GetApiSODicUerData().AuthToken,
+            StageNum = stageNum,
+        };
 
-        await CallAPI<Dictionary<string, object>, GameData>(APIUrls.StageApi, GetApiSODicUerData(), null);
+        await CallAPI<Dictionary<string, object>, StageData>(APIUrls.StageApi, stageData, null);
+
+        //await CallAPI<Dictionary<string, object>, GameData>(APIUrls.GameDataApi, GetApiSODicUerData(), HandleGameDataResponse);
     }
 
     private void HandleStageDataResponse(APIResponse<Dictionary<string, object>> apiResponse)
