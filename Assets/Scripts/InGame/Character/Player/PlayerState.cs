@@ -11,7 +11,7 @@ public partial class Player
         {
             GameObject pullBullet = ObjectPooler.SpawnFromPool("Bullet2D", gameObject.transform.position);
 
-            // Bullet¿¡ ¹ß»ç Á¤º¸ Àü´Þ
+            // Bulletï¿½ï¿½ ï¿½ß»ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             if (pullBullet.TryGetComponent<Bullet>(out Bullet bull))
             {
                 bullet = bull;
@@ -32,7 +32,7 @@ public partial class Player
                 bulletRb = pullBullet.AddComponent<Rigidbody2D>();
             }
 
-            // ¼Óµµ °¡ÁßÄ¡´Â ¼­¹ö µ¥ÀÌÅÍ ¾÷·Îµå ÈÄ º¯°æ (5 -> projectileSpeed)
+            // ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (5 -> projectileSpeed)
             bulletRb.velocity = targetDirection * 5;
         }
     }
