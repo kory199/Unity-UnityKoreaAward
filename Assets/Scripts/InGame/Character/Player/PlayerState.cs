@@ -7,11 +7,9 @@ public partial class Player
 {
     public override void Attack()
     {
-        if (Input.GetKey(KeyCode.Mouse0))
-        {
             GameObject pullBullet = ObjectPooler.SpawnFromPool("Bullet2D", gameObject.transform.position);
 
-            // Bulletï¿½ï¿½ ï¿½ß»ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            // Bullet¿¡ ¹ß»ç Á¤º¸ Àü´Þ
             if (pullBullet.TryGetComponent<Bullet>(out Bullet bull))
             {
                 bullet = bull;
@@ -32,9 +30,8 @@ public partial class Player
                 bulletRb = pullBullet.AddComponent<Rigidbody2D>();
             }
 
-            // ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (5 -> projectileSpeed)
-            bulletRb.velocity = targetDirection * 5;
-        }
+            // ¼Óµµ °¡ÁßÄ¡´Â ¼­¹ö µ¥ÀÌÅÍ ¾÷·Îµå ÈÄ º¯°æ
+            bulletRb.velocity = targetDirection * projectileSpeed;
     }
     public void PlayerHit(int damageAmount)
     {
