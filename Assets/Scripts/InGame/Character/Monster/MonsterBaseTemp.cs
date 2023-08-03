@@ -12,8 +12,9 @@ public abstract class MonsterBase : MonoBehaviour
 
     // юс╫ц Status
     private int maxHP = 10;
-    private int curHP = 10;
+    public int curHP = 10;
     public int exp = 10;
+    public int score = 10;
 
 
     public bool Death { get { return curHP <= 0; } }
@@ -34,6 +35,7 @@ public abstract class MonsterBase : MonoBehaviour
 #endif
         }
     }
+
     private void OnEnable()
     {
         state = MonsterStateType.None;
