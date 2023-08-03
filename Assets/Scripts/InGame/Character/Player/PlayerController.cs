@@ -23,7 +23,7 @@ public partial class Player
         Vector3 mousePosition = Input.mousePosition;
         mousePosition.z = 10;
         Vector3 targetPosition = Camera.main.ScreenToWorldPoint(mousePosition);
-        targetDirection = targetPosition - transform.position;
+        targetDirection = (targetPosition - transform.position).normalized;
 
         if (targetDirection != Vector3.zero)
         {

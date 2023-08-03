@@ -98,7 +98,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSpeed: 5
+<<<<<<< HEAD
   bulletLifeTime: 2
+=======
+  bulletLifeTime: 5
+>>>>>>> 7b445977e969774cac433a4390f64c66acca0c77
   rangedBulletDamage: 0
   meleeBulletDamage: 0
   playerBulletDamage: 0
