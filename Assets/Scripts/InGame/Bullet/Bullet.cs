@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -13,11 +12,8 @@ public class Bullet : MonoBehaviour
     [SerializeField] GameObject bossMonster;
     [SerializeField] GameObject meleeMonster;
     [SerializeField] GameObject rangedMonster;
-
     [SerializeField] GameObject setShooter;
-
-    Player playerScript;
-
+    
     Vector2 dirBullet;
 
     private Transform bulletSpawner;
@@ -74,7 +70,8 @@ public class Bullet : MonoBehaviour
         // Monster Hit
         else if (other.gameObject.tag == "Monster" && setShooter.name == "Player")
         {
-            // 몬스터 충돌 처리 : 추후 player의 Damage를 넘겨주고 Monster Hp 감소
+            Debug.LogError("Monster Hit");
+            // 몬스터 충돌 처리
             other.gameObject.SetActive(false);
         }
         else
@@ -85,15 +82,6 @@ public class Bullet : MonoBehaviour
 
     private void OnEnable()
     {
-        if (player.TryGetComponent<Player>(out Player playerCs))
-        {
-            playerScript = playerCs;
-        }
-        else
-        {
-            playerScript = player.AddComponent<Player>();
-        }
-
         // 발사 후 5초 뒤 Bullet 비활성화
         Invoke("ReturnBullet", bulletLifeTime);
     }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public partial class Player
 {
+    Vector3 targetDirection;
+
     public override void Move()
     {
         if (playerRb == null)

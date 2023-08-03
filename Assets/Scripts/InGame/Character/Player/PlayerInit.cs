@@ -13,19 +13,16 @@ public partial class Player
     // �ӽ� : �����κ��� �޾ƾߵ�
     [Header("User Setting")]
     [SerializeField] float playerSpeed;
-    [SerializeField] public float playerMaxHp;
-    [SerializeField] public float playerCurHp;
+    [SerializeField] public int playerMaxHp;
+    [SerializeField] public int playerCurHp;
     public int playerAttackPower;
     public int playerLv;
     public int playerMaxExp;
     public int playerCurExp = 0;
-    public int score = 0;
     public float playerMovementSpeed;
     public float projectileSpeed = 5f;
     public float rateOfFire = 0.3f;
     public float lastAttackTime = 0;
-
-    Vector3 targetDirection;
 
     public bool IsDeath;
 
