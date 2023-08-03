@@ -26,14 +26,8 @@ public partial class Player : CharacterBase
             if (Time.time - lastAttackTime >= rateOfFire)
             {
                 Attack();
-<<<<<<< HEAD
-                Debug.Log("Time.time - lastAttackTime : " + (Time.time - lastAttackTime));
-                Debug.Log("Time.time : " + Time.time);
-                Debug.Log("lastAttackTime  1: " + lastAttackTime);
-=======
->>>>>>> 7b445977e969774cac433a4390f64c66acca0c77
+
                 lastAttackTime = Time.time;
-                Debug.Log("lastAttackTime  2: " + lastAttackTime);
             }
         }
     }
