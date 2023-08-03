@@ -23,10 +23,14 @@ public partial class Player : CharacterBase
 
         if (Input.GetKey(KeyCode.Mouse0))
         {
-            Attack();
             if (Time.time - lastAttackTime >= rateOfFire)
             {
+                Attack();
+                Debug.Log("Time.time - lastAttackTime : " + (Time.time - lastAttackTime));
+                Debug.Log("Time.time : " + Time.time);
+                Debug.Log("lastAttackTime  1: " + lastAttackTime);
                 lastAttackTime = Time.time;
+                Debug.Log("lastAttackTime  2: " + lastAttackTime);
             }
         }
     }

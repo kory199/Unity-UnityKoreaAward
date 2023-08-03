@@ -98,9 +98,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSpeed: 5
-  bulletLifeTime: 0
+  bulletLifeTime: 2
   rangedBulletDamage: 0
   meleeBulletDamage: 0
   playerBulletDamage: 0
   player: {fileID: 5329609039082644204, guid: 447dfd2202628a04a9c407b170214b88, type: 3}
+  bossMonster: {fileID: 0}
+  meleeMonster: {fileID: 0}
+  rangedMonster: {fileID: 0}
   setShooter: {fileID: 0}
