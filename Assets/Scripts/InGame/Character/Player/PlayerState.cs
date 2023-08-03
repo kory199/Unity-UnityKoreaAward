@@ -7,8 +7,6 @@ public partial class Player
 {
     public override void Attack()
     {
-        if (Input.GetKey(KeyCode.Mouse0))
-        {
             GameObject pullBullet = ObjectPooler.SpawnFromPool("Bullet2D", gameObject.transform.position);
 
             // Bullet에 발사 정보 전달
@@ -34,7 +32,6 @@ public partial class Player
 
             // 속도 가중치는 서버 데이터 업로드 후 변경 (5 -> projectileSpeed)
             bulletRb.velocity = targetDirection * 5;
-        }
     }
     public void PlayerHit(int damageAmount)
     {
