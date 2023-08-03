@@ -20,7 +20,7 @@ public partial class Player
     public int playerMaxExp;
     public int playerCurExp = 0;
     public float playerMovementSpeed;
-    public float projectileSpeed = 5f;
+    public float projectileSpeed;
     public float rateOfFire = 0.3f;
     public float lastAttackTime = 0;
 
@@ -37,7 +37,9 @@ public partial class Player
 
     private void InitSetting()
     {
-        playerSpeed = 3f;
+    projectileSpeed = 15f;
+
+    playerSpeed = 3f;
 
         // Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
