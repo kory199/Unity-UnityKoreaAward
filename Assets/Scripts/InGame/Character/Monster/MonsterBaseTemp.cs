@@ -10,10 +10,11 @@ public abstract class MonsterBase : MonoBehaviour
     [SerializeField] protected MonsterInfo _monsterInfo = null;
     public string MonsterName;
 
-    // 임시 Status
-    private int maxHP = 10;
-    private int curHP = 10;
+    // temp variable
+    private float maxHP = 10;
+    public float curHP;
     public int exp = 10;
+    public int score = 10;
 
 
     public bool Death { get { return curHP <= 0; } }
@@ -36,23 +37,22 @@ public abstract class MonsterBase : MonoBehaviour
     }
     private void OnEnable()
     {
+        curHP = maxHP;
         state = MonsterStateType.None;
         StartCoroutine("State_" + state);
     }
+
     private void OnDisable()
     {
-        ObjectPooler.ReturnToPool(gameObject);
         //CancelInvoke(); //invoke 함수를 사용하는 경우적어주세요
-    }
 
-    private void OnDestroy()
-    {
         if (Death == true)
         {
             // 죽었을 때의 처리
             DeathProcess();
         }
     }
+
     /// <summary>
     /// Set variable string ' MonsterName ' 
     /// </summary>
@@ -152,8 +152,6 @@ public abstract class MonsterBase : MonoBehaviour
     private IEnumerator State_Death()
     {
         // 점수+, exp+, 비활성화 되고 풀에 다시 들어가고 등등...
-
-
         MonsterDeath();
         yield return null;
     }
@@ -163,9 +161,19 @@ public abstract class MonsterBase : MonoBehaviour
     /// </summary>
     protected abstract void Attack();
 
+    public void Hit(float hitDamage)
+    {
+        curHP -= hitDamage;
+
+        if (curHP <= 0)
+        {
+            player.playerCurExp += this.exp;
+            player.score += this.score;
+        }
+    }
 
     private void MonsterDeath()
     {
-        // 오브젝트 풀에 반환
+        ObjectPooler.ReturnToPool(gameObject);
     }
 }
