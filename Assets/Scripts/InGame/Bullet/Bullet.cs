@@ -73,10 +73,12 @@ public class Bullet : MonoBehaviour
             Debug.LogError("Monster Hit");
             // 몬스터 충돌 처리
             other.gameObject.SetActive(false);
+            gameObject.SetActive(false);
         }
         else
         {
             // 벽 or 다른 collider 충돌처리
+            gameObject.SetActive(false);
         }
     }
 
