@@ -6,8 +6,21 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "APIData", menuName = "ScriptableObjects/APIDataSO", order = 1)]
 public class APIDataSO : ScriptableObject
 {
+    private static APIDataSO instance;
+
+    public static APIDataSO Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = Resources.Load<APIDataSO>("APIData");
+            }
+            return instance;
+        }
+    }
+
     public Dictionary<string, object> responseDataDic = new();
-    public List<InspectorDictionaryElement> dictionaryElements = new List<InspectorDictionaryElement>();
 
     public event Action OnResponseDataChanged;
 
@@ -24,7 +37,6 @@ public class APIDataSO : ScriptableObject
             return tValue;
         }
 
-        Debug.LogError($"Error with : {key}");
         return default;
     }
 
@@ -33,7 +45,7 @@ public class APIDataSO : ScriptableObject
         if (responseDataDic.ContainsKey(key))
         {
             responseDataDic.Remove(key);
-            EditorUtility.SetDirty(this); // Notify Unity that this object has been modified.
+            EditorUtility.SetDirty(this);
             OnResponseDataChanged?.Invoke();
         }
     }

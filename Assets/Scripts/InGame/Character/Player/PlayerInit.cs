@@ -1,16 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using APIModels;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 public partial class Player
 {
-    public PlayerBaseData playerBaseData;
     public Rigidbody2D bulletRb;
     public Rigidbody2D playerRb;
     public Bullet bullet;
 
-    // �ӽ� : �����κ��� �޾ƾߵ�
+    // �ӽ� : �����κ��� �޾ƾߵ�
     [Header("User Setting")]
     [SerializeField] float playerSpeed;
     [SerializeField] public float playerMaxHp;
@@ -52,14 +52,12 @@ public partial class Player
         playerMaxHp = 100;
         playerCurHp = playerMaxHp;
 
-        if (APIManager.Instacne.isLogin)
-        {
-            playerMaxHp = playerBaseData.hp;
-            playerMaxHp = 100;
-            playerCurHp = playerMaxHp;
-            playerLv = playerBaseData.level;
-            playerMaxExp = playerBaseData.exp;
-            IsDeath = false;
-        }
+        //PlayerData player = APIDataSO.Instance.GetValueByKey<PlayerData>(APIDataDicKey.PlayerData);
+        // TODO : 로그인 후 해당 유저 데이터 추가예정
+        playerMaxHp = hp;
+        playerMaxHp = 100;
+        playerCurHp = playerMaxHp;
+        playerMaxExp = playerMaxHp;
+        IsDeath = false;
     }
 }

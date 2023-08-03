@@ -6,7 +6,7 @@ public partial class Player : CharacterBase
 {
     protected override void Start()
     {
-        // ±âÅ¸ ÃÊ±âÈ­ Ç×¸ñ Ãß°¡
+        // ï¿½ï¿½Å¸ ï¿½Ê±ï¿½È­ ï¿½×¸ï¿½ ï¿½ß°ï¿½
         base.Start();
     }
 

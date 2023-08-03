@@ -351,6 +351,7 @@ MonoBehaviour:
   _spawnMonsterTotalNum: 0
   _spawnTime: 3
   _SpawnRandomFactor: 2
+  _isBoss: 0
 --- !u!1 &1532666274
 GameObject:
   m_ObjectHideFlags: 0

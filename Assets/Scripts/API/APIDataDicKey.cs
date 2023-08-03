@@ -2,17 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class APIDataDicKey : MonoBehaviour
+public class APIDataDicKey
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public static readonly string GameData = "GameData";
+    public static readonly string PlayerData = "PlayerData";
+    public static readonly string RankingData = "RankingData";
+    public static readonly string StageData = "StageData";
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public static readonly string MeleeMonstser = "MeleeMonstser";
+    public static readonly string RangedMonster = "RangedMonster";
+    public static readonly string BOSS = "BOSS";
+    public static readonly string StageSpawnMonster = "StageSpawnMonster";
+    public static readonly string PlayerStatus = "PlayerStatus";
 }
