@@ -55,4 +55,9 @@ public partial class Player
             // Level Up
         }
     }
+
+    public void playerDeath()
+    {
+        StageManager.Instacne.PlayerDeath();
+    }
 }
