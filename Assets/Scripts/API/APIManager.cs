@@ -86,6 +86,17 @@ public class APIManager : MonoSingleton<APIManager>
         await CallAPI<Dictionary<string, object>, User>(APIUrls.LoginApi, user, HandleLoginResponse);
     }
 
+    public async UniTask LoginAPI_TEST()
+    {
+        User testUser = new User
+        {
+            ID = "Wally3",
+            Password = "1234!"
+        };
+
+        await CallAPI<Dictionary<string, object>, User>(APIUrls.LoginApi, testUser, HandleLoginResponse);
+    }
+
     private void HandleLoginResponse(APIResponse<Dictionary<string, object>> apiResponse)
     {
         var responseBody = JsonConvert.DeserializeObject<Dictionary<string, object>>(apiResponse.responseBody);
