@@ -4,6 +4,7 @@ using APIModels;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 
 public class APIManager : MonoSingleton<APIManager>
@@ -88,9 +89,11 @@ public class APIManager : MonoSingleton<APIManager>
 
     public async UniTask LoginAPI_TEST()
     {
+        _id = "Wally3";
+
         User testUser = new User
         {
-            ID = "Wally3",
+            ID = _id,
             Password = "1234!"
         };
 
@@ -184,6 +187,22 @@ public class APIManager : MonoSingleton<APIManager>
         {
             Debug.LogError("Failed RankingData from API response.");
         }
+    }
+
+    public async UniTask GetStageAPI_Test(int stageNum)
+    {
+
+#if UNITY_EDITOR
+        Debug.Log($"_AuthToken : {NewGameData().AuthToken}");
+#endif
+        StageData stageData = new StageData
+        {
+            ID = NewGameData().ID,
+            AuthToken = NewGameData().AuthToken,
+            StageNum = stageNum,
+        };
+
+        await CallAPI<Dictionary<string, object>, StageData>(APIUrls.StageApi, stageData, HandleStageDataResponse);
     }
 
     public async UniTask GetStageAPI(int stageNum)

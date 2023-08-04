@@ -10,29 +10,32 @@ public class StageUI : MonoBehaviour
 
     private int _stageNum = 0;
 
-    private async void Awake()
+    private void Awake()
     {
-        await APIManager.Instacne.LoginAPI_TEST();
-    }
-
-    private void Start()
-    {
-        //GetSategInof();
+        GetSategInof();
     }
 
     private async void GetSategInof()
     {
         await APIManager.Instacne.GetStageAPI(_stageNum);
 
-
         List<StageInfo> stageInfo = APIDataSO.Instance.GetValueByKey<List<StageInfo>>(APIDataDicKey.StageData);
-        if(stageInfo == null)
+
+        foreach (Button btn in stageBut)
         {
-            Debug.Log("null 이다");
+            btn.interactable = false;
         }
-        foreach(StageInfo stage in stageInfo)
+
+        foreach (StageInfo stage in stageInfo)
         {
             Debug.Log($"stage : {stage.stage_id}");
+            Debug.Log($"is_achieved : {stage.is_achieved}");
+
+            int stageID = stage.stage_id;
+            if (stageID > 0 && stageID <= stageBut.Length)
+            {
+                stageBut[stageID - 1].interactable = stage.is_achieved; 
+            }
         }
     }
 }
