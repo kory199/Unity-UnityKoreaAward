@@ -7,6 +7,7 @@ public abstract class MonsterBase : MonoBehaviour
     protected MonsterData monsterData; //=> 나중에 스크립터블 오브젝트 or 엑셀파일로 정보 받아온 클래스 등등
     protected MonsterStateType state;
     protected Player player;
+    protected Vector3 playerTargetDirection;
     [SerializeField] protected MonsterInfo _monsterInfo = null;
     public string MonsterName;
 
@@ -22,7 +23,7 @@ public abstract class MonsterBase : MonoBehaviour
     protected void Start()
     {
         SetMonsterName();
-        if ( DataManager.Instacne.MonsterData.TryGetMonsterInfo(MonsterName, out _monsterInfo))
+        if (DataManager.Instacne.MonsterData.TryGetMonsterInfo(MonsterName, out _monsterInfo))
         {
 #if UNITY_EDITOR
             Debug.Log("Insert Data");
@@ -116,7 +117,7 @@ public abstract class MonsterBase : MonoBehaviour
             //gameObject.transform.LookAt(player.transform.position);
 
             // 몬스터를 해당 방향으로 움직임(다른 방식으로 구현해도 ㅇㅋ)
-            gameObject.transform.Translate(dirVector *_monsterInfo.MoveSpeed * Time.deltaTime);
+            gameObject.transform.Translate(dirVector * _monsterInfo.MoveSpeed * Time.deltaTime);
 
             // 플레이어와 자기자신(몬스터)사이의 거리와 본인의 공격 가능범위를 비교하여 수행(다른 방식으로 구현해도 ㅇㅋ)
             if (Vector3.Distance(player.transform.position, this.gameObject.transform.position) <= _monsterInfo.Range)
