@@ -187,17 +187,31 @@ public class APIManager : MonoSingleton<APIManager>
         await CallAPI<Dictionary<string, object>, StageData>(APIUrls.StageApi, stageData, HandleStageDataResponse);
     }
 
-    public async UniTask StageUpToServer(int stageNum, int score, float time)
+    public async UniTask StageUpToServer(int stageNum, int score)
     {
+        var userData = GetApiSODicUerData();
+        string id = userData.ID;
+        string authToken = userData.AuthToken;
+
         StageData stageData = new StageData
         {
-            ID = GetApiSODicUerData().ID,
-            AuthToken = GetApiSODicUerData().AuthToken,
-            StageNum = stageNum,
+            ID = id,
+            AuthToken = authToken,
+            StageNum = stageNum
         };
 
-        await CallAPI<Dictionary<string, object>, StageData>(APIUrls.StageApi, stageData, null);
-        }
+        StageClear stageClear = new StageClear
+        {
+            ID = id,
+            AuthToken = authToken,
+            Score = score
+        };
+
+        UniTask callStageApi = CallAPI<Dictionary<string, object>, StageData>(APIUrls.StageApi, stageData, null);
+        UniTask callStageClear = CallAPI<Dictionary<string, object>, StageClear>(APIUrls.StageClear, stageClear, null);
+
+        await UniTask.WhenAll(callStageApi, callStageClear);
+    }
 
     private void HandleStageDataResponse(APIResponse<Dictionary<string, object>> apiResponse)
     {

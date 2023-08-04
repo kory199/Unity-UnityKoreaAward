@@ -28,6 +28,11 @@ namespace APIModels
         public int StageNum { get; set; }
     }
 
+    public class StageClear : GameData
+    {
+        public int Score { get; set; }
+    }
+
     // === Response === 
     public class PlayerData
     {
