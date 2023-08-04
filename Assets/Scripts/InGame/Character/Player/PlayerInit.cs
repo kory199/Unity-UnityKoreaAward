@@ -45,7 +45,7 @@ public partial class Player
 
     private async void InitPlayer()
     {
-        await APIManager.Instacne.GetMasterDataAPI();
+        await APIManager.Instance.GetMasterDataAPI();
 
         PlayerStatus_res[] playerStatus = APIDataSO.Instance.GetValueByKey<PlayerStatus_res[]>(APIDataDicKey.PlayerStatus);
 

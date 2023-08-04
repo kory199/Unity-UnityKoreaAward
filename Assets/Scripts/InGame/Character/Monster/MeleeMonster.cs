@@ -16,9 +16,15 @@ public class MeleeMonster : MonsterBase
     private float meleeMonster_Range;
 
 
+    private void Awake()
+    {
+        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetMeleeMonsterStatus);
+    }
+
     // stage 변경에 따른 Level별 능력치 부여 => 서버 정보 받아오기
     private void OnEnable()
     {
+
         // init melee monster variable
         // meleeMonster_Level = 0;
         // meleeMonster_exp = 0;
@@ -31,10 +37,12 @@ public class MeleeMonster : MonsterBase
         // meleeMonster_Range = 0;
     }
 
+
+
     protected override void OnDisable()
     {
         base.OnDisable();
-        StageManager.Instacne.MonsterDeath();
+        StageManager.Instance.MonsterDeath();
     }
     protected override void Attack()
     {
@@ -47,4 +55,17 @@ public class MeleeMonster : MonsterBase
     {
         MonsterName = "BasicMeleeMonster";
     }
+
+    private void SetMeleeMonsterStatus()
+    {
+      // meleeMonster_Level = monsterData_Res[0].level;
+      // meleeMonster_exp ;
+      // meleeMonster_Hp;
+      // meleeMonster_Speed;
+      // meleeMonster_RateOfFire;
+      // meleeMonster_ProjectileSpeed;
+      // meleeMonster_CollisionDamage;
+      // meleeMonster_Score;
+      // meleeMonster_Range;
+}
 }

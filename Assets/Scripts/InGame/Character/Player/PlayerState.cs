@@ -57,7 +57,7 @@ public partial class Player
     }
     protected override void Die()
     {
-        StageManager.Instacne.PlayerDeath();
+        StageManager.Instance.PlayerDeath();
     }
 
     public void LevelyUp()

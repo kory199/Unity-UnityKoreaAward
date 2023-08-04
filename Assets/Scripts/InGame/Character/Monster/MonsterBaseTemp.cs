@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using static EnumTypes;
+using APIModels;
 
 public abstract class MonsterBase : MonoBehaviour
 {
@@ -11,6 +12,10 @@ public abstract class MonsterBase : MonoBehaviour
     [SerializeField] protected MonsterInfo _monsterInfo = null;
     public string MonsterName;
 
+    int stageNum;
+
+    protected MonsterData_res[] monsterData_Res;
+
     // 임시 Status
     private int maxHP = 10;
     public int curHP = 10;
@@ -18,8 +23,27 @@ public abstract class MonsterBase : MonoBehaviour
     public int score = 10;
     protected bool Death { get { return curHP <= 0; } }
 
+    private void Awake()
+    {
+        // Start Chain
+        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, GetMeleeMonsterInfo);
+        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, GetRangedMonsterInfo);
+
+        // Next Chain
+        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Next, SetStageNum);
+    }
+
+    private void OnEnable()
+    {
+        InGameManager.Instance.InvokeCallBacks(EnumTypes.InGameParamType.Stage, (int)EnumTypes.StageStateType.Start);
+        state = MonsterStateType.None;
+        StartCoroutine("State_" + state);
+    }
+
     protected void Start()
     {
+        stageNum = 1;
+
         // data manager 삭제 및 stage 변경에 따른 monster status 변경으로 onEnable로 monster setting 변경 필요
         SetMonsterName();
         /*if (DataManager.Instacne.MonsterData.TryGetMonsterInfo(MonsterName, out _monsterInfo))
@@ -36,11 +60,6 @@ public abstract class MonsterBase : MonoBehaviour
         }*/
     }
 
-    private void OnEnable()
-    {
-        state = MonsterStateType.None;
-        StartCoroutine("State_" + state);
-    }
     protected virtual void OnDisable()
     {
         ObjectPooler.ReturnToPool(gameObject);
@@ -170,5 +189,44 @@ public abstract class MonsterBase : MonoBehaviour
     private void MonsterDeath()
     {
         // 오브젝트 풀에 반환
+    }
+
+    private void GetMeleeMonsterInfo() => MonsterSetting(stageNum, EnumTypes.MonsterType.MeleeMonster);
+    private void GetRangedMonsterInfo() => MonsterSetting(stageNum, EnumTypes.MonsterType.RangedMonster);
+
+    // 임시 _SSH
+    private async void RequestServer()
+    {
+        await APIManager.Instance.GetMasterDataAPI();
+    }
+
+    private void MonsterSetting(int stageNum, EnumTypes.MonsterType monsterType)
+    {
+        monsterData_Res = APIDataSO.Instance.GetValueByKey<MonsterData_res[]>(monsterType.ToString());
+
+        if (monsterData_Res == null)
+        {
+            Debug.LogError("No MonsterData_res data");
+            return;
+        }
+
+        MonsterSetting(monsterType);
+    }
+
+    private void MonsterSetting(EnumTypes.MonsterType monsterType)
+    {
+
+    }
+
+    private void SetStageNum()
+    {
+        // 현재 Max Stage 5 기준
+        if (stageNum > 5)
+        {
+            InGameManager.Instance.InvokeCallBacks(InGameParamType.Stage, (int)EnumTypes.StageStateType.End);
+            return;
+        }
+        
+        stageNum++;
     }
 }
