@@ -197,9 +197,7 @@ public class APIManager : MonoSingleton<APIManager>
         };
 
         await CallAPI<Dictionary<string, object>, StageData>(APIUrls.StageApi, stageData, null);
-
-        //await CallAPI<Dictionary<string, object>, GameData>(APIUrls.GameDataApi, GetApiSODicUerData(), HandleGameDataResponse);
-    }
+        }
 
     private void HandleStageDataResponse(APIResponse<Dictionary<string, object>> apiResponse)
     {
