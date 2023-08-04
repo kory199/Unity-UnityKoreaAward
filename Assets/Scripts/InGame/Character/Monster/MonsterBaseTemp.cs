@@ -22,6 +22,7 @@ public abstract class MonsterBase : MonoBehaviour
 
     protected void Start()
     {
+        // data manager 삭제 및 stage 변경에 따른 monster status 변경으로 onEnable로 monster setting 변경 필요
         SetMonsterName();
         if (DataManager.Instacne.MonsterData.TryGetMonsterInfo(MonsterName, out _monsterInfo))
         {

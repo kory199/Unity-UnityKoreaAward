@@ -37,9 +37,9 @@ public partial class Player
 
     private void InitSetting()
     {
-    projectileSpeed = 15f;
+        projectileSpeed = 15f;
 
-    playerSpeed = 3f;
+        playerSpeed = 3f;
 
         // Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;

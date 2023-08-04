@@ -52,12 +52,17 @@ public partial class Player
 
         if (playerCurExp >= playerMaxExp)
         {
-            // Level Up
+            LevelyUp();
         }
     }
-
-    public void playerDeath()
+    protected override void Die()
     {
         StageManager.Instacne.PlayerDeath();
+    }
+
+    public void LevelyUp()
+    {
+        // 스크립터블 오브젝트로 부터 새로운 정보를 받아와 player setting
+        // InitPlayer();
     }
 }

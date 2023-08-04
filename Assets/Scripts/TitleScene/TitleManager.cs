@@ -326,7 +326,7 @@ public class TitleManager : MonoBehaviour
     {
         if (startBut.interactable)
         {
-            await SceneAndUIManager.Instacne.LoadScene(EnumTypes.ScenesType.SceneLobby);
+            await GameManager.Instacne.LoadScene(EnumTypes.ScenesType.SceneLobby);
         }
     }
 

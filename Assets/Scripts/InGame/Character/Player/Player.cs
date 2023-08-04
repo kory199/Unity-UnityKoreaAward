@@ -32,8 +32,4 @@ public partial class Player : CharacterBase
         }
     }
 
-    protected override void Die()
-    {
-        // player Die
-    }
 }
