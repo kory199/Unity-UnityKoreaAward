@@ -68,7 +68,7 @@ public class StageManager : MonoSingleton<StageManager>
         if (_stageNum < 4)
             _spawnManager.SettingMonsterSpawnNum(_spawnMeleeNum, _spawnRangedNum);
         else
-            _spawnManager.SettingMonsterSpawnNum(_spawnMeleeNum, _spawnRangedNum,true,"BossOne");
+            _spawnManager.SettingMonsterSpawnNum(_spawnMeleeNum, _spawnRangedNum, true, "BossOne");
     }
     private async void SendStageData()
     {
@@ -99,7 +99,7 @@ public class StageManager : MonoSingleton<StageManager>
             Debug.Log("stageNum : " + _stageNum);
         }
     }
-    public void BossDeath()
+    public async void BossDeath()
     {
         //게임 클리어 코루틴
         StartCoroutine(Co_GameOverUI());
@@ -108,7 +108,7 @@ public class StageManager : MonoSingleton<StageManager>
         SendStageData();
 
         //씬 이동
-        GameManager.Instacne.MoveScene("SceneLobby");
+        await GameManager.Instacne.LoadScene(EnumTypes.ScenesType.SceneLobby);
     }
     IEnumerator Co_GameOverUI()
     {

@@ -39,6 +39,8 @@ public class MeleeMonster : MonsterBase
     protected override void Attack()
     {
         transform.Rotate(0, 0, 30);
+
+        // player.PlayerHit();
     }
 
     protected override void SetMonsterName()

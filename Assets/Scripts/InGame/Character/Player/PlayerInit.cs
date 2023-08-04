@@ -12,16 +12,16 @@ public partial class Player
 
     // �ӽ� : �����κ��� �޾ƾߵ�
     [Header("User Setting")]
-    [SerializeField] float playerSpeed;
-    [SerializeField] public int playerMaxHp;
-    [SerializeField] public int playerCurHp;
+    public float playerSpeed;
+    public int playerMaxHp;
+    public int playerCurHp;
     public int playerAttackPower;
     public int playerLv;
     public int playerMaxExp;
     public int playerCurExp = 0;
     public float playerMovementSpeed;
-    public float projectileSpeed;
-    public float rateOfFire = 0.3f;
+    public float playerProjectileSpeed;
+    public float playerRateOfFire = 0.3f;
     public float lastAttackTime = 0;
 
     public bool IsDeath;
@@ -37,26 +37,34 @@ public partial class Player
 
     private void InitSetting()
     {
-        projectileSpeed = 15f;
-
         playerSpeed = 3f;
 
         // Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
     }
 
-    private void InitPlayer()
+    private async void InitPlayer()
     {
-        // Test
-        playerMaxHp = 100;
-        playerCurHp = playerMaxHp;
+        await APIManager.Instacne.GetMasterDataAPI();
 
-        //PlayerData player = APIDataSO.Instance.GetValueByKey<PlayerData>(APIDataDicKey.PlayerData);
-        // TODO : 로그인 후 해당 유저 데이터 추가예정
-        playerMaxHp = hp;
-        playerMaxHp = 100;
+        PlayerStatus_res[] playerStatus = APIDataSO.Instance.GetValueByKey<PlayerStatus_res[]>(APIDataDicKey.PlayerStatus);
+
+        // Level 1 기준 초기 셋팅
+        playerMaxHp = playerStatus[0].hp;
         playerCurHp = playerMaxHp;
-        playerMaxExp = playerMaxHp;
+        playerAttackPower = playerStatus[0].attack_power;
+        playerMaxExp = playerStatus[0].xp_requiredfor_levelup;
+        playerMovementSpeed = playerStatus[0].movement_speed;
+        playerProjectileSpeed = playerStatus[0].projectile_speed;
+        playerRateOfFire = playerStatus[0].rate_of_fire;
+
+        // PlayerData player = APIDataSO.Instance.GetValueByKey<PlayerData>(APIDataDicKey.PlayerData);
+        // TODO : 로그인 후 해당 유저 데이터 추가예정
+        // playerMaxHp = player.hp;
+        // playerCurHp = playerMaxHp;
+        // playerMaxExp = player.exp;
+
+
         IsDeath = false;
     }
 }

@@ -22,7 +22,7 @@ public abstract class MonsterBase : MonoBehaviour
     {
         // data manager 삭제 및 stage 변경에 따른 monster status 변경으로 onEnable로 monster setting 변경 필요
         SetMonsterName();
-        if (DataManager.Instacne.MonsterData.TryGetMonsterInfo(MonsterName, out _monsterInfo))
+        /*if (DataManager.Instacne.MonsterData.TryGetMonsterInfo(MonsterName, out _monsterInfo))
         {
 #if UNITY_EDITOR
             Debug.Log("Insert Data");
@@ -33,7 +33,7 @@ public abstract class MonsterBase : MonoBehaviour
 #if UNITY_EDITOR
             Debug.Log("Not Found Data");
 #endif
-        }
+        }*/
     }
 
     private void OnEnable()
