@@ -31,8 +31,8 @@ public class StageManager : MonoSingleton<StageManager>
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetMonsterSpawn);
         //Next 체인
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Next, SetStageNum);
-        //End 체인 
-        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.End, SendStageData);
+        //End 체인 _SSH 임시 주석처리
+        // InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.End, SendStageData);
 
     }
     private void Update()
@@ -88,8 +88,8 @@ public class StageManager : MonoSingleton<StageManager>
         //게임 오버 코루틴
         StartCoroutine(Co_GameOverUI());
 
-        //서버 데이터 전달 
-        SendStageData();
+        //서버 데이터 전달 _SSH 임시 주석처리
+        // SendStageData();
 
         //씬 이동 : Logic edit _SSH
         await GameManager.Instance.LoadScene(EnumTypes.ScenesType.SceneLobby);
@@ -111,8 +111,8 @@ public class StageManager : MonoSingleton<StageManager>
         //게임 클리어 코루틴
         StartCoroutine(Co_GameOverUI());
 
-        //서버 데이터 전달 
-        SendStageData();
+        //서버 데이터 전달 _SSH 임시 주석처리
+        // SendStageData();
 
         //씬 이동 : Logic edit _SSH
         await GameManager.Instance.LoadScene(EnumTypes.ScenesType.SceneLobby);
