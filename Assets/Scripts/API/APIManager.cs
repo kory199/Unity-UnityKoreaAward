@@ -87,19 +87,6 @@ public class APIManager : MonoSingleton<APIManager>
         await CallAPI<Dictionary<string, object>, User>(APIUrls.LoginApi, user, HandleLoginResponse);
     }
 
-    public async UniTask LoginAPI_TEST()
-    {
-        _id = "Wally3";
-
-        User testUser = new User
-        {
-            ID = _id,
-            Password = "1234!"
-        };
-
-        await CallAPI<Dictionary<string, object>, User>(APIUrls.LoginApi, testUser, HandleLoginResponse);
-    }
-
     private void HandleLoginResponse(APIResponse<Dictionary<string, object>> apiResponse)
     {
         var responseBody = JsonConvert.DeserializeObject<Dictionary<string, object>>(apiResponse.responseBody);
@@ -187,22 +174,6 @@ public class APIManager : MonoSingleton<APIManager>
         {
             Debug.LogError("Failed RankingData from API response.");
         }
-    }
-
-    public async UniTask GetStageAPI_Test(int stageNum)
-    {
-
-#if UNITY_EDITOR
-        Debug.Log($"_AuthToken : {NewGameData().AuthToken}");
-#endif
-        StageData stageData = new StageData
-        {
-            ID = NewGameData().ID,
-            AuthToken = NewGameData().AuthToken,
-            StageNum = stageNum,
-        };
-
-        await CallAPI<Dictionary<string, object>, StageData>(APIUrls.StageApi, stageData, HandleStageDataResponse);
     }
 
     public async UniTask GetStageAPI(int stageNum)
