@@ -18,7 +18,7 @@ public class MeleeMonster : MonsterBase
 
     private void Awake()
     {
-        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetMeleeMonsterStatus);
+        // InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetMeleeMonsterStatus);
     }
 
     // stage 변경에 따른 Level별 능력치 부여 => 서버 정보 받아오기

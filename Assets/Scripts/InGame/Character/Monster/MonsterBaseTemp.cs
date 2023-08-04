@@ -64,7 +64,7 @@ public abstract class MonsterBase : MonoBehaviour
     {
         ObjectPooler.ReturnToPool(gameObject);
 
-        //CancelInvoke(); //invoke 함수를 사용하는 경우적어주세요
+        CancelInvoke(); //invoke 함수를 사용하는 경우적어주세요
     }
 
     private void OnDestroy()
