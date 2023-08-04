@@ -22,8 +22,9 @@ public abstract class MonsterBase : MonoBehaviour
 
     protected void Start()
     {
+        // data manager 삭제 및 stage 변경에 따른 monster status 변경으로 onEnable로 monster setting 변경 필요
         SetMonsterName();
-        if ( DataManager.Instacne.MonsterData.TryGetMonsterInfo(MonsterName, out _monsterInfo))
+        if (DataManager.Instacne.MonsterData.TryGetMonsterInfo(MonsterName, out _monsterInfo))
         {
 #if UNITY_EDITOR
             Debug.Log("Insert Data");
@@ -117,7 +118,7 @@ public abstract class MonsterBase : MonoBehaviour
             //gameObject.transform.LookAt(player.transform.position);
 
             // 몬스터를 해당 방향으로 움직임(다른 방식으로 구현해도 ㅇㅋ)
-            gameObject.transform.Translate(dirVector *_monsterInfo.MoveSpeed * Time.deltaTime);
+            gameObject.transform.Translate(dirVector * _monsterInfo.MoveSpeed * Time.deltaTime);
 
             // 플레이어와 자기자신(몬스터)사이의 거리와 본인의 공격 가능범위를 비교하여 수행(다른 방식으로 구현해도 ㅇㅋ)
             if (Vector3.Distance(player.transform.position, this.gameObject.transform.position) <= _monsterInfo.Range)

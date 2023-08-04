@@ -265,7 +265,7 @@ MonoBehaviour:
     Number: 20
     IsUi: 0
   - Name: Bullet2D
-    Prefab: {fileID: 4010791524929188743, guid: ed54ded7b6f3eb842acb98c188ef2ae2, type: 3}
+    Prefab: {fileID: 8885433462564445170, guid: ed54ded7b6f3eb842acb98c188ef2ae2, type: 3}
     Number: 50
     IsUi: 0
 --- !u!4 &645094729
