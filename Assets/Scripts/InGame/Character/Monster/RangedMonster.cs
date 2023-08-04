@@ -18,8 +18,8 @@ public class RangedMonster : MonsterBase
     private int rangedMonster_Score;
     private float rangedMonster_Range;
 
-    // Start is called before the first frame update
-    void Start()
+    // stage 변경에 따른 Level별 능력치 부여 => 서버 정보 받아오기
+    private void OnEnable()
     {
         // variable init
         // rangedMonster_Level = 0;
@@ -27,7 +27,7 @@ public class RangedMonster : MonsterBase
         // rangedMonster_Hp = 0;
         // rangedMonster_Speed = 0;
         // rangedMonster_RateOfFire = 0;
-        // rangedMonster_ProjectileSpeed = 0;
+        rangedMonster_ProjectileSpeed = 10;
         // RangedMonster_CollisionDamage = 0;
         // rangedMonster_Score = 0;
         // rangedMonster_Range = 0;
@@ -37,7 +37,6 @@ public class RangedMonster : MonsterBase
     {
         GameObject pullBullet = ObjectPooler.SpawnFromPool("Bullet2D", gameObject.transform.position);
         playerTargetDirection = (player.transform.position - gameObject.transform.position).normalized;
-
 
         // Bullet에 발사 정보 전달
         if (pullBullet.TryGetComponent<Bullet>(out Bullet bull))

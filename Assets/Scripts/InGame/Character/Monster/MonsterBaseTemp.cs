@@ -16,9 +16,7 @@ public abstract class MonsterBase : MonoBehaviour
     public int curHP = 10;
     public int exp = 10;
     public int score = 10;
-
-
-    public bool Death { get { return curHP <= 0; } }
+    protected bool Death { get { return curHP <= 0; } }
 
     protected void Start()
     {

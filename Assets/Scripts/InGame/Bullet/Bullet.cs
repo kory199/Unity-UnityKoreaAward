@@ -70,9 +70,8 @@ public class Bullet : MonoBehaviour
         // Monster Hit
         else if (other.gameObject.tag == "Monster" && setShooter.name == "Player")
         {
-            Debug.LogError("Monster Hit");
             // 몬스터 충돌 처리
-            other.gameObject.SetActive(false);
+            other.gameObject.SetActive(false); // monster hit func 구현 후 대체
             gameObject.SetActive(false);
         }
         else

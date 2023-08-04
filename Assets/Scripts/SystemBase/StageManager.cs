@@ -76,7 +76,7 @@ public class StageManager : MonoSingleton<StageManager>
         await APIManager.Instacne.StageUpToServer("nickname", _stageNum, _score, _time);
     }
 
-    public void PlayerDeath()
+    public async void PlayerDeath()
     {
         //게임 오버 코루틴
         StartCoroutine(Co_GameOverUI());
@@ -85,7 +85,7 @@ public class StageManager : MonoSingleton<StageManager>
         SendStageData();
 
         //씬 이동
-        GameManager.Instacne.MoveScene("SceneLobby");
+        await GameManager.Instacne.LoadScene(EnumTypes.ScenesType.SceneLobby);
     }
     public void MonsterDeath()
     {

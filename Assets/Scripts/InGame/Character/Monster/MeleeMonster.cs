@@ -15,7 +15,9 @@ public class MeleeMonster : MonsterBase
     private int meleeMonster_Score;
     private float meleeMonster_Range;
 
-    private void Start()
+
+    // stage 변경에 따른 Level별 능력치 부여 => 서버 정보 받아오기
+    private void OnEnable()
     {
         // init melee monster variable
         // meleeMonster_Level = 0;
@@ -37,7 +39,6 @@ public class MeleeMonster : MonsterBase
     protected override void Attack()
     {
         transform.Rotate(0, 0, 30);
-
     }
 
     protected override void SetMonsterName()
