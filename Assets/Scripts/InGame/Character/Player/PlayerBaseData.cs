@@ -1,16 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using APIModels;
 
 [CreateAssetMenu(fileName = "PlayerData", menuName = "ScriptableObjects/Player Data", order = int.MaxValue)]
 public class PlayerBaseData : ScriptableObject
 {
-    List<object> responseDataList = new();
-
-    [SerializeField] public string id;
-    [SerializeField] public int exp;
-    [SerializeField] public int hp;
-    [SerializeField] public int score;
-    [SerializeField] public int level;
-    [SerializeField] public int status;
+    public string id;
+    public int exp;
+    public int hp;
+    public int score;
+    public int level;
+    public int status;
 }
