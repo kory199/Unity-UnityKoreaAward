@@ -73,7 +73,7 @@ public class StageManager : MonoSingleton<StageManager>
     private async void SendStageData()
     {
         Debug.Log("Send StageEndData to Server ...");
-        await APIManager.Instacne.StageUpToServer("nickname", _stageNum, _score, _time);
+        await APIManager.Instacne.StageUpToServer(_stageNum, _score);
     }
 
     public void PlayerDeath()
