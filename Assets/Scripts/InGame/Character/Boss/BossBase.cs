@@ -9,30 +9,30 @@ public abstract class BossBase : MonsterBase
     [SerializeField] protected List<Transform> _spawners;
 
     /// <summary>
-    /// Åõ»çÃ¼ ¹ß»çÇÏ´Â ÇÔ¼ö
+    /// ï¿½ï¿½ï¿½ï¿½Ã¼ ï¿½ß»ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
     /// </summary>
     protected void ShootProjectile(string name)
     {
-        //¹ß»ç ¹æÇâ °è»ê
+        //ï¿½ß»ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         //_initMoveVector = gameObject.transform.position - _boss.transform.position;
         foreach(var dir in _spawners)
         {
-            //Ç®¿¡¼­ Åõ»çÃ¼ ²¨³»±â
+            //Ç®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             GameObject projectiles = ObjectPooler.SpawnFromPool(name, dir.transform.position);
 
-            //¹ß»ç ÄÚ·çÆ¾
+            //ï¿½ß»ï¿½ ï¿½Ú·ï¿½Æ¾
             StartCoroutine(Co_ProjectileMove(projectiles, dir.position - _boss.transform.position));
         }
 
 
-     /*   //Ç®¿¡¼­ Åõ»çÃ¼ ²¨³»±â
+     /*   //Ç®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         GameObject ball = ObjectPooler.SpawnFromPool(projectile, gameObject.transform.position);
         
-        //¹ß»ç ÄÚ·çÆ¾
+        //ï¿½ß»ï¿½ ï¿½Ú·ï¿½Æ¾
         StartCoroutine(Co_BulletMove(ball, _initMoveVector));*/
     }
     /// <summary>
-    /// Åõ»çÃ¼¸¦ Á÷¼±À¸·Î ³¯¸®´Â ·ÎÁ÷ , º¸½º 1´Ü°è ÆÐÅÏ
+    /// ï¿½ï¿½ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ , ï¿½ï¿½ï¿½ï¿½ 1ï¿½Ü°ï¿½ ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     /// <param name="ball"></param>
     /// <returns></returns>
@@ -42,7 +42,7 @@ public abstract class BossBase : MonsterBase
         while (i < Utils.PROJECTILE_MAXDISTANCE)
         {
             yield return null;
-            ball.transform.Translate(dir.normalized * Utils.PROJECTILE_SPEDD); 
+            ball.transform.Translate(dir.normalized * Utils.PROJECTILE_SPEED); 
             i++;
         }
         ball.gameObject.SetActive(false);
