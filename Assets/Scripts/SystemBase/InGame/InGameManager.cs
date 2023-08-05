@@ -43,7 +43,7 @@ public class InGameManager : MonoSingleton<InGameManager>
         }
     }
     /// <summary>
-    /// °ÔÀÓ º¯¼ö Å¸ÀÔ¿¡ ¸ÂÃç action ÁöÁ¤
+    /// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½ï¿½ action ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     /// <param name="type"></param>
     /// <param name="action"></param>
@@ -60,7 +60,12 @@ public class InGameManager : MonoSingleton<InGameManager>
     }
     private void Start()
     {
-       // AddActionType(EnumTypes.InGameParamType.Player, PlayerSkiilsType.DoubleShot, () => Debug.Log("´õºí¼¦"));
+       // AddActionType(EnumTypes.InGameParamType.Player, PlayerSkiilsType.DoubleShot, () => Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"));
        // _parameters[EnumTypes.InGameParamType.Player].InvokeCallBack(EnumTypes.PlayerSkiilsType.DoubleShot);
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
     }
 }
