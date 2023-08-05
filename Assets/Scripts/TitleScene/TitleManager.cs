@@ -316,7 +316,7 @@ public class TitleManager : MonoBehaviour
         {
             startBut.interactable = true;
             loginInfotext.gameObject.SetActive(false);
-            await APIManager.Instacne.GetGameDataAPI();
+            await APIManager.Instance.GetGameDataAPI();
         }
         else
         {

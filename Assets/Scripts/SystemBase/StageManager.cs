@@ -13,6 +13,9 @@ public class StageManager : MonoSingleton<StageManager>
     [SerializeField] private int _deathMonsters = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
     [SerializeField] private float _time = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
     [SerializeField] private SpawnManager _spawnManager;
+
+    private int _onclickNum;
+
     #region Uinity lifeCycle
     private void Awake()
     {
@@ -32,8 +35,9 @@ public class StageManager : MonoSingleton<StageManager>
         //Next 체인
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Next, SetStageNum);
         //End 체인 _SSH 임시 주석처리
-        // InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.End, SendStageData);
-
+        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.End, SendStageData);
+        _onclickNum = GameManager.Instance.OnclickStageNum;
+        Debug.Log($"Click Stage Num : {_onclickNum}");
     }
     private void Update()
     {
@@ -81,7 +85,7 @@ public class StageManager : MonoSingleton<StageManager>
     {
         Debug.Log("Send StageEndData to Server ...");
 
-        await APIManager.Instacne.StageUpToServer(_stageNum, _score);
+        await APIManager.Instance.StageUpToServer(_stageNum, _score);
     }
 
     public async void PlayerDeath()
