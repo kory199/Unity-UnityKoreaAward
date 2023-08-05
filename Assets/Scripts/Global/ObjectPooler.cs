@@ -10,10 +10,10 @@ using UnityEditor;
 public class ObjectPoolerEditor : Editor
 {
     const string INFO = 
-        " Ç®¸µµÉ ¿ÀºêÁ§Æ®ÀÇ OnDisable() ¾È¿¡ ´ÙÀ½À» ÀûÀ¸¼¼¿ë~ " +
+        " Ç®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ OnDisable() ï¿½È¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½~ " +
         "\nvoid OnDisable()\n" +
         "{\nObjectPooler.ReturnToPool(gameobject); \n" +
-        "CancelInvoke(); //invoke ÇÔ¼ö¸¦ »ç¿ëÇÏ´Â °æ¿ìÀû¾îÁÖ¼¼¿ä\n}";
+        "CancelInvoke(); //invoke ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½\n}";
     public override void OnInspectorGUI()
     {
         EditorGUILayout.HelpBox(INFO, MessageType.Info);
@@ -33,20 +33,22 @@ public class Pool
 public class ObjectPooler : MonoBehaviour
 {
     private static ObjectPooler s_inst;
+
     private void Awake()
     {
         s_inst = this;
     }
+
     [SerializeField] private RectTransform _uiCanvasPooler;
     [SerializeField] private Pool[] _pools;
     private List<GameObject> _spawnObjects;
     private Dictionary<string, Queue<GameObject>> _dictionaryPool;
-    //³ªÁß¿¡ ÇÊ¿ä½Ã ÃÊ±âÈ­ °ªÀ¸·Î º¯°æÇÒ ¼ö ÀÖÀ½
+    //ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½Ê¿ï¿½ï¿½ ï¿½Ê±ï¿½È­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     readonly string INFO = 
-        " Ç®¸µµÉ ¿ÀºêÁ§Æ®ÀÇ OnDisable() ¾È¿¡ ´ÙÀ½À» ÀûÀ¸¼¼¿ë~ " +
+        " Ç®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ OnDisable() ï¿½È¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½~ " +
         "\nvoid OnDisable()\n" +
         "{\nObjectPooler.ReturnToPool(gameobject); \n" +
-        "CancelInvoke(); //invoke ÇÔ¼ö¸¦ »ç¿ëÇÏ´Â °æ¿ìÀû¾îÁÖ¼¼¿ä\n}";
+        "CancelInvoke(); //invoke ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½\n}";
 
     private void Start()
     {
@@ -59,7 +61,7 @@ public class ObjectPooler : MonoBehaviour
             for (int i = 0; i < pool.Number; i++)
             {
                 GameObject obj;
-                //Ingame ¿ÀºêÁ§Æ®¿Í UI ¿ÀºêÁ§Æ® ±¸ºÐ
+                //Ingame ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ UI ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
                 if (pool.IsUi == false)
                     obj = CreateNewObject(pool.Name, pool.Prefab);
                 else
@@ -70,15 +72,15 @@ public class ObjectPooler : MonoBehaviour
                 else
                     ArrangePool(obj, _uiCanvasPooler);
             }
-            //OnDisable¿¡ ReturnToPool ±¸Çö ¿©ºÎÁßº¹ ±¸Çö °Ë»ç
+            //OnDisableï¿½ï¿½ ReturnToPool ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ßºï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½
             if (_dictionaryPool[pool.Name].Count <= 0)
                 Debug.LogError($"{pool.Name}{INFO}");
             else if (_dictionaryPool[pool.Name].Count != pool.Number)
-                Debug.LogError($"{pool.Name}¿¡ returnToPoolÀÌ Áßº¹µË´Ï´Ù");
+                Debug.LogError($"{pool.Name}ï¿½ï¿½ returnToPoolï¿½ï¿½ ï¿½ßºï¿½ï¿½Ë´Ï´ï¿½");
         }
     }
 
-    //º¯¼ö¿¡ µû¸¥ ¿À¹ö·Îµù
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Îµï¿½
     public static GameObject SpawnFromPool(string name, Vector3 position) =>
         s_inst._SpawnFromPool(name, position, Quaternion.identity);
     public static GameObject SpawnFromPool(string name, Vector3 position, Quaternion rotation) =>
@@ -97,7 +99,7 @@ public class ObjectPooler : MonoBehaviour
     }
     public static T SpawnFromPool<T>(string name, Vector3 position, Quaternion rotation) where T : Component
     {
-        GameObject obj = s_inst._SpawnFromPool(name, position, rotation);
+        GameObject obj = s_inst?._SpawnFromPool(name, position, Quaternion.identity);
         if (obj.TryGetComponent(out T component))
             return component;
         else
@@ -106,31 +108,22 @@ public class ObjectPooler : MonoBehaviour
             throw new Exception($"Component not found");
         }
     }
+
     private GameObject _SpawnFromPool(string name, Vector3 position, Quaternion rotation)
     {
         if (!_dictionaryPool.ContainsKey(name))
-            throw new Exception($"pool with name {name} doesn't exist");
-        //Å¥¿¡ ¾øÀ¸¸é »õ·Î Ãß°¡
-        Queue<GameObject> poolQueue = _dictionaryPool[name];
-        if (poolQueue.Count == 0)
         {
-            Pool pool = Array.Find(_pools, x => x.Name == name);
-            GameObject obj;
-            if (pool.IsUi == false)
-                obj = CreateNewObject(pool.Name, pool.Prefab);
-            else
-                obj = CreateNewObject(pool.Name, pool.Prefab, _uiCanvasPooler);
-            if (pool.IsUi == false)
-                ArrangePool(obj);
-            else
-                ArrangePool(obj, _uiCanvasPooler);
-
+            Debug.LogWarning("Pool with name " + name + " doesn't exist.");
+            return null;
         }
-        //Å¥¿¡¼­ ²¨³»¼­ »ç¿ë
-        GameObject objectToSpawn = poolQueue.Dequeue();
+
+        GameObject objectToSpawn = _dictionaryPool[name].Dequeue();
         objectToSpawn.transform.position = position;
         objectToSpawn.transform.rotation = rotation;
         objectToSpawn.SetActive(true);
+
+        _dictionaryPool[name].Enqueue(objectToSpawn);
+
         return objectToSpawn;
     }
     public static List<GameObject> GetAllPools(string name)
@@ -156,13 +149,13 @@ public class ObjectPooler : MonoBehaviour
         s_inst._dictionaryPool[obj.name].Enqueue(obj);
     }
 
-    //Ç®ÀÇ ¿ÀºêÁ§Æ® Á¤º¸¸¦ º¸±âÀ§ÇØ¼­ ¿¡µðÅÍ¿¡ ¹öÆ° ¸¸µå´Â °Í
+    //Ç®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¿ï¿½ ï¿½ï¿½Æ° ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
     [ContextMenu("GetSpawnObjectsInfo")]
     private void GetSpawnObjectInfo()
     {
         foreach (var pool in _pools)
         {
-            int count = _spawnObjects.FindAll(x => x.name == pool.Name).Count; //¸®½ºÆ®ÀÇ °³¼ö 
+            int count = _spawnObjects.FindAll(x => x.name == pool.Name).Count; //ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
             Debug.Log($"{pool.Name} Count : {count}");
         }
     }
@@ -171,28 +164,28 @@ public class ObjectPooler : MonoBehaviour
     {
         var obj = Instantiate(prefab, transform);
         obj.name = name;
-        obj.SetActive(false); //ºñÈ°¼ºÈ­½Ã ReturnToPoolÀ» ÇÏ±â ¶§¹®¿¡ enqueueµÈ´Ù.
+        obj.SetActive(false); //ï¿½ï¿½È°ï¿½ï¿½È­ï¿½ï¿½ ReturnToPoolï¿½ï¿½ ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ enqueueï¿½È´ï¿½.
         return obj;
     }
     private GameObject CreateNewObject(string name, GameObject prefab, RectTransform trans)
     {
         var obj = Instantiate(prefab, trans);
         obj.name = name;
-        obj.SetActive(false); //ºñÈ°¼ºÈ­½Ã ReturnToPoolÀ» ÇÏ±â ¶§¹®¿¡ enqueueµÈ´Ù.
+        obj.SetActive(false); //ï¿½ï¿½È°ï¿½ï¿½È­ï¿½ï¿½ ReturnToPoolï¿½ï¿½ ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ enqueueï¿½È´ï¿½.
         return obj;
     }
     #region ArrangePool overroding
     /// <summary>
-    /// ¿ÀºêÁ§Æ® Ç®¸µ¿¡ ÀÇÇØ »ý¼ºµÈ °´Ã¼µéÀ» ÀÌ¸§º°·Î ÇÏÀÌ¾î¶óÅ°ºä¿¡ Á¤¸®ÇØÁÖ´Â ÇÔ¼ö
+    /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® Ç®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½ï¿½Å°ï¿½ä¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½Ô¼ï¿½
     /// </summary>
     /// <param name="obj"></param>
     private void ArrangePool(GameObject obj)
     {
-        //Ãß°¡µÈ ¿ÀºêÁ§Æ® ¹­¾î¼­ Á¤·Ä
+        //ï¿½ß°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½î¼­ ï¿½ï¿½ï¿½ï¿½
         bool isFind = false;
         for (int i = 0; i < transform.childCount; i++)
         {
-            if (i == transform.childCount - 1) //¸¶Áö¸·ÀÎ °æ¿ì
+            if (i == transform.childCount - 1) //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
             {
                 obj.transform.SetSiblingIndex(i);
                 _spawnObjects.Insert(i, obj);
@@ -210,7 +203,7 @@ public class ObjectPooler : MonoBehaviour
 
     private void ArrangePool(GameObject obj, RectTransform parent)
     {
-        //Ãß°¡µÈ ¿ÀºêÁ§Æ® ¹­¾î¼­ Á¤·Ä
+        //ï¿½ß°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½î¼­ ï¿½ï¿½ï¿½ï¿½
         bool isFind = false;
         for (int i = 0; i < parent.transform.childCount; i++)
         {

@@ -17,7 +17,7 @@ public abstract class CharacterBase : MonoBehaviour
 {
     private PlayerInfo _playerInfo;
 
-    // ÃßÈÄ ¼­¹ö¸¦ ÅëÇØ ¹ÞÀº Ä³¸¯ÅÍ¸í È¤Àº ¸ó½ºÅÍ¸í
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½Í¸ï¿½ È¤ï¿½ï¿½ ï¿½ï¿½ï¿½Í¸ï¿½
     protected string CharacterName;
     protected int hp;
     protected int mp;
@@ -27,10 +27,15 @@ public abstract class CharacterBase : MonoBehaviour
 
     protected virtual void Start()
     {
-        // ÀÚ½Ä¿¡ ÀÇ¿¡ È£Ãâ µÆÀ»‹š ÃÊ±âÈ­ ÀÛ¾÷
+        // ï¿½Ú½Ä¿ï¿½ ï¿½Ç¿ï¿½ È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ ï¿½Û¾ï¿½
     }
 
-    // player, monster º°·Î °³º° ±¸Çö
+    protected virtual void OnDisable()
+    {
+
+    }
+
+    // player, monster ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public abstract void Attack();
 
     public abstract void Move();
@@ -41,6 +46,6 @@ public abstract class CharacterBase : MonoBehaviour
 
     }
 
-    // player, monster º°·Î °³º° ±¸Çö
+    // player, monster ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     protected abstract void Die();
 }

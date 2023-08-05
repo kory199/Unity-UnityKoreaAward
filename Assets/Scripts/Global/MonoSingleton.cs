@@ -4,7 +4,6 @@ using UnityEngine;
 public class MonoSingleton<T>  : MonoBehaviour where T : MonoSingleton<T>
 {
     private static T _instance = null;
-    private static bool isQuitting = false;
 
     public static T Instance 
     {
@@ -25,23 +24,13 @@ public class MonoSingleton<T>  : MonoBehaviour where T : MonoSingleton<T>
         }
     }
 
+    protected virtual void Awake()
+    {
+        //Debug.Log("******After Awake " + typeof(T).Name);
+    }
+
     protected virtual void OnDestroy()
     {
-        if (isQuitting)
-        {
-            _instance = null;
-        }
+        //Debug.Log($"*****Destroying singleton: {typeof(T).Name}");
     }
-
-#if UNITY_EDITOR
-    private void OnApplicationQuit()
-    {
-        isQuitting = true;
-
-        if(_instance != null)
-        {
-            Destroy(_instance.gameObject);
-        }
-    }
-#endif
 }

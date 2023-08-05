@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using static EnumTypes;
+
 public class InGameManager : MonoSingleton<InGameManager>
 {
     private Dictionary<EnumTypes.InGameParamType, InGameParamBase> _parameters = new();
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         //
         RegisterParams(EnumTypes.InGameParamType.Player,(int)EnumTypes.PlayerSkiilsType.MAX);
     }
@@ -66,6 +68,7 @@ public class InGameManager : MonoSingleton<InGameManager>
 
     protected override void OnDestroy()
     {
+        //_parameters.Clear();
         base.OnDestroy();
     }
 }

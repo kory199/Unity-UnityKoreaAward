@@ -96,7 +96,7 @@ public class TitleManager : MonoBehaviour
 
     private void GetMasterData_t()
     {
-        MonsterData_res[] monsterData = APIDataSO.Instance.GetValueByKey<MonsterData_res[]>(APIDataDicKey.MeleeMonstser);
+        MonsterData_res[] monsterData = APIDataSO.Instance.GetValueByKey<MonsterData_res[]>(APIDataDicKey.MeleeMonster);
 
         if (monsterData == null)
         {

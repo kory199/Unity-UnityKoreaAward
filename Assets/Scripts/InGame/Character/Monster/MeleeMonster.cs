@@ -22,7 +22,7 @@ public class MeleeMonster : MonsterBase
         // InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetMeleeMonsterStatus);
     }
 
-    // stage º¯°æ¿¡ µû¸¥ Levelº° ´É·ÂÄ¡ ºÎ¿© => ¼­¹ö Á¤º¸ ¹Þ¾Æ¿À±â
+    // stage ï¿½ï¿½ï¿½æ¿¡ ï¿½ï¿½ï¿½ï¿½ Levelï¿½ï¿½ ï¿½É·ï¿½Ä¡ ï¿½Î¿ï¿½ => ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½ï¿½ï¿½
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -38,12 +38,14 @@ public class MeleeMonster : MonsterBase
         // meleeMonster_Range = 0;
     }
 
-
-
     protected override void OnDisable()
     {
         base.OnDisable();
-        StageManager.Instance.MonsterDeath();
+        //StageManager.Instance.MonsterDeath();
+        //if(StageManager.Instance != null)
+        //{
+        //    StageManager.Instance.MonsterDeath();
+        //}
     }
     protected override void Attack()
     {

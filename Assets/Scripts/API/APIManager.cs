@@ -12,8 +12,9 @@ public class APIManager : MonoSingleton<APIManager>
     private string _id;
     private string _authToken;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         DontDestroyOnLoad(this.gameObject);
     }
 
@@ -45,7 +46,7 @@ public class APIManager : MonoSingleton<APIManager>
     {
         var responseBody = JsonConvert.DeserializeObject<MasterDataResponse>(apiResponse.responseBody);
 
-        APIDataSO.Instance.SetResponseData(APIDataDicKey.MeleeMonstser, responseBody.masterDataDic.MeleeMonstser);
+        APIDataSO.Instance.SetResponseData(APIDataDicKey.MeleeMonster, responseBody.masterDataDic.MeleeMonstser);
         APIDataSO.Instance.SetResponseData(APIDataDicKey.RangedMonster, responseBody.masterDataDic.RangedMonster);
         APIDataSO.Instance.SetResponseData(APIDataDicKey.BOSS, responseBody.masterDataDic.BOSS);
         APIDataSO.Instance.SetResponseData(APIDataDicKey.PlayerStatus, responseBody.masterDataDic.PlayerStatus);
@@ -193,24 +194,24 @@ public class APIManager : MonoSingleton<APIManager>
         var userData = GetApiSODicUerData();
         string id = userData.ID;
         string authToken = userData.AuthToken;
-
+    
         StageData stageData = new StageData
         {
             ID = id,
             AuthToken = authToken,
             StageNum = stageNum
         };
-
+    
         StageClear stageClear = new StageClear
         {
             ID = id,
             AuthToken = authToken,
             Score = score
         };
-
+    
         UniTask callStageApi = CallAPI<Dictionary<string, object>, StageData>(APIUrls.StageApi, stageData, null);
         UniTask callStageClear = CallAPI<Dictionary<string, object>, StageClear>(APIUrls.StageClear, stageClear, null);
-
+    
         await UniTask.WhenAll(callStageApi, callStageClear);
     }
 
