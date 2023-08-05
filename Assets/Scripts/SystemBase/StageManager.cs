@@ -7,8 +7,8 @@ using APIModels;
 public class StageManager : MonoSingleton<StageManager>
 {
     [SerializeField] private int _stageNum = 0;
-    [SerializeField ] private int _spawnMeleeNum =0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
-    [SerializeField]  private int _spawnRangedNum = 0   ; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
+    [SerializeField] private int _spawnMeleeNum = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
+    [SerializeField] private int _spawnRangedNum = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
     [SerializeField] private int _score = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
     [SerializeField] private int _deathMonsters = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
     [SerializeField] private float _time = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
@@ -36,9 +36,6 @@ public class StageManager : MonoSingleton<StageManager>
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Next, SetStageNum);
         //End 체인 
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.End, SendStageData);
-        _onclickNum = GameManager.Instance.OnclickStageNum;
-
-
     }
     private void Update()
     {
@@ -73,8 +70,8 @@ public class StageManager : MonoSingleton<StageManager>
     public int GetStageNum() => _stageNum;
 
     // Spawn Logic Edit
-    private void SetMeleeMonster() => _spawnMeleeNum = GetMonsterInfo(_stageNum-1, EnumTypes.MonsterType.MeleeMonster);
-    private void SetRangedMonster() => _spawnRangedNum = GetMonsterInfo(_stageNum-1, EnumTypes.MonsterType.RangedMonster);
+    private void SetMeleeMonster() => _spawnMeleeNum = GetMonsterInfo(_stageNum, EnumTypes.MonsterType.MeleeMonster);
+    private void SetRangedMonster() => _spawnRangedNum = GetMonsterInfo(_stageNum, EnumTypes.MonsterType.RangedMonster);
     private void SetMonsterSpawn()
     {
         if (_stageNum < 4)
@@ -103,14 +100,13 @@ public class StageManager : MonoSingleton<StageManager>
     public void MonsterDeath()
     {
         _deathMonsters++;
-        Debug.Log("DeathMonsterCount : " + _deathMonsters);
+        //  Debug.Log("DeathMonsterCount : " + _deathMonsters);
         if (_deathMonsters >= (_spawnMeleeNum + _spawnRangedNum) * 1 * 60)
         {
-            Debug.Log((_spawnMeleeNum + _spawnRangedNum) * 1 * 60);
             SetStageNum();
             CallStage(EnumTypes.StageStateType.Start);
             _deathMonsters = 0;
-            Debug.Log("stageNum : " + _stageNum);
+           // Debug.Log("stageNum : " + _stageNum);
         }
     }
     public async void BossDeath()

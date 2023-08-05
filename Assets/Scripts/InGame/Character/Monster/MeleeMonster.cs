@@ -16,15 +16,16 @@ public class MeleeMonster : MonsterBase
     private float meleeMonster_Range;
 
 
-    private void Awake()
+    protected override void Start()
     {
+        base.Start();
         // InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetMeleeMonsterStatus);
     }
 
     // stage 변경에 따른 Level별 능력치 부여 => 서버 정보 받아오기
-    private void OnEnable()
+    protected override void OnEnable()
     {
-
+        base.OnEnable();
         // init melee monster variable
         // meleeMonster_Level = 0;
         // meleeMonster_exp = 0;

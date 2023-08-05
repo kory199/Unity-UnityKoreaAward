@@ -23,29 +23,26 @@ public abstract class MonsterBase : MonoBehaviour
     public int score = 10;
     protected bool Death { get { return curHP <= 0; } }
 
-    private void Awake()
-    {
-        // Start Chain
-        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, GetMeleeMonsterInfo);
-        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, GetRangedMonsterInfo);
 
-        // Next Chain
-        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Next, SetStageNum);
-    }
-
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
-        InGameManager.Instance.InvokeCallBacks(EnumTypes.InGameParamType.Stage, (int)EnumTypes.StageStateType.Start);
         state = MonsterStateType.None;
         StartCoroutine("State_" + state);
     }
 
-    protected void Start()
+    protected virtual void Start()
     {
+        // // Start Chain
+        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, GetMeleeMonsterInfo);
+        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, GetRangedMonsterInfo);
+        // 
+        // // Next Chain
+        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Next, SetStageNum);
         stageNum = 1;
 
         // data manager 삭제 및 stage 변경에 따른 monster status 변경으로 onEnable로 monster setting 변경 필요
         SetMonsterName();
+
         /*if (DataManager.Instacne.MonsterData.TryGetMonsterInfo(MonsterName, out _monsterInfo))
         {
 #if UNITY_EDITOR
@@ -64,7 +61,7 @@ public abstract class MonsterBase : MonoBehaviour
     {
         ObjectPooler.ReturnToPool(gameObject);
 
-        CancelInvoke(); //invoke 함수를 사용하는 경우적어주세요
+        // CancelInvoke(); //invoke 함수를 사용하는 경우적어주세요
     }
 
     private void OnDestroy()
@@ -105,8 +102,11 @@ public abstract class MonsterBase : MonoBehaviour
         {
             // 플레이어를 찾아두고
             player = FindObjectOfType<Player>();
+
+            Debug.Log(player == null);
             // 작동하고있던 코루틴이 있다면 종료한다.
             StopAllCoroutines();
+            //이동시킴
         }
         else
         {
@@ -226,7 +226,7 @@ public abstract class MonsterBase : MonoBehaviour
             InGameManager.Instance.InvokeCallBacks(InGameParamType.Stage, (int)EnumTypes.StageStateType.End);
             return;
         }
-        
+
         stageNum++;
     }
 }
