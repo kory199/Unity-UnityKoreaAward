@@ -80,7 +80,6 @@ public class StageDb : BaseDb<Stage>, IStageDb
             var getNextStage = NextStageDb.StageInfoDic[stage_id];
             var newStage = new Stage
             {
-                player_uid = account_id,
                 stage_id = getNextStage,
                 is_achieved = false,
             };

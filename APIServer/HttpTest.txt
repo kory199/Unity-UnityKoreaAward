@@ -4,6 +4,12 @@ POST https://localhost:44376/Version
 	"Version" : "GetVersion"
 }
 
+// 마스터 데이터 
+POST https://localhost:44376/MasterData
+{
+	"MaterData" : "GetMasterData"
+}
+
 // 계정 생성
 POST https://localhost:44376/CreateAccount
 {
@@ -16,6 +22,14 @@ POST https://localhost:44376/Login
 {
   "ID":"ParkHyeWon",
   "Password": "1234"
+}
+
+// 인게임 Ping 체크
+POST https://localhost:44376/Ping
+{
+  "ID":"ParkHyeWon",
+  "AuthToken": "",
+  "ClientPing": ""
 }
 
 // 게임 데이터 받아오기
@@ -33,7 +47,7 @@ POST https://localhost:44376/Ranking
 }
 
 // 게임 데이터 점수 업데이트
-POST https://localhost:44376/SocreUpdate
+POST https://localhost:44376/StageClear
 {
   "ID":"ParkHyeWon",
   "AuthToken": "",

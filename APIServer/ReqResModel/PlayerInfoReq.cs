@@ -17,3 +17,8 @@ public class StageReq : PlayerInfoReq
 {
     [Required] public Int32 StageNum { get; set; }
 }
+
+public class PingReq : PlayerInfoReq
+{
+    [Required] public String ClientPing { get; set; } = "";
+}

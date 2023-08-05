@@ -1,9 +1,13 @@
 ﻿namespace APIServer;
 
-public class MasterData_GameVersion
+public class MasterDataTable
 {
     public const String game_ver = "game_ver";
+    public const String monster_data = "monster_data";
+    public const String player_status = "player_status";
+    public const String stage_spawn_monster = "stage_spawn_monster";
     public const String version = "version";
+    public const String id = "id";
 }
 
 public class AccountDbTable

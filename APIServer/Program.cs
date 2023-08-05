@@ -39,6 +39,9 @@ var app = builder.Build();
 var loggerFactory = app.Services.GetRequiredService<ILoggerFactory>();
 LogManager.SetLoggerFactory(loggerFactory, "Global");
 
+var masterdata = app.Services.GetService<IMasterDataDb>();
+masterdata.LoadAllMasterDataAsync();
+
 var getStageInfo = app.Services.GetRequiredService<INextStage>();
 getStageInfo.LoadStageDataAsync();
 

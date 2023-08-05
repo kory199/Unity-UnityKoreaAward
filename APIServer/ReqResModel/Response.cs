@@ -37,3 +37,8 @@ public class StageDataRes : BaseResponse
 {
     [Required] public List<Stage> StageData { get; set; } = new List<Stage>();
 }
+
+public class MasterDataRes : BaseResponse
+{
+    [Required] public Dictionary<string, object> MasterDataDic { get; set; } = new Dictionary<string, object>();
+}

@@ -12,14 +12,16 @@ public enum ResultCode
 
     // === SuccessCode 50 ~ ===
     LoadGameVersionSuccess = 50,
-    CreateAccountSuccess = 51,
-    LoginSuccess = 52,
-    CreateGameDataSuccess = 53,
-    LoadGameDataSuccess = 54,
-    LoadRankingDataSuccess = 55,
-    UpdateScoreSuccess = 56,
-    LoadStageSuccess = 57,
-    GetNewStageSuccess = 58,
+    LoadMasterDataSuccess = 51,
+    CreateAccountSuccess = 52,
+    LoginSuccess = 53,
+    CreateGameDataSuccess = 54,
+    LoadGameDataSuccess = 55,
+    LoadRankingDataSuccess = 56,
+    UpdateScoreSuccess = 57,
+    LoadStageSuccess = 58,
+    GetNewStageSuccess = 59,
+    PingSuccess = 60,
 
     // === GameVersion 80~ ===
     LoadGameVersionFail = 80,
@@ -30,8 +32,20 @@ public enum ResultCode
     UnhandleException = 101,
     RedisFailException = 102,
     RedisDelectFailException = 103,
-    InValidRequestHttpBody = 104,
-    AuthTokenFailWrongAuthToken = 106,
+    RedisPingFail = 104,
+    RedisPingException = 105,
+    InValidRequestHttpBody = 106,
+    AuthTokenFailWrongAuthToken = 107,
+
+    // === Master Data 150 ~ ===
+    LoadMasterMonsterDataFail = 150,
+    LoadMasterMonsterDataFailException = 151,
+    LoadStageSpawnMonsterDataFail = 152,
+    LoadStageSpawnMonsterDataFailException = 153,
+    LoadPlayerStatusDataFail = 154,
+    LoadPlayerStatusDataFailException = 155,
+    LoadMasterDataFailException = 156,
+    RedisConnectionException = 157,
 
     // === Account ErrorCode 200~ ===
     CreateAccountFailInsert = 200,

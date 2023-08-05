@@ -14,6 +14,8 @@ public interface IMemoryDb
 
     public Task<bool> SetUserReqLockAsync(String key);
 
+    public Task<ResultCode> PingAsync(String id);
+
     public Task<ResultCode> DelectUserAsync(String id);
 
     public Task<bool> DelUserReqLockAsync(String key);

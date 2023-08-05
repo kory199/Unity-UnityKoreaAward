@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-using MySqlConnector;
+﻿using MySqlConnector;
 using System.Data;
 
 namespace APIServer.Services;

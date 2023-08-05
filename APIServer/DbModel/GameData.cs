@@ -1,7 +1,4 @@
-﻿using System.Security.Cryptography;
-using static System.Formats.Asn1.AsnWriter;
-
-namespace APIServer.DbModel;
+﻿namespace APIServer.DbModel;
 
 public class GameData
 {

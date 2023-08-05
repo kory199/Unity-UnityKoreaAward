@@ -7,11 +7,11 @@ namespace APIServer.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class ScoreUpdateController : BaseApiController
+public class StageClearController : BaseApiController
 {
     private readonly IGameDb _gameDb;
 
-    public ScoreUpdateController(ILogger<ScoreUpdateController> logger, IGameDb gameDb, IMemoryDb memoryDb, IAccountDb accountDb)
+    public StageClearController(ILogger<StageClearController> logger, IGameDb gameDb, IMemoryDb memoryDb, IAccountDb accountDb)
         : base(logger, memoryDb, accountDb)
     {
         _gameDb = gameDb;

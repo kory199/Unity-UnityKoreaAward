@@ -25,7 +25,6 @@ public class StageController : BaseApiController
         var resultCode = ResultCode.None;
         var stageList = new List<Stage>();
 
-
         if (request.StageNum != 0 && NextStageDb.StageInfoDic.ContainsKey(request.StageNum) == false)
         {
             return CreateResponse<StageDataRes>(ResultCode.StageNumNotMatch);

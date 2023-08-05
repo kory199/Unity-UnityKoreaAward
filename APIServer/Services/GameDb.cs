@@ -68,9 +68,13 @@ public class GameDb : BaseDb<GameData>, IGameDb
         {
             var scoreUpdata = await _queryFactory.Query(_tableName)
                 .Where(GameDbTable.player_uid, account_id)
-                .UpdateAsync(new { score = newscore});
+                .UpdateAsync(new
+                {
+                    score = newscore,
+                    created_at = DateTime.Now
+                });
 
-            if(scoreUpdata == 0)
+            if (scoreUpdata == 0)
             {
                 _logger.ZLogError($"[{GetType().Name}.UpdataScoreDataAsync] ErrorCode : {ResultCode.UpdateScoreDataFail}");
                 return (ResultCode.UpdateScoreDataFail, null);

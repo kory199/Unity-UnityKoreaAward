@@ -2,6 +2,8 @@
 using APIServer.StateType;
 using CloudStructures;
 using CloudStructures.Structures;
+using StackExchange.Redis;
+using System.Diagnostics;
 using ZLogger;
 using static APIServer.Services.RedisTimeSpan;
 
@@ -31,14 +33,14 @@ public class RedisDb : IMemoryDb
             Id = id,
             AuthToken = authToken,
             AccountId = accountId,
-            State = UserState.Default.ToString(),
+            State = UserState.Login.ToString(),
         };
 
         try
         {
             var redis = new RedisString<AuthUser>(redisConn, key, LoginTimeSpan());
-        
-            if(await redis.SetAsync(user, LoginTimeSpan()) == false)
+
+            if (await redis.SetAsync(user, LoginTimeSpan()) == false)
             {
                 s_logger.ZLogError(LogManager.EventIdDic[EventType.LoginAddRedis],
                     $"ID : {id}, AuthToken : {authToken}, ErrorMessage : UserBasicAuth, RedisString Set Error");
@@ -46,7 +48,7 @@ public class RedisDb : IMemoryDb
                 result = ResultCode.LoginFailAddRedis;
             }
         }
-        catch (Exception e) 
+        catch (Exception e)
         {
             s_logger.ZLogError(LogManager.EventIdDic[EventType.LoginAddRedis], e,
                 $"ID : {id}, AuthToken : {authToken}, ErrorMessage : Redis Connection Error");
@@ -67,7 +69,7 @@ public class RedisDb : IMemoryDb
             var redis = new RedisString<AuthUser>(redisConn, key, null);
             var user = await redis.GetAsync();
 
-            if(user.HasValue == false)
+            if (user.HasValue == false)
             {
                 s_logger.ZLogError(LogManager.EventIdDic[EventType.Login],
                     $"[RedisDb.CheckUserAuthAsync] ID : {id}, AuthToken : {authToken}, " +
@@ -78,7 +80,7 @@ public class RedisDb : IMemoryDb
                 return result;
             }
 
-            if(user.Value.Id != id || user.Value.AuthToken != authToken)
+            if (user.Value.Id != id || user.Value.AuthToken != authToken)
             {
                 s_logger.ZLogError(LogManager.EventIdDic[EventType.Login],
                     $"[RedisDb.CheckUserAuthAsync], ID ; {id}, AuthToken : {authToken}, " +
@@ -90,7 +92,7 @@ public class RedisDb : IMemoryDb
 
             return result;
         }
-        catch (Exception e) 
+        catch (Exception e)
         {
             s_logger.ZLogError(LogManager.EventIdDic[EventType.Login], e,
                 $"[RedisDb.CheckUserAuthAsync], ID ; {id}, AuthToken : {authToken}, ErrorMessage : Redis Connection Error");
@@ -109,7 +111,7 @@ public class RedisDb : IMemoryDb
             var redis = new RedisString<AuthUser>(redisConn, uid, null);
             var user = await redis.GetAsync();
 
-            if(user.HasValue == false)
+            if (user.HasValue == false)
             {
                 s_logger.ZLogError($"RedisDb.GetUserAsync, UID : {uid}," +
                     "ErrorMessage = Not Assigned User, RedisStaring GET Error");
@@ -119,7 +121,7 @@ public class RedisDb : IMemoryDb
 
             return (true, user.Value);
         }
-        catch(Exception e) 
+        catch (Exception e)
         {
             s_logger.ZLogError(e, $"UID:{uid}, ErrorMessage:ID does Not Exist");
 
@@ -129,11 +131,11 @@ public class RedisDb : IMemoryDb
 
     public async Task<bool> SetUserReqLockAsync(String key)
     {
-        try 
+        try
         {
-            var redis = new RedisString<AuthUser>(redisConn, key, NxKeyTimeSpan()); 
+            var redis = new RedisString<AuthUser>(redisConn, key, NxKeyTimeSpan());
 
-            if(await redis.SetAsync(new AuthUser { }, NxKeyTimeSpan(), StackExchange.Redis.When.NotExists) == false)
+            if (await redis.SetAsync(new AuthUser { }, NxKeyTimeSpan(), StackExchange.Redis.When.NotExists) == false)
             {
                 return false;
             }
@@ -156,7 +158,7 @@ public class RedisDb : IMemoryDb
 
             return ResultCode.None;
         }
-        catch (Exception e) 
+        catch (Exception e)
         {
             s_logger.ZLogError(e, $"ErrorMessage : Redis Delect User Data !");
 
@@ -164,9 +166,31 @@ public class RedisDb : IMemoryDb
         }
     }
 
+    public async Task<ResultCode> PingAsync(String id)
+    {
+        var key = MemoryDbKeyMaker.MakePingkey(id);
+        var redis = new RedisString<DateTime>(redisConn, key, null);
+        
+        try
+        {
+            await redis.SetAsync(DateTime.UtcNow, PingKeyTimeSpan());
+            return ResultCode.None;
+        }
+        catch (RedisConnectionException e)
+        {
+            s_logger.ZLogError(e.Message, $"Redis connection exception for client: {id}");
+            return ResultCode.RedisConnectionException;
+        }
+        catch (Exception e)
+        {
+            s_logger.ZLogError(e.Message, $"Ping failed for client: {id}");
+            return ResultCode.RedisPingException;
+        }
+    }
+
     public async Task<bool> DelUserReqLockAsync(String key)
     {
-        if(string.IsNullOrWhiteSpace(key))
+        if (string.IsNullOrWhiteSpace(key))
         {
             return false;
         }

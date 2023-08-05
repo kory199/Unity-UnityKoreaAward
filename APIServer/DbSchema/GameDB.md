@@ -22,7 +22,6 @@ CREATE TABLE IF NOT EXISTS gameDb.`player_data`
 ) COMMENT '유저 게임 정보 테이블';
 ```
 
-
 ## Stage Table
 
 ```sql

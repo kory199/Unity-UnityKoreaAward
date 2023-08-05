@@ -14,4 +14,5 @@ public class RediskeyExpireTime
     public const ushort RedisKeyExpireSecong = 6000;
     public const ushort LoginKeyExpireMin = 60;
     public const ushort TicketKeyExpireSecond = 6000;
+    public const ushort PingKeyExpireMin = 1;
 }

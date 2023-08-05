@@ -23,6 +23,7 @@ public class CheckUserAuth
         var formString = context.Request.Path.Value;
 
         if (string.Compare(formString, "/Version", StringComparison.OrdinalIgnoreCase) == 0 ||
+            string.Compare(formString, "/MasterData", StringComparison.OrdinalIgnoreCase) == 0 ||
             string.Compare(formString, "/Account", StringComparison.OrdinalIgnoreCase) == 0 ||
             string.Compare(formString, "/Account/GoogleResponse", StringComparison.OrdinalIgnoreCase) == 0 ||
             string.Compare(formString, "/Login", StringComparison.OrdinalIgnoreCase) == 0 ||
