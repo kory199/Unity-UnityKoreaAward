@@ -7,8 +7,8 @@ using APIModels;
 public class StageManager : MonoSingleton<StageManager>
 {
     [SerializeField] private int _stageNum = 0;
-    [SerializeField ] private int _spawnMeleeNum =20; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
-    [SerializeField]  private int _spawnRangedNum = 20   ; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
+    [SerializeField ] private int _spawnMeleeNum =0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
+    [SerializeField]  private int _spawnRangedNum = 0   ; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
     [SerializeField] private int _score = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
     [SerializeField] private int _deathMonsters = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
     [SerializeField] private float _time = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
@@ -73,8 +73,8 @@ public class StageManager : MonoSingleton<StageManager>
     public int GetStageNum() => _stageNum;
 
     // Spawn Logic Edit
-    private void SetMeleeMonster() => _spawnMeleeNum = GetMonsterInfo(_stageNum, EnumTypes.MonsterType.MeleeMonster);
-    private void SetRangedMonster() => _spawnRangedNum = GetMonsterInfo(_stageNum, EnumTypes.MonsterType.RangedMonster);
+    private void SetMeleeMonster() => _spawnMeleeNum = GetMonsterInfo(_stageNum-1, EnumTypes.MonsterType.MeleeMonster);
+    private void SetRangedMonster() => _spawnRangedNum = GetMonsterInfo(_stageNum-1, EnumTypes.MonsterType.RangedMonster);
     private void SetMonsterSpawn()
     {
         if (_stageNum < 4)

@@ -6,7 +6,7 @@ using APIModels;
 public abstract class MonsterBase : MonoBehaviour
 {
     protected MonsterData monsterData; //=> 나중에 스크립터블 오브젝트 or 엑셀파일로 정보 받아온 클래스 등등
-    protected MonsterStateType state;
+    [SerializeField] protected MonsterStateType state;
     protected Player player;
     protected Vector3 playerTargetDirection;
     [SerializeField] protected MonsterInfo _monsterInfo = null;
