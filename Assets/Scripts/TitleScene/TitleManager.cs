@@ -106,7 +106,23 @@ public class TitleManager : MonoBehaviour
 
         foreach (MonsterData_res a in monsterData)
         {
-            Debug.Log("Level: " + a.level + "Exp: " + a.exp + "Hp: " + a.hp);
+            Debug.Log("MeleeMonstser) Level: " + a.level + "Exp: " + a.exp + "Hp: " + a.hp);
+        }
+
+        MonsterData_res boss = APIDataSO.Instance.GetValueByKey<MonsterData_res>(APIDataDicKey.BOSS);
+        Debug.Log($"BOSS) Level: {boss.level}, Exp: { boss.exp}, Hp: { boss.hp}");
+
+        MonsterData_res[] rangedMonsterData = APIDataSO.Instance.GetValueByKey<MonsterData_res[]>(APIDataDicKey.RangedMonster);
+
+        if (rangedMonsterData == null)
+        {
+            Debug.LogError("MonsterData list is null!");
+            return;
+        }
+
+        foreach (MonsterData_res a in rangedMonsterData)
+        {
+            Debug.Log("RangedMonster) Level: " + a.level + "Exp: " + a.exp + "Hp: " + a.hp);
         }
     }
 
@@ -294,14 +310,13 @@ public class TitleManager : MonoBehaviour
         }
     }
 
-    private void UpdateStartButtonState()
+    private async void UpdateStartButtonState()
     {
-        if (APIDataSO.Instance == null) return;
-
         if (APIDataSO.Instance.GetValueByKey<GameData>(APIDataDicKey.GameData) != null)
         {
             startBut.interactable = true;
             loginInfotext.gameObject.SetActive(false);
+            await APIManager.Instacne.GetGameDataAPI();
         }
         else
         {

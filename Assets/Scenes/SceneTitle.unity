@@ -697,8 +697,6 @@ MonoBehaviour:
   userRank: {fileID: 3389555987144865021}
   r_infoText: {fileID: 3389555987598007589}
   o_goBackBut: {fileID: 3389555988434309628}
-  apidataSO: {fileID: 11400000, guid: 4a89ae5313ea34302a571f99e1b467e9, type: 2}
-  playerBaseData: {fileID: 11400000, guid: 2f84640ebc608c14796569bdfb369a83, type: 2}
 --- !u!114 &3389555986359644656
 MonoBehaviour:
   m_ObjectHideFlags: 0

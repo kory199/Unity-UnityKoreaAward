@@ -1,9 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Build;
-using UnityEngine;
-
 namespace APIModels
 {
     // === Request === 
@@ -32,6 +26,11 @@ namespace APIModels
     public class StageData : GameData
     {
         public int StageNum { get; set; }
+    }
+
+    public class StageClear : GameData
+    {
+        public int Score { get; set; }
     }
 
     // === Response === 

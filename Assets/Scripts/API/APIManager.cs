@@ -4,6 +4,7 @@ using APIModels;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 
 public class APIManager : MonoSingleton<APIManager>
@@ -19,7 +20,7 @@ public class APIManager : MonoSingleton<APIManager>
     public async UniTask<String> GetGameVersionAPI()
     {
         string gameVersion = null;
-        Version_req requestBody = new Version_req();
+        Version_req requestBody = new();
 
         await CallAPI<Dictionary<string, object>, Version_req>(APIUrls.VersionApi, requestBody, apiResponse =>
         {
@@ -151,10 +152,6 @@ public class APIManager : MonoSingleton<APIManager>
                 APIDataSO.Instance.SetResponseData(APIDataDicKey.PlayerData, playerData);
             }
         }
-        else
-        {
-            Debug.LogError("Failed PlayerData from API response.");
-        }
     }
 
     public async UniTask GetRankingAPI()
@@ -191,10 +188,30 @@ public class APIManager : MonoSingleton<APIManager>
         await CallAPI<Dictionary<string, object>, StageData>(APIUrls.StageApi, stageData, HandleStageDataResponse);
     }
 
-    public async UniTask StageUpToServer(string name, int stageNum, int score, float time)
+    public async UniTask StageUpToServer(int stageNum, int score)
     {
+        var userData = GetApiSODicUerData();
+        string id = userData.ID;
+        string authToken = userData.AuthToken;
 
-        await CallAPI<Dictionary<string, object>, GameData>(APIUrls.StageApi, GetApiSODicUerData(), null);
+        StageData stageData = new StageData
+        {
+            ID = id,
+            AuthToken = authToken,
+            StageNum = stageNum
+        };
+
+        StageClear stageClear = new StageClear
+        {
+            ID = id,
+            AuthToken = authToken,
+            Score = score
+        };
+
+        UniTask callStageApi = CallAPI<Dictionary<string, object>, StageData>(APIUrls.StageApi, stageData, null);
+        UniTask callStageClear = CallAPI<Dictionary<string, object>, StageClear>(APIUrls.StageClear, stageClear, null);
+
+        await UniTask.WhenAll(callStageApi, callStageClear);
     }
 
     private void HandleStageDataResponse(APIResponse<Dictionary<string, object>> apiResponse)

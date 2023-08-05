@@ -32,22 +32,12 @@ public class APIDataSO : ScriptableObject
 
     public T GetValueByKey<T>(string key)
     {
-        if(responseDataDic.TryGetValue(key, out object value) && value is T tValue)
+        if (responseDataDic.TryGetValue(key, out object value) && value is T tValue)
         {
             return tValue;
         }
 
         return default;
-    }
-
-    public void RemoveKey(string key)
-    {
-        if (responseDataDic.ContainsKey(key))
-        {
-            responseDataDic.Remove(key);
-            EditorUtility.SetDirty(this);
-            OnResponseDataChanged?.Invoke();
-        }
     }
 
     public void ClearResponseData()
@@ -72,6 +62,7 @@ public class PlayModeStateChanged
         if (mode == PlayModeStateChange.EnteredEditMode)
         {
             var dataSOs = AssetDatabase.FindAssets("t:APIDataSO");
+
             foreach (var guid in dataSOs)
             {
                 var path = AssetDatabase.GUIDToAssetPath(guid);
