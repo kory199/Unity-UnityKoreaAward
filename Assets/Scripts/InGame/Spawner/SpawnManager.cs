@@ -37,7 +37,7 @@ public class SpawnManager : MonoBehaviour
     }
     IEnumerator Co_MonsterSpawn(string name=null)
     {
-        //Ç®¿¡¼­ ¸ó½ºÅÍ ²¨³»±â
+        //Ç®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         while (!_isBoss)
         {
             SpawnMonsters();
@@ -46,7 +46,7 @@ public class SpawnManager : MonoBehaviour
         GameObject Boss = ObjectPooler.SpawnFromPool(name,Vector3.up*10);
     }
 
-    #region Áßº¹¾ø´Â ·£´ý »Ì±â
+    #region ï¿½ßºï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì±ï¿½
     private void SpawnMonsters(string name = null)
     {
         List<int> tempNum = new List<int>();
@@ -54,7 +54,7 @@ public class SpawnManager : MonoBehaviour
         {
             tempNum.Add(i);
         }
-        //±ÙÁ¢ »ý¼º
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         for (int i = 0; i < _spawnMonsterTotalNum; i++)
         {
             int num = RandomChoose(tempNum.Count - 1);
