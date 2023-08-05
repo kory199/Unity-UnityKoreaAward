@@ -60,6 +60,7 @@ public class SpawnManager : MonoBehaviour
             int num = RandomChoose(tempNum.Count - 1);
             tempNum.Remove(num);
 
+            Debug.Log("i : " + i);
             Vector3 spawnRandomArea = _spawnPos[tempNum[num]] + (Vector3)Random.insideUnitCircle * _SpawnRandomFactor;
             GameObject monster = ObjectPooler.SpawnFromPool("BasicMeleeMonster", spawnRandomArea);
         }

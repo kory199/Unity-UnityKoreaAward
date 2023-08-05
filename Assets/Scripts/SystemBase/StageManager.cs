@@ -7,8 +7,8 @@ using APIModels;
 public class StageManager : MonoSingleton<StageManager>
 {
     [SerializeField] private int _stageNum = 0;
-    [SerializeField] private int _spawnMeleeNum = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
-    [SerializeField] private int _spawnRangedNum = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
+    [SerializeField ] private int _spawnMeleeNum =20; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
+    [SerializeField]  private int _spawnRangedNum = 20   ; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
     [SerializeField] private int _score = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
     [SerializeField] private int _deathMonsters = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
     [SerializeField] private float _time = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
@@ -21,7 +21,7 @@ public class StageManager : MonoSingleton<StageManager>
     {
         // 서버로부터 몬스터 스폰 정보 요청 (임시)
         RequestMonsterInfo();
-        
+
         //체인 등록
         InGameManager.Instance.RegisterParams(EnumTypes.InGameParamType.Stage, (int)EnumTypes.StageStateType.Max);
     }
@@ -34,10 +34,11 @@ public class StageManager : MonoSingleton<StageManager>
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetMonsterSpawn);
         //Next 체인
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Next, SetStageNum);
-        //End 체인 _SSH 임시 주석처리
+        //End 체인 
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.End, SendStageData);
         _onclickNum = GameManager.Instance.OnclickStageNum;
-        Debug.Log($"Click Stage Num : {_onclickNum}");
+
+
     }
     private void Update()
     {
@@ -71,7 +72,7 @@ public class StageManager : MonoSingleton<StageManager>
     }
     public int GetStageNum() => _stageNum;
 
-    // Spawn Logic Edit _SSH
+    // Spawn Logic Edit
     private void SetMeleeMonster() => _spawnMeleeNum = GetMonsterInfo(_stageNum, EnumTypes.MonsterType.MeleeMonster);
     private void SetRangedMonster() => _spawnRangedNum = GetMonsterInfo(_stageNum, EnumTypes.MonsterType.RangedMonster);
     private void SetMonsterSpawn()
@@ -93,10 +94,10 @@ public class StageManager : MonoSingleton<StageManager>
         //게임 오버 코루틴
         StartCoroutine(Co_GameOverUI());
 
-        //서버 데이터 전달 _SSH 임시 주석처리
-        // SendStageData();
+        //서버 데이터 전달 
+        SendStageData();
 
-        //씬 이동 : Logic edit _SSH
+        //씬 이동 : Logic edit 
         await GameManager.Instance.LoadScene(EnumTypes.ScenesType.SceneLobby);
     }
     public void MonsterDeath()
@@ -105,6 +106,7 @@ public class StageManager : MonoSingleton<StageManager>
         Debug.Log("DeathMonsterCount : " + _deathMonsters);
         if (_deathMonsters >= (_spawnMeleeNum + _spawnRangedNum) * 1 * 60)
         {
+            Debug.Log((_spawnMeleeNum + _spawnRangedNum) * 1 * 60);
             SetStageNum();
             CallStage(EnumTypes.StageStateType.Start);
             _deathMonsters = 0;
@@ -116,10 +118,10 @@ public class StageManager : MonoSingleton<StageManager>
         //게임 클리어 코루틴
         StartCoroutine(Co_GameOverUI());
 
-        //서버 데이터 전달 _SSH 임시 주석처리
-        // SendStageData();
+        //서버 데이터 전달 
+        SendStageData();
 
-        //씬 이동 : Logic edit _SSH
+        //씬 이동 : Logic edit 
         await GameManager.Instance.LoadScene(EnumTypes.ScenesType.SceneLobby);
     }
     IEnumerator Co_GameOverUI()
@@ -157,18 +159,8 @@ public class StageManager : MonoSingleton<StageManager>
         }
         else
         {
-            Debug.Log("The monster format doesn't match");
+            Debug.LogError("The monster format doesn't match");
             return 0;
         }
     }
-}
-
-// 확인 후 삭제 필요 _SSH
-public class StageDataTest : MonoSingleton<StageDataTest>
-{
-    public int[] MeleeMonsterNum = new int[6] { 0, 1, 1, 2, 2, 3 };
-    public int[] RangedMonsterNum = new int[6] { 0, 0, 1, 1, 2, 2 };
-
-    public int GetMeleeMonsterNum(int idx) => MeleeMonsterNum[idx];
-    public int GetRangedMonsterNum(int idx) => RangedMonsterNum[idx];
 }
