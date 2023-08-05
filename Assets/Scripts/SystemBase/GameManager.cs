@@ -8,6 +8,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoSingleton<GameManager>
 {
+    public int OnclickStageNum { get; private set; }
+
     // private EventSystem _eventSystem;
 
     // Runtume init Gamemanager 
@@ -23,6 +25,10 @@ public class GameManager : MonoSingleton<GameManager>
         DontDestroyOnLoad(this.gameObject);
     }
 
+    public void SetStageNum(int stageNum)
+    {
+        OnclickStageNum = stageNum;
+    }
 
     public void MoveScene(string sceneName)
     {

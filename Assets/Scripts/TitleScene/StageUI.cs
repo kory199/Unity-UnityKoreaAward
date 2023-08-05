@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using APIModels;
 using UnityEngine;
@@ -13,6 +12,18 @@ public class StageUI : MonoBehaviour
     private void Awake()
     {
         GetSategInof();
+
+        for (int i = 0; i < stageBut.Length; i++)
+        {
+            int index = i + 1;
+            stageBut[i].onClick.AddListener(() => GoInGameScene(index));
+        }
+    }
+
+    private async void GoInGameScene(int index)
+    {
+        GameManager.Instacne.SetStageNum(index);
+        await GameManager.Instacne.LoadScene(EnumTypes.ScenesType.SceneInGame);
     }
 
     private async void GetSategInof()
@@ -34,7 +45,8 @@ public class StageUI : MonoBehaviour
             int stageID = stage.stage_id;
             if (stageID > 0 && stageID <= stageBut.Length)
             {
-                stageBut[stageID - 1].interactable = stage.is_achieved; 
+                //stageBut[stageID - 1].interactable = stage.is_achieved;
+                stageBut[stageID - 1].interactable = true;
             }
         }
     }
