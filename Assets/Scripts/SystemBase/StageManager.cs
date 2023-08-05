@@ -2,38 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using APIModels;
+
 public class StageManager : MonoSingleton<StageManager>
 {
     [SerializeField] private int _stageNum = 0;
-    [SerializeField] private int _spawnMeleeNum = 0; //=>ï¿½ï¿½Å©ï¿½ï¿½ï¿½Íºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½æ¿¹ï¿½ï¿½
-    [SerializeField] private int _spawnRangedNum = 0; //=>ï¿½ï¿½Å©ï¿½ï¿½ï¿½Íºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½æ¿¹ï¿½ï¿½
-    [SerializeField] private int _score = 0; //=>ï¿½ï¿½Å©ï¿½ï¿½ï¿½Íºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½æ¿¹ï¿½ï¿½
-    [SerializeField] private int _deathMonsters = 0; //=>ï¿½ï¿½Å©ï¿½ï¿½ï¿½Íºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½æ¿¹ï¿½ï¿½
-    [SerializeField] private float _time = 0; //=>ï¿½ï¿½Å©ï¿½ï¿½ï¿½Íºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½æ¿¹ï¿½ï¿½
+    [SerializeField] private int _spawnMeleeNum = 0; //=>½ºÅ©¸³ÅÍºí ¿ÀºêÁ§Æ®¿¡¼­ ÀÐ¾î¿À´Â ¹æ½ÄÀ¸·Î º¯°æ¿¹Á¤
+    [SerializeField] private int _spawnRangedNum = 0; //=>½ºÅ©¸³ÅÍºí ¿ÀºêÁ§Æ®¿¡¼­ ÀÐ¾î¿À´Â ¹æ½ÄÀ¸·Î º¯°æ¿¹Á¤
+    [SerializeField] private int _score = 0; //=>½ºÅ©¸³ÅÍºí ¿ÀºêÁ§Æ®¿¡¼­ ÀÐ¾î¿À´Â ¹æ½ÄÀ¸·Î º¯°æ¿¹Á¤
+    [SerializeField] private int _deathMonsters = 0; //=>½ºÅ©¸³ÅÍºí ¿ÀºêÁ§Æ®¿¡¼­ ÀÐ¾î¿À´Â ¹æ½ÄÀ¸·Î º¯°æ¿¹Á¤
+    [SerializeField] private float _time = 0; //=>½ºÅ©¸³ÅÍºí ¿ÀºêÁ§Æ®¿¡¼­ ÀÐ¾î¿À´Â ¹æ½ÄÀ¸·Î º¯°æ¿¹Á¤
     [SerializeField] private SpawnManager _spawnManager;
 
-    private int _onclickstageNum;
+    private int _onclickNum;
 
     #region Uinity lifeCycle
     private void Awake()
     {
-        //Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½
-        InGameManager.Instacne.RegisterParams(EnumTypes.InGameParamType.Stage, (int)EnumTypes.StageStateType.Max);
+        // ¼­¹ö·ÎºÎÅÍ ¸ó½ºÅÍ ½ºÆù Á¤º¸ ¿äÃ» (ÀÓ½Ã)
+        RequestMonsterInfo();
+
+        //Ã¼ÀÎ µî·Ï
+        InGameManager.Instance.RegisterParams(EnumTypes.InGameParamType.Stage, (int)EnumTypes.StageStateType.Max);
     }
     private void Start()
     {
         _stageNum = 1;
-        //start Ã¼ï¿½ï¿½ 
-        InGameManager.Instacne.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetMeleeMonster);
-        InGameManager.Instacne.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetRangedMonster);
-        InGameManager.Instacne.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetMonsterSpawn);
-        //Next Ã¼ï¿½ï¿½
-        InGameManager.Instacne.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Next, SetStageNum);
-        //End Ã¼ï¿½ï¿½ 
-        InGameManager.Instacne.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.End, SendStageData);
-
-        _onclickstageNum = GameManager.Instacne.OnclickStageNum;
-        Debug.Log($"num : {_onclickstageNum}");
+        //start Ã¼ÀÎ 
+        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetMeleeMonster);
+        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetRangedMonster);
+        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetMonsterSpawn);
+        //Next Ã¼ÀÎ
+        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Next, SetStageNum);
+        //End Ã¼ÀÎ 
+        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.End, SendStageData);
     }
     private void Update()
     {
@@ -51,97 +53,110 @@ public class StageManager : MonoSingleton<StageManager>
         }
     }
     #endregion
-
     public void CallStage(EnumTypes.StageStateType stageType)
     {
-        InGameManager.Instacne.InvokeCallBacks(EnumTypes.InGameParamType.Stage, (int)stageType);
+        InGameManager.Instance.InvokeCallBacks(EnumTypes.InGameParamType.Stage, (int)stageType);
     }
     public void SetStageNum()
     {
-        if (_stageNum >= 5) //5 ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        if (_stageNum >= 5) //5 ´ë½Å ¼­¹ö ½ºÅ×ÀÌÁö ¸Æ½º°ª ³Ö¾îÁà¾ßÇÔ
         {
-            InGameManager.Instacne.InvokeCallBacks(EnumTypes.InGameParamType.Stage, (int)EnumTypes.StageStateType.End);
+            InGameManager.Instance.InvokeCallBacks(EnumTypes.InGameParamType.Stage, (int)EnumTypes.StageStateType.End);
             return;
         }
         Debug.Log("Stage Up ...");
         _stageNum++;
     }
     public int GetStageNum() => _stageNum;
-    private void SetMeleeMonster() => _spawnMeleeNum = StageDataTest.Instacne.GetMeleeMonsterNum(_stageNum);
-    private void SetRangedMonster() => _spawnRangedNum = StageDataTest.Instacne.GetRangedMonsterNum(_stageNum);
+
+    // Spawn Logic Edit
+    private void SetMeleeMonster() => _spawnMeleeNum = GetMonsterInfo(_stageNum, EnumTypes.MonsterType.MeleeMonster);
+    private void SetRangedMonster() => _spawnRangedNum = GetMonsterInfo(_stageNum, EnumTypes.MonsterType.RangedMonster);
     private void SetMonsterSpawn()
     {
         if (_stageNum < 4)
             _spawnManager.SettingMonsterSpawnNum(_spawnMeleeNum, _spawnRangedNum);
         else
-            _spawnManager.SettingMonsterSpawnNum(_spawnMeleeNum, _spawnRangedNum,true,"BossOne");
+            _spawnManager.SettingMonsterSpawnNum(_spawnMeleeNum, _spawnRangedNum, true, "BossOne");
     }
     private async void SendStageData()
     {
         Debug.Log("Send StageEndData to Server ...");
-        await APIManager.Instacne.StageUpToServer(_stageNum, _score);
+
+        await APIManager.Instance.StageUpToServer(_stageNum, _score);
     }
 
-    public void PlayerDeath()
+    public async void PlayerDeath()
     {
-        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ú·ï¿½Æ¾
+        //°ÔÀÓ ¿À¹ö ÄÚ·çÆ¾
         StartCoroutine(Co_GameOverUI());
 
-        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
+        //¼­¹ö µ¥ÀÌÅÍ Àü´Þ 
         SendStageData();
 
-        //ï¿½ï¿½ ï¿½Ìµï¿½
-        GameManager.Instacne.MoveScene("SceneLobby");
+        //¾À ÀÌµ¿ : Logic edit 
+        await GameManager.Instance.LoadScene(EnumTypes.ScenesType.SceneLobby);
     }
     public void MonsterDeath()
     {
         _deathMonsters++;
-        Debug.Log("DeathMonsterCount : " + _deathMonsters);
+        //  Debug.Log("DeathMonsterCount : " + _deathMonsters);
         if (_deathMonsters >= (_spawnMeleeNum + _spawnRangedNum) * 1 * 60)
         {
             SetStageNum();
             CallStage(EnumTypes.StageStateType.Start);
             _deathMonsters = 0;
-            Debug.Log("stageNum : " + _stageNum);
+           // Debug.Log("stageNum : " + _stageNum);
         }
     }
-    public void BossDeath()
+    public async void BossDeath()
     {
-        //ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½Ú·ï¿½Æ¾
+        //°ÔÀÓ Å¬¸®¾î ÄÚ·çÆ¾
         StartCoroutine(Co_GameOverUI());
 
-        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
+        //¼­¹ö µ¥ÀÌÅÍ Àü´Þ 
         SendStageData();
 
-        //ï¿½ï¿½ ï¿½Ìµï¿½
-        GameManager.Instacne.MoveScene("SceneLobby");
+        //¾À ÀÌµ¿ : Logic edit 
+        await GameManager.Instance.LoadScene(EnumTypes.ScenesType.SceneLobby);
     }
     IEnumerator Co_GameOverUI()
     {
         yield return null;
-        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Ã¢ ï¿½Ñ°Å³ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½
+        //°ÔÀÓ ¿À¹ö½Ã ¶ç¿ï Ã¢ ÄÑ°Å³ª ÀÌÆåÆ® ¸¸µé±â
     }
     IEnumerator Co_GameClearUI()
     {
         yield return null;
-        //ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Ã¢ ï¿½Ñ°Å³ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½
+        //º¸½º Å¬¸®¾î½Ã ¶ç¿ï Ã¢ ÄÑ°Å³ª ÀÌÆåÆ® ¸¸µé±â
     }
 
-    protected override void OnDestroy()
+    public async void RequestMonsterInfo()
     {
-        base.OnDestroy();
+        await APIManager.Instance.GetMasterDataAPI();
     }
-}
-public class StageDataTest : MonoSingleton<StageDataTest>
-{
-    public int[] MeleeMonsterNum = new int[6] { 0, 1, 1, 2, 2, 3 };
-    public int[] RangedMonsterNum = new int[6] { 0, 0, 1, 1, 2, 2 };
 
-    public int GetMeleeMonsterNum(int idx) => MeleeMonsterNum[idx];
-    public int GetRangedMonsterNum(int idx) => RangedMonsterNum[idx];
-
-    protected override void OnDestroy()
+    public int GetMonsterInfo(int stageNum, EnumTypes.MonsterType monsterType)
     {
-        base.OnDestroy();
+        StageSpawnMonsterData_res[] stageSpawnMonsterData_Res = APIDataSO.Instance.GetValueByKey<StageSpawnMonsterData_res[]>(APIDataDicKey.StageSpawnMonster);
+
+        if (stageSpawnMonsterData_Res == null)
+        {
+            Debug.LogError("StageSpawnMonsterData_res is Null");
+        }
+
+        if (monsterType == EnumTypes.MonsterType.MeleeMonster)
+        {
+            return stageSpawnMonsterData_Res[stageNum].meleemonster_spawn;
+        }
+        else if (monsterType == EnumTypes.MonsterType.RangedMonster)
+        {
+            return stageSpawnMonsterData_Res[stageNum].rangedmonster_spawn;
+        }
+        else
+        {
+            Debug.LogError("The monster format doesn't match");
+            return 0;
+        }
     }
 }

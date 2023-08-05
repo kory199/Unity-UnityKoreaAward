@@ -6,7 +6,7 @@ public class MonoSingleton<T>  : MonoBehaviour where T : MonoSingleton<T>
     private static T _instance = null;
     private static bool isQuitting = false;
 
-    public static T Instacne 
+    public static T Instance 
     {
         get 
         {

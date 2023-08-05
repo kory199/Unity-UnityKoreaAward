@@ -22,13 +22,13 @@ public class StageUI : MonoBehaviour
 
     private async void GoInGameScene(int index)
     {
-        GameManager.Instacne.SetStageNum(index);
-        await GameManager.Instacne.LoadScene(EnumTypes.ScenesType.SceneInGame);
+        GameManager.Instance.SetStageNum(index);
+        await GameManager.Instance.LoadScene(EnumTypes.ScenesType.SceneInGame);
     }
 
     private async void GetSategInof()
     {
-        await APIManager.Instacne.GetStageAPI(_stageNum);
+        await APIManager.Instance.GetStageAPI(_stageNum);
 
         List<StageInfo> stageInfo = APIDataSO.Instance.GetValueByKey<List<StageInfo>>(APIDataDicKey.StageData);
 

@@ -1,20 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using APIModels;
 
 public partial class Player : CharacterBase
 {
-    protected override void Start()
-    {
-        // ��Ÿ �ʱ�ȭ �׸� �߰�
-        base.Start();
-    }
-
     private void Awake()
     {
         InitSetting();
         InitComponent();
         InitPlayer();
+    }
+
+    protected override void Start()
+    {
+        // ��Ÿ �ʱ�ȭ �׸� �߰�
+        base.Start();
     }
 
     void Update()
@@ -23,7 +24,7 @@ public partial class Player : CharacterBase
 
         if (Input.GetKey(KeyCode.Mouse0))
         {
-            if (Time.time - lastAttackTime >= rateOfFire)
+            if (Time.time - lastAttackTime >= playerRateOfFire)
             {
                 Attack();
 
@@ -31,5 +32,4 @@ public partial class Player : CharacterBase
             }
         }
     }
-
 }

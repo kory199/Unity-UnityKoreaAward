@@ -137,19 +137,19 @@ public class TitleManager : MonoBehaviour
 
     private async void GetGameVersion()
     {
-        versionText.text = "Ver :  " +  await APIManager.Instacne.GetGameVersionAPI();
+        versionText.text = "Ver :  " +  await APIManager.Instance.GetGameVersionAPI(); ;
     }
 
     private async void GetMasterData()
     {
-        await APIManager.Instacne.GetMasterDataAPI();
+        await APIManager.Instance.GetMasterDataAPI();
     }
 
     private async void OnClickCreareAccount()
     {
         if (TryProcessUserInput(out User user))
         {
-            await APIManager.Instacne.CreateAccountAPI(user);
+            await APIManager.Instance.CreateAccountAPI(user);
             infotext.text = $"Created New Account Successful ! {user.ID}, {user.Password}";
         }
     }
@@ -158,7 +158,7 @@ public class TitleManager : MonoBehaviour
     {
         if (TryProcessUserInput(out User user))
         {
-            await APIManager.Instacne.LoginAPI(user);
+            await APIManager.Instance.LoginAPI(user);
             infotext.text = $"Login Successful {user.ID}, {user.Password}";
         }
     }
@@ -190,9 +190,9 @@ public class TitleManager : MonoBehaviour
         ShowUI(panels[2]);
         r_infoText.gameObject.SetActive(false);
 
-        await APIManager.Instacne.GetRankingAPI();
+        await APIManager.Instance.GetRankingAPI();
 
-        GameData userInfo = APIManager.Instacne.GetApiSODicUerData();
+        GameData userInfo = APIManager.Instance.GetApiSODicUerData();
         if(userInfo == null)
         {
             r_infoText.gameObject.SetActive(true);
@@ -316,7 +316,7 @@ public class TitleManager : MonoBehaviour
         {
             startBut.interactable = true;
             loginInfotext.gameObject.SetActive(false);
-            await APIManager.Instacne.GetGameDataAPI();
+            await APIManager.Instance.GetGameDataAPI();
         }
         else
         {
@@ -341,7 +341,7 @@ public class TitleManager : MonoBehaviour
     {
         if (startBut.interactable)
         {
-            await GameManager.Instacne.LoadScene(EnumTypes.ScenesType.SceneLobby);
+            await GameManager.Instance.LoadScene(EnumTypes.ScenesType.SceneLobby);
         }
     }
 

@@ -9,7 +9,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private int _rangedMonsterNum;
     [SerializeField] private int _spawnMonsterTotalNum;
     [SerializeField] private float _spawnTime = 3f;
-    [SerializeField] private float _SpawnRandomFactor = 2f;
+    [SerializeField] private float _SpawnRandomFactor = 1f;
     [SerializeField] private bool _isBoss = false;
     WaitForSeconds spawnDelay;
 
@@ -26,7 +26,7 @@ public class SpawnManager : MonoBehaviour
 
     }
     #endregion
-    public void SettingMonsterSpawnNum(int melee, int ranged, bool isBoss = false,string name = null)
+    public void SettingMonsterSpawnNum(int melee, int ranged, bool isBoss = false, string name = null)
     {
         _isBoss = isBoss;
         _meleeMonsterNum = melee;
@@ -35,18 +35,18 @@ public class SpawnManager : MonoBehaviour
         StopCoroutine(Co_MonsterSpawn());
         StartCoroutine(Co_MonsterSpawn());
     }
-    IEnumerator Co_MonsterSpawn(string name=null)
+    IEnumerator Co_MonsterSpawn(string name = null)
     {
-        //Ç®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        //Ç®¿¡¼­ ¸ó½ºÅÍ ²¨³»±â
         while (!_isBoss)
         {
             SpawnMonsters();
             yield return spawnDelay;
         }
-        GameObject Boss = ObjectPooler.SpawnFromPool(name,Vector3.up*10);
+        GameObject Boss = ObjectPooler.SpawnFromPool(name, Vector3.up * 10);
     }
 
-    #region ï¿½ßºï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì±ï¿½
+    #region Áßº¹¾ø´Â ·£´ý »Ì±â
     private void SpawnMonsters(string name = null)
     {
         List<int> tempNum = new List<int>();
@@ -54,8 +54,8 @@ public class SpawnManager : MonoBehaviour
         {
             tempNum.Add(i);
         }
-        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-        for (int i = 0; i < _spawnMonsterTotalNum; i++)
+        //±ÙÁ¢ »ý¼º
+        for (int i = 0; i < _meleeMonsterNum; i++)
         {
             int num = RandomChoose(tempNum.Count - 1);
             tempNum.Remove(num);
