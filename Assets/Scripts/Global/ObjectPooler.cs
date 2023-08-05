@@ -30,9 +30,13 @@ public class Pool
     public int Number;
     public bool IsUi;
 }
-
-public class ObjectPooler : MonoSingleton<ObjectPooler>
+public class ObjectPooler : MonoBehaviour
 {
+    private static ObjectPooler s_inst;
+    private void Awake()
+    {
+        s_inst = this;
+    }
     [SerializeField] private RectTransform _uiCanvasPooler;
     [SerializeField] private Pool[] _pools;
     private List<GameObject> _spawnObjects;
@@ -43,11 +47,6 @@ public class ObjectPooler : MonoSingleton<ObjectPooler>
         "\nvoid OnDisable()\n" +
         "{\nObjectPooler.ReturnToPool(gameobject); \n" +
         "CancelInvoke(); //invoke 함수를 사용하는 경우적어주세요\n}";
-
-    protected override void Awake()
-    {
-        base.Awake();
-    }
 
     private void Start()
     {
@@ -81,13 +80,13 @@ public class ObjectPooler : MonoSingleton<ObjectPooler>
 
     //변수에 따른 오버로딩
     public static GameObject SpawnFromPool(string name, Vector3 position) =>
-        Instance._SpawnFromPool(name, position, Quaternion.identity);
+        s_inst._SpawnFromPool(name, position, Quaternion.identity);
     public static GameObject SpawnFromPool(string name, Vector3 position, Quaternion rotation) =>
-        Instance._SpawnFromPool(name, position, rotation);
+        s_inst._SpawnFromPool(name, position, rotation);
 
     public static T SpawnFromPool<T>(string name, Vector3 position) where T : Component
     {
-        GameObject obj = Instance._SpawnFromPool(name, position, Quaternion.identity);
+        GameObject obj = s_inst._SpawnFromPool(name, position, Quaternion.identity);
         if (obj.TryGetComponent(out T component))
             return component;
         else
@@ -98,7 +97,7 @@ public class ObjectPooler : MonoSingleton<ObjectPooler>
     }
     public static T SpawnFromPool<T>(string name, Vector3 position, Quaternion rotation) where T : Component
     {
-        GameObject obj = Instance._SpawnFromPool(name, position, rotation);
+        GameObject obj = s_inst._SpawnFromPool(name, position, rotation);
         if (obj.TryGetComponent(out T component))
             return component;
         else
@@ -136,10 +135,10 @@ public class ObjectPooler : MonoSingleton<ObjectPooler>
     }
     public static List<GameObject> GetAllPools(string name)
     {
-        if (!Instance._dictionaryPool.ContainsKey(name))
+        if (!s_inst._dictionaryPool.ContainsKey(name))
             throw new Exception($"Pool with name {name} doesn't exist");
 
-        return Instance._spawnObjects.FindAll(x => x.name == name);
+        return s_inst._spawnObjects.FindAll(x => x.name == name);
     }
 
     public static List<T> GetAllPools<T>(string name) where T : Component
@@ -151,10 +150,10 @@ public class ObjectPooler : MonoSingleton<ObjectPooler>
     }
     public static void ReturnToPool(GameObject obj)
     {
-        if (Instance._dictionaryPool.ContainsKey(obj.name) == false)
+        if (s_inst._dictionaryPool.ContainsKey(obj.name) == false)
             throw new Exception($"Pool with name{obj.name} dosen't exist");
 
-        Instance._dictionaryPool[obj.name].Enqueue(obj);
+        s_inst._dictionaryPool[obj.name].Enqueue(obj);
     }
 
     //풀의 오브젝트 정보를 보기위해서 에디터에 버튼 만드는 것
