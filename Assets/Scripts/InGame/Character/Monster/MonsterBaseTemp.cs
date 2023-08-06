@@ -5,7 +5,7 @@ using APIModels;
 
 public abstract class MonsterBase : MonoBehaviour
 {
-    protected MonsterData monsterData; //=> ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½ï¿½Å©ï¿½ï¿½ï¿½Íºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® or ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+    protected MonsterData monsterData; //=> ³ªÁß¿¡ ½ºÅ©¸³ÅÍºí ¿ÀºêÁ§Æ® or ¿¢¼¿ÆÄÀÏ·Î Á¤º¸ ¹Þ¾Æ¿Â Å¬·¡½º µîµî
     [SerializeField] protected MonsterStateType state;
     protected Player player;
     protected Vector3 playerTargetDirection;
@@ -16,7 +16,7 @@ public abstract class MonsterBase : MonoBehaviour
 
     protected MonsterData_res[] monsterData_Res;
 
-    // ï¿½Ó½ï¿½ Status
+    // ÀÓ½Ã Status
     private int maxHP = 10;
     public int curHP = 10;
     public int exp = 10;
@@ -40,7 +40,7 @@ public abstract class MonsterBase : MonoBehaviour
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Next, SetStageNum);
         stageNum = 1;
 
-        // data manager ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ stage ï¿½ï¿½ï¿½æ¿¡ ï¿½ï¿½ï¿½ï¿½ monster status ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ onEnableï¿½ï¿½ monster setting ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½
+        // data manager »èÁ¦ ¹× stage º¯°æ¿¡ µû¸¥ monster status º¯°æÀ¸·Î onEnable·Î monster setting º¯°æ ÇÊ¿ä
         SetMonsterName();
 
         /*if (DataManager.Instacne.MonsterData.TryGetMonsterInfo(MonsterName, out _monsterInfo))
@@ -61,14 +61,14 @@ public abstract class MonsterBase : MonoBehaviour
     {
         ObjectPooler.ReturnToPool(gameObject);
 
-        // CancelInvoke(); //invoke ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½
+        // CancelInvoke(); //invoke ÇÔ¼ö¸¦ »ç¿ëÇÏ´Â °æ¿ìÀû¾îÁÖ¼¼¿ä
     }
 
     private void OnDestroy()
     {
         if (Death == true)
         {
-            // ï¿½×¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
+            // Á×¾úÀ» ¶§ÀÇ Ã³¸®
             DeathProcess();
         }
     }
@@ -76,45 +76,54 @@ public abstract class MonsterBase : MonoBehaviour
     /// Set variable string ' MonsterName ' 
     /// </summary>
     protected abstract void SetMonsterName();
+
+    public void MonsterHit(int damage)
+    {
+        curHP -= damage;
+        if(curHP<=0)
+        {
+            MonsterDeath();
+        }
+    }
     protected void DeathProcess()
     {
-        // ï¿½ï¿½ï¿½Í°ï¿½ ï¿½×¾ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½
-        // ex) ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¸ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ã¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+        // ¸ó½ºÅÍ°¡ Á×¾úÀ»¶§ Ã³¸®ÇØÁÙ ·ÎÁ÷ ÀÛ¼º
+        // ex) Á¡¼ö¸¦¿Ã¸°´Ù, °æÇèÄ¡¸¦ ¿Ã¸°´Ù µîµî
     }
 
-    // Stringï¿½ï¿½ï¿½Â·ï¿½ ï¿½Ú·ï¿½Æ¾ ï¿½Ô¼ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ç·ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ï¿½Ê°ï¿½ ï¿½ï¿½ï¿½ï¿½
+    // StringÇüÅÂ·Î ÄÚ·çÆ¾ ÇÔ¼ö¸¦ Ã£À¸¹Ç·Î ¿ÀÅ¸³ªÁö¾Ê°Ô ÁÖÀÇ
     // ex) NONE -> X,  None -> O
     protected void TransferState(MonsterStateType Nextstate)
     {
-        // ï¿½ï¿½ï¿½ï¿½ Stateï¿½ï¿½ ï¿½Ú·ï¿½Æ¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å°ï¿½ï¿½
+        // ÇöÀç StateÀÇ ÄÚ·çÆ¾À» ÁßÁö½ÃÅ°°í
         StopCoroutine("State_" + state);
-        // Stateï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½
+        // State¸¦ º¯°æÇØÁØµÚ
         state = Nextstate;
-        // ï¿½Ø´ï¿½ Stateï¿½ï¿½ ï¿½Ú·ï¿½Æ¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Å²ï¿½ï¿½.
+        // ÇØ´ç StateÀÇ ÄÚ·çÆ¾À» ½ÇÇà½ÃÅ²´Ù.
         StartCoroutine("State_" + state);
     }
 
-    // È°ï¿½ï¿½È­(Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ or ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®Ç®ï¿½ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½È¯ï¿½Ç¾ï¿½ ï¿½ï¿½ï¿½Ã¶ï¿½)
+    // È°¼ºÈ­(Ã³À½ »ý¼º or ¿ÀºêÁ§Æ®Ç®¿¡¼­ ´Ù½Ã ¹ÝÈ¯µÇ¾î ³ª¿Ã¶§)
     private IEnumerator State_None()
     {
-        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ù¸ï¿½
+        // ÇÃ·¹ÀÌ¾î Á¤º¸°¡ ¾ø´Ù¸é
         if (player == null)
         {
-            // ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ Ã£ï¿½ÆµÎ°ï¿½
+            // ÇÃ·¹ÀÌ¾î¸¦ Ã£¾ÆµÎ°í
             player = FindObjectOfType<Player>();
 
             Debug.Log(player == null);
-            // ï¿½Ûµï¿½ï¿½Ï°ï¿½ï¿½Ö´ï¿½ ï¿½Ú·ï¿½Æ¾ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
+            // ÀÛµ¿ÇÏ°íÀÖ´ø ÄÚ·çÆ¾ÀÌ ÀÖ´Ù¸é Á¾·áÇÑ´Ù.
             StopAllCoroutines();
-            //ï¿½Ìµï¿½ï¿½ï¿½Å´
+            //ÀÌµ¿½ÃÅ´
         }
         else
         {
-            // ï¿½ï¿½ï¿½ï¿½ Stateï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²Û´ï¿½.
+            // ´ÙÀ½ State¸¦ ÀÌµ¿À¸·Î ¹Ù²Û´Ù.
             TransferState(MonsterStateType.Move);
         }
 
-        // ï¿½Ø´ï¿½ Iteratorï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ breakï¿½ï¿½ TransferStateï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
+        // ÇØ´ç Iteratorºí·°ÀÇ break´Â TransferState¿¡¼­ Ã³¸®
         yield return null;
     }
 
@@ -122,22 +131,22 @@ public abstract class MonsterBase : MonoBehaviour
     {
         while (state == MonsterStateType.Move)
         {
-            // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            // ÇÃ·¹ÀÌ¾î°¡ Á×À¸¸é ½ÇÇà
             if (player.IsDeath)
             {
-                // ï¿½ï¿½ï¿½Íµï¿½ï¿½ï¿½ Æ¯ï¿½ï¿½ Stateï¿½ï¿½ ï¿½Å°ï¿½ï¿½Ø´ï¿½
+                // ¸ó½ºÅÍµéÀ» Æ¯Á¤ State·Î ¿Å°ÜÁØ´Ù
                 TransferState(MonsterStateType.Dance);
                 yield break;
             }
 
-            // ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½âº¤ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½.
+            // ÇÃ·¹ÀÌ¾î¸¦ ÇâÇÑ ¹æÇâº¤ÅÍ¸¦ ±¸ÇÔ.
             Vector3 dirVector = (player.transform.position - gameObject.transform.position).normalized;
             //gameObject.transform.LookAt(player.transform.position);
 
-            // ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½ ï¿½ï¿½ï¿½ï¿½)
+            // ¸ó½ºÅÍ¸¦ ÇØ´ç ¹æÇâÀ¸·Î ¿òÁ÷ÀÓ(´Ù¸¥ ¹æ½ÄÀ¸·Î ±¸ÇöÇØµµ ¤·¤»)
             gameObject.transform.Translate(dirVector * _monsterInfo.MoveSpeed * Time.deltaTime);
 
-            // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ ï¿½Ú±ï¿½ï¿½Ú½ï¿½(ï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½ ï¿½ï¿½ï¿½ï¿½)
+            // ÇÃ·¹ÀÌ¾î¿Í ÀÚ±âÀÚ½Å(¸ó½ºÅÍ)»çÀÌÀÇ °Å¸®¿Í º»ÀÎÀÇ °ø°Ý °¡´É¹üÀ§¸¦ ºñ±³ÇÏ¿© ¼öÇà(´Ù¸¥ ¹æ½ÄÀ¸·Î ±¸ÇöÇØµµ ¤·¤»)
             if (Vector3.Distance(player.transform.position, this.gameObject.transform.position) <= _monsterInfo.Range)
             {
                 TransferState(MonsterStateType.Attack);
@@ -150,14 +159,14 @@ public abstract class MonsterBase : MonoBehaviour
 
     protected virtual IEnumerator State_Attack()
     {
-        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¶ï¿½ ï¿½ï¿½ï¿½Ñ¹Ýºï¿½
+        // °ø°Ý °¡´ÉÇÑ »óÅÂÀÏ¶§ ¹«ÇÑ¹Ýº¹
         while (state == MonsterStateType.Attack)
         {
-            // ï¿½ï¿½ï¿½Ý°ï¿½ï¿½É»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¼Å©
-            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ Move Stateï¿½ï¿½ ï¿½Ìµï¿½ 
+            // °ø°Ý°¡´É»óÅÂÀÎÁö Ã¼Å©
+            // ¹üÀ§¹ÛÀÌ¸é Move State·Î ÀÌµ¿ 
             if (Vector3.Distance(player.transform.position, this.gameObject.transform.position) <= _monsterInfo.Range)
             {
-                //ï¿½ï¿½ï¿½ï¿½
+                //°ø°Ý
                 Attack();
             }
             else
@@ -166,14 +175,14 @@ public abstract class MonsterBase : MonoBehaviour
                 yield break;
             }
 
-            yield return new WaitForSeconds(_monsterInfo.RateOfFire); // 3f ï¿½ï¿½ï¿½ monsterData.RateOfFire ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½î¼­ ï¿½ï¿½Ã¼
+            yield return new WaitForSeconds(_monsterInfo.RateOfFire); // 3f ´ë½Å monsterData.RateOfFire µîµî ¸¸µé¾î¼­ ´ëÃ¼
         }
     }
 
-    // ï¿½×¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
+    // Á×¾úÀ»¶§ÀÇ Ã³¸®
     private IEnumerator State_Death()
     {
-        // ï¿½ï¿½ï¿½ï¿½+, exp+, ï¿½ï¿½È°ï¿½ï¿½È­ ï¿½Ç°ï¿½ Ç®ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½î°¡ï¿½ï¿½ ï¿½ï¿½ï¿½...
+        // Á¡¼ö+, exp+, ºñÈ°¼ºÈ­ µÇ°í Ç®¿¡ ´Ù½Ã µé¾î°¡°í µîµî...
 
 
         MonsterDeath();
@@ -181,20 +190,21 @@ public abstract class MonsterBase : MonoBehaviour
     }
 
     /// <summary>
-    /// ï¿½ï¿½ï¿½Ý·ï¿½ï¿½ï¿½
+    /// °ø°Ý·ÎÁ÷
     /// </summary>
     protected abstract void Attack();
 
 
-    private void MonsterDeath()
+    protected virtual void MonsterDeath()
     {
-        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® Ç®ï¿½ï¿½ ï¿½ï¿½È¯
+        // ¿ÀºêÁ§Æ® Ç®¿¡ ¹ÝÈ¯
+        StageManager.Instance.MonsterDeath(); 
     }
 
     private void GetMeleeMonsterInfo() => MonsterSetting(stageNum, EnumTypes.MonsterType.MeleeMonster);
     private void GetRangedMonsterInfo() => MonsterSetting(stageNum, EnumTypes.MonsterType.RangedMonster);
 
-    // ï¿½Ó½ï¿½ _SSH
+    // ÀÓ½Ã _SSH
     private async void RequestServer()
     {
         await APIManager.Instance.GetMasterDataAPI();
@@ -204,23 +214,23 @@ public abstract class MonsterBase : MonoBehaviour
     {
         monsterData_Res = APIDataSO.Instance.GetValueByKey<MonsterData_res[]>(monsterType.ToString());
 
-        foreach(MonsterData_res a in monsterData_Res)
+        if (monsterData_Res == null)
         {
-            Debug.Log($"monsterdata : {a.exp}");
+            Debug.LogError("No MonsterData_res data");
+            return;
         }
 
-        //if (monsterData_Res == null)
-        //{
-        //    Debug.LogError("No MonsterData_res data");
-        //    return;
-        //}
+        MonsterSetting(monsterType);
+    }
 
-        //MonsterSetting(monsterType);
+    private void MonsterSetting(EnumTypes.MonsterType monsterType)
+    {
+
     }
 
     private void SetStageNum()
     {
-        // ï¿½ï¿½ï¿½ï¿½ Max Stage 5 ï¿½ï¿½ï¿½ï¿½
+        // ÇöÀç Max Stage 5 ±âÁØ
         if (stageNum > 5)
         {
             InGameManager.Instance.InvokeCallBacks(InGameParamType.Stage, (int)EnumTypes.StageStateType.End);
