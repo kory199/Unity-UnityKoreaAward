@@ -43,7 +43,6 @@ public class MeleeMonster : MonsterBase
     protected override void OnDisable()
     {
         base.OnDisable();
-        StageManager.Instance.MonsterDeath();
     }
     protected override void Attack()
     {
