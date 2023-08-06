@@ -9,11 +9,10 @@ public class InGameManager : MonoSingleton<InGameManager>
 {
     private Dictionary<EnumTypes.InGameParamType, InGameParamBase> _parameters = new();
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
         //
-        RegisterParams(EnumTypes.InGameParamType.Player,(int)EnumTypes.PlayerSkiilsType.MAX);
+        RegisterParams(EnumTypes.InGameParamType.Player, (int)EnumTypes.PlayerSkiilsType.MAX);
     }
 
     public void RegisterParams(EnumTypes.InGameParamType paramType, int maxTypeNum)
@@ -62,13 +61,7 @@ public class InGameManager : MonoSingleton<InGameManager>
     }
     private void Start()
     {
-       // AddActionType(EnumTypes.InGameParamType.Player, PlayerSkiilsType.DoubleShot, () => Debug.Log("������"));
-       // _parameters[EnumTypes.InGameParamType.Player].InvokeCallBack(EnumTypes.PlayerSkiilsType.DoubleShot);
-    }
-
-    protected override void OnDestroy()
-    {
-        //_parameters.Clear();
-        base.OnDestroy();
+        // AddActionType(EnumTypes.InGameParamType.Player, PlayerSkiilsType.DoubleShot, () => Debug.Log("������"));
+        // _parameters[EnumTypes.InGameParamType.Player].InvokeCallBack(EnumTypes.PlayerSkiilsType.DoubleShot);
     }
 }

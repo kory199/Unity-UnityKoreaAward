@@ -12,9 +12,8 @@ public class APIManager : MonoSingleton<APIManager>
     private string _id;
     private string _authToken;
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
         DontDestroyOnLoad(this.gameObject);
     }
 
@@ -250,10 +249,5 @@ public class APIManager : MonoSingleton<APIManager>
         {
             Debug.LogError($"API request failed : {e.Message}");
         }
-    }
-
-    protected override void OnDestroy()
-    {
-        base.OnDestroy();
     }
 }

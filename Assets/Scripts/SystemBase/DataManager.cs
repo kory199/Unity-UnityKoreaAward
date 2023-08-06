@@ -6,9 +6,8 @@ public class DataManager :MonoSingleton<DataManager>
 {
     public MonsterData MonsterData = null;
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
 
         if(MonsterData = null)
         {
@@ -16,8 +15,4 @@ public class DataManager :MonoSingleton<DataManager>
         }
     }
 
-    protected override void OnDestroy()
-    {
-        base.OnDestroy();
-    }
 }

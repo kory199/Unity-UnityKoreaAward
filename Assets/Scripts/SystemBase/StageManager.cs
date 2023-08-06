@@ -17,9 +17,8 @@ public class StageManager : MonoSingleton<StageManager>
     private int _onclickNum;
 
     #region Uinity lifeCycle
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
         // �����κ��� ���� ���� ���� ��û (�ӽ�)
         RequestMonsterInfo();
 
@@ -160,10 +159,5 @@ public class StageManager : MonoSingleton<StageManager>
             Debug.LogError("The monster format doesn't match");
             return 0;
         }
-    }
-
-    protected override void OnDestroy()
-    {
-        base.OnDestroy();
     }
 }
