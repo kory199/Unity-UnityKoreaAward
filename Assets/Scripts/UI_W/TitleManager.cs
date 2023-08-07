@@ -22,13 +22,6 @@ public class TitleManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI loginInfotext = null;
     [SerializeField] TextMeshProUGUI versionText = null;
 
-    [Header("[Ranking]")]
-    [SerializeField] Button r_goBackBut = null;
-    [SerializeField] TextMeshProUGUI[] rankTopThreeName = null;
-    [SerializeField] TextMeshProUGUI[] rankTopTen = null;
-    [SerializeField] TextMeshProUGUI userRank = null;
-    [SerializeField] TextMeshProUGUI r_infoText = null;
-
     [Header("Option")]
     [SerializeField] Button o_goBackBut = null;
 
@@ -52,9 +45,6 @@ public class TitleManager : MonoBehaviour
         optionBut.onClick.AddListener(delegate { ShowUI(panels[3]);});
         exitBut.onClick.AddListener(delegate { OnExitBut(); });
 
-        // === RankingPanel Button Event ===
-        r_goBackBut.onClick.AddListener(OnClickRankBackBut);
-
         // === OptionPanel Button Event ===
         o_goBackBut.onClick.AddListener(delegate { ShowUI(panels[0]); });
     }
@@ -62,6 +52,11 @@ public class TitleManager : MonoBehaviour
     private void OnClickAccount()
     {
         ShowUI(panels[1]);
+    }
+
+    private void OnClickRank()
+    {
+        ShowUI(panels[2]);
     }
 
     private async void GetGameVersion()
@@ -158,74 +153,5 @@ public class TitleManager : MonoBehaviour
         {
             Debug.Log("RangedMonster) Level: " + a.level + "Exp: " + a.exp + "Hp: " + a.hp);
         }
-    }
-
-    private void OnClickRankBackBut()
-    {
-        ShowUI(panels[0]);
-
-        for(int i = 0; i < rankTopThreeName.Length; ++i)
-        {
-            rankTopThreeName[i].text = "";
-            rankTopThreeName[i].text = "";
-            userRank.text = "";
-        }
-    }
-
-    private async void OnClickRank()
-    {
-        ShowUI(panels[2]);
-        r_infoText.gameObject.SetActive(false);
-
-        await APIManager.Instance.GetRankingAPI();
-
-        GameData userInfo = APIManager.Instance.GetApiSODicUerData();
-        if(userInfo == null)
-        {
-            r_infoText.gameObject.SetActive(true);
-            r_infoText.text = "Please Log in";
-        }
-
-        List<RankingData> rankingDataList = APIDataSO.Instance.GetValueByKey<List<RankingData>>("RankingData");
-
-        if (rankingDataList != null && rankingDataList.Count > 0)
-        {
-            for (int i = 0; i < rankingDataList.Count; i++)
-            {
-                RankingData rankingData = rankingDataList[i];
-
-                if (i < rankTopThreeName.Length)
-                {
-                    rankTopThreeName[i].text = rankingData.id;
-                }
-
-                if (i < rankTopTen.Length)
-                {
-                    rankTopTen[i].text = $"ID: {rankingData.id}, Score: {rankingData.score}, Rank: {rankingData.ranking}";
-                }
-
-                if(rankingDataList.Count == 11)
-                {
-                    userRank.text = $"ID: {rankingData.id}, Score: {rankingData.score}, Rank: {rankingData.ranking}";
-                }
-                else if (rankingDataList.Count == 10)
-                {
-                    RankingData userRankingData = rankingDataList.Find(r => r.id == userInfo.ID);
-                    if (userRankingData != null)
-                    {
-                        userRank.text = $"ID: {userRankingData.id}, Score: {userRankingData.score}, Rank: {userRankingData.ranking}";
-                    }
-                    else
-                    {
-                        Debug.LogError("User's ranking data not found.");
-                    }
-                }
-            }
-        }
-        else
-        {
-            Debug.LogError("No ranking data found in APIDataSO.");
-        }
-
     }
 }
