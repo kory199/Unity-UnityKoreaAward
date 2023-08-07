@@ -76,6 +76,15 @@ public abstract class MonsterBase : MonoBehaviour
     /// Set variable string ' MonsterName ' 
     /// </summary>
     protected abstract void SetMonsterName();
+
+    public void MonsterHit(int damage)
+    {
+        curHP -= damage;
+        if(curHP<=0)
+        {
+            MonsterDeath();
+        }
+    }
     protected void DeathProcess()
     {
         // 몬스터가 죽었을때 처리해줄 로직 작성
@@ -186,9 +195,10 @@ public abstract class MonsterBase : MonoBehaviour
     protected abstract void Attack();
 
 
-    private void MonsterDeath()
+    protected virtual void MonsterDeath()
     {
         // 오브젝트 풀에 반환
+        StageManager.Instance.MonsterDeath(); 
     }
 
     private void GetMeleeMonsterInfo() => MonsterSetting(stageNum, EnumTypes.MonsterType.MeleeMonster);

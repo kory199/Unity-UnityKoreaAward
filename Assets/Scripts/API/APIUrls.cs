@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 public class APIUrls
 {
-    private static readonly string url = "https://d4f8-101-235-202-157.ngrok-free.app/";
+    private static readonly string url = "https://cbaa-101-235-202-157.ngrok-free.app/";
     public static readonly string VersionApi = url + "Version";
     public static readonly string MasterDataApi = url + "MasterData";
     public static readonly string CreateAccountApi = url + "CreateAccount";
@@ -11,6 +11,7 @@ public class APIUrls
     public static readonly string RankingApi = url + "Ranking";
     public static readonly string StageApi = url + "Stage";
     public static readonly string StageClear = url + "StageClear";
+    public static readonly string Ping = url + "Ping";
 
     private static HashSet<string> validUrls = new HashSet<string>
     {
@@ -21,7 +22,8 @@ public class APIUrls
         GameDataApi,
         RankingApi,
         StageApi,
-        StageClear
+        StageClear,
+        Ping
     };
 
     public static bool IsValidUrl(string url) => validUrls.Contains(url);

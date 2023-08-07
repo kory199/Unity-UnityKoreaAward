@@ -8,7 +8,7 @@ public class MonoSingleton<T>  : MonoBehaviour where T : MonoSingleton<T>
     {
         get 
         {
-            if(_instance == null)
+            if (_instance == null)
             {
                 _instance = GameManager.FindObjectOfType<T>();
 
