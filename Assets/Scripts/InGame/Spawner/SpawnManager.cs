@@ -13,6 +13,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private bool _isBoss = false;
     WaitForSeconds spawnDelay;
 
+    private Coroutine _monsterSpawnRoutine = null;
+
     #region Unity Life Cycle
     // Start is called before the first frame update
     void Start()
@@ -32,21 +34,39 @@ public class SpawnManager : MonoBehaviour
         _meleeMonsterNum = melee;
         _rangedMonsterNum = ranged;
         _spawnMonsterTotalNum = melee + ranged;
-        StopCoroutine(Co_MonsterSpawn());
+
+        // ===
+        if (_monsterSpawnRoutine != null)
+        {
+            StopCoroutine(_monsterSpawnRoutine);
+        }
+
         StartCoroutine(Co_MonsterSpawn());
     }
     IEnumerator Co_MonsterSpawn(string name = null)
     {
-        //Ç®¿¡¼­ ¸ó½ºÅÍ ²¨³»±â
+        //Ç®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         while (!_isBoss)
         {
-            SpawnMonsters();
-            yield return spawnDelay;
+            if (_meleeMonsterNum > 0 || _rangedMonsterNum > 0)
+            {
+                SpawnMonsters();
+                yield return spawnDelay;
+            }
+            else
+            {
+                break; 
+            }
         }
-        GameObject Boss = ObjectPooler.SpawnFromPool(name, Vector3.up * 10);
+        if (_isBoss)
+        {
+            GameObject Boss = ObjectPooler.SpawnFromPool(name, Vector3.up * 10);
+        }
+
+        _monsterSpawnRoutine = null;
     }
 
-    #region Áßº¹¾ø´Â ·£´ý »Ì±â
+    #region ï¿½ßºï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì±ï¿½
     private void SpawnMonsters(string name = null)
     {
         List<int> tempNum = new List<int>();
@@ -54,7 +74,7 @@ public class SpawnManager : MonoBehaviour
         {
             tempNum.Add(i);
         }
-        //±ÙÁ¢ »ý¼º
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         for (int i = 0; i < _meleeMonsterNum; i++)
         {
             int num = RandomChoose(tempNum.Count - 1);

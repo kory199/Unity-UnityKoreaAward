@@ -27,6 +27,7 @@ public class APIDataSO : ScriptableObject
     public void SetResponseData(string key, object data)
     {
         responseDataDic[key] = data;
+        //Debug.Log($"Data added successfully : {key}, {data}");
         OnResponseDataChanged?.Invoke();
     }
 

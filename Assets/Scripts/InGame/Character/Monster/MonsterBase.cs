@@ -20,7 +20,7 @@ public class Monster : CharacterBase
 
     public override void Attack()
     {
-        // ¸ó½ºÅÍ °ø°Ý ±¸Çö
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
 
     protected override void Die()
@@ -37,5 +37,4 @@ public class Monster : CharacterBase
     {
         ObjectPooler.ReturnToPool(gameObject);
     }
-
 }

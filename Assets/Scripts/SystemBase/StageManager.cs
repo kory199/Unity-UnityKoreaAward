@@ -7,11 +7,11 @@ using APIModels;
 public class StageManager : MonoSingleton<StageManager>
 {
     [SerializeField] private int _stageNum = 0;
-    [SerializeField] private int _spawnMeleeNum = 0; //=>½ºÅ©¸³ÅÍºí ¿ÀºêÁ§Æ®¿¡¼­ ÀÐ¾î¿À´Â ¹æ½ÄÀ¸·Î º¯°æ¿¹Á¤
-    [SerializeField] private int _spawnRangedNum = 0; //=>½ºÅ©¸³ÅÍºí ¿ÀºêÁ§Æ®¿¡¼­ ÀÐ¾î¿À´Â ¹æ½ÄÀ¸·Î º¯°æ¿¹Á¤
-    [SerializeField] private int _score = 0; //=>½ºÅ©¸³ÅÍºí ¿ÀºêÁ§Æ®¿¡¼­ ÀÐ¾î¿À´Â ¹æ½ÄÀ¸·Î º¯°æ¿¹Á¤
-    [SerializeField] private int _deathMonsters = 0; //=>½ºÅ©¸³ÅÍºí ¿ÀºêÁ§Æ®¿¡¼­ ÀÐ¾î¿À´Â ¹æ½ÄÀ¸·Î º¯°æ¿¹Á¤
-    [SerializeField] private float _time = 0; //=>½ºÅ©¸³ÅÍºí ¿ÀºêÁ§Æ®¿¡¼­ ÀÐ¾î¿À´Â ¹æ½ÄÀ¸·Î º¯°æ¿¹Á¤
+    [SerializeField] private int _spawnMeleeNum = 0; //=>ï¿½ï¿½Å©ï¿½ï¿½ï¿½Íºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½æ¿¹ï¿½ï¿½
+    [SerializeField] private int _spawnRangedNum = 0; //=>ï¿½ï¿½Å©ï¿½ï¿½ï¿½Íºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½æ¿¹ï¿½ï¿½
+    [SerializeField] private int _score = 0; //=>ï¿½ï¿½Å©ï¿½ï¿½ï¿½Íºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½æ¿¹ï¿½ï¿½
+    [SerializeField] private int _deathMonsters = 0; //=>ï¿½ï¿½Å©ï¿½ï¿½ï¿½Íºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½æ¿¹ï¿½ï¿½
+    [SerializeField] private float _time = 0; //=>ï¿½ï¿½Å©ï¿½ï¿½ï¿½Íºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½æ¿¹ï¿½ï¿½
     [SerializeField] private SpawnManager _spawnManager;
 
     private int _onclickNum;
@@ -19,23 +19,23 @@ public class StageManager : MonoSingleton<StageManager>
     #region Uinity lifeCycle
     private void Awake()
     {
-        // ¼­¹ö·ÎºÎÅÍ ¸ó½ºÅÍ ½ºÆù Á¤º¸ ¿äÃ» (ÀÓ½Ã)
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã» (ï¿½Ó½ï¿½)
         RequestMonsterInfo();
 
-        //Ã¼ÀÎ µî·Ï
+        //Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½
         InGameManager.Instance.RegisterParams(EnumTypes.InGameParamType.Stage, (int)EnumTypes.StageStateType.Max);
     }
     private void Start()
     {
         _stageNum = 1;
-        //start Ã¼ÀÎ 
+        //start Ã¼ï¿½ï¿½ 
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetMeleeMonster);
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetRangedMonster);
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetMonsterSpawn);
-        //Next Ã¼ÀÎ
+        //Next Ã¼ï¿½ï¿½
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Next, SetStageNum);
-        //End Ã¼ÀÎ 
-        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.End, SendStageData);
+        //End Ã¼ï¿½ï¿½ 
+        //InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.End, SendStageData);
     }
     private void Update()
     {
@@ -59,7 +59,7 @@ public class StageManager : MonoSingleton<StageManager>
     }
     public void SetStageNum()
     {
-        if (_stageNum >= 5) //5 ´ë½Å ¼­¹ö ½ºÅ×ÀÌÁö ¸Æ½º°ª ³Ö¾îÁà¾ßÇÔ
+        if (_stageNum >= 5) //5 ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         {
             InGameManager.Instance.InvokeCallBacks(EnumTypes.InGameParamType.Stage, (int)EnumTypes.StageStateType.End);
             return;
@@ -83,18 +83,18 @@ public class StageManager : MonoSingleton<StageManager>
     {
         Debug.Log("Send StageEndData to Server ...");
 
-        await APIManager.Instance.StageUpToServer(_stageNum, _score);
+        //await APIManager.Instance.StageUpToServer(_stageNum, _score);
     }
 
     public async void PlayerDeath()
     {
-        //°ÔÀÓ ¿À¹ö ÄÚ·çÆ¾
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ú·ï¿½Æ¾
         StartCoroutine(Co_GameOverUI());
 
-        //¼­¹ö µ¥ÀÌÅÍ Àü´Þ 
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
         SendStageData();
 
-        //¾À ÀÌµ¿ : Logic edit 
+        //ï¿½ï¿½ ï¿½Ìµï¿½ : Logic edit 
         await GameManager.Instance.LoadScene(EnumTypes.ScenesType.SceneLobby);
     }
     public void MonsterDeath()
@@ -109,26 +109,27 @@ public class StageManager : MonoSingleton<StageManager>
            // Debug.Log("stageNum : " + _stageNum);
         }
     }
+
     public async void BossDeath()
     {
-        //°ÔÀÓ Å¬¸®¾î ÄÚ·çÆ¾
+        //ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½Ú·ï¿½Æ¾
         StartCoroutine(Co_GameOverUI());
 
-        //¼­¹ö µ¥ÀÌÅÍ Àü´Þ 
-        SendStageData();
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
+        //SendStageData();
 
-        //¾À ÀÌµ¿ : Logic edit 
+        //ï¿½ï¿½ ï¿½Ìµï¿½ : Logic edit 
         await GameManager.Instance.LoadScene(EnumTypes.ScenesType.SceneLobby);
     }
     IEnumerator Co_GameOverUI()
     {
         yield return null;
-        //°ÔÀÓ ¿À¹ö½Ã ¶ç¿ï Ã¢ ÄÑ°Å³ª ÀÌÆåÆ® ¸¸µé±â
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Ã¢ ï¿½Ñ°Å³ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½
     }
     IEnumerator Co_GameClearUI()
     {
         yield return null;
-        //º¸½º Å¬¸®¾î½Ã ¶ç¿ï Ã¢ ÄÑ°Å³ª ÀÌÆåÆ® ¸¸µé±â
+        //ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Ã¢ ï¿½Ñ°Å³ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½
     }
 
     public async void RequestMonsterInfo()
