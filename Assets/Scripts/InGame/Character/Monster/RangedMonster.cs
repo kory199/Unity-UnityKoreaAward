@@ -14,23 +14,20 @@ public class RangedMonster : MonsterBase
     private float rangedMonster_Speed;
     private float rangedMonster_RateOfFire;
     private float rangedMonster_ProjectileSpeed;
-    private float RangedMonster_CollisionDamage;
+    private float rangedMonster_CollisionDamage;
     private int rangedMonster_Score;
     private float rangedMonster_Range;
 
     // stage 변경에 따른 Level별 능력치 부여 => 서버 정보 받아오기
     private void OnEnable()
     {
-        // variable init
-        // rangedMonster_Level = 0;
-        // rangedMonster_exp = 0;
-        // rangedMonster_Hp = 0;
-        // rangedMonster_Speed = 0;
-        // rangedMonster_RateOfFire = 0;
-        rangedMonster_ProjectileSpeed = 10;
-        // RangedMonster_CollisionDamage = 0;
-        // rangedMonster_Score = 0;
-        // rangedMonster_Range = 0;
+        base.OnEnable();
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        SetRangedMonsterStatus();
     }
 
     protected override void Attack()
@@ -61,6 +58,18 @@ public class RangedMonster : MonsterBase
 
         // 속도 가중치는 서버 데이터 업로드 후 변경
         bulletRb.velocity = playerTargetDirection * rangedMonster_ProjectileSpeed;
+    }
+    private void SetRangedMonsterStatus()
+    {
+        rangedMonster_Level = rangedMonsterStatus[0].level;
+        rangedMonster_exp = rangedMonsterStatus[0].exp;
+        rangedMonster_Hp = rangedMonsterStatus[0].hp;
+        rangedMonster_Speed = rangedMonsterStatus[0].speed;
+        rangedMonster_RateOfFire = rangedMonsterStatus[0].rate_of_fire;
+        rangedMonster_ProjectileSpeed = rangedMonsterStatus[0].projectile_speed;
+        rangedMonster_CollisionDamage = rangedMonsterStatus[0].collision_damage;
+        rangedMonster_Score = rangedMonsterStatus[0].score;
+        rangedMonster_Range = rangedMonsterStatus[0].ranged;
     }
 
     protected override void SetMonsterName()

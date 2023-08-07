@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using APIModels;
 
 public class Monster : CharacterBase
 {
@@ -26,11 +27,6 @@ public class Monster : CharacterBase
     protected override void Die()
     {
         gameObject.SetActive(false);
-    }
-
-    private void init()
-    {
-
     }
 
     private void OnDisable()

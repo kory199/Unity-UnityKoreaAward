@@ -33,7 +33,7 @@ public partial class Player
         // 속도 가중치는 서버 데이터 업로드 후 변경
         bulletRb.velocity = targetDirection * playerProjectileSpeed;
     }
-    public void PlayerHit(int damageAmount)
+    public void PlayerHit(float damageAmount)
     {
         playerCurHp -= damageAmount;
 

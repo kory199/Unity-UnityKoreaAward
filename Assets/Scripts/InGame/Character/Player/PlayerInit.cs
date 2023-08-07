@@ -14,7 +14,7 @@ public partial class Player
     [Header("User Setting")]
     public float playerSpeed;
     public int playerMaxHp;
-    public int playerCurHp;
+    public float playerCurHp;
     public int playerAttackPower;
     public int playerLv;
     public int playerMaxExp;

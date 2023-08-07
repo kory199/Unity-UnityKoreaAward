@@ -14,6 +14,9 @@ public abstract class MonsterBase : MonoBehaviour
 
     int stageNum;
 
+    // 편집 필요
+    protected MonsterData_res[] meleeMonsterStatus;
+    protected MonsterData_res[] rangedMonsterStatus;
     protected MonsterData_res[] monsterData_Res;
 
     // 임시 Status
@@ -32,16 +35,18 @@ public abstract class MonsterBase : MonoBehaviour
 
     protected virtual void Start()
     {
-        // // Start Chain
+        // Start Chain
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, GetMeleeMonsterInfo);
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, GetRangedMonsterInfo);
-        // 
-        // // Next Chain
+
+        // Next Chain
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Next, SetStageNum);
         stageNum = 1;
 
         // data manager 삭제 및 stage 변경에 따른 monster status 변경으로 onEnable로 monster setting 변경 필요
         SetMonsterName();
+
+        initMonsterStatus();
 
         /*if (DataManager.Instacne.MonsterData.TryGetMonsterInfo(MonsterName, out _monsterInfo))
         {
@@ -77,10 +82,18 @@ public abstract class MonsterBase : MonoBehaviour
     /// </summary>
     protected abstract void SetMonsterName();
 
+    protected virtual async void initMonsterStatus()
+    {
+        await APIManager.Instance.GetMasterDataAPI();
+
+        meleeMonsterStatus = APIDataSO.Instance.GetValueByKey<MonsterData_res[]>(APIDataDicKey.MeleeMonster);
+        rangedMonsterStatus = APIDataSO.Instance.GetValueByKey<MonsterData_res[]>(APIDataDicKey.RangedMonster);
+    }
+
     public void MonsterHit(int damage)
     {
         curHP -= damage;
-        if(curHP<=0)
+        if (curHP <= 0)
         {
             MonsterDeath();
         }
@@ -198,17 +211,11 @@ public abstract class MonsterBase : MonoBehaviour
     protected virtual void MonsterDeath()
     {
         // 오브젝트 풀에 반환
-        StageManager.Instance.MonsterDeath(); 
+        StageManager.Instance.MonsterDeath();
     }
 
     private void GetMeleeMonsterInfo() => MonsterSetting(stageNum, EnumTypes.MonsterType.MeleeMonster);
     private void GetRangedMonsterInfo() => MonsterSetting(stageNum, EnumTypes.MonsterType.RangedMonster);
-
-    // 임시 _SSH
-    private async void RequestServer()
-    {
-        await APIManager.Instance.GetMasterDataAPI();
-    }
 
     private void MonsterSetting(int stageNum, EnumTypes.MonsterType monsterType)
     {

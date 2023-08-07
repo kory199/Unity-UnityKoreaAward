@@ -20,6 +20,8 @@ public class MeleeMonster : MonsterBase
     {
         base.Start();
         // InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetMeleeMonsterStatus);
+
+        SetMeleeMonsterStatus();
     }
 
     // stage 변경에 따른 Level별 능력치 부여 => 서버 정보 받아오기
@@ -27,18 +29,8 @@ public class MeleeMonster : MonsterBase
     {
         base.OnEnable();
         // init melee monster variable
-        // meleeMonster_Level = 0;
-        // meleeMonster_exp = 0;
-        // meleeMonster_Hp = 0;
-        // meleeMonster_Speed = 0;
-        // meleeMonster_RateOfFire = 0;
-        // meleeMonster_ProjectileSpeed = 0;
-        // meleeMonster_CollisionDamage = 0;
-        // meleeMonster_Score = 0;
-        // meleeMonster_Range = 0;
+
     }
-
-
 
     protected override void OnDisable()
     {
@@ -48,7 +40,7 @@ public class MeleeMonster : MonsterBase
     {
         transform.Rotate(0, 0, 30);
 
-        // player.PlayerHit();
+        // player.PlayerHit(meleeMonster_CollisionDamage);
     }
 
     protected override void SetMonsterName()
@@ -58,14 +50,14 @@ public class MeleeMonster : MonsterBase
 
     private void SetMeleeMonsterStatus()
     {
-      // meleeMonster_Level = monsterData_Res[0].level;
-      // meleeMonster_exp ;
-      // meleeMonster_Hp;
-      // meleeMonster_Speed;
-      // meleeMonster_RateOfFire;
-      // meleeMonster_ProjectileSpeed;
-      // meleeMonster_CollisionDamage;
-      // meleeMonster_Score;
-      // meleeMonster_Range;
-}
+        meleeMonster_Level = meleeMonsterStatus[0].level;
+        meleeMonster_exp = meleeMonsterStatus[0].exp;
+        meleeMonster_Hp = meleeMonsterStatus[0].hp;
+        meleeMonster_Speed = meleeMonsterStatus[0].speed;
+        meleeMonster_RateOfFire = meleeMonsterStatus[0].rate_of_fire;
+        meleeMonster_ProjectileSpeed = meleeMonsterStatus[0].projectile_speed;
+        meleeMonster_CollisionDamage = meleeMonsterStatus[0].collision_damage;
+        meleeMonster_Score = meleeMonsterStatus[0].score;
+        meleeMonster_Range = meleeMonsterStatus[0].ranged;
+    }
 }
