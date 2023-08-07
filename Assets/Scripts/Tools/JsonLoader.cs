@@ -65,7 +65,7 @@ public class JsonLoader
         var jsonFileName = Path.GetFileNameWithoutExtension(file.Name);
         var jsonFileContentResource = await Resources.LoadAsync<TextAsset>(Path.Combine("ResourcesTable", jsonFileName)) as TextAsset;
         DeserializeAndAddToList(jsonFileName, jsonFileContentResource.text);
-        Debug.Log($"Load Successed {jsonFileName}.json");
+        //Debug.Log($"Load Successed {jsonFileName}.json");
     }
 
     private void DeserializeAndAddToList(string className, string jsonFileContent)
@@ -94,7 +94,7 @@ public class JsonLoader
         }
     }
 
-    // ¼Ò½º ÄÚµå¿¡¼­ GetStaticProperty¸¦ GetStaticField·Î ¼öÁ¤
+    // ï¿½Ò½ï¿½ ï¿½Úµå¿¡ï¿½ï¿½ GetStaticPropertyï¿½ï¿½ GetStaticFieldï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     private object GetStaticField(string classQualifiedName, string fieldName)
     {
         System.Type type = Type.GetType(classQualifiedName);

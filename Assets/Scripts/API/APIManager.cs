@@ -244,7 +244,6 @@ public class APIManager : MonoSingleton<APIManager>
 
             handler?.Invoke(apiResponse);
         }
-
         catch (UnityWebRequestException e)
         {
             Debug.LogError($"API request failed : {e.Message}");
