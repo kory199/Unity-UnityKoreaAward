@@ -1,5 +1,6 @@
 public class APIResponse<T>
 {
-    public string responseBody { get; set; }
+    public int Result { get; set; }
+    public string ResultMessage { get; set; }
     public T Data { get; set; }
 }

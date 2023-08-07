@@ -1,5 +1,5 @@
+using System.Collections;
 using APIModels;
-using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,9 +20,9 @@ public class AccountUI : MonoBehaviour
         inputFields[1].contentType = TMP_InputField.ContentType.Password;
     }
 
-    private void Start()
+    private void OnEnable()
     {
-
+        StartCoroutine(CheckTabKey());
     }
 
     public void ValidateID()
@@ -41,6 +41,19 @@ public class AccountUI : MonoBehaviour
         else
         {
             infoText.text = "";
+        }
+    }
+
+    private IEnumerator CheckTabKey()
+    {
+        while (true)
+        {
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                MoveToNextInputField();
+            }
+
+            yield return null;
         }
     }
 
@@ -63,14 +76,6 @@ public class AccountUI : MonoBehaviour
         }
     }
 
-    public void MoveToNextInputFieldOnTab()
-    {
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            MoveToNextInputField();
-        }
-    }
-
     private void MoveToNextInputField()
     {
         inputFields[_currentIndex].DeactivateInputField();
@@ -78,12 +83,20 @@ public class AccountUI : MonoBehaviour
         inputFields[_currentIndex].ActivateInputField();
     }
 
-    public async void OnClickCreareAccount()
+    public async void OnClickCreateAccount()
     {
         if (TryProcessUserInput(out User user))
         {
-            await APIManager.Instance.CreateAccountAPI(user);
-            infoText.text = $"Created New Account Successful ! {user.ID}, {user.Password}";
+            bool result = await APIManager.Instance.CreateAccountAPI(user);
+
+            if(result == false)
+            {
+                infoText.text = $"Username {user.ID} is already in use.";
+            }
+            else
+            {
+                infoText.text = $"Created New Account Successful ! {user.ID}, {user.Password}";
+            }
         }
     }
 
@@ -91,8 +104,16 @@ public class AccountUI : MonoBehaviour
     {
         if (TryProcessUserInput(out User user))
         {
-            await APIManager.Instance.LoginAPI(user);
-            infoText.text = $"Login Successful {user.ID}, {user.Password}";
+            bool result = await APIManager.Instance.LoginAPI(user);
+
+            if(result == false)
+            {
+                infoText.text = $"Incorrect username or password.";
+            }
+            else
+            {
+                infoText.text = $"Login Successful {user.ID}, {user.Password}";
+            }
         }
     }
 
@@ -101,37 +122,21 @@ public class AccountUI : MonoBehaviour
         string id = inputFields[0].text;
         string password = inputFields[1].text;
 
+        if (IsValidID(id) && IsValidPassword(password))
+        {
+            user = new User
+            {
+                ID = id,
+                Password = password
+            };
+
+            return true;
+        }
+
         infoText.gameObject.SetActive(true);
-
-        if (!IsValidID(id))
-        {
-            infoText.text = "The ID can only contain alphanumeric characters.";
-            user = null;
-            return false;
-        }
-        else
-        {
-            infoText.text = "The ID is invalid. It should be between 2 and 12 characters.";
-        }
-
-        if (!IsValidPassword(password))
-        {
-            infoText.text = "The password must include at least one special character.";
-            user = null;
-            return false;
-        }
-        else
-        {
-            infoText.text = "The password is invalid. It should be between 2 and 12 characters.";
-        }
-
-        user = new User
-        {
-            ID = id,
-            Password = password
-        };
-
-        return true;
+        infoText.text = "Please correct the highlighted errors.";
+        user = null;
+        return false;
     }
 
     private bool IsValidID(string id)
@@ -150,7 +155,7 @@ public class AccountUI : MonoBehaviour
     {
         if (string.IsNullOrWhiteSpace(password) ||
             !System.Text.RegularExpressions.Regex.IsMatch(password, "[!@#$%^&*(),.?\":{}|<>]") ||
-            password.Length < 2 || password.Length > 12)
+            password.Length < 1 || password.Length > 12)
         {
             return false;
         }
@@ -163,5 +168,7 @@ public class AccountUI : MonoBehaviour
         {
             inputFields[i].text = "";
         }
+
+        StopCoroutine(CheckTabKey());
     }
 }

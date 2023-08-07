@@ -1,6 +1,7 @@
 using System.Text;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -11,6 +12,7 @@ public class APIWebRequest
         if(APIUrls.IsValidUrl(url) == false)
         {
             Debug.LogError($"Invalid URL: {url}. Please check APIUrls.");
+            return null;
         }
 
         byte[] bodyRaw = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(requestBody));
@@ -29,14 +31,22 @@ public class APIWebRequest
                 return null;
             }
 
+            var jsonResponse = JObject.Parse(request.downloadHandler.text);
+
+            int result = jsonResponse.Value<int>("result");
+            string resultMessage = jsonResponse.Value<string>("resultMessage");
+
+            T data = jsonResponse.ToObject<T>();
+
             APIResponse<T> response = new()
             {
-                responseBody = request.downloadHandler.text,
-                Data = JsonConvert.DeserializeObject<T>(request.downloadHandler.text),
+                Result = result,
+                ResultMessage = resultMessage,
+                Data = data
             };
 
 #if UNITY_EDITOR
-            Debug.Log($"responseBody : {request.downloadHandler.text}");
+            Debug.Log($"jsonResponse : {JsonConvert.SerializeObject(response)}");
 #endif
 
             return response;
