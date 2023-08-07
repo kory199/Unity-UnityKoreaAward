@@ -27,8 +27,16 @@ public class APIDataSO : ScriptableObject
     public void SetResponseData(string key, object data)
     {
         responseDataDic[key] = data;
-        //Debug.Log($"Data added successfully : {key}, {data}");
         OnResponseDataChanged?.Invoke();
+    }
+
+    public void RemoveValueByKey(string key)
+    {
+        if (responseDataDic.ContainsKey(key))
+        {
+            responseDataDic.Remove(key);
+            OnResponseDataChanged?.Invoke();
+        }
     }
 
     public T GetValueByKey<T>(string key)

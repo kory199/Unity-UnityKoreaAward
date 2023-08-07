@@ -25,13 +25,11 @@ public class TitleManager : MonoBehaviour
     [Header("Option")]
     [SerializeField] Button o_goBackBut = null;
 
-    private int _currentIndex = 0;
     private GameObject curPanel = null;
 
     private void Awake()
     {
-        curPanel = panels[0];
-        ShowUI(curPanel);
+        panels[0].gameObject.SetActive(true);
         loginInfotext.gameObject.SetActive(false);
 
         GetGameVersion();
@@ -49,15 +47,8 @@ public class TitleManager : MonoBehaviour
         o_goBackBut.onClick.AddListener(delegate { ShowUI(panels[0]); });
     }
 
-    private void OnClickAccount()
-    {
-        ShowUI(panels[1]);
-    }
-
-    private void OnClickRank()
-    {
-        ShowUI(panels[2]);
-    }
+    private void OnClickAccount() => ShowUI(panels[1]);
+    private void OnClickRank() => ShowUI(panels[2]);
 
     private async void GetGameVersion()
     {
@@ -71,23 +62,22 @@ public class TitleManager : MonoBehaviour
 
     private void ShowUI(GameObject showUIPanel)
     {
-        foreach (GameObject panel in panels)
-        {
-            panel.SetActive(panel == showUIPanel);
-        }
+        showUIPanel.SetActive(true);
     }
 
-    private async void UpdateStartButtonState()
+    private void UpdateStartButtonState()
     {
         if (APIDataSO.Instance.GetValueByKey<GameData>(APIDataDicKey.GameData) != null)
         {
             startBut.interactable = true;
+            rankBut.interactable = true;
             loginInfotext.gameObject.SetActive(false);
-            await APIManager.Instance.GetGameDataAPI();
+            //await APIManager.Instance.GetGameDataAPI();
         }
         else
         {
             startBut.interactable = false;
+            rankBut.interactable = false;
             loginInfotext.gameObject.SetActive(true);
             loginInfotext.text = "Please Log in";
         }

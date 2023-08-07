@@ -16,7 +16,7 @@ public class APIManager : MonoSingleton<APIManager>
         DontDestroyOnLoad(this.gameObject);
     }
 
-    public async UniTask<String> GetGameVersionAPI()
+    public async UniTask<string> GetGameVersionAPI()
     {
         string gameVersion = null;
         Version_req requestBody = new();
@@ -67,9 +67,9 @@ public class APIManager : MonoSingleton<APIManager>
     {
         bool result = await CallAPI<Dictionary<string, object>, User>(APIUrls.CreateAccountApi, user, APISuccessCode.CreateAccountSuccess, null);
 
-        if (!result)
+        if (result == false)
         {
-            Debug.LogError("Failed to create account");
+            return false;
         }
 
         return result;
@@ -84,6 +84,10 @@ public class APIManager : MonoSingleton<APIManager>
         if (!result)
         {
             Debug.LogError("Failed to create account");
+        }
+        else
+        {
+            await GetGameDataAPI();
         }
 
         return result;
@@ -113,6 +117,7 @@ public class APIManager : MonoSingleton<APIManager>
             ID = _id,
             AuthToken = _authToken
         };
+
         return gameData;
     }
 
@@ -130,14 +135,7 @@ public class APIManager : MonoSingleton<APIManager>
 
     public async UniTask GetGameDataAPI()
     {
-        try
-        {
-            await CallAPI<Dictionary<string, object>, GameData>(APIUrls.GameDataApi, GetApiSODicUerData(), APISuccessCode.LoadGameDataSuccess, HandleGameDataResponse);
-        }
-        catch (Exception e)
-        {
-            Debug.LogError($"Error calling GameData API: {e.Message}");
-        }
+        await CallAPI<Dictionary<string, object>, GameData>(APIUrls.GameDataApi, GetApiSODicUerData(), APISuccessCode.LoadGameDataSuccess, HandleGameDataResponse);
     }
 
     private void HandleGameDataResponse(APIResponse<Dictionary<string, object>> apiResponse)
@@ -152,9 +150,16 @@ public class APIManager : MonoSingleton<APIManager>
         }
     }
 
-    public async UniTask GetRankingAPI()
+    public async UniTask<bool> GetRankingAPI()
     {
-        await CallAPI<Dictionary<string, object>, GameData>(APIUrls.RankingApi, GetApiSODicUerData(), APISuccessCode.LoadRankingDataSuccess, HandleRankingDataResponse);
+        bool result = await CallAPI<Dictionary<string, object>, GameData>(APIUrls.RankingApi, GetApiSODicUerData(), APISuccessCode.LoadRankingDataSuccess, HandleRankingDataResponse);
+
+        if (result == false)
+        {
+            return false;
+        }
+
+        return result;
     }
 
     private void HandleRankingDataResponse(APIResponse<Dictionary<string, object>> apiResponse)
@@ -164,7 +169,14 @@ public class APIManager : MonoSingleton<APIManager>
             List<RankingData> rankingDataList =
                 JsonConvert.DeserializeObject<List<RankingData>>(rankingDataObj.ToString());
 
-            APIDataSO.Instance.SetResponseData(APIDataDicKey.RankingData, rankingDataList);
+            if (rankingDataList != null && rankingDataList.Count > 0)
+            {
+                APIDataSO.Instance.SetResponseData(APIDataDicKey.RankingData, rankingDataList);
+            }
+            else
+            {
+                Debug.LogError("RankingDataList is null or empty.");
+            }
         }
         else
         {
@@ -239,7 +251,7 @@ public class APIManager : MonoSingleton<APIManager>
 
             if(apiResponse.Result != (int)successCode)
             {
-                Debug.LogError("API Response Not Success");
+                Debug.LogWarning("API Response Not Success");
                 return false;
             }
             
