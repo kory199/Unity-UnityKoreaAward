@@ -244,6 +244,7 @@ public abstract class MonsterBase : MonoBehaviour
     private void SetStageNum()
     {
         // ���� Max Stage 5 ����
+        // 
         if (stageNum > 5)
         {
             InGameManager.Instance.InvokeCallBacks(InGameParamType.Stage, (int)EnumTypes.StageStateType.End);
