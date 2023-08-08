@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using APIModels;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
@@ -11,6 +12,9 @@ public class APIManager : MonoSingleton<APIManager>
     private string _id;
     private string _authToken;
 
+    public bool IsLogin { get; private set; }
+    public Dictionary<string, object> MansterDataDic = new Dictionary<string, object>();
+
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
@@ -21,7 +25,7 @@ public class APIManager : MonoSingleton<APIManager>
         string gameVersion = null;
         Version_req requestBody = new();
 
-        await CallAPI<Dictionary<string, object>, Version_req>(APIUrls.VersionApi, requestBody, APISuccessCode.LoadGameVersionSuccess ,apiResponse =>
+        bool result = await CallAPI<Dictionary<string, object>, Version_req>(APIUrls.VersionApi, requestBody, APISuccessCode.LoadGameVersionSuccess ,apiResponse =>
         {
             if (apiResponse?.Data is Dictionary<string, object> data)
             {
@@ -32,35 +36,35 @@ public class APIManager : MonoSingleton<APIManager>
             }
         });
 
-        return gameVersion;
+        if(result)
+        {
+            return gameVersion;
+        }
+        else
+        {
+            return null;
+        }
     }
 
-    public async UniTask GetMasterDataAPI()
+    public async UniTask<bool> GetMasterDataAPI()
     {
-        await CallAPI<MasterDataResponse, MasterData_req>(APIUrls.MasterDataApi, new MasterData_req(), APISuccessCode.LoadMasterDataSuccess, HandleMasterDataResponse);
+        bool result = await CallAPI<MasterDataResponse, MasterData_req>(APIUrls.MasterDataApi, new MasterData_req(), APISuccessCode.LoadMasterDataSuccess, HandleMasterDataResponse);
+
+        if (result == false)
+        {
+            return false;
+        }
+
+        return result;
     }
 
     private void HandleMasterDataResponse(APIResponse<MasterDataResponse> apiResponse)
     {
-        APIDataSO.Instance.SetResponseData(APIDataDicKey.MeleeMonster, apiResponse.Data.masterDataDic.MeleeMonstser);
-        APIDataSO.Instance.SetResponseData(APIDataDicKey.RangedMonster, apiResponse.Data.masterDataDic.RangedMonster);
-        APIDataSO.Instance.SetResponseData(APIDataDicKey.BOSS, apiResponse.Data.masterDataDic.BOSS);
-        APIDataSO.Instance.SetResponseData(APIDataDicKey.PlayerStatus, apiResponse.Data.masterDataDic.PlayerStatus);
-        APIDataSO.Instance.SetResponseData(APIDataDicKey.StageSpawnMonster, apiResponse.Data.masterDataDic.StageSpawnMonster);
-    }
-
-    public class MasterDataResponse
-    {
-        public MasterDataArray masterDataDic { get; set; }
-    }
-
-    public class MasterDataArray
-    {
-        public MonsterData_res[] MeleeMonstser { get; set; } = new MonsterData_res[4];
-        public MonsterData_res[] RangedMonster { get; set; } = new MonsterData_res[4];
-        public MonsterData_res BOSS { get; set; }
-        public PlayerStatus_res[] PlayerStatus { get; set; } = new PlayerStatus_res[4];
-        public StageSpawnMonsterData_res[] StageSpawnMonster { get; set; } = new StageSpawnMonsterData_res[4];
+        SetDicData(MasterDataDicKey.MeleeMonster, apiResponse.Data.masterDataDic.MeleeMonster);
+        SetDicData(MasterDataDicKey.RangedMonster, apiResponse.Data.masterDataDic.RangedMonster);
+        SetDicData(MasterDataDicKey.BOSS, apiResponse.Data.masterDataDic.BOSS);
+        SetDicData(MasterDataDicKey.PlayerStatus, apiResponse.Data.masterDataDic.PlayerStatus);
+        SetDicData(MasterDataDicKey.StageSpawnMonster, apiResponse.Data.masterDataDic.StageSpawnMonster);
     }
 
     public async UniTask<bool> CreateAccountAPI(User user)
@@ -79,35 +83,22 @@ public class APIManager : MonoSingleton<APIManager>
     {
         _id = user.ID;
 
-        bool result = await CallAPI<Dictionary<string, object>, User>(APIUrls.LoginApi, user, APISuccessCode.LoginSuccess, HandleLoginResponse);
-
-        if (!result)
+        bool result = await CallAPI<Dictionary<string, object>, User>(APIUrls.LoginApi, user, APISuccessCode.LoginSuccess, (apiResponse) =>
         {
-            Debug.LogError("Failed to create account");
-        }
-        else
+            if (apiResponse.Data.TryGetValue("authToken", out var authTokenObj))
+            {
+                _authToken = authTokenObj as string;
+            }
+        });
+
+        if (result == false)
         {
-            await GetGameDataAPI();
+            IsLogin = false;
+            return false;
         }
 
+        IsLogin = true;
         return result;
-    }
-
-    private void HandleLoginResponse(APIResponse<Dictionary<string, object>> apiResponse)
-    {
-        if (apiResponse.Data.TryGetValue("authToken", out var authTokenObj))
-        {
-            _authToken = authTokenObj as string;
-        }
-
-        if (_authToken != null && _authToken != string.Empty)
-        {
-            APIDataSO.Instance.SetResponseData(APIDataDicKey.GameData, NewGameData());
-        }
-        else
-        {
-            Debug.LogError("Failed to retrieve authToken from API response.");
-        }
     }
 
     private GameData NewGameData()
@@ -121,86 +112,83 @@ public class APIManager : MonoSingleton<APIManager>
         return gameData;
     }
 
-    public GameData GetApiSODicUerData()
+    public async UniTask<PlayerData> GetGameDataAPI()
     {
-        GameData curUserInfo = APIDataSO.Instance.GetValueByKey<GameData>(APIDataDicKey.GameData);
 
-        if (curUserInfo == null)
+        PlayerData playerData = null;
+
+        bool result = await CallAPI<Dictionary<string, object>, GameData>(APIUrls.GameDataApi, NewGameData(), APISuccessCode.LoadGameDataSuccess, (apiResponse) =>
         {
-            Debug.LogError("No GameData found in APIDataSO.");
-        }
-
-        return curUserInfo;
-    }
-
-    public async UniTask GetGameDataAPI()
-    {
-        await CallAPI<Dictionary<string, object>, GameData>(APIUrls.GameDataApi, GetApiSODicUerData(), APISuccessCode.LoadGameDataSuccess, HandleGameDataResponse);
-    }
-
-    private void HandleGameDataResponse(APIResponse<Dictionary<string, object>> apiResponse)
-    {
-        if (apiResponse.Data.TryGetValue("playerData", out var playerDataObj) && playerDataObj is JArray)
-        {
-            foreach (var playerDataJToken in playerDataObj as JArray)
+            if (apiResponse.Data.TryGetValue("playerData", out var playerDataObj) && playerDataObj is JObject)
             {
-                PlayerData playerData = playerDataJToken.ToObject<PlayerData>();
-                APIDataSO.Instance.SetResponseData(APIDataDicKey.PlayerData, playerData);
+                playerData = (playerDataObj as JObject).ToObject<PlayerData>();
             }
-        }
+        });
+
+        return playerData;
     }
 
-    public async UniTask<bool> GetRankingAPI()
+    public async UniTask<(List<RankingData>, string)> GetRankingAPI()
     {
-        bool result = await CallAPI<Dictionary<string, object>, GameData>(APIUrls.RankingApi, GetApiSODicUerData(), APISuccessCode.LoadRankingDataSuccess, HandleRankingDataResponse);
+        List<RankingData> rankingList = null;
 
-        if (result == false)
+        bool result = await CallAPI<Dictionary<string, object>, GameData>(APIUrls.RankingApi, NewGameData(), APISuccessCode.LoadRankingDataSuccess, (apiResponse) =>
         {
-            return false;
-        }
-
-        return result;
-    }
-
-    private void HandleRankingDataResponse(APIResponse<Dictionary<string, object>> apiResponse)
-    {
-        if (apiResponse.Data.TryGetValue("rankingData", out object rankingDataObj))
-        {
-            List<RankingData> rankingDataList =
-                JsonConvert.DeserializeObject<List<RankingData>>(rankingDataObj.ToString());
-
-            if (rankingDataList != null && rankingDataList.Count > 0)
+            if (apiResponse.Data.TryGetValue("rankingData", out object rankingDataObj))
             {
-                APIDataSO.Instance.SetResponseData(APIDataDicKey.RankingData, rankingDataList);
+                rankingList = JsonConvert.DeserializeObject<List<RankingData>>(rankingDataObj.ToString());
+
+                if (rankingList == null || rankingList.Count == 0)
+                {
+                    Debug.LogError("RankingDataList is null or empty.");
+                }
             }
             else
             {
-                Debug.LogError("RankingDataList is null or empty.");
+                Debug.LogError("Failed RankingData from API response.");
             }
+        });
+
+        if (result)
+        {
+            return (rankingList,_id);
         }
         else
         {
-            Debug.LogError("Failed RankingData from API response.");
+            return (null, null);
         }
     }
 
-    public async UniTask GetStageAPI(int stageNum)
+    public async UniTask<int> GetStageAPI(int stageNum)
     {
         StageData stageData = new StageData
         {
-            ID = GetApiSODicUerData().ID,
-            AuthToken = GetApiSODicUerData().AuthToken,
+            ID = NewGameData().ID,
+            AuthToken = NewGameData().AuthToken,
             StageNum = stageNum,
         };
 
-        await CallAPI<Dictionary<string, object>, StageData>(APIUrls.StageApi, stageData, APISuccessCode.LoadStageSuccess, HandleStageDataResponse);
+        int lastStageId = 0;
+
+        bool result = await CallAPI<Dictionary<string, object>, StageData>(APIUrls.StageApi, stageData, APISuccessCode.LoadStageSuccess, (apiResponse) =>
+        {
+            if (apiResponse.Data.TryGetValue("stageData", out object stageDataObj))
+            {
+                List<StageInfo> stageDataList = JsonConvert.DeserializeObject<List<StageInfo>>(stageDataObj.ToString());
+                if (stageDataList != null && stageDataList.Count > 0)
+                {
+                    lastStageId = stageDataList.Last().stage_id;
+                }
+            }
+        });
+
+        return lastStageId;
     }
 
     public async UniTask StageUpToServer(int stageNum, int score)
     {
-        var userData = GetApiSODicUerData();
-        string id = userData.ID;
-        string authToken = userData.AuthToken;
+        string id = NewGameData().ID;
+        string authToken = NewGameData().AuthToken;
 
         StageData stageData = new StageData
         {
@@ -222,21 +210,6 @@ public class APIManager : MonoSingleton<APIManager>
         await UniTask.WhenAll(callStageApi, callStageClear);
     }
 
-    private void HandleStageDataResponse(APIResponse<Dictionary<string, object>> apiResponse)
-    {
-        if (apiResponse.Data.TryGetValue("stageData", out object stageDataObj))
-        {
-            List<StageInfo> stageDataList =
-                JsonConvert.DeserializeObject<List<StageInfo>>(stageDataObj.ToString());
-
-            APIDataSO.Instance.SetResponseData(APIDataDicKey.StageData, stageDataList);
-        }
-        else
-        {
-            Debug.LogError("Failed StageData from API response.");
-        }
-    }
-
     private async UniTask<bool> CallAPI<T, TRequest>(string apiUrl, TRequest requestBody, APISuccessCode successCode, Action<APIResponse<T>> handler)
     {
         try
@@ -251,7 +224,7 @@ public class APIManager : MonoSingleton<APIManager>
 
             if(apiResponse.Result != (int)successCode)
             {
-                Debug.LogWarning("API Response Not Success");
+                Debug.LogError("API Response Not Success");
                 return false;
             }
             
@@ -263,5 +236,17 @@ public class APIManager : MonoSingleton<APIManager>
             Debug.LogError($"API request failed : {e.Message}");
             return false;
         }
+    }
+
+    private void SetDicData(MasterDataDicKey key, object data) => MansterDataDic[key.ToString()] = data;
+
+    public T GetValueByKey<T>(string key)
+    {
+        if(MansterDataDic.TryGetValue(key, out object value) && value is T tValue)
+        {
+            return tValue;
+        }
+
+        return default;
     }
 }

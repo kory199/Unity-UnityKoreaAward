@@ -45,27 +45,29 @@ public partial class Player
 
     private async void InitPlayer()
     {
-        await APIManager.Instance.GetMasterDataAPI();
-
-        PlayerStatus_res[] playerStatus = APIDataSO.Instance.GetValueByKey<PlayerStatus_res[]>(APIDataDicKey.PlayerStatus);
-
-        // Level 1 기준 초기 셋팅
-        playerMaxHp = playerStatus[0].hp;
-        playerCurHp = playerMaxHp;
-        playerAttackPower = playerStatus[0].attack_power;
-        playerMaxExp = playerStatus[0].xp_requiredfor_levelup;
-        playerMovementSpeed = playerStatus[0].movement_speed;
-        playerProjectileSpeed = playerStatus[0].projectile_speed;
-        //playerRateOfFire = playerStatus[0].rate_of_fire;
-        playerRateOfFire = 0.1f;
-
-        // PlayerData player = APIDataSO.Instance.GetValueByKey<PlayerData>(APIDataDicKey.PlayerData);
-        // TODO : 로그인 후 해당 유저 데이터 추가예정
-        // playerMaxHp = player.hp;
-        // playerCurHp = playerMaxHp;
-        // playerMaxExp = player.exp;
+        bool result = await APIManager.Instance.GetMasterDataAPI();
 
 
-        IsDeath = false;
+        if (result)
+        {
+            PlayerStatus_res[] playerStatus = APIManager.Instance.GetValueByKey<PlayerStatus_res[]>(MasterDataDicKey.PlayerStatus.ToString());
+            // Level 1 기준 초기 셋팅
+            playerMaxHp = playerStatus[0].hp;
+            playerCurHp = playerMaxHp;
+            playerAttackPower = playerStatus[0].attack_power;
+            playerMaxExp = playerStatus[0].xp_requiredfor_levelup;
+            playerMovementSpeed = playerStatus[0].movement_speed;
+            playerProjectileSpeed = playerStatus[0].projectile_speed;
+            playerRateOfFire = playerStatus[0].rate_of_fire;
+
+            // PlayerData player = APIDataSO.Instance.GetValueByKey<PlayerData>(APIDataDicKey.PlayerData);
+            // TODO : 로그인 후 해당 유저 데이터 추가예정
+            // playerMaxHp = player.hp;
+            // playerCurHp = playerMaxHp;
+            // playerMaxExp = player.exp;
+
+
+            IsDeath = false;
+        }
     }
 }

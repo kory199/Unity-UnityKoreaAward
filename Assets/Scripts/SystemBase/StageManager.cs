@@ -139,7 +139,7 @@ public class StageManager : MonoSingleton<StageManager>
 
     public int GetMonsterInfo(int stageNum, EnumTypes.MonsterType monsterType)
     {
-        StageSpawnMonsterData_res[] stageSpawnMonsterData_Res = APIDataSO.Instance.GetValueByKey<StageSpawnMonsterData_res[]>(APIDataDicKey.StageSpawnMonster);
+        StageSpawnMonsterData_res[] stageSpawnMonsterData_Res = APIManager.Instance.GetValueByKey<StageSpawnMonsterData_res[]>(MasterDataDicKey.StageSpawnMonster.ToString());
 
         if (stageSpawnMonsterData_Res == null)
         {

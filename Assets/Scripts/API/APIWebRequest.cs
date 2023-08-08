@@ -1,4 +1,5 @@
 using System.Text;
+using APIModels;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -36,7 +37,17 @@ public class APIWebRequest
             int result = jsonResponse.Value<int>("result");
             string resultMessage = jsonResponse.Value<string>("resultMessage");
 
-            T data = jsonResponse.ToObject<T>();
+            T data;
+
+            if (jsonResponse["masterDataDic"] != null)
+            {
+                var masterDataResponse = jsonResponse.ToObject<MasterDataResponse>();
+                data = (T)(object)masterDataResponse;
+            }
+            else
+            {
+                data = jsonResponse.ToObject<T>();
+            }
 
             APIResponse<T> response = new()
             {
