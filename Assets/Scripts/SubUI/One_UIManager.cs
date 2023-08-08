@@ -23,7 +23,7 @@ public class One_UIManager : MonoSingleton<One_UIManager>
 
     private int _sortingOrder = 0;
 
-    #region 
+ /*   #region 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void InstUIManager()
     {
@@ -40,7 +40,7 @@ public class One_UIManager : MonoSingleton<One_UIManager>
         }
         DontDestroyOnLoad(this.gameObject);
     }
-    private void Start() => SetUp();
+    private void Start() => SetUp();*/
 
     private void SetUp()
     {
