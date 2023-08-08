@@ -78,8 +78,8 @@ public abstract class MonsterBase : MonoBehaviour
         if (result)
         {
 
-            meleeMonsterStatus = APIDataSO.Instance.GetValueByKey<MonsterData_res[]>(APIDataDicKey.MeleeMonster);
-            rangedMonsterStatus = APIDataSO.Instance.GetValueByKey<MonsterData_res[]>(APIDataDicKey.RangedMonster);
+            meleeMonsterStatus = APIManager.Instance.GetValueByKey<MonsterData_res[]>(MasterDataDicKey.MeleeMonster.ToString());
+            rangedMonsterStatus = APIManager.Instance.GetValueByKey<MonsterData_res[]>(MasterDataDicKey.RangedMonster.ToString());
         }
 
         if (meleeMonsterStatus == null)
@@ -100,7 +100,7 @@ public abstract class MonsterBase : MonoBehaviour
     {
         this.stageNum = curStageNum;
 
-        monsterData_Res = APIDataSO.Instance.GetValueByKey<MonsterData_res[]>(monsterType.ToString());
+        monsterData_Res = APIManager.Instance.GetValueByKey<MonsterData_res[]>(monsterType.ToString());
 
         if (monsterData_Res == null)
         {
@@ -115,11 +115,11 @@ public abstract class MonsterBase : MonoBehaviour
     {
         if (monsterType == EnumTypes.MonsterType.MeleeMonster)
         {
-            meleeMonsterStatus = APIDataSO.Instance.GetValueByKey<MonsterData_res[]>(APIDataDicKey.MeleeMonster);
+            meleeMonsterStatus = APIManager.Instance.GetValueByKey<MonsterData_res[]>(MasterDataDicKey.MeleeMonster.ToString());
         }
         else if (monsterType == EnumTypes.MonsterType.RangedMonster)
         {
-            rangedMonsterStatus = APIDataSO.Instance.GetValueByKey<MonsterData_res[]>(APIDataDicKey.RangedMonster);
+            rangedMonsterStatus = APIManager.Instance.GetValueByKey<MonsterData_res[]>(MasterDataDicKey.RangedMonster.ToString());
         }
         else
         {
