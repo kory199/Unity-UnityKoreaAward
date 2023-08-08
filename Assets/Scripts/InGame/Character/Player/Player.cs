@@ -25,7 +25,7 @@ public partial class Player : CharacterBase
 
         if (Input.GetKey(KeyCode.Mouse0))
         {
-            if (Time.time - lastAttackTime >= playerRateOfFire)
+            if (Time.time - lastAttackTime >= 0.1f)
             {
                 Attack();
 

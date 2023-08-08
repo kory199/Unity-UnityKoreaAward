@@ -197,7 +197,7 @@ public abstract class MonsterBase : MonoBehaviour
             if (player.IsDeath)
             {
                 // 몬스터들을 특정 State로 옮겨준다
-                TransferState(MonsterStateType.Dance);
+                // TransferState(MonsterStateType.Dance);
                 yield break;
             }
 
@@ -208,7 +208,7 @@ public abstract class MonsterBase : MonoBehaviour
             // 몬스터를 해당 방향으로 움직임(다른 방식으로 구현해도 ㅇㅋ)
             // gameObject.transform.Translate(dirVector * _monsterInfo.MoveSpeed * Time.deltaTime);
             // 임시 이동속도
-            gameObject.transform.Translate(dirVector * 5f * Time.deltaTime);
+            gameObject.transform.Translate(dirVector * 2f * Time.deltaTime);
 
             // 플레이어와 자기자신(몬스터)사이의 거리와 본인의 공격 가능범위를 비교하여 수행(다른 방식으로 구현해도 ㅇㅋ)
             if (Vector3.Distance(player.transform.position, this.gameObject.transform.position) <= _monsterInfo.Range)
