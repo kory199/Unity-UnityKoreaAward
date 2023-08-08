@@ -18,6 +18,7 @@ public class RangedMonster : MonsterBase
     private int rangedMonster_Score;
     private float rangedMonster_Range;
 
+    #region unity event func
     // stage 변경에 따른 Level별 능력치 부여 => 서버 정보 받아오기
     private void OnEnable()
     {
@@ -29,6 +30,7 @@ public class RangedMonster : MonsterBase
         base.Start();
         SetRangedMonsterStatus();
     }
+    #endregion
 
     protected override void Attack()
     {
@@ -59,6 +61,7 @@ public class RangedMonster : MonsterBase
         // 속도 가중치는 서버 데이터 업로드 후 변경
         bulletRb.velocity = playerTargetDirection * rangedMonster_ProjectileSpeed;
     }
+
     private void SetRangedMonsterStatus()
     {
         rangedMonster_Level = rangedMonsterStatus[0].level;

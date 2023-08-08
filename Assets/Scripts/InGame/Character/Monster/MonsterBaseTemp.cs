@@ -7,12 +7,12 @@ public abstract class MonsterBase : MonoBehaviour
 {
     protected MonsterData monsterData; //=> 나중에 스크립터블 오브젝트 or 엑셀파일로 정보 받아온 클래스 등등
     [SerializeField] protected MonsterStateType state;
-    protected Player player;
+    [SerializeField] protected Player player;
     protected Vector3 playerTargetDirection;
     [SerializeField] protected MonsterInfo _monsterInfo = null;
     public string MonsterName;
 
-    int stageNum;
+    protected int stageNum;
 
     // 편집 필요
     protected MonsterData_res[] meleeMonsterStatus;
@@ -26,6 +26,10 @@ public abstract class MonsterBase : MonoBehaviour
     public int score = 10;
     protected bool Death { get { return curHP <= 0; } }
 
+    protected void Awake()
+    {
+        GetinitMonsterStatus();
+    }
 
     protected virtual void OnEnable()
     {
@@ -45,21 +49,6 @@ public abstract class MonsterBase : MonoBehaviour
 
         // data manager 삭제 및 stage 변경에 따른 monster status 변경으로 onEnable로 monster setting 변경 필요
         SetMonsterName();
-
-        initMonsterStatus();
-
-        /*if (DataManager.Instacne.MonsterData.TryGetMonsterInfo(MonsterName, out _monsterInfo))
-        {
-#if UNITY_EDITOR
-            Debug.Log("Insert Data");
-#endif
-        }
-        else
-        {
-#if UNITY_EDITOR
-            Debug.Log("Not Found Data");
-#endif
-        }*/
     }
 
     protected virtual void OnDisable()
@@ -82,12 +71,69 @@ public abstract class MonsterBase : MonoBehaviour
     /// </summary>
     protected abstract void SetMonsterName();
 
-    protected virtual async void initMonsterStatus()
+    protected virtual async void GetinitMonsterStatus()
     {
         await APIManager.Instance.GetMasterDataAPI();
 
+
         meleeMonsterStatus = APIDataSO.Instance.GetValueByKey<MonsterData_res[]>(APIDataDicKey.MeleeMonster);
         rangedMonsterStatus = APIDataSO.Instance.GetValueByKey<MonsterData_res[]>(APIDataDicKey.RangedMonster);
+
+        if (meleeMonsterStatus == null)
+        {
+            Debug.LogError("meleeMonsterStatus Data is Null");
+        }
+
+        if (rangedMonsterStatus == null)
+        {
+            Debug.LogError("rangedMonsterStatus Data is null");
+        }
+    }
+
+    private void GetMeleeMonsterInfo() => MonsterSetting(stageNum, EnumTypes.MonsterType.MeleeMonster);
+    private void GetRangedMonsterInfo() => MonsterSetting(stageNum, EnumTypes.MonsterType.RangedMonster);
+
+    private void MonsterSetting(int curStageNum, EnumTypes.MonsterType monsterType)
+    {
+        this.stageNum = curStageNum;
+
+        monsterData_Res = APIDataSO.Instance.GetValueByKey<MonsterData_res[]>(monsterType.ToString());
+
+        if (monsterData_Res == null)
+        {
+            Debug.LogError("No MonsterData_res data");
+            return;
+        }
+
+        MonsterSetting(monsterType);
+    }
+
+    private void MonsterSetting(EnumTypes.MonsterType monsterType)
+    {
+        if (monsterType == EnumTypes.MonsterType.MeleeMonster)
+        {
+            meleeMonsterStatus = APIDataSO.Instance.GetValueByKey<MonsterData_res[]>(APIDataDicKey.MeleeMonster);
+        }
+        else if (monsterType == EnumTypes.MonsterType.RangedMonster)
+        {
+            rangedMonsterStatus = APIDataSO.Instance.GetValueByKey<MonsterData_res[]>(APIDataDicKey.RangedMonster);
+        }
+        else
+        {
+            Debug.LogError("Confirm Monster Type");
+        }
+    }
+
+    private void SetStageNum()
+    {
+        // 현재 Max Stage 5 기준
+        if (stageNum > 5)
+        {
+            InGameManager.Instance.InvokeCallBacks(InGameParamType.Stage, (int)EnumTypes.StageStateType.End);
+            return;
+        }
+
+        stageNum++;
     }
 
     public void MonsterHit(int damage)
@@ -214,36 +260,4 @@ public abstract class MonsterBase : MonoBehaviour
         StageManager.Instance.MonsterDeath();
     }
 
-    private void GetMeleeMonsterInfo() => MonsterSetting(stageNum, EnumTypes.MonsterType.MeleeMonster);
-    private void GetRangedMonsterInfo() => MonsterSetting(stageNum, EnumTypes.MonsterType.RangedMonster);
-
-    private void MonsterSetting(int stageNum, EnumTypes.MonsterType monsterType)
-    {
-        monsterData_Res = APIDataSO.Instance.GetValueByKey<MonsterData_res[]>(monsterType.ToString());
-
-        if (monsterData_Res == null)
-        {
-            Debug.LogError("No MonsterData_res data");
-            return;
-        }
-
-        MonsterSetting(monsterType);
-    }
-
-    private void MonsterSetting(EnumTypes.MonsterType monsterType)
-    {
-
-    }
-
-    private void SetStageNum()
-    {
-        // 현재 Max Stage 5 기준
-        if (stageNum > 5)
-        {
-            InGameManager.Instance.InvokeCallBacks(InGameParamType.Stage, (int)EnumTypes.StageStateType.End);
-            return;
-        }
-
-        stageNum++;
-    }
 }

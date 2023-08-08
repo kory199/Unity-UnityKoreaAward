@@ -41,7 +41,7 @@ public partial class Player
 
         if (playerCurHp <= 0)
         {
-            Debug.Log("Player Die");
+            Debug.LogError("Player Die");
             Die();
         }
     }
