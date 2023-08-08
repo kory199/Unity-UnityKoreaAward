@@ -224,7 +224,7 @@ public class APIManager : MonoSingleton<APIManager>
 
             if(apiResponse.Result != (int)successCode)
             {
-                Debug.LogError("API Response Not Success");
+                Debug.LogWarning("API Response Not Success");
                 return false;
             }
             
