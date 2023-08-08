@@ -27,7 +27,7 @@ public class One_UIManager : MonoSingleton<One_UIManager>
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void InstUIManager()
     {
-        GameObject uiManager = new GameObject().AddComponent<One_UIManager>();
+        One_UIManager uiManager = new GameObject().AddComponent<One_UIManager>();
         uiManager.name = "One_UIManager";
     }
     #endregion
@@ -59,7 +59,7 @@ public class One_UIManager : MonoSingleton<One_UIManager>
     {
         if (_popupStack.Count == 0)
         {
-            Debug.Log("Stack is null");
+            UnityEngine.Debug.Log("Stack is null");
             return null;
         }
         GameObject popup = _popupStack.Pop();
