@@ -17,9 +17,19 @@ public class AccountUI : MonoBehaviour
     private void Awake()
     {
         infoText.gameObject.SetActive(false);
+        inputFields[1].contentType = TMP_InputField.ContentType.Password;
+    }
+
+    private void Start()
+    {
+        StartCoroutine(SetInitialFocus());
+    }
+
+    private IEnumerator SetInitialFocus()
+    {
+        yield return new WaitForSeconds(0.1f); 
         inputFields[_currentIndex].Select();
         inputFields[_currentIndex].ActivateInputField();
-        inputFields[1].contentType = TMP_InputField.ContentType.Password;
     }
 
     public void ValidateID()
@@ -86,13 +96,13 @@ public class AccountUI : MonoBehaviour
         {
             bool result = await APIManager.Instance.CreateAccountAPI(user);
 
-            if(result == false)
+            if(result)
             {
-                infoText.text = $"Username {user.ID} is already in use.";
+                infoText.text = $"Created New Account Successful ! {user.ID}, {user.Password}";
             }
             else
             {
-                infoText.text = $"Created New Account Successful ! {user.ID}, {user.Password}";
+                infoText.text = $"Username {user.ID} is already in use.";
             }
         }
     }
@@ -103,13 +113,13 @@ public class AccountUI : MonoBehaviour
         {
             bool result = await APIManager.Instance.LoginAPI(user);
 
-            if(result == false)
+            if(result)
             {
-                infoText.text = $"Incorrect username or password.";
+                infoText.text = $"Login Successful {user.ID}, {user.Password}";
             }
             else
             {
-                infoText.text = $"Login Successful {user.ID}, {user.Password}";
+                infoText.text = $"Incorrect username or password.";
             }
         }
     }
@@ -162,6 +172,7 @@ public class AccountUI : MonoBehaviour
     private void OnEnable()
     {
         StartCoroutine(CheckTabKey());
+        StartCoroutine(SetInitialFocus());
     }
 
     private void OnDisable()

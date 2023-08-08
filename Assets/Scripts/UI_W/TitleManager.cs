@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using APIModels;
-using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,8 +8,6 @@ public class TitleManager : MonoBehaviour
     [Header("[PanelObj]")]
     [SerializeField] GameObject[] panels = null;
     // start : 0, account : 1, rank : 2, option : 3
-
-    [SerializeField] Button test = null;
 
     [Header("[Start]")]
     [SerializeField] Button accountBut = null;
@@ -34,7 +30,6 @@ public class TitleManager : MonoBehaviour
 
         GetGameVersion();
         GetMasterData();
-        test.onClick.AddListener(() => GetMasterData_t());
 
         // === StartPanel Button Event ===
         accountBut.onClick.AddListener(OnClickAccount);
@@ -67,7 +62,8 @@ public class TitleManager : MonoBehaviour
 
     private void UpdateStartButtonState()
     {
-        if (APIDataSO.Instance.GetValueByKey<GameData>(APIDataDicKey.GameData) != null)
+
+        if (APIManager.Instance.IsLogin == true)
         {
             startBut.interactable = true;
             rankBut.interactable = true;
@@ -83,17 +79,6 @@ public class TitleManager : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        UpdateStartButtonState();
-        APIDataSO.Instance.OnResponseDataChanged += UpdateStartButtonState;
-    }
-
-    private void OnDisable()
-    {
-        APIDataSO.Instance.OnResponseDataChanged -= UpdateStartButtonState;
-    }
-
     private async void GoLobbyScene()
     {
         if (startBut.interactable)
@@ -104,44 +89,10 @@ public class TitleManager : MonoBehaviour
 
     private void OnExitBut()
     {
-        APIDataSO.Instance.ClearResponseData();
-
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
     Application.Quit();
 #endif
-    }
-
-    private void GetMasterData_t()
-    {
-        MonsterData_res[] monsterData = APIDataSO.Instance.GetValueByKey<MonsterData_res[]>(APIDataDicKey.MeleeMonster);
-
-        if (monsterData == null)
-        {
-            Debug.LogError("MonsterData list is null!");
-            return;
-        }
-
-        foreach (MonsterData_res a in monsterData)
-        {
-            Debug.Log("MeleeMonstser) Level: " + a.level + "Exp: " + a.exp + "Hp: " + a.hp);
-        }
-
-        MonsterData_res boss = APIDataSO.Instance.GetValueByKey<MonsterData_res>(APIDataDicKey.BOSS);
-        Debug.Log($"BOSS) Level: {boss.level}, Exp: {boss.exp}, Hp: {boss.hp}");
-
-        MonsterData_res[] rangedMonsterData = APIDataSO.Instance.GetValueByKey<MonsterData_res[]>(APIDataDicKey.RangedMonster);
-
-        if (rangedMonsterData == null)
-        {
-            Debug.LogError("MonsterData list is null!");
-            return;
-        }
-
-        foreach (MonsterData_res a in rangedMonsterData)
-        {
-            Debug.Log("RangedMonster) Level: " + a.level + "Exp: " + a.exp + "Hp: " + a.hp);
-        }
     }
 }

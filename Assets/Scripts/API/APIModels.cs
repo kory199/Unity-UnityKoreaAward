@@ -33,7 +33,31 @@ namespace APIModels
         public int Score { get; set; }
     }
 
-    // === Response === 
+    // === MasterData ===
+    public enum MasterDataDicKey
+    {
+        MeleeMonster,
+        RangedMonster,
+        BOSS,
+        PlayerStatus,
+        StageSpawnMonster
+    }
+
+    // === Response ===
+    public class MasterDataResponse
+    {
+        public MasterDataArray masterDataDic { get; set; }
+    }
+
+    public class MasterDataArray
+    {
+        public MonsterData_res[] MeleeMonster { get; set; } = new MonsterData_res[4];
+        public MonsterData_res[] RangedMonster { get; set; } = new MonsterData_res[4];
+        public MonsterData_res BOSS { get; set; }
+        public PlayerStatus_res[] PlayerStatus { get; set; } = new PlayerStatus_res[4];
+        public StageSpawnMonsterData_res[] StageSpawnMonster { get; set; } = new StageSpawnMonsterData_res[4];
+    }
+
     public class PlayerData
     {
         public string id { get; set; }
