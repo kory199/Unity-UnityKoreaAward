@@ -2,10 +2,16 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum SceneState
+{
+    Title,
+    Lobby,
+    Game,
+}
 public class GameManager : MonoSingleton<GameManager>
 {
     public int OnclickStageNum { get; private set; }
-
+    public SceneState sceneState { get; set; }
     // private EventSystem _eventSystem;
 
     // Runtume init Gamemanager 

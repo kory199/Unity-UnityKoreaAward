@@ -5,9 +5,10 @@ using UnityEngine;
 public class UI_SceneLobby : UIBase
 {
     private string _basePath = "UI/";
-    private void Awake()
+    private void OnEnable()
     {
         OnShow();
+        GameManager.Instance.sceneState = SceneState.Lobby;
     }
 
 
@@ -19,7 +20,10 @@ public class UI_SceneLobby : UIBase
 
     public void OnClick_GameStart()
     {
-
+        GameManager.Instance.MoveScene("SceneInGame");
+        GameManager.Instance.sceneState = SceneState.Game;
+        OnHide();
+        Destroy(this);
     }
     public void OnClick_Explane()
     {
@@ -31,9 +35,9 @@ public class UI_SceneLobby : UIBase
     }
     public void OnClick_Options()
     {
-        string path = string.Concat(_basePath, "GPopup_Options");
-        GameObject option = Resources.Load<GameObject>(path);
-        Instantiate(option);
+        UIManager.Instance.CreateObject<GameObject>("GPopup_Options", EnumTypes.LayoutType.Global);
+        OnHide();
+        Destroy(this);
     }
     public void OnClick_RankingList()
     {
