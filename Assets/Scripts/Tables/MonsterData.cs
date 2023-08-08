@@ -34,6 +34,7 @@ public class MonsterData : ScriptableObject
     {
         MonsterDataList.Add(new MonsterInfo("BossOne", 100, 101, 102, 0.8f));
         MonsterDataList.Add(new MonsterInfo("BasicMeleeMonster", 100, 101, 102, 0.8f));
+        MonsterDataList.Add(new MonsterInfo("RangedMonster", 100, 101, 102, 0.8f));
     }
     public bool TryGetMonsterInfo(string name, out MonsterInfo monsterInfo)
     {

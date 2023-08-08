@@ -5,6 +5,7 @@ using APIModels;
 
 public partial class Player : CharacterBase
 {
+    #region unity event func
     private void Awake()
     {
         InitSetting();
@@ -32,4 +33,6 @@ public partial class Player : CharacterBase
             }
         }
     }
+
+    #endregion
 }

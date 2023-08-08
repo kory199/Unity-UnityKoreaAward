@@ -41,7 +41,7 @@ public partial class Player
 
         if (playerCurHp <= 0)
         {
-            Debug.LogError("Player Die");
+            IsDeath = true;
             Die();
         }
     }
@@ -57,6 +57,7 @@ public partial class Player
     }
     protected override void Die()
     {
+        Debug.LogError("Player Die");
         StageManager.Instance.PlayerDeath();
     }
 

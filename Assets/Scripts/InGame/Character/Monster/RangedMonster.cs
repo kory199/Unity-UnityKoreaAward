@@ -8,19 +8,20 @@ public class RangedMonster : MonsterBase
     private Rigidbody2D bulletRb;
 
     // temp monster status
-    private int rangedMonster_Level;
-    private int rangedMonster_exp;
-    private float rangedMonster_Hp;
-    private float rangedMonster_Speed;
-    private float rangedMonster_RateOfFire;
-    private float rangedMonster_ProjectileSpeed;
-    private float rangedMonster_CollisionDamage;
-    private int rangedMonster_Score;
-    private float rangedMonster_Range;
+    [SerializeField] protected int rangedMonster_Level;
+    [SerializeField] protected int rangedMonster_exp;
+    [SerializeField] protected float rangedMonster_Hp;
+    [SerializeField] protected float rangedMonster_CurHp;
+    [SerializeField] protected float rangedMonster_Speed;
+    [SerializeField] protected float rangedMonster_RateOfFire;
+    [SerializeField] protected float rangedMonster_ProjectileSpeed;
+    [SerializeField] protected float rangedMonster_CollisionDamage;
+    [SerializeField] protected int rangedMonster_Score;
+    [SerializeField] protected float rangedMonster_Range;
 
     #region unity event func
     // stage 변경에 따른 Level별 능력치 부여 => 서버 정보 받아오기
-    private void OnEnable()
+    protected override void OnEnable()
     {
         base.OnEnable();
     }
@@ -30,7 +31,37 @@ public class RangedMonster : MonsterBase
         base.Start();
         SetRangedMonsterStatus();
     }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+    }
+
+    protected override void SetMonsterName()
+    {
+        MonsterName = "RangedMonster";
+    }
+
+    private void SetRangedMonsterStatus()
+    {
+        rangedMonster_Level = rangedMonsterStatus[0].level;
+        rangedMonster_exp = rangedMonsterStatus[0].exp;
+        rangedMonster_Hp = rangedMonsterStatus[0].hp;
+        rangedMonster_CurHp = rangedMonster_Hp;
+        rangedMonster_Speed = rangedMonsterStatus[0].speed;
+        rangedMonster_RateOfFire = rangedMonsterStatus[0].rate_of_fire;
+        rangedMonster_ProjectileSpeed = rangedMonsterStatus[0].projectile_speed;
+        rangedMonster_CollisionDamage = rangedMonsterStatus[0].collision_damage;
+        rangedMonster_Score = rangedMonsterStatus[0].score;
+        rangedMonster_Range = rangedMonsterStatus[0].ranged;
+    }
+
     #endregion
+    protected override IEnumerator State_Move()
+    {
+        // 추후 몬스터 별 이동속도 및 공격 범위 추가
+        return base.State_Move();
+    }
 
     protected override void Attack()
     {
@@ -62,21 +93,8 @@ public class RangedMonster : MonsterBase
         bulletRb.velocity = playerTargetDirection * rangedMonster_ProjectileSpeed;
     }
 
-    private void SetRangedMonsterStatus()
+    protected override void Hit(float playerDamage)
     {
-        rangedMonster_Level = rangedMonsterStatus[0].level;
-        rangedMonster_exp = rangedMonsterStatus[0].exp;
-        rangedMonster_Hp = rangedMonsterStatus[0].hp;
-        rangedMonster_Speed = rangedMonsterStatus[0].speed;
-        rangedMonster_RateOfFire = rangedMonsterStatus[0].rate_of_fire;
-        rangedMonster_ProjectileSpeed = rangedMonsterStatus[0].projectile_speed;
-        rangedMonster_CollisionDamage = rangedMonsterStatus[0].collision_damage;
-        rangedMonster_Score = rangedMonsterStatus[0].score;
-        rangedMonster_Range = rangedMonsterStatus[0].ranged;
-    }
-
-    protected override void SetMonsterName()
-    {
-        throw new System.NotImplementedException();
+        rangedMonster_CurHp -= playerDamage;
     }
 }

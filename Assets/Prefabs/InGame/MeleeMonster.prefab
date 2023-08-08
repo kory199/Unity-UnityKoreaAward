@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5345714286809512655}
   - component: {fileID: 5345714286809512648}
-  - component: {fileID: 1027490076}
+  - component: {fileID: -4932320455617486541}
+  - component: {fileID: 1557498549645304856}
   m_Layer: 7
   m_Name: MeleeMonster
   m_TagString: Untagged
@@ -75,7 +76,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -85,7 +86,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1027490076
+--- !u!114 &-4932320455617486541
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,24 +95,45 @@ MonoBehaviour:
   m_GameObject: {fileID: 5345714286809512649}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c28d77d02a5cee44aca9c38f2ef8695, type: 3}
+  m_Script: {fileID: 11500000, guid: 72ed20d8cad0e7c459d2fec58abe6e2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterType: 0
-  fsmMonsterStateType: 0
-  meleeMoveSpeed: 3
-  meleeAttackCooldown: 1.5
-  meleeDetectionRange: 100
-  meleeAttackRange: 1.5
-  meleeAttackDamage: 10
-  rangedMoveSpeed: 2
-  rangedAttackCooldown: 2
-  rangedDetectionRange: 20
-  rangedAttackRange: 15
-  rangedAttackDamage: 5
-  player: {fileID: 8516200050958493884, guid: 447dfd2202628a04a9c407b170214b88, type: 3}
-  meleeDetectionCollider: {fileID: 0}
-  rangedDetectionCollider: {fileID: 0}
-  meleeAttackCollider: {fileID: 0}
-  rangedAttackCollider: {fileID: 0}
-  isAttacking: 0
+  state: 0
+  player: {fileID: 0}
+  _monsterInfo:
+    Name: 
+    Exp: 0
+    Score: 0
+    Hp: 0
+    RateOfFire: 0
+    Range: 0
+    MoveSpeed: 0
+  MonsterName: 
+  curHP: 10
+  exp: 10
+  score: 10
+  meleeMonster_Level: 0
+  meleeMonster_exp: 0
+  meleeMonster_Hp: 0
+  meleeMonster_Speed: 0
+  meleeMonster_RateOfFire: 0
+  meleeMonster_ProjectileSpeed: 0
+  meleeMonster_CollisionDamage: 0
+  meleeMonster_Score: 0
+  meleeMonster_Range: 0
+--- !u!58 &1557498549645304856
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5345714286809512649}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5

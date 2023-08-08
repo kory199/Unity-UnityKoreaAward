@@ -104,6 +104,6 @@ MonoBehaviour:
   playerBulletDamage: 0
   player: {fileID: 5329609039082644204, guid: 447dfd2202628a04a9c407b170214b88, type: 3}
   bossMonster: {fileID: 0}
-  meleeMonster: {fileID: 0}
-  rangedMonster: {fileID: 0}
+  meleeMonster: {fileID: 2311305897999876828, guid: e2136717026b3da47ab912210318a5a3, type: 3}
+  rangedMonster: {fileID: 739570210054639162, guid: 077f8cdf593ccab4a93bf37afcb4bc4b, type: 3}
   setShooter: {fileID: 0}

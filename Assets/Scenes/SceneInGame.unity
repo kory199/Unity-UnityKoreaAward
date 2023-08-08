@@ -933,6 +933,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3553034056798106049, guid: 0c54e70e9c041c941bf6cbbfd45471e8, type: 3}
+      propertyPath: _pools.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3553034056798106049, guid: 0c54e70e9c041c941bf6cbbfd45471e8, type: 3}
+      propertyPath: _pools.Array.data[3].Name
+      value: RangedMonster
+      objectReference: {fileID: 0}
+    - target: {fileID: 3553034056798106049, guid: 0c54e70e9c041c941bf6cbbfd45471e8, type: 3}
+      propertyPath: _pools.Array.data[3].Number
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3553034056798106049, guid: 0c54e70e9c041c941bf6cbbfd45471e8, type: 3}
+      propertyPath: _pools.Array.data[3].Prefab
+      value: 
+      objectReference: {fileID: 739570210054639162, guid: 077f8cdf593ccab4a93bf37afcb4bc4b, type: 3}
     - target: {fileID: 3553034056798106062, guid: 0c54e70e9c041c941bf6cbbfd45471e8, type: 3}
       propertyPath: m_Name
       value: ObjectPooler

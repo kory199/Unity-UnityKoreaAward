@@ -10,8 +10,8 @@ public class Bullet : MonoBehaviour
     
     [SerializeField] GameObject player;
     [SerializeField] GameObject bossMonster;
-    [SerializeField] GameObject meleeMonster;
-    [SerializeField] GameObject rangedMonster;
+    [SerializeField] MeleeMonster meleeMonster;
+    [SerializeField] RangedMonster rangedMonster;
     [SerializeField] GameObject setShooter;
     
     Vector2 dirBullet;
@@ -70,6 +70,16 @@ public class Bullet : MonoBehaviour
         // Monster Hit
         else if (other.gameObject.tag == "Monster" && setShooter.name == "Player")
         {
+            if (other.gameObject.name == "BasicMeleeMonster")
+            {
+                meleeMonster = GetComponent<MeleeMonster>();
+            }
+
+            else if (other.gameObject.name == "RangedMonster")
+            {
+
+            }
+
             // 몬스터 충돌 처리
             other.gameObject.SetActive(false); // monster hit func 구현 후 대체
             gameObject.SetActive(false);

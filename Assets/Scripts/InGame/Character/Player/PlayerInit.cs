@@ -56,7 +56,8 @@ public partial class Player
         playerMaxExp = playerStatus[0].xp_requiredfor_levelup;
         playerMovementSpeed = playerStatus[0].movement_speed;
         playerProjectileSpeed = playerStatus[0].projectile_speed;
-        playerRateOfFire = playerStatus[0].rate_of_fire;
+        //playerRateOfFire = playerStatus[0].rate_of_fire;
+        playerRateOfFire = 0.1f;
 
         // PlayerData player = APIDataSO.Instance.GetValueByKey<PlayerData>(APIDataDicKey.PlayerData);
         // TODO : 로그인 후 해당 유저 데이터 추가예정

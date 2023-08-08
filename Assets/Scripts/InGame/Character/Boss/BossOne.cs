@@ -157,4 +157,9 @@ public class BossOne : BossBase
         //스테이지 매니저에 보스 죽음알림
         FindObjectOfType<StageManager>().BossDeath();
     }
+
+    protected override void Hit(float hitDamage)
+    {
+        throw new System.NotImplementedException();
+    }
 }

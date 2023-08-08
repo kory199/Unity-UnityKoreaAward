@@ -28,7 +28,7 @@ public abstract class MonsterBase : MonoBehaviour
 
     protected void Awake()
     {
-        GetinitMonsterStatus();
+        GetInitMonsterStatus();
     }
 
     protected virtual void OnEnable()
@@ -71,7 +71,7 @@ public abstract class MonsterBase : MonoBehaviour
     /// </summary>
     protected abstract void SetMonsterName();
 
-    protected virtual async void GetinitMonsterStatus()
+    protected virtual async void GetInitMonsterStatus()
     {
         await APIManager.Instance.GetMasterDataAPI();
 
@@ -105,10 +105,10 @@ public abstract class MonsterBase : MonoBehaviour
             return;
         }
 
-        MonsterSetting(monsterType);
+        MonsterStatusSetting(monsterType);
     }
 
-    private void MonsterSetting(EnumTypes.MonsterType monsterType)
+    private void MonsterStatusSetting(EnumTypes.MonsterType monsterType)
     {
         if (monsterType == EnumTypes.MonsterType.MeleeMonster)
         {
@@ -186,7 +186,7 @@ public abstract class MonsterBase : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator State_Move()
+    protected virtual IEnumerator State_Move()
     {
         while (state == MonsterStateType.Move)
         {
@@ -203,7 +203,9 @@ public abstract class MonsterBase : MonoBehaviour
             //gameObject.transform.LookAt(player.transform.position);
 
             // 몬스터를 해당 방향으로 움직임(다른 방식으로 구현해도 ㅇㅋ)
-            gameObject.transform.Translate(dirVector * _monsterInfo.MoveSpeed * Time.deltaTime);
+            // gameObject.transform.Translate(dirVector * _monsterInfo.MoveSpeed * Time.deltaTime);
+            // 임시 이동속도
+            gameObject.transform.Translate(dirVector * 5f * Time.deltaTime);
 
             // 플레이어와 자기자신(몬스터)사이의 거리와 본인의 공격 가능범위를 비교하여 수행(다른 방식으로 구현해도 ㅇㅋ)
             if (Vector3.Distance(player.transform.position, this.gameObject.transform.position) <= _monsterInfo.Range)
@@ -239,7 +241,7 @@ public abstract class MonsterBase : MonoBehaviour
     }
 
     // 죽었을때의 처리
-    private IEnumerator State_Death()
+    protected virtual IEnumerator State_Death()
     {
         // 점수+, exp+, 비활성화 되고 풀에 다시 들어가고 등등...
 
@@ -253,11 +255,11 @@ public abstract class MonsterBase : MonoBehaviour
     /// </summary>
     protected abstract void Attack();
 
+    protected abstract void Hit(float hitDamage);
 
     protected virtual void MonsterDeath()
     {
         // 오브젝트 풀에 반환
         StageManager.Instance.MonsterDeath();
     }
-
 }

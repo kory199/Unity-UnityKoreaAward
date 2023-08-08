@@ -10,10 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 739570210054639164}
   - component: {fileID: 739570210054639165}
-  - component: {fileID: 1191585310}
+  - component: {fileID: 38274799743832930}
+  - component: {fileID: 8242944204451586038}
   m_Layer: 7
   m_Name: RangedMonster
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -75,7 +76,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -85,7 +86,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1191585310
+--- !u!114 &38274799743832930
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,24 +95,55 @@ MonoBehaviour:
   m_GameObject: {fileID: 739570210054639162}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c28d77d02a5cee44aca9c38f2ef8695, type: 3}
+  m_Script: {fileID: 11500000, guid: b0430fa8dae51d9409e50ecf70c61a8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterType: 0
-  fsmMonsterStateType: 0
-  meleeMoveSpeed: 0
-  meleeAttackCooldown: 0
-  meleeDetectionRange: 0
-  meleeAttackRange: 0
-  meleeAttackDamage: 0
-  rangedMoveSpeed: 0
-  rangedAttackCooldown: 0
-  rangedDetectionRange: 0
-  rangedAttackRange: 0
-  rangedAttackDamage: 0
-  player: {fileID: 8516200050958493884, guid: 447dfd2202628a04a9c407b170214b88, type: 3}
-  meleeDetectionCollider: {fileID: 0}
-  rangedDetectionCollider: {fileID: 0}
-  meleeAttackCollider: {fileID: 0}
-  rangedAttackCollider: {fileID: 0}
-  isAttacking: 0
+  state: 0
+  player: {fileID: 0}
+  _monsterInfo:
+    Name: 
+    Exp: 0
+    Score: 0
+    Hp: 0
+    RateOfFire: 0
+    Range: 0
+    MoveSpeed: 0
+  MonsterName: 
+  curHP: 10
+  exp: 10
+  score: 10
+  rangedMonster_Level: 0
+  rangedMonster_exp: 0
+  rangedMonster_Hp: 0
+  rangedMonster_Speed: 0
+  rangedMonster_RateOfFire: 0
+  rangedMonster_ProjectileSpeed: 0
+  rangedMonster_CollisionDamage: 0
+  rangedMonster_Score: 0
+  rangedMonster_Range: 0
+--- !u!61 &8242944204451586038
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 739570210054639162}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0

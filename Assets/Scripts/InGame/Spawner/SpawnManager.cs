@@ -81,7 +81,16 @@ public class SpawnManager : MonoBehaviour
             tempNum.Remove(num);
 
             Vector3 spawnRandomArea = _spawnPos[tempNum[num]] + (Vector3)Random.insideUnitCircle * _SpawnRandomFactor;
-            GameObject monster = ObjectPooler.SpawnFromPool("BasicMeleeMonster", spawnRandomArea);
+            GameObject meleeMonster = ObjectPooler.SpawnFromPool("BasicMeleeMonster", spawnRandomArea);
+        }
+
+        for (int i = 0; i < _rangedMonsterNum; i++)
+        {
+            int num = RandomChoose(tempNum.Count - 1);
+            tempNum.Remove(num);
+
+            Vector3 spawnRandomArea = _spawnPos[tempNum[num]] + (Vector3)Random.insideUnitCircle * _SpawnRandomFactor;
+            GameObject rangedMonster = ObjectPooler.SpawnFromPool("RangedMonster", spawnRandomArea);
         }
     }
     private int RandomChoose(int gap) => Random.Range(0, gap);
