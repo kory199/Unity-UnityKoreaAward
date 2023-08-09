@@ -100,8 +100,7 @@ public class StageManager : MonoSingleton<StageManager>
     }
     public void MonsterDeath()
     {
-        //_deathMonsters++;
-        _deathMonsters += 10;
+        _deathMonsters++;
 
         //  Debug.Log("DeathMonsterCount : " + _deathMonsters);
         if (_deathMonsters >= (_spawnMeleeNum + _spawnRangedNum) * 1 * 60)
