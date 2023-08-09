@@ -1,0 +1,32 @@
+[
+    {
+        "Id": 1,
+        "stage": 1,
+        "meleemonster_spawn": 1,
+        "rangedmonster_spawn": 0
+    },
+    {
+        "Id": 2,
+        "stage": 2,
+        "meleemonster_spawn": 1,
+        "rangedmonster_spawn": 1
+    },
+    {
+        "Id": 3,
+        "stage": 3,
+        "meleemonster_spawn": 2,
+        "rangedmonster_spawn": 1
+    },
+    {
+        "Id": 4,
+        "stage": 4,
+        "meleemonster_spawn": 2,
+        "rangedmonster_spawn": 2
+    },
+    {
+        "Id": 5,
+        "stage": 5,
+        "meleemonster_spawn": 3,
+        "rangedmonster_spawn": 2
+    }
+]
