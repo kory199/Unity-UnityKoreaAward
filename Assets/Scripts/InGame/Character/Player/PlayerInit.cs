@@ -52,7 +52,8 @@ public partial class Player
         {
             PlayerStatus_res[] playerStatus = APIManager.Instance.GetValueByKey<PlayerStatus_res[]>(MasterDataDicKey.PlayerStatus.ToString());
             // Level 1 기준 초기 셋팅
-            playerMaxHp = playerStatus[0].hp;
+            // playerMaxHp = playerStatus[0].hp;
+            playerMaxHp = 1000;
             playerCurHp = playerMaxHp;
             playerAttackPower = playerStatus[0].attack_power;
             playerMaxExp = playerStatus[0].xp_requiredfor_levelup;
@@ -65,7 +66,6 @@ public partial class Player
             // playerMaxHp = player.hp;
             // playerCurHp = playerMaxHp;
             // playerMaxExp = player.exp;
-
 
             IsDeath = false;
         }

@@ -53,7 +53,8 @@ public class BossOne : BossBase
     }
     public void GetDamage(int damage)
     {
-        curHP -= damage;
+        // curHP : 서버에서 받아오깅
+        // curHP -= damage;
     }
     public override void Attack()
     {

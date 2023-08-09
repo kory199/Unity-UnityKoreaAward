@@ -19,12 +19,7 @@ public abstract class MonsterBase : MonoBehaviour
     protected MonsterData_res[] rangedMonsterStatus;
     protected MonsterData_res[] monsterData_Res;
 
-    // 임시 Status
-    private int maxHP = 10;
-    public int curHP = 10;
-    public int exp = 10;
-    public int score = 10;
-    protected bool Death { get { return curHP <= 0; } }
+    // protected bool Death { get { return curHP <= 0; } }
 
     protected void Awake()
     {
@@ -56,15 +51,6 @@ public abstract class MonsterBase : MonoBehaviour
         ObjectPooler.ReturnToPool(gameObject);
 
         // CancelInvoke(); //invoke 함수를 사용하는 경우적어주세요
-    }
-
-    private void OnDestroy()
-    {
-        if (Death == true)
-        {
-            // 죽었을 때의 처리
-            DeathProcess();
-        }
     }
     /// <summary>
     /// Set variable string ' MonsterName ' 
@@ -139,19 +125,6 @@ public abstract class MonsterBase : MonoBehaviour
         stageNum++;
     }
 
-    public void MonsterHit(int damage)
-    {
-        curHP -= damage;
-        if (curHP <= 0)
-        {
-            MonsterDeath();
-        }
-    }
-    protected void DeathProcess()
-    {
-        // 몬스터가 죽었을때 처리해줄 로직 작성
-        // ex) 점수를올린다, 경험치를 올린다 등등
-    }
 
     // String형태로 코루틴 함수를 찾으므로 오타나지않게 주의
     // ex) NONE -> X,  None -> O
@@ -262,6 +235,7 @@ public abstract class MonsterBase : MonoBehaviour
 
     protected virtual void MonsterDeath()
     {
+        gameObject.SetActive(false);
         StageManager.Instance.MonsterDeath();
     }
 }

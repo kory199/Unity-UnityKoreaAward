@@ -50,7 +50,7 @@ public class Bullet : MonoBehaviour
         bulletRb.gravityScale = 0;
         bulletCollider.isTrigger = true;
 
-        bulletSpawner = playerObject.transform;
+        playerObject = FindObjectOfType<Player>().gameObject;
 
         if (playerObject.TryGetComponent<Player>(out Player player))
         {
@@ -61,8 +61,7 @@ public class Bullet : MonoBehaviour
             player = playerObject.AddComponent<Player>();
         }
 
-        meleeMonster = GetComponent<MeleeMonster>();
-        rangedMonster = GetComponent<RangedMonster>();
+        bulletSpawner = playerObject.transform;
 
         // 레벨업 등에 따라 바뀜 (초기 값으로 추후 스크립터블 오브젝트에서 값을 받아와야됨)
         bulletSpeed = 10f;
@@ -103,17 +102,16 @@ public class Bullet : MonoBehaviour
             switch (other.gameObject.name)
             {
                 case "BasicMeleeMonster":
+                    meleeMonster = other.gameObject.GetComponent<MeleeMonster>();
                     meleeMonster.Hit();
                     break;
                 case "RangedMonster":
+                    rangedMonster = other.gameObject.GetComponent<RangedMonster>();
                     rangedMonster.Hit();
                     break;
                 default:
                     break;
             }
-
-            // 몬스터 충돌 처리 (임시)
-            other.gameObject.SetActive(false); // monster hit func 구현 후 대체
             gameObject.SetActive(false);
         }
         else
