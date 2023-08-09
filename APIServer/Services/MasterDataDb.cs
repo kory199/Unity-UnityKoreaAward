@@ -76,7 +76,7 @@ public class MasterDataDb : BaseDb<MasterDataDic>, IMasterDataDb
             {
                 switch (monster.type)
                 {
-                    case "MeleeMonstser":
+                    case "MeleeMonster":
                         meleeMonsters.Add(monster);
                         break;
                     case "RangedMonster":
@@ -88,7 +88,7 @@ public class MasterDataDb : BaseDb<MasterDataDic>, IMasterDataDb
                 }
             }
 
-            MasterDataDic.masterDataDic.Add(MasterDataDicKey.MeleeMonstser, meleeMonsters);
+            MasterDataDic.masterDataDic.Add(MasterDataDicKey.MeleeMonster, meleeMonsters);
             MasterDataDic.masterDataDic.Add(MasterDataDicKey.RangedMonster, rangedMonsters);
             MasterDataDic.masterDataDic.Add(MasterDataDicKey.BOSS, bossMonster);
 

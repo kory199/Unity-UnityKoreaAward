@@ -15,7 +15,7 @@ public class MasterDataDic
 
 public class MasterDataDicKey
 {
-    public const String MeleeMonstser = "MeleeMonstser";
+    public const String MeleeMonster = "MeleeMonster";
     public const String RangedMonster = "RangedMonster";
     public const String BOSS = "BOSS";
     public const String PlayerStatus = "PlayerStatus";
