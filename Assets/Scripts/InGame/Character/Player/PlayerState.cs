@@ -2,14 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using TMPro;
 
 public partial class Player
 {
-    // UI Test Component
-
-
-
     public override void Attack()
     {
         GameObject pullBullet = ObjectPooler.SpawnFromPool("Bullet2D", gameObject.transform.position);
@@ -58,6 +53,7 @@ public partial class Player
         if (playerCurExp >= playerMaxExp)
         {
             LevelyUp();
+            playerCurExp = 0;
         }
     }
     protected override void Die()
@@ -70,5 +66,7 @@ public partial class Player
     {
         // 스크립터블 오브젝트로 부터 새로운 정보를 받아와 player setting
         // InitPlayer();
+
+        playerLv++;
     }
 }

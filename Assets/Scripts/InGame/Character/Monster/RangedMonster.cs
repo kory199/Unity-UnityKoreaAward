@@ -24,6 +24,7 @@ public class RangedMonster : MonsterBase
     protected override void OnEnable()
     {
         base.OnEnable();
+        player.Reward(rangedMonster_exp);
     }
 
     protected override void Start()

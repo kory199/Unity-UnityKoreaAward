@@ -37,7 +37,7 @@ public class MeleeMonster : MonsterBase
     {
         base.OnDisable();
 
-        // player.Reward();
+        player.Reward(meleeMonster_exp);
     }
     #endregion
     protected override void SetMonsterName()

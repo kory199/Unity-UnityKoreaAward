@@ -60,6 +60,7 @@ public partial class Player
             playerMovementSpeed = playerStatus[0].movement_speed;
             playerProjectileSpeed = playerStatus[0].projectile_speed;
             playerRateOfFire = playerStatus[0].rate_of_fire;
+            playerLv = 1;
 
             // PlayerData player = APIDataSO.Instance.GetValueByKey<PlayerData>(APIDataDicKey.PlayerData);
             // TODO : 로그인 후 해당 유저 데이터 추가예정
