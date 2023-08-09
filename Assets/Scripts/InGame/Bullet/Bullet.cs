@@ -86,9 +86,6 @@ public class Bullet : MonoBehaviour
         {
             switch (setShooter.name)
             {
-                case "BaseMeleeMonster":
-                    meleeMonster.PlayerHit();
-                    break;
                 case "RangedMonster":
                     rangedMonster.PlayerHit();
                     break;

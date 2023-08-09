@@ -60,7 +60,7 @@ public class SpawnManager : MonoBehaviour
         }
         if (_isBoss)
         {
-            GameObject Boss = ObjectPooler.SpawnFromPool(name, Vector3.up * 10);
+            GameObject Boss = ObjectPooler.SpawnFromPool("BossOne", Vector3.up * 10);
         }
 
         _monsterSpawnRoutine = null;

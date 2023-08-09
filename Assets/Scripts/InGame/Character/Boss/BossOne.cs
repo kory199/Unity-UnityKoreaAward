@@ -99,6 +99,12 @@ public class BossOne : BossBase
             yield return new WaitForSeconds(_monsterInfo.RateOfFire); // 3f 대신 monsterData.RateOfFire 등등 만들어서 대체
         }
     }
+    protected override IEnumerator State_Move()
+    {
+        // 추후 몬스터 별 이동속도 및 공격 범위 추가
+        return base.State_Move();
+    }
+
     IEnumerator State_Phase1()
     {
         Debug.Log("페이즈 1");

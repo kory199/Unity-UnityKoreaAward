@@ -62,6 +62,8 @@ public class MeleeMonster : MonsterBase
     public override void Attack()
     {
         transform.Rotate(0, 0, 30);
+        // юс╫ц
+        PlayerHit();
     }
 
     public override void Hit()
