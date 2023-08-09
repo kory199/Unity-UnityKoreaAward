@@ -24,6 +24,8 @@ public abstract class MonsterBase : MonoBehaviour
     protected void Awake()
     {
         GetInitMonsterStatus();
+
+        InGameManager.Instance.RegisterParams(EnumTypes.InGameParamType.Monster, (int)EnumTypes.StageStateType.Max);
     }
 
     protected virtual void OnEnable()
@@ -35,12 +37,14 @@ public abstract class MonsterBase : MonoBehaviour
     protected virtual void Start()
     {
         // Start Chain
-        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, GetMeleeMonsterInfo);
-        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, GetRangedMonsterInfo);
+        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Monster, EnumTypes.StageStateType.Awake, GetMeleeMonsterInfo);
+        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Monster, EnumTypes.StageStateType.Awake, GetRangedMonsterInfo);
 
         // Next Chain
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Next, SetStageNum);
         stageNum = 1;
+
+        CallMonster(EnumTypes.StageStateType.Awake);
 
         // data manager 삭제 및 stage 변경에 따른 monster status 변경으로 onEnable로 monster setting 변경 필요
         SetMonsterName();
@@ -63,7 +67,6 @@ public abstract class MonsterBase : MonoBehaviour
 
         if (result)
         {
-
             meleeMonsterStatus = APIManager.Instance.GetValueByKey<MonsterData_res[]>(MasterDataDicKey.MeleeMonster.ToString());
             rangedMonsterStatus = APIManager.Instance.GetValueByKey<MonsterData_res[]>(MasterDataDicKey.RangedMonster.ToString());
         }
@@ -84,8 +87,7 @@ public abstract class MonsterBase : MonoBehaviour
 
     private void MonsterSetting(int curStageNum, EnumTypes.MonsterType monsterType)
     {
-        this.stageNum = curStageNum;
-
+        Debug.LogError("MonsterSetting Call");
         monsterData_Res = APIManager.Instance.GetValueByKey<MonsterData_res[]>(monsterType.ToString());
 
         if (monsterData_Res == null)
@@ -115,16 +117,27 @@ public abstract class MonsterBase : MonoBehaviour
 
     private void SetStageNum()
     {
+        Debug.LogError("SetStageNum : " + stageNum);
         // 현재 Max Stage 5 기준
         if (stageNum > 5)
         {
-            InGameManager.Instance.InvokeCallBacks(InGameParamType.Stage, (int)EnumTypes.StageStateType.End);
             return;
         }
 
         stageNum++;
+
+        CallMonster(EnumTypes.StageStateType.Next);
     }
 
+    protected virtual void MonsterStatusUpdate()
+    {
+
+    }
+
+    private void CallMonster(EnumTypes.StageStateType stageType)
+    {
+        InGameManager.Instance.InvokeCallBacks(EnumTypes.InGameParamType.Monster, (int)stageType);
+    }
 
     // String형태로 코루틴 함수를 찾으므로 오타나지않게 주의
     // ex) NONE -> X,  None -> O

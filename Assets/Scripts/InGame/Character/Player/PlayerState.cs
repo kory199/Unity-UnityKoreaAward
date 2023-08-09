@@ -68,5 +68,7 @@ public partial class Player
         // InitPlayer();
 
         playerLv++;
+        // InitPlayer(playerLv);
+        retrunPlayerInfo(playerLv);
     }
 }

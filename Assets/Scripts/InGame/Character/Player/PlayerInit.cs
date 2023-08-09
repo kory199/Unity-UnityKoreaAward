@@ -14,7 +14,7 @@ public partial class Player
     [Header("User Setting")]
     public float playerSpeed;
     public int playerMaxHp;
-    public float playerCurHp;
+    public float playerCurHp = int.MaxValue;
     public int playerAttackPower;
     public int playerLv;
     public int playerMaxExp;
@@ -23,6 +23,8 @@ public partial class Player
     public float playerProjectileSpeed;
     public float playerRateOfFire = 0.3f;
     public float lastAttackTime = 0;
+
+    PlayerStatus_res[] playerStatus;
 
     public bool IsDeath;
 
@@ -43,24 +45,25 @@ public partial class Player
         Cursor.lockState = CursorLockMode.Confined;
     }
 
-    private async void InitPlayer()
+    private async void InitPlayer(int playerLv)
     {
+        // 추후 변경
         bool result = await APIManager.Instance.GetMasterDataAPI();
-
 
         if (result)
         {
-            PlayerStatus_res[] playerStatus = APIManager.Instance.GetValueByKey<PlayerStatus_res[]>(MasterDataDicKey.PlayerStatus.ToString());
+            playerStatus = APIManager.Instance.GetValueByKey<PlayerStatus_res[]>(MasterDataDicKey.PlayerStatus.ToString());
             // Level 1 기준 초기 셋팅
             // playerMaxHp = playerStatus[0].hp;
+            this.playerLv = playerLv;
+
             playerMaxHp = 1000;
             playerCurHp = playerMaxHp;
-            playerAttackPower = playerStatus[0].attack_power;
-            playerMaxExp = playerStatus[0].xp_requiredfor_levelup;
-            playerMovementSpeed = playerStatus[0].movement_speed;
-            playerProjectileSpeed = playerStatus[0].projectile_speed;
-            playerRateOfFire = playerStatus[0].rate_of_fire;
-            playerLv = 1;
+            playerAttackPower = playerStatus[playerLv - 1].attack_power;
+            playerMaxExp = playerStatus[playerLv - 1].xp_requiredfor_levelup;
+            playerMovementSpeed = playerStatus[playerLv - 1].movement_speed;
+            playerProjectileSpeed = playerStatus[playerLv - 1].projectile_speed;
+            playerRateOfFire = playerStatus[playerLv - 1].rate_of_fire;
 
             // PlayerData player = APIDataSO.Instance.GetValueByKey<PlayerData>(APIDataDicKey.PlayerData);
             // TODO : 로그인 후 해당 유저 데이터 추가예정
@@ -70,5 +73,17 @@ public partial class Player
 
             IsDeath = false;
         }
+    }
+
+    // 추후 InitPlayer로 병합 예정 (서버 연결 확인 후 MasterData로부터 받아오기)
+    private void retrunPlayerInfo(int inputPlayerLV)
+    {
+        playerMaxHp = 1000;
+        playerCurHp = playerMaxHp;
+        playerAttackPower = playerStatus[inputPlayerLV - 1].attack_power;
+        playerMaxExp = playerStatus[inputPlayerLV - 1].xp_requiredfor_levelup;
+        playerMovementSpeed = playerStatus[inputPlayerLV - 1].movement_speed;
+        playerProjectileSpeed = playerStatus[inputPlayerLV - 1].projectile_speed;
+        playerRateOfFire = playerStatus[inputPlayerLV - 1].rate_of_fire;
     }
 }

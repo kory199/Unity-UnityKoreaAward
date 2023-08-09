@@ -17,6 +17,7 @@ public static partial class EnumTypes
     public enum InGameParamType
     {
         Player,
+        Monster,
         Stage,
         MAX
     }
@@ -67,6 +68,7 @@ public static partial class EnumTypes
 
     public enum StageStateType
     {
+        Awake,
         Start, //����
         Next, //����
         End, //�� => ������

@@ -8,10 +8,11 @@ public partial class Player : CharacterBase
 {
     
     // UI Test Component
-    [SerializeField] TextMeshProUGUI ui_Hp;
-    [SerializeField] TextMeshProUGUI ui_Exp;
-    [SerializeField] TextMeshProUGUI ui_Stage;
-    [SerializeField] TextMeshProUGUI ui_LV;
+    [SerializeField] private TextMeshProUGUI ui_Hp;
+    [SerializeField] private TextMeshProUGUI ui_Exp;
+    [SerializeField] private TextMeshProUGUI ui_Stage;
+    [SerializeField] private TextMeshProUGUI ui_LV;
+    [SerializeField] private TextMeshProUGUI ui_Attack;
 
 
     #region unity event func
@@ -19,7 +20,7 @@ public partial class Player : CharacterBase
     {
         InitSetting();
         InitComponent();
-        InitPlayer();
+        InitPlayer(1);
     }
 
     protected override void Start()
@@ -42,11 +43,12 @@ public partial class Player : CharacterBase
             }
         }
 
-        // temp ui
+        // temp ui (추후 각 컴포넌트 별 변경 시 반영)
         ui_Hp.text = playerCurHp.ToString();
         ui_Exp.text = playerCurExp.ToString();
         ui_Stage.text = StageManager.Instance.GetStageNum().ToString();
         ui_LV.text = playerLv.ToString();
+        ui_Attack.text = playerAttackPower.ToString();
     }
 
     #endregion
