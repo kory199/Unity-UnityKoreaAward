@@ -59,21 +59,24 @@ public class MeleeMonster : MonsterBase
         meleeMonster_Range = meleeMonsterStatus[0].ranged;
     }
 
-    protected override void Attack()
+    public override void Attack()
     {
         transform.Rotate(0, 0, 30);
-
-        player.PlayerHit(meleeMonster_CollisionDamage);
     }
 
-    protected override void Hit(float playerDamage)
+    public override void Hit()
     {
-        meleeMonster_CurHp -= playerDamage;
+        meleeMonster_CurHp -= player.playerAttackPower;
 
         if (meleeMonster_CurHp <= 0)
         {
-
+            MonsterDeath();
         }
+    }
+
+    public void PlayerHit()
+    {
+        player.PlayerHit(meleeMonster_CollisionDamage);
     }
 
     protected override IEnumerator State_Move()

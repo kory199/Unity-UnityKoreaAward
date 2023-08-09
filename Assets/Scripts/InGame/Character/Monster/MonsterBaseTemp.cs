@@ -256,13 +256,12 @@ public abstract class MonsterBase : MonoBehaviour
     /// <summary>
     /// 공격로직
     /// </summary>
-    protected abstract void Attack();
+    public abstract void Attack();
 
-    protected abstract void Hit(float hitDamage);
+    public abstract void Hit();
 
     protected virtual void MonsterDeath()
     {
-        // 오브젝트 풀에 반환
         StageManager.Instance.MonsterDeath();
     }
 }

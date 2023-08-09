@@ -63,8 +63,10 @@ public class RangedMonster : MonsterBase
         return base.State_Move();
     }
 
-    protected override void Attack()
+    public override void Attack()
     {
+        Debug.LogError("Ranged Monster Attack : " + rangedMonster_CollisionDamage);
+
         GameObject pullBullet = ObjectPooler.SpawnFromPool("Bullet2D", gameObject.transform.position);
         playerTargetDirection = (player.transform.position - gameObject.transform.position).normalized;
 
@@ -93,8 +95,18 @@ public class RangedMonster : MonsterBase
         bulletRb.velocity = playerTargetDirection * rangedMonster_ProjectileSpeed;
     }
 
-    protected override void Hit(float playerDamage)
+    public override void Hit()
     {
-        rangedMonster_CurHp -= playerDamage;
+        rangedMonster_CurHp -= player.playerAttackPower;
+
+        if (rangedMonster_CurHp <= 0)
+        {
+            MonsterDeath();
+        }
+    }
+
+    public void PlayerHit()
+    {
+        player.PlayerHit(rangedMonster_CollisionDamage);
     }
 }

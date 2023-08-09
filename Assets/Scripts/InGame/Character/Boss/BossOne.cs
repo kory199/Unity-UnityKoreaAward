@@ -55,7 +55,7 @@ public class BossOne : BossBase
     {
         curHP -= damage;
     }
-    protected override void Attack()
+    public override void Attack()
     {
         ShootProjectile(projectileName);
     }
@@ -159,7 +159,7 @@ public class BossOne : BossBase
 
     }
 
-    protected override void Hit(float hitDamage)
+    public override void Hit()
     {
         throw new System.NotImplementedException();
     }
