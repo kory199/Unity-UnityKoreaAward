@@ -1,0 +1,67 @@
+[
+    {
+        "Id": 1,
+        "type": "RangedMonster",
+        "level": 1,
+        "exp": 10,
+        "hp": 5,
+        "speed": 0.5,
+        "rate_of_fire": 0.45,
+        "projectile_speed": 5,
+        "collision_damage": 10,
+        "score": 10,
+        "ranged": 10
+    },
+    {
+        "Id": 2,
+        "type": "RangedMonster",
+        "level": 2,
+        "exp": 15,
+        "hp": 7.5,
+        "speed": 0.525,
+        "rate_of_fire": 0.525,
+        "projectile_speed": 7.5,
+        "collision_damage": 11,
+        "score": 20,
+        "ranged": 10
+    },
+    {
+        "Id": 3,
+        "type": "RangedMonster",
+        "level": 3,
+        "exp": 20,
+        "hp": 10,
+        "speed": 0.55,
+        "rate_of_fire": 0.6,
+        "projectile_speed": 10,
+        "collision_damage": 12,
+        "score": 30,
+        "ranged": 10
+    },
+    {
+        "Id": 4,
+        "type": "RangedMonster",
+        "level": 4,
+        "exp": 25,
+        "hp": 12.5,
+        "speed": 0.575,
+        "rate_of_fire": 0.675,
+        "projectile_speed": 12.5,
+        "collision_damage": 13,
+        "score": 40,
+        "ranged": 10
+    },
+    {
+        "Id": 5,
+        "type": "RangedMonster",
+        "level": 5,
+        "exp": 30,
+        "hp": 15,
+        "speed": 0.6,
+        "rate_of_fire": 0.75,
+        "projectile_speed": 15,
+        "collision_damage": 14,
+        "score": 50,
+        "ranged": 10
+    }
+]

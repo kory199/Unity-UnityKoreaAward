@@ -11,7 +11,7 @@ public class MonsterInfo
     public float RateOfFire;
     public float Range;
     public float MoveSpeed;
-    public MonsterInfo(string name, int exp, float hp, int score, float rateofFire, float range= 0,float moveSpeed= 0.5f)
+    public MonsterInfo(string name, int exp, float hp, int score, float rateofFire, float range = 0, float moveSpeed = 0.5f)
     {
         this.Name = name;
         this.Exp = exp;

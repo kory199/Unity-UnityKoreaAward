@@ -28,8 +28,8 @@ public class TitleManager : MonoBehaviour
         panels[0].gameObject.SetActive(true);
         loginInfotext.gameObject.SetActive(false);
 
-        GetGameVersion();
-        GetMasterData();
+        //GetGameVersion();
+        //GetMasterData();
 
         // === StartPanel Button Event ===
         accountBut.onClick.AddListener(OnClickAccount);
