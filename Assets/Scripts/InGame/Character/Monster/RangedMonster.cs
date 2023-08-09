@@ -29,7 +29,8 @@ public class RangedMonster : MonsterBase
     protected override void Start()
     {
         base.Start();
-        SetRangedMonsterStatus();
+        SetRangedMonsterStatus(1);
+        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Monster, EnumTypes.StageStateType.Next, MonsterStatusUpdate);
     }
 
     protected override void OnDisable()
@@ -42,18 +43,23 @@ public class RangedMonster : MonsterBase
         MonsterName = "RangedMonster";
     }
 
-    private void SetRangedMonsterStatus()
+    private void SetRangedMonsterStatus(int inputStageNum)
     {
-        rangedMonster_Level = rangedMonsterStatus[0].level;
-        rangedMonster_exp = rangedMonsterStatus[0].exp;
-        rangedMonster_Hp = rangedMonsterStatus[0].hp;
+        rangedMonster_Level = rangedMonsterStatus[inputStageNum - 1].level;
+        rangedMonster_exp = rangedMonsterStatus[inputStageNum - 1].exp;
+        rangedMonster_Hp = rangedMonsterStatus[inputStageNum - 1].hp;
         rangedMonster_CurHp = rangedMonster_Hp;
-        rangedMonster_Speed = rangedMonsterStatus[0].speed;
-        rangedMonster_RateOfFire = rangedMonsterStatus[0].rate_of_fire;
-        rangedMonster_ProjectileSpeed = rangedMonsterStatus[0].projectile_speed;
-        rangedMonster_CollisionDamage = rangedMonsterStatus[0].collision_damage;
-        rangedMonster_Score = rangedMonsterStatus[0].score;
-        rangedMonster_Range = rangedMonsterStatus[0].ranged;
+        rangedMonster_Speed = rangedMonsterStatus[inputStageNum - 1].speed;
+        rangedMonster_RateOfFire = rangedMonsterStatus[inputStageNum - 1].rate_of_fire;
+        rangedMonster_ProjectileSpeed = rangedMonsterStatus[inputStageNum - 1].projectile_speed;
+        rangedMonster_CollisionDamage = rangedMonsterStatus[inputStageNum - 1].collision_damage;
+        rangedMonster_Score = rangedMonsterStatus[inputStageNum - 1].score;
+        rangedMonster_Range = rangedMonsterStatus[inputStageNum - 1].ranged;
+    }
+
+    protected override void MonsterStatusUpdate()
+    {
+        SetRangedMonsterStatus(stageNum);
     }
 
     #endregion
@@ -63,8 +69,10 @@ public class RangedMonster : MonsterBase
         return base.State_Move();
     }
 
-    protected override void Attack()
+    public override void Attack()
     {
+        Debug.LogError("Ranged Monster Attack : " + rangedMonster_CollisionDamage);
+
         GameObject pullBullet = ObjectPooler.SpawnFromPool("Bullet2D", gameObject.transform.position);
         playerTargetDirection = (player.transform.position - gameObject.transform.position).normalized;
 
@@ -93,8 +101,19 @@ public class RangedMonster : MonsterBase
         bulletRb.velocity = playerTargetDirection * rangedMonster_ProjectileSpeed;
     }
 
-    protected override void Hit(float playerDamage)
+    public override void Hit()
     {
-        rangedMonster_CurHp -= playerDamage;
+        rangedMonster_CurHp -= player.playerAttackPower;
+
+        if (rangedMonster_CurHp <= 0)
+        {
+            player.Reward(rangedMonster_exp);
+            MonsterDeath();
+        }
+    }
+
+    public void PlayerHit()
+    {
+        player.PlayerHit(rangedMonster_CollisionDamage);
     }
 }

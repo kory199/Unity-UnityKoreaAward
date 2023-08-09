@@ -19,16 +19,13 @@ public abstract class MonsterBase : MonoBehaviour
     protected MonsterData_res[] rangedMonsterStatus;
     protected MonsterData_res[] monsterData_Res;
 
-    // 임시 Status
-    private int maxHP = 10;
-    public int curHP = 10;
-    public int exp = 10;
-    public int score = 10;
-    protected bool Death { get { return curHP <= 0; } }
+    // protected bool Death { get { return curHP <= 0; } }
 
     protected void Awake()
     {
         GetInitMonsterStatus();
+
+        InGameManager.Instance.RegisterParams(EnumTypes.InGameParamType.Monster, (int)EnumTypes.StageStateType.Max);
     }
 
     protected virtual void OnEnable()
@@ -40,12 +37,14 @@ public abstract class MonsterBase : MonoBehaviour
     protected virtual void Start()
     {
         // Start Chain
-        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, GetMeleeMonsterInfo);
-        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, GetRangedMonsterInfo);
+        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Monster, EnumTypes.StageStateType.Awake, GetMeleeMonsterInfo);
+        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Monster, EnumTypes.StageStateType.Awake, GetRangedMonsterInfo);
 
         // Next Chain
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Next, SetStageNum);
         stageNum = 1;
+
+        CallMonster(EnumTypes.StageStateType.Awake);
 
         // data manager 삭제 및 stage 변경에 따른 monster status 변경으로 onEnable로 monster setting 변경 필요
         SetMonsterName();
@@ -56,15 +55,6 @@ public abstract class MonsterBase : MonoBehaviour
         ObjectPooler.ReturnToPool(gameObject);
 
         // CancelInvoke(); //invoke 함수를 사용하는 경우적어주세요
-    }
-
-    private void OnDestroy()
-    {
-        if (Death == true)
-        {
-            // 죽었을 때의 처리
-            DeathProcess();
-        }
     }
     /// <summary>
     /// Set variable string ' MonsterName ' 
@@ -77,7 +67,6 @@ public abstract class MonsterBase : MonoBehaviour
 
         if (result)
         {
-
             meleeMonsterStatus = APIManager.Instance.GetValueByKey<MonsterData_res[]>(MasterDataDicKey.MeleeMonster.ToString());
             rangedMonsterStatus = APIManager.Instance.GetValueByKey<MonsterData_res[]>(MasterDataDicKey.RangedMonster.ToString());
         }
@@ -98,8 +87,7 @@ public abstract class MonsterBase : MonoBehaviour
 
     private void MonsterSetting(int curStageNum, EnumTypes.MonsterType monsterType)
     {
-        this.stageNum = curStageNum;
-
+        Debug.LogError("MonsterSetting Call");
         monsterData_Res = APIManager.Instance.GetValueByKey<MonsterData_res[]>(monsterType.ToString());
 
         if (monsterData_Res == null)
@@ -129,28 +117,26 @@ public abstract class MonsterBase : MonoBehaviour
 
     private void SetStageNum()
     {
+        Debug.LogError("SetStageNum : " + stageNum);
         // 현재 Max Stage 5 기준
         if (stageNum > 5)
         {
-            InGameManager.Instance.InvokeCallBacks(InGameParamType.Stage, (int)EnumTypes.StageStateType.End);
             return;
         }
 
         stageNum++;
+
+        CallMonster(EnumTypes.StageStateType.Next);
     }
 
-    public void MonsterHit(int damage)
+    protected virtual void MonsterStatusUpdate()
     {
-        curHP -= damage;
-        if (curHP <= 0)
-        {
-            MonsterDeath();
-        }
+
     }
-    protected void DeathProcess()
+
+    private void CallMonster(EnumTypes.StageStateType stageType)
     {
-        // 몬스터가 죽었을때 처리해줄 로직 작성
-        // ex) 점수를올린다, 경험치를 올린다 등등
+        InGameManager.Instance.InvokeCallBacks(EnumTypes.InGameParamType.Monster, (int)stageType);
     }
 
     // String형태로 코루틴 함수를 찾으므로 오타나지않게 주의
@@ -256,13 +242,13 @@ public abstract class MonsterBase : MonoBehaviour
     /// <summary>
     /// 공격로직
     /// </summary>
-    protected abstract void Attack();
+    public abstract void Attack();
 
-    protected abstract void Hit(float hitDamage);
+    public abstract void Hit();
 
     protected virtual void MonsterDeath()
     {
-        // 오브젝트 풀에 반환
+        gameObject.SetActive(false);
         StageManager.Instance.MonsterDeath();
     }
 }

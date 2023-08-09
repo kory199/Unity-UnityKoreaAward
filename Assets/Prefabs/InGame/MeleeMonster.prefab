@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1557498549645304856}
   m_Layer: 7
   m_Name: MeleeMonster
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -115,6 +115,7 @@ MonoBehaviour:
   meleeMonster_Level: 0
   meleeMonster_exp: 0
   meleeMonster_Hp: 0
+  meleeMonster_CurHp: 0
   meleeMonster_Speed: 0
   meleeMonster_RateOfFire: 0
   meleeMonster_ProjectileSpeed: 0

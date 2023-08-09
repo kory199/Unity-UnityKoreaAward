@@ -16,7 +16,7 @@ public class MeleeMonster : MonsterBase
     [SerializeField] private int meleeMonster_Score;
     [SerializeField] private float meleeMonster_Range;
 
-    
+
 
     #region unity event func
     // stage 변경에 따른 Level별 능력치 부여 => 서버 정보 받아오기
@@ -30,14 +30,13 @@ public class MeleeMonster : MonsterBase
     protected override void Start()
     {
         base.Start();
-        SetMeleeMonsterStatus();
+        SetMeleeMonsterStatus(1);
+        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Monster, EnumTypes.StageStateType.Next, MonsterStatusUpdate);
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
-
-        // player.Reward();
     }
     #endregion
     protected override void SetMonsterName()
@@ -45,35 +44,47 @@ public class MeleeMonster : MonsterBase
         MonsterName = "BasicMeleeMonster";
     }
 
-    protected void SetMeleeMonsterStatus()
+    protected void SetMeleeMonsterStatus(int inputStageNum)
     {
-        meleeMonster_Level = meleeMonsterStatus[0].level;
-        meleeMonster_exp = meleeMonsterStatus[0].exp;
-        meleeMonster_Hp = meleeMonsterStatus[0].hp;
+        meleeMonster_Level = meleeMonsterStatus[inputStageNum - 1].level;
+        meleeMonster_exp = meleeMonsterStatus[inputStageNum - 1].exp;
+        meleeMonster_Hp = meleeMonsterStatus[inputStageNum - 1].hp;
         meleeMonster_CurHp = meleeMonster_Hp;
-        meleeMonster_Speed = meleeMonsterStatus[0].speed;
-        meleeMonster_RateOfFire = meleeMonsterStatus[0].rate_of_fire;
-        meleeMonster_ProjectileSpeed = meleeMonsterStatus[0].projectile_speed;
-        meleeMonster_CollisionDamage = meleeMonsterStatus[0].collision_damage;
-        meleeMonster_Score = meleeMonsterStatus[0].score;
-        meleeMonster_Range = meleeMonsterStatus[0].ranged;
+        meleeMonster_Speed = meleeMonsterStatus[inputStageNum - 1].speed;
+        meleeMonster_RateOfFire = meleeMonsterStatus[inputStageNum - 1].rate_of_fire;
+        meleeMonster_ProjectileSpeed = meleeMonsterStatus[inputStageNum - 1].projectile_speed;
+        meleeMonster_CollisionDamage = meleeMonsterStatus[inputStageNum - 1].collision_damage;
+        meleeMonster_Score = meleeMonsterStatus[inputStageNum - 1].score;
+        meleeMonster_Range = meleeMonsterStatus[inputStageNum - 1].ranged;
     }
 
-    protected override void Attack()
+    protected override void MonsterStatusUpdate()
+    {
+        SetMeleeMonsterStatus(stageNum);
+    }
+
+
+    public override void Attack()
     {
         transform.Rotate(0, 0, 30);
-
-        player.PlayerHit(meleeMonster_CollisionDamage);
+        // 임시
+        PlayerHit();
     }
 
-    protected override void Hit(float playerDamage)
+    public override void Hit()
     {
-        meleeMonster_CurHp -= playerDamage;
+        meleeMonster_CurHp -= player.playerAttackPower;
 
         if (meleeMonster_CurHp <= 0)
         {
-
+            player.Reward(meleeMonster_exp);
+            MonsterDeath();
         }
+    }
+
+    public void PlayerHit()
+    {
+        player.PlayerHit(meleeMonster_CollisionDamage);
     }
 
     protected override IEnumerator State_Move()

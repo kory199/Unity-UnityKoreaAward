@@ -34,6 +34,7 @@ public class StageManager : MonoSingleton<StageManager>
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetMonsterSpawn);
         //Next ü��
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Next, SetStageNum);
+
         //End ü�� 
         //InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.End, SendStageData);
     }
@@ -100,6 +101,7 @@ public class StageManager : MonoSingleton<StageManager>
     public void MonsterDeath()
     {
         _deathMonsters++;
+
         //  Debug.Log("DeathMonsterCount : " + _deathMonsters);
         if (_deathMonsters >= (_spawnMeleeNum + _spawnRangedNum) * 1 * 60)
         {
