@@ -7,8 +7,7 @@ public class UI_SceneLobby : UIBase
     private string _basePath = "UI/";
     private void OnEnable()
     {
-        OnShow();
-        GameManager.Instance.sceneState = SceneState.Lobby;
+        GameManager.Instance.SceneState = SceneState.Lobby;
     }
 
 
@@ -21,9 +20,8 @@ public class UI_SceneLobby : UIBase
     public void OnClick_GameStart()
     {
         GameManager.Instance.MoveScene("SceneInGame");
-        GameManager.Instance.sceneState = SceneState.Game;
+        GameManager.Instance.SceneState = SceneState.Game;
         OnHide();
-        Destroy(this);
     }
     public void OnClick_Explane()
     {
@@ -33,11 +31,18 @@ public class UI_SceneLobby : UIBase
     {
 
     }
+    UI_GPopupOption gPopupOption = null;
     public void OnClick_Options()
     {
-        UIManager.Instance.CreateObject<GameObject>("GPopup_Options", EnumTypes.LayoutType.Global);
+        Debug.Log("click button");
         OnHide();
-        Destroy(this);
+        if (gPopupOption == null)
+        {
+            gPopupOption = UIManager.Instance.CreateObject
+              <UI_GPopupOption>("GPopup_Options", EnumTypes.LayoutType.Global);
+            gPopupOption.uI_SceneLobby = this;
+        }
+            gPopupOption.OnShow();
     }
     public void OnClick_RankingList()
     {

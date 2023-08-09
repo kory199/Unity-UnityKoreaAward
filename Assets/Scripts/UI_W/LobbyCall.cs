@@ -6,6 +6,9 @@ public class LobbyCall : MonoBehaviour
 {
     private void Start()
     {
-        UIManager.Instance.CreateObject<UI_SceneLobby>("UI_SceneLobby",EnumTypes.LayoutType.First);
+        UI_SceneLobby uI_SceneLobby = UIManager.Instance.CreateObject
+            <UI_SceneLobby>("UI_SceneLobby",EnumTypes.LayoutType.First);
+
+        uI_SceneLobby.OnShow();
     }
 }

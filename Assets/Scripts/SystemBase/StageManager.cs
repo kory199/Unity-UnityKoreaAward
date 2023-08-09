@@ -14,14 +14,16 @@ public class StageManager : MonoSingleton<StageManager>
     [SerializeField] private float _time = 0; //=>��ũ���ͺ� ������Ʈ���� �о���� ������� ���濹��
     [SerializeField] private SpawnManager _spawnManager;
 
-    private int _onclickNum;
 
+    private UI_SceneGame uI_SceneGame = null;
     #region Uinity lifeCycle
     private void Awake()
     {
         // �����κ��� ���� ���� ���� ��û (�ӽ�)
         RequestMonsterInfo();
 
+        uI_SceneGame = UIManager.Instance.CreateObject<UI_SceneGame>("UI_SceneGame", EnumTypes.LayoutType.First);
+        uI_SceneGame.OnShow();
         //ü�� ���
         InGameManager.Instance.RegisterParams(EnumTypes.InGameParamType.Stage, (int)EnumTypes.StageStateType.Max);
     }
@@ -71,8 +73,8 @@ public class StageManager : MonoSingleton<StageManager>
     public int GetStageNum() => _stageNum;
 
     // Spawn Logic Edit
-    private void SetMeleeMonster() => _spawnMeleeNum = GetMonsterInfo(_stageNum, EnumTypes.MonsterType.MeleeMonster);
-    private void SetRangedMonster() => _spawnRangedNum = GetMonsterInfo(_stageNum, EnumTypes.MonsterType.RangedMonster);
+    private void SetMeleeMonster() => _spawnMeleeNum = GetMonsterInfo(_stageNum-1, EnumTypes.MonsterType.MeleeMonster);
+    private void SetRangedMonster() => _spawnRangedNum = GetMonsterInfo(_stageNum-1, EnumTypes.MonsterType.RangedMonster);
     private void SetMonsterSpawn()
     {
         if (_stageNum < 4)
@@ -108,7 +110,7 @@ public class StageManager : MonoSingleton<StageManager>
             SetStageNum();
             CallStage(EnumTypes.StageStateType.Start);
             _deathMonsters = 0;
-           // Debug.Log("stageNum : " + _stageNum);
+            // Debug.Log("stageNum : " + _stageNum);
         }
     }
 

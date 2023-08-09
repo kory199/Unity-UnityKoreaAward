@@ -6,7 +6,6 @@ public class UI_GPopupOption : UIBase
 {
     private void OnEnable()
     {
-        OnShow();
     }
 
 
@@ -16,17 +15,18 @@ public class UI_GPopupOption : UIBase
         return _nextProcess;
     }
 
-
+    public UI_SceneLobby uI_SceneLobby = null;
     public void OnClick_GoBack()
     {
-        switch (GameManager.Instance.sceneState)
+        OnHide();
+        switch (GameManager.Instance.SceneState)
         {
             case SceneState.Lobby:
-                GameObject lobby = UIManager.Instance.CreateObject<GameObject>("UI_SceneLobby", EnumTypes.LayoutType.First);
+                uI_SceneLobby.OnShow();
                 break;
             case SceneState.Game:
+
                 break;
         }
-        OnHide();
     }
 }

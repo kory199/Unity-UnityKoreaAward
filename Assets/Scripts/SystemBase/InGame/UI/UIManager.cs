@@ -94,6 +94,9 @@ public class UIManager : UIBase
         GameObject newUI = Resources.Load<GameObject>(path);
         GameObject newUIInstance = Instantiate(newUI);
         newUIInstance.transform.SetParent(targetCanvas.transform);
+        var targetcanvas = newUIInstance.GetComponent<Canvas>();
+        targetcanvas.overrideSorting = true;
+        targetcanvas.sortingOrder = _canvases[type].GetComponent<Canvas>().sortingOrder + 1;
         var targetComponent = newUIInstance.GetComponent<T>();
         return newUIInstance.GetComponent<T>();
     }
