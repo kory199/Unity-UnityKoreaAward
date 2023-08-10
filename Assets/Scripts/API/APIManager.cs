@@ -114,9 +114,9 @@ public class APIManager : MonoSingleton<APIManager>
 
     public async UniTask<bool> LogOutAPI()
     {
-        bool result = await CallAPI<Dictionary<string, object>, GameData>(APIUrls.LogOut,NewGameData(), APISuccessCode.LogOutSuccess, null);
+        bool result = await CallAPI<Dictionary<string, object>, GameData>(APIUrls.LogOut, NewGameData(), APISuccessCode.LogOutSuccess, null);
 
-        if(result)
+        if (result)
         {
             _id = "";
             _authToken = "";

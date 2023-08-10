@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using APIModels;
+using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -110,7 +112,7 @@ public class AccountUI : UIBase
 
             if(result)
             {
-                infoText.text = $"Created New Account Successful ! {user.ID}, {user.Password}";
+                infoText.text = $"Created New Account Successful !";
             }
             else
             {
@@ -127,8 +129,9 @@ public class AccountUI : UIBase
 
             if(result)
             {
-                infoText.text = $"Login Successful {user.ID}, {user.Password}";
-                
+                infoText.text = $"Login Successful !";
+                await UniTask.Delay(TimeSpan.FromSeconds(0.5));
+
                 //Move Scene
                 GameManager.Instance.MoveScene("SceneLobby");
                 OnHide();
