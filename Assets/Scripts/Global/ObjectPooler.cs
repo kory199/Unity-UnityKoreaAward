@@ -5,7 +5,7 @@ using UnityEngine;
 
 #if UNITY_EDITOR
 using UnityEditor;
-// 테스트
+
 [CustomEditor(typeof(ObjectPooler))]
 public class ObjectPoolerEditor : Editor
 {
