@@ -44,7 +44,7 @@ public class InGameManager : MonoSingleton<InGameManager>
         }
     }
     /// <summary>
-    /// ���� ���� Ÿ�Կ� ���� action ����
+    /// 게임 변수 타입에 맞춰 action 지정
     /// </summary>
     /// <param name="type"></param>
     /// <param name="action"></param>
@@ -61,7 +61,7 @@ public class InGameManager : MonoSingleton<InGameManager>
     }
     private void Start()
     {
-        // AddActionType(EnumTypes.InGameParamType.Player, PlayerSkiilsType.DoubleShot, () => Debug.Log("������"));
+        // AddActionType(EnumTypes.InGameParamType.Player, PlayerSkiilsType.DoubleShot, () => Debug.Log("더블샷"));
         // _parameters[EnumTypes.InGameParamType.Player].InvokeCallBack(EnumTypes.PlayerSkiilsType.DoubleShot);
     }
 }
