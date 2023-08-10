@@ -22,6 +22,7 @@ public enum ResultCode
     LoadStageSuccess = 58,
     GetNewStageSuccess = 59,
     PingSuccess = 60,
+    LogOutSuccess = 61,
 
     // === GameVersion 80~ ===
     LoadGameVersionFail = 80,

@@ -4,7 +4,8 @@
     {
         Default = 0,
         Login = 1,
-        Playing = 2,
+        GamePlay = 2,
+        GameOver = 3,
         LogOut = 4
     }
 }

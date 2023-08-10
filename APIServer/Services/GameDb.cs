@@ -1,4 +1,5 @@
 ﻿using APIServer.DbModel;
+using APIServer.StateType;
 using Microsoft.Extensions.Options;
 using SqlKata.Execution;
 using ZLogger;
@@ -24,7 +25,7 @@ public class GameDb : BaseDb<GameData>, IGameDb
                 hp = 10,
                 score = 0,
                 level = 0,
-                status = 0
+                status = (int)UserState.Login
             };
 
             await ExecuteInsertAsync(gameData);
@@ -165,6 +166,34 @@ public class GameDb : BaseDb<GameData>, IGameDb
                $"[{GetType().Name}.LoadRankingDataAsync] ErrorCode : {ResultCode.LoadRankingDataFailException}");
 
             return (ResultCode.LoadRankingDataFailException, null);
+        }
+    }
+
+    public async Task<ResultCode> StatusChangedAsync(Int64 account_id)
+    {
+        try
+        {
+            var scoreUpdata = await _queryFactory.Query(_tableName)
+                .Where(GameDbTable.player_uid, account_id)
+                .UpdateAsync(new
+                {
+                    status = (int)UserState.LogOut
+                });
+
+            if(scoreUpdata == 0)
+            {
+                return ResultCode.ChangedStatusFail;
+            }
+
+            return ResultCode.None;
+
+        }
+        catch(Exception e)
+        {
+            _logger.ZLogError(e,
+                $"[{GetType().Name}.StatusChangedAsync] ErrorCode : {ResultCode.ChangedStatusFailException}");
+
+            return ResultCode.ChangedStatusFailException;
         }
     }
 
