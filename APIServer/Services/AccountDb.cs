@@ -46,8 +46,9 @@ public class AccountDb : BaseDb<Account>, IAccountDb
         try
         {
             var accountInfo = await _queryFactory.Query(_tableName)
-                .Where(AccountDbTable.id, id)
-                .FirstOrDefaultAsync<Account>();
+                          .Where(AccountDbTable.id, id)
+                          .WhereRaw("BINARY " + AccountDbTable.id + " = ?", id)
+                          .FirstOrDefaultAsync<Account>();
 
             if (accountInfo == null || accountInfo.account_id == 0)
             {
