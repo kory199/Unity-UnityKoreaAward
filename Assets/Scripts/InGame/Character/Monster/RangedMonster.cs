@@ -30,7 +30,6 @@ public class RangedMonster : MonsterBase
     {
         base.Start();
         SetRangedMonsterStatus(1);
-        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Monster, EnumTypes.StageStateType.Next, MonsterStatusUpdate);
     }
 
     protected override void OnDisable()

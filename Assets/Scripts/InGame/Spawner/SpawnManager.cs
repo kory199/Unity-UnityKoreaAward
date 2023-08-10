@@ -74,7 +74,7 @@ public class SpawnManager : MonoBehaviour
         {
             tempNum.Add(i);
         }
-        //근접 생성
+        // 근접 몬스터 생성
         for (int i = 0; i < _meleeMonsterNum; i++)
         {
             int num = RandomChoose(tempNum.Count - 1);
@@ -84,6 +84,7 @@ public class SpawnManager : MonoBehaviour
             GameObject meleeMonster = ObjectPooler.SpawnFromPool("BasicMeleeMonster", spawnRandomArea);
         }
 
+        // 원거리 몬스터 생성
         for (int i = 0; i < _rangedMonsterNum; i++)
         {
             int num = RandomChoose(tempNum.Count - 1);

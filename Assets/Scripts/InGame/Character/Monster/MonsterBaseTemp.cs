@@ -25,7 +25,9 @@ public abstract class MonsterBase : MonoBehaviour
     {
         GetInitMonsterStatus();
 
+        //체인 등록
         InGameManager.Instance.RegisterParams(EnumTypes.InGameParamType.Monster, (int)EnumTypes.StageStateType.Max);
+        InGameManager.Instance.RegisterParams(EnumTypes.InGameParamType.Stage, (int)EnumTypes.StageStateType.Max);
     }
 
     protected virtual void OnEnable()
@@ -42,6 +44,7 @@ public abstract class MonsterBase : MonoBehaviour
 
         // Next Chain
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Next, SetStageNum);
+        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Monster, EnumTypes.StageStateType.Next, MonsterStatusUpdate);
         stageNum = 1;
 
         CallMonster(EnumTypes.StageStateType.Awake);

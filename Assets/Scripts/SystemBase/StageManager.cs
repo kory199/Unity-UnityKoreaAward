@@ -33,8 +33,7 @@ public class StageManager : MonoSingleton<StageManager>
     {
         _stageNum = 1;
         //start 체인
-        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetMeleeMonster);
-        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetRangedMonster);
+        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetMonsterSpawnum);
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetMonsterSpawn);
         //Next 체인
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Next, SetStageNum);
@@ -75,8 +74,7 @@ public class StageManager : MonoSingleton<StageManager>
     public int GetStageNum() => _stageNum;
 
     // Spawn Logic Edit
-    private void SetMeleeMonster() => _spawnMeleeNum = GetMonsterInfo(_stageNum, EnumTypes.MonsterType.MeleeMonster);
-    private void SetRangedMonster() => _spawnRangedNum = GetMonsterInfo(_stageNum, EnumTypes.MonsterType.RangedMonster);
+    private void SetMonsterSpawnum() => GetMonsterInfo(_stageNum);
     private void SetMonsterSpawn()
     {
         if (_stageNum < 4)
@@ -104,7 +102,8 @@ public class StageManager : MonoSingleton<StageManager>
     }
     public void MonsterDeath()
     {
-        _deathMonsters++;
+        //_deathMonsters++;
+        _deathMonsters += 10;
 
         //  Debug.Log("DeathMonsterCount : " + _deathMonsters);
         if (_deathMonsters >= (_spawnMeleeNum + _spawnRangedNum) * 1 * 60)
@@ -143,7 +142,7 @@ public class StageManager : MonoSingleton<StageManager>
         await APIManager.Instance.GetMasterDataAPI();
     }
 
-    public int GetMonsterInfo(int stageNum, EnumTypes.MonsterType monsterType)
+    public void GetMonsterInfo(int stageNum)
     {
         StageSpawnMonsterData_res[] stageSpawnMonsterData_Res = APIManager.Instance.GetValueByKey<StageSpawnMonsterData_res[]>(MasterDataDicKey.StageSpawnMonster.ToString());
 
@@ -152,18 +151,7 @@ public class StageManager : MonoSingleton<StageManager>
             Debug.LogError("StageSpawnMonsterData_res is Null");
         }
 
-        if (monsterType == EnumTypes.MonsterType.MeleeMonster)
-        {
-            return stageSpawnMonsterData_Res[stageNum].meleemonster_spawn;
-        }
-        else if (monsterType == EnumTypes.MonsterType.RangedMonster)
-        {
-            return stageSpawnMonsterData_Res[stageNum].rangedmonster_spawn;
-        }
-        else
-        {
-            Debug.LogError("The monster format doesn't match");
-            return 0;
-        }
+        _spawnMeleeNum = stageSpawnMonsterData_Res[stageNum - 1].meleemonster_spawn;
+        _spawnRangedNum = stageSpawnMonsterData_Res[stageNum - 1].rangedmonster_spawn;
     }
 }
