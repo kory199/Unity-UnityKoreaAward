@@ -12,7 +12,7 @@ public class APIUrls
     public static readonly string StageApi = url + "Stage";
     public static readonly string StageClear = url + "StageClear";
     public static readonly string Ping = url + "Ping";
-    public static readonly string LogOut = "LogOut";
+    public static readonly string LogOut = url + "LogOut";
 
     private static HashSet<string> validUrls = new HashSet<string>
     {

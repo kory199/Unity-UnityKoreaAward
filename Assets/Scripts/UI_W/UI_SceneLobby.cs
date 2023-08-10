@@ -66,11 +66,11 @@ public class UI_SceneLobby : UIBase
 
     public async void OnClick_LogOut()
     {
-        OnHide();
         bool result = await APIManager.Instance.LogOutAPI();
         if(result)
         {
             GameManager.Instance.MoveScene("SceneTitle");
+            OnHide();
         }
     }
 }
