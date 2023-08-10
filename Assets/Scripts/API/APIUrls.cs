@@ -12,6 +12,7 @@ public class APIUrls
     public static readonly string StageApi = url + "Stage";
     public static readonly string StageClear = url + "StageClear";
     public static readonly string Ping = url + "Ping";
+    public static readonly string LogOut = "LogOut";
 
     private static HashSet<string> validUrls = new HashSet<string>
     {
@@ -23,7 +24,8 @@ public class APIUrls
         RankingApi,
         StageApi,
         StageClear,
-        Ping
+        Ping,
+        LogOut
     };
 
     public static bool IsValidUrl(string url) => validUrls.Contains(url);

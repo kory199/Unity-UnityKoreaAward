@@ -11,4 +11,5 @@ public enum APISuccessCode
     LoadStageSuccess = 58,
     GetNewStageSuccess = 59,
     PingSuccess = 60,
+    LogOutSuccess = 61,
 }

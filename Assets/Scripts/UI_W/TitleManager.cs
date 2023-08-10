@@ -15,8 +15,10 @@ public class TitleManager : MonoBehaviour
     [SerializeField] Button startBut = null;
     [SerializeField] Button optionBut = null;
     [SerializeField] Button exitBut = null;
+    [SerializeField] Button logout = null;
     [SerializeField] TextMeshProUGUI loginInfotext = null;
     [SerializeField] TextMeshProUGUI versionText = null;
+    
 
     [Header("Option")]
     [SerializeField] Button o_goBackBut = null;
@@ -37,6 +39,7 @@ public class TitleManager : MonoBehaviour
         startBut.onClick.AddListener(GoLobbyScene);
         optionBut.onClick.AddListener(delegate { ShowUI(panels[3]);});
         exitBut.onClick.AddListener(delegate { OnExitBut(); });
+        logout.onClick.AddListener(delegate { TestLogOut(); });
 
         // === OptionPanel Button Event ===
         o_goBackBut.onClick.AddListener(delegate { ShowUI(panels[0]); });
@@ -44,6 +47,15 @@ public class TitleManager : MonoBehaviour
 
     private void OnClickAccount() => ShowUI(panels[1]);
     private void OnClickRank() => ShowUI(panels[2]);
+
+    private async void TestLogOut()
+    {
+        APIManager.Instance.LogOutAPI();
+
+        
+        int stageNum =  await APIManager.Instance.GetStageAPI(0);
+        Debug.Log("stageNum" + stageNum);
+    }
 
     private async void GetGameVersion()
     {
