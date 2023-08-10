@@ -10,10 +10,10 @@ using UnityEditor;
 public class ObjectPoolerEditor : Editor
 {
     const string INFO = 
-        " Ǯ���� ������Ʈ�� OnDisable() �ȿ� ������ ��������~ " +
+        " 풀링될 오브젝트의 OnDisable() 안에 다음을 적으세용~ " +
         "\nvoid OnDisable()\n" +
         "{\nObjectPooler.ReturnToPool(gameobject); \n" +
-        "CancelInvoke(); //invoke �Լ��� ����ϴ� ��������ּ���\n}";
+        "CancelInvoke(); //invoke 함수를 사용하는 경우적어주세요\n}";
     public override void OnInspectorGUI()
     {
         EditorGUILayout.HelpBox(INFO, MessageType.Info);
@@ -44,11 +44,11 @@ public class ObjectPooler : MonoBehaviour
     private List<GameObject> _spawnObjects;
     private Dictionary<string, Queue<GameObject>> _dictionaryPool;
     //���߿� �ʿ�� �ʱ�ȭ ������ ������ �� ����
-    readonly string INFO = 
-        " Ǯ���� ������Ʈ�� OnDisable() �ȿ� ������ ��������~ " +
+    readonly string INFO =
+        " 풀링될 오브젝트의 OnDisable() 안에 다음을 적으세용~ " +
         "\nvoid OnDisable()\n" +
         "{\nObjectPooler.ReturnToPool(gameobject); \n" +
-        "CancelInvoke(); //invoke �Լ��� ����ϴ� ��������ּ���\n}";
+        "CancelInvoke(); //invoke 함수를 사용하는 경우적어주세요\n}";
 
     private void Start()
     {
@@ -61,7 +61,7 @@ public class ObjectPooler : MonoBehaviour
             for (int i = 0; i < pool.Number; i++)
             {
                 GameObject obj;
-                //Ingame ������Ʈ�� UI ������Ʈ ����
+                //Ingame 오브젝트와 UI 오브젝트 구분
                 if (pool.IsUi == false)
                     obj = CreateNewObject(pool.Name, pool.Prefab);
                 else
@@ -72,7 +72,7 @@ public class ObjectPooler : MonoBehaviour
                 else
                     ArrangePool(obj, _uiCanvasPooler);
             }
-            //OnDisable�� ReturnToPool ���� �����ߺ� ���� �˻�
+            //OnDisable에 ReturnToPool 구현 여부중복 구현 검사
             if (_dictionaryPool[pool.Name].Count <= 0)
                 Debug.LogError($"{pool.Name}{INFO}");
             else if (_dictionaryPool[pool.Name].Count != pool.Number)
@@ -80,7 +80,7 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
-    //������ ���� �����ε�
+    //변수에 따른 오버로딩
     public static GameObject SpawnFromPool(string name, Vector3 position) =>
         s_inst._SpawnFromPool(name, position, Quaternion.identity);
     public static GameObject SpawnFromPool(string name, Vector3 position, Quaternion rotation) =>
@@ -155,7 +155,7 @@ public class ObjectPooler : MonoBehaviour
     {
         foreach (var pool in _pools)
         {
-            int count = _spawnObjects.FindAll(x => x.name == pool.Name).Count; //����Ʈ�� ���� 
+            int count = _spawnObjects.FindAll(x => x.name == pool.Name).Count; //리스트의 개수
             Debug.Log($"{pool.Name} Count : {count}");
         }
     }
@@ -164,14 +164,14 @@ public class ObjectPooler : MonoBehaviour
     {
         var obj = Instantiate(prefab, transform);
         obj.name = name;
-        obj.SetActive(false); //��Ȱ��ȭ�� ReturnToPool�� �ϱ� ������ enqueue�ȴ�.
+        obj.SetActive(false); //비활성화시 ReturnToPool을 하기 때문에 enqueue된다.
         return obj;
     }
     private GameObject CreateNewObject(string name, GameObject prefab, RectTransform trans)
     {
         var obj = Instantiate(prefab, trans);
         obj.name = name;
-        obj.SetActive(false); //��Ȱ��ȭ�� ReturnToPool�� �ϱ� ������ enqueue�ȴ�.
+        obj.SetActive(false); //비활성화시 ReturnToPool을 하기 때문에 enqueue된다.
         return obj;
     }
     #region ArrangePool overroding
@@ -181,7 +181,7 @@ public class ObjectPooler : MonoBehaviour
     /// <param name="obj"></param>
     private void ArrangePool(GameObject obj)
     {
-        //�߰��� ������Ʈ ��� ����
+        //추가된 오브젝트 묶어서 정렬
         bool isFind = false;
         for (int i = 0; i < transform.childCount; i++)
         {
