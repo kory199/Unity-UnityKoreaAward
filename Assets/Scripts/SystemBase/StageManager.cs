@@ -22,20 +22,20 @@ public class StageManager : MonoSingleton<StageManager>
         // �����κ��� ���� ���� ���� ��û (�ӽ�)
         RequestMonsterInfo();
 
-        //ü�� ���
+        //체인 등록
         InGameManager.Instance.RegisterParams(EnumTypes.InGameParamType.Stage, (int)EnumTypes.StageStateType.Max);
     }
     private void Start()
     {
         _stageNum = 1;
-        //start ü�� 
+        //start 체인
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetMeleeMonster);
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetRangedMonster);
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetMonsterSpawn);
-        //Next ü��
+        //Next 체인
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Next, SetStageNum);
 
-        //End ü�� 
+        //End 체인
         //InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.End, SendStageData);
     }
     private void Update()
@@ -89,13 +89,13 @@ public class StageManager : MonoSingleton<StageManager>
 
     public async void PlayerDeath()
     {
-        //���� ���� �ڷ�ƾ
+        //게임 오버 코루틴
         StartCoroutine(Co_GameOverUI());
 
-        //���� ������ ���� 
+        //서버 데이터 전달
         SendStageData();
 
-        //�� �̵� : Logic edit 
+        //씬 이동 : Logic edit 
         await GameManager.Instance.LoadScene(EnumTypes.ScenesType.SceneLobby);
     }
     public void MonsterDeath()
@@ -114,24 +114,24 @@ public class StageManager : MonoSingleton<StageManager>
 
     public async void BossDeath()
     {
-        //���� Ŭ���� �ڷ�ƾ
+        //게임 클리어 코루틴
         StartCoroutine(Co_GameOverUI());
 
-        //���� ������ ���� 
+        //서버 데이터 전달 
         //SendStageData();
 
-        //�� �̵� : Logic edit 
+        //씬 이동 : Logic edit 
         await GameManager.Instance.LoadScene(EnumTypes.ScenesType.SceneLobby);
     }
     IEnumerator Co_GameOverUI()
     {
         yield return null;
-        //���� ������ ��� â �Ѱų� ����Ʈ �����
+        //게임 오버시 띄울 창 켜거나 이펙트 만들기
     }
     IEnumerator Co_GameClearUI()
     {
         yield return null;
-        //���� Ŭ����� ��� â �Ѱų� ����Ʈ �����
+        //보스 클리어시 띄울 창 켜거나 이펙트 만들기
     }
 
     public async void RequestMonsterInfo()
