@@ -21,6 +21,7 @@ public class UI_SceneLobby : UIBase
     {
         GameManager.Instance.MoveScene("SceneInGame");
         GameManager.Instance.SceneState = SceneState.Game;
+
         OnHide();
     }
     public void OnClick_Explane()
