@@ -3,9 +3,9 @@
         "Id": 1,
         "level": 1,
         "hp": 100,
-        "movement_speed": 1,
+        "movement_speed": 1.0,
         "attack_power": 10,
-        "rate_of_fire": 1,
+        "rate_of_fire": 1.0,
         "projectile_speed": 10,
         "xp_requiredfor_levelup": 100
     },
