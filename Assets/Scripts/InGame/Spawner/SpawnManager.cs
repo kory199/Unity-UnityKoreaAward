@@ -11,7 +11,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private float _spawnTime = 3f;
     [SerializeField] private float _SpawnRandomFactor = 1f;
     [SerializeField] private bool _isBoss = false;
-    [SerializeField] WaitForSeconds spawnDelay;
+    WaitForSeconds spawnDelay;
 
     private Coroutine _monsterSpawnRoutine = null;
 
@@ -51,7 +51,6 @@ public class SpawnManager : MonoBehaviour
             if (_meleeMonsterNum > 0 || _rangedMonsterNum > 0)
             {
                 SpawnMonsters();
-                Debug.LogError("spawnDelay : " + spawnDelay);
                 yield return spawnDelay;
             }
             else
@@ -70,28 +69,30 @@ public class SpawnManager : MonoBehaviour
     #region 중복없는 랜덤 뽑기
     private void SpawnMonsters(string name = null)
     {
-        List<int> tempNum = new List<int>();
+        List<int> tempMeleeNum = new List<int>();
+        List<int> tempRangeNum = new List<int>();
         for (int i = 0; i < _spawnPos.Count; i++)
         {
-            tempNum.Add(i);
+            tempMeleeNum.Add(i);
+            tempRangeNum.Add(i);
         }
         // 근접 몬스터 생성
         for (int i = 0; i < _meleeMonsterNum; i++)
         {
-            int num = RandomChoose(tempNum.Count - 1);
-            tempNum.Remove(num);
+            int num = RandomChoose(tempMeleeNum.Count - 1);
+            tempMeleeNum.Remove(num);
 
-            Vector3 spawnRandomArea = _spawnPos[tempNum[num]] + (Vector3)Random.insideUnitCircle * _SpawnRandomFactor;
+            Vector3 spawnRandomArea = _spawnPos[tempMeleeNum[num]] + (Vector3)Random.insideUnitCircle * _SpawnRandomFactor;
             GameObject meleeMonster = ObjectPooler.SpawnFromPool("BasicMeleeMonster", spawnRandomArea);
         }
 
         // 원거리 몬스터 생성
         for (int i = 0; i < _rangedMonsterNum; i++)
         {
-            int num = RandomChoose(tempNum.Count - 1);
-            tempNum.Remove(num);
+            int num = RandomChoose(tempRangeNum.Count - 1);
+            tempRangeNum.Remove(num);
 
-            Vector3 spawnRandomArea = _spawnPos[tempNum[num]] + (Vector3)Random.insideUnitCircle * _SpawnRandomFactor;
+            Vector3 spawnRandomArea = _spawnPos[tempRangeNum[num]] + (Vector3)Random.insideUnitCircle * _SpawnRandomFactor;
             GameObject rangedMonster = ObjectPooler.SpawnFromPool("RangedMonster", spawnRandomArea);
         }
     }
