@@ -9,30 +9,30 @@ public abstract class BossBase : MonsterBase
     [SerializeField] protected List<Transform> _spawners;
 
     /// <summary>
-    /// ����ü �߻��ϴ� �Լ�
+    /// 투사체 발사하는 함수
     /// </summary>
     protected void ShootProjectile(string name)
     {
-        //�߻� ���� ���
+        //발사 방향 계산
         //_initMoveVector = gameObject.transform.position - _boss.transform.position;
-        foreach(var dir in _spawners)
+        foreach (var dir in _spawners)
         {
-            //Ǯ���� ����ü ������
+            //풀에서 투사체 꺼내기
             GameObject projectiles = ObjectPooler.SpawnFromPool(name, dir.transform.position);
 
-            //�߻� �ڷ�ƾ
+            //발사 코루틴
             StartCoroutine(Co_ProjectileMove(projectiles, dir.position - _boss.transform.position));
         }
 
 
-     /*   //Ǯ���� ����ü ������
-        GameObject ball = ObjectPooler.SpawnFromPool(projectile, gameObject.transform.position);
-        
-        //�߻� �ڷ�ƾ
-        StartCoroutine(Co_BulletMove(ball, _initMoveVector));*/
+        /*   //풀에서 투사체 꺼내기
+           GameObject ball = ObjectPooler.SpawnFromPool(projectile, gameObject.transform.position);
+
+           //발사 코루틴
+           StartCoroutine(Co_BulletMove(ball, _initMoveVector));*/
     }
     /// <summary>
-    /// ����ü�� �������� ������ ���� , ���� 1�ܰ� ����
+    /// 투사체를 직선으로 날리는 로직 , 보스 1단계 패턴
     /// </summary>
     /// <param name="ball"></param>
     /// <returns></returns>
