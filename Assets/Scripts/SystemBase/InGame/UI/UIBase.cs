@@ -9,7 +9,7 @@ public abstract class UIBase : MonoBehaviour, IProcess
     private ProcessManager _processManager { get { return UIManager.Instance.processManager; } }
     protected virtual void Awake()
     {
-        
+
     }
     protected virtual void Start()
     {
@@ -20,7 +20,12 @@ public abstract class UIBase : MonoBehaviour, IProcess
     {
         gameObject.SetActive(true);
         if (false == _processManager.processingUIStack.Contains(this))
+        {
             _processManager.processingUIStack.Push(this);
+
+            Debug.Log(_processManager.processingUIStack.Count + " show " + gameObject.name);
+        }
+
     }
 
     public void OnHide()
@@ -28,8 +33,12 @@ public abstract class UIBase : MonoBehaviour, IProcess
         gameObject.SetActive(false);
 
         if (true == _processManager.processingUIStack.Contains(this))
-            _processManager.processingUIStack.Pop();
+        {
 
+            _processManager.processingUIStack.Pop();
+            Debug.Log(_processManager.processingUIStack.Count + " hide " + gameObject.name);
+
+        }
     }
 
     public abstract IProcess.NextProcess ProcessInput();

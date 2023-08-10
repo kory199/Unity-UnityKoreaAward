@@ -13,7 +13,7 @@ public class StageManager : MonoSingleton<StageManager>
     [SerializeField] private int _deathMonsters = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
     [SerializeField] private float _time = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
     [SerializeField] private SpawnManager _spawnManager;
-
+    [SerializeField] private UI_SceneGame _uI_SceneGame;
     private int _onclickNum;
 
     #region Uinity lifeCycle
@@ -22,7 +22,11 @@ public class StageManager : MonoSingleton<StageManager>
         // 서버로부터 몬스터 스폰 정보 요청 (임시)
         RequestMonsterInfo();
 
-        // 체인 등록
+        // 플레이어 UI 켜기
+        if (_uI_SceneGame == null)
+            _uI_SceneGame = UIManager.Instance.CreateObject<UI_SceneGame>("UI_SceneGame", EnumTypes.LayoutType.First);
+        _uI_SceneGame.OnShow();
+        //체인 등록
         InGameManager.Instance.RegisterParams(EnumTypes.InGameParamType.Stage, (int)EnumTypes.StageStateType.Max);
     }
     private void Start()
@@ -108,7 +112,7 @@ public class StageManager : MonoSingleton<StageManager>
             SetStageNum();
             CallStage(EnumTypes.StageStateType.Start);
             _deathMonsters = 0;
-           // Debug.Log("stageNum : " + _stageNum);
+            // Debug.Log("stageNum : " + _stageNum);
         }
     }
 
