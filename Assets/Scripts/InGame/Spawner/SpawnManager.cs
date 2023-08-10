@@ -51,6 +51,7 @@ public class SpawnManager : MonoBehaviour
             if (_meleeMonsterNum > 0 || _rangedMonsterNum > 0)
             {
                 SpawnMonsters();
+                Debug.LogError("spawnDelay : " + spawnDelay);
                 yield return spawnDelay;
             }
             else
