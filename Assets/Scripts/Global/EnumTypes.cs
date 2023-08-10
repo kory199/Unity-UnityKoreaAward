@@ -2,7 +2,7 @@ using System;
 
 public static partial class EnumTypes
 {
-    public enum LanguageType // ���̺�
+    public enum LanguageType // 테이블
     {
         Kor = 0,
         Eng = 1
@@ -26,7 +26,7 @@ public static partial class EnumTypes
     {
         Death,
         LevelUp,
-        MAX //������ Enum => Const����
+        MAX //마지막 Enum => Const느낌
     }
     public enum PlayerSkiilsType
     {
@@ -69,9 +69,9 @@ public static partial class EnumTypes
     public enum StageStateType
     {
         Awake,
-        Start, //����
-        Next, //����
-        End, //�� => ������
+        Start, //시작
+        Next, //다음
+        End, //끝 => 보스맵
         Max
     }
 
@@ -90,11 +90,11 @@ public static partial class EnumTypes
 
     public enum MonsterStateType
     {
-        None,   // ������ �ʱ�ȭ ���� �۾�
-        Move,   // �÷��̾����� or ������ �̵�
-        Attack, // ����
-        Death,  // ����
-        Dance,  // �÷��̾� �׾����� ŷ�ް� �ϱ�� State
+        None,   // 데이터 초기화 등의 작업
+        Move,   // 플레이어추적 or 무작위 이동
+        Attack, // 공격
+        Death,  // 죽음
+        Dance,  // 플레이어 죽었을때 킹받게 하기용 State
         Phase1,
         Phase2,
         Phase3,

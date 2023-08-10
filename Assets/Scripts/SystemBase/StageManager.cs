@@ -7,37 +7,35 @@ using APIModels;
 public class StageManager : MonoSingleton<StageManager>
 {
     [SerializeField] private int _stageNum = 0;
-    [SerializeField] private int _spawnMeleeNum = 0; //=>��ũ���ͺ� ������Ʈ���� �о���� ������� ���濹��
-    [SerializeField] private int _spawnRangedNum = 0; //=>��ũ���ͺ� ������Ʈ���� �о���� ������� ���濹��
-    [SerializeField] private int _score = 0; //=>��ũ���ͺ� ������Ʈ���� �о���� ������� ���濹��
-    [SerializeField] private int _deathMonsters = 0; //=>��ũ���ͺ� ������Ʈ���� �о���� ������� ���濹��
-    [SerializeField] private float _time = 0; //=>��ũ���ͺ� ������Ʈ���� �о���� ������� ���濹��
+    [SerializeField] private int _spawnMeleeNum = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
+    [SerializeField] private int _spawnRangedNum = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
+    [SerializeField] private int _score = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
+    [SerializeField] private int _deathMonsters = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
+    [SerializeField] private float _time = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
     [SerializeField] private SpawnManager _spawnManager;
 
+    private int _onclickNum;
 
-    private UI_SceneGame uI_SceneGame = null;
     #region Uinity lifeCycle
     private void Awake()
     {
-        // �����κ��� ���� ���� ���� ��û (�ӽ�)
+        // 서버로부터 몬스터 스폰 정보 요청 (임시)
         RequestMonsterInfo();
 
-        uI_SceneGame = UIManager.Instance.CreateObject<UI_SceneGame>("UI_SceneGame", EnumTypes.LayoutType.First);
-        uI_SceneGame.OnShow();
-        //ü�� ���
+        //체인 등록
         InGameManager.Instance.RegisterParams(EnumTypes.InGameParamType.Stage, (int)EnumTypes.StageStateType.Max);
     }
     private void Start()
     {
         _stageNum = 1;
-        //start ü�� 
+        //start 체인
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetMeleeMonster);
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetRangedMonster);
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetMonsterSpawn);
-        //Next ü��
+        //Next 체인
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Next, SetStageNum);
 
-        //End ü�� 
+        //End 체인
         //InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.End, SendStageData);
     }
     private void Update()
@@ -62,7 +60,7 @@ public class StageManager : MonoSingleton<StageManager>
     }
     public void SetStageNum()
     {
-        if (_stageNum >= 5) //5 ��� ���� �������� �ƽ��� �־������
+        if (_stageNum >= 5) //5 대신 서버 스테이지 맥스값 넣어줘야함
         {
             InGameManager.Instance.InvokeCallBacks(EnumTypes.InGameParamType.Stage, (int)EnumTypes.StageStateType.End);
             return;
@@ -73,8 +71,8 @@ public class StageManager : MonoSingleton<StageManager>
     public int GetStageNum() => _stageNum;
 
     // Spawn Logic Edit
-    private void SetMeleeMonster() => _spawnMeleeNum = GetMonsterInfo(_stageNum-1, EnumTypes.MonsterType.MeleeMonster);
-    private void SetRangedMonster() => _spawnRangedNum = GetMonsterInfo(_stageNum-1, EnumTypes.MonsterType.RangedMonster);
+    private void SetMeleeMonster() => _spawnMeleeNum = GetMonsterInfo(_stageNum, EnumTypes.MonsterType.MeleeMonster);
+    private void SetRangedMonster() => _spawnRangedNum = GetMonsterInfo(_stageNum, EnumTypes.MonsterType.RangedMonster);
     private void SetMonsterSpawn()
     {
         if (_stageNum < 4)
@@ -91,13 +89,13 @@ public class StageManager : MonoSingleton<StageManager>
 
     public async void PlayerDeath()
     {
-        //���� ���� �ڷ�ƾ
+        //게임 오버 코루틴
         StartCoroutine(Co_GameOverUI());
 
-        //���� ������ ���� 
+        //서버 데이터 전달
         SendStageData();
 
-        //�� �̵� : Logic edit 
+        //씬 이동 : Logic edit 
         await GameManager.Instance.LoadScene(EnumTypes.ScenesType.SceneLobby);
     }
     public void MonsterDeath()
@@ -110,30 +108,30 @@ public class StageManager : MonoSingleton<StageManager>
             SetStageNum();
             CallStage(EnumTypes.StageStateType.Start);
             _deathMonsters = 0;
-            // Debug.Log("stageNum : " + _stageNum);
+           // Debug.Log("stageNum : " + _stageNum);
         }
     }
 
     public async void BossDeath()
     {
-        //���� Ŭ���� �ڷ�ƾ
+        //게임 클리어 코루틴
         StartCoroutine(Co_GameOverUI());
 
-        //���� ������ ���� 
+        //서버 데이터 전달 
         //SendStageData();
 
-        //�� �̵� : Logic edit 
+        //씬 이동 : Logic edit 
         await GameManager.Instance.LoadScene(EnumTypes.ScenesType.SceneLobby);
     }
     IEnumerator Co_GameOverUI()
     {
         yield return null;
-        //���� ������ ��� â �Ѱų� ����Ʈ �����
+        //게임 오버시 띄울 창 켜거나 이펙트 만들기
     }
     IEnumerator Co_GameClearUI()
     {
         yield return null;
-        //���� Ŭ����� ��� â �Ѱų� ����Ʈ �����
+        //보스 클리어시 띄울 창 켜거나 이펙트 만들기
     }
 
     public async void RequestMonsterInfo()

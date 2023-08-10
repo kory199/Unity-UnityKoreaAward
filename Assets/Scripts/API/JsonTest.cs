@@ -20,3 +20,4 @@ public class JsonTest : MonoBehaviour
         Debug.Log($"rate_of_fire : {playerStatus[0].rate_of_fire}");
     }
 }
+// 한글테스트 한글 테스트

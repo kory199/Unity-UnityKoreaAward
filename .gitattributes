@@ -1,0 +1,13 @@
+# Auto detect text files and perform CRLF normalization
+*        text=auto eol=crlf
+
+*.cs     text diff=csharp
+
+*.csproj text merge=union
+*.sln    text merge=union eol=crlf
+
+# absolute paths are ok, as are globs
+/**/postinst* text eol=crlf
+
+# paths that don't start with / are treated relative to the .gitattributes folder
+relative/path/*.txt text eol=crlf

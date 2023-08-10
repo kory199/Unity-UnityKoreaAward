@@ -8,7 +8,7 @@ public class SceneAndUIManager : MonoSingleton<SceneAndUIManager>
 {
     private EventSystem _eventSystem;
 
-    // ��Ÿ�� �ʱ�ȭ ������ SceneManager ����
+    // 런타임 초기화 시점에 SceneManager 생성
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void InstSceneManager()
     {
@@ -21,16 +21,16 @@ public class SceneAndUIManager : MonoSingleton<SceneAndUIManager>
         DontDestroyOnLoad(this.gameObject);
     }
 
-    // Unitask�� Ȱ���� �񵿱� �� �ε� �� �񵿱� UI ����
+    // Unitask를 활용한 비동기 씬 로드 및 비동기 UI 생성
     public async UniTask LoadAsync(EnumTypes.ScenesType scene)
     {
-        // UI �񵿱� ����
+        // UI 비동기 생성
         UniTask creatUIUnitask = CreatUI(scene);
 
-        // �� �񵿱� �ε�
+        // 씬 비동기 로드
         UniTask loadSceneUnitask = LoadScene(scene);
 
-        // �ش� ���� �ε� �۾� �� UI���� �۾� �Ϸ� ��
+        // 해당 씬의 로드 작업 및 UI생성 작업 완료 시
         await UniTask.WhenAll(creatUIUnitask, loadSceneUnitask);
     }
 
@@ -39,15 +39,15 @@ public class SceneAndUIManager : MonoSingleton<SceneAndUIManager>
         switch (scene)
         {
             case EnumTypes.ScenesType.SceneInGame:
-                // SceneInGame UI ���� �Լ� ȣ��
+                // SceneInGame UI 생성 함수 호출
                 InitGameUI();
                 break;
             case EnumTypes.ScenesType.SceneLobby:
-                // SceneLobby UI ���� �Լ� ȣ��
+                // SceneLobby UI 생성 함수 호출
                 InitLobbyUI();
                 break;
             case EnumTypes.ScenesType.SceneTitle:
-                // SceneTitle UI ���� �Լ� ȣ��
+                // SceneTitle UI 생성 함수 호출
                 InitTitleUI();
                 break;
             default:
@@ -61,7 +61,7 @@ public class SceneAndUIManager : MonoSingleton<SceneAndUIManager>
     {
         AsyncOperation sceneLoad = SceneManager.LoadSceneAsync(scene.ToString());
 
-        // Scene Load�� �Ϸ�� ������ ���
+        // Scene Load가 완료될 때까지 대기
         while (!sceneLoad.isDone)
         {
             await UniTask.Yield(PlayerLoopTiming.Update);

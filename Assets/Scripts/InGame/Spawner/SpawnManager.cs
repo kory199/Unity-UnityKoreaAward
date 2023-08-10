@@ -45,7 +45,7 @@ public class SpawnManager : MonoBehaviour
     }
     IEnumerator Co_MonsterSpawn(string name = null)
     {
-        //Ǯ���� ���� ������
+        //풀에서 몬스터 꺼내기
         while (!_isBoss)
         {
             if (_meleeMonsterNum > 0 || _rangedMonsterNum > 0)
@@ -66,7 +66,7 @@ public class SpawnManager : MonoBehaviour
         _monsterSpawnRoutine = null;
     }
 
-    #region �ߺ����� ���� �̱�
+    #region 중복없는 랜덤 뽑기
     private void SpawnMonsters(string name = null)
     {
         List<int> tempNum = new List<int>();
@@ -74,7 +74,7 @@ public class SpawnManager : MonoBehaviour
         {
             tempNum.Add(i);
         }
-        //���� ����
+        //근접 생성
         for (int i = 0; i < _meleeMonsterNum; i++)
         {
             int num = RandomChoose(tempNum.Count - 1);

@@ -18,8 +18,8 @@ public class UIManager : UIBase
     #endregion
 
     #region GET UI OBJECTS
-    // ���� Getset���� Ư�� UI �Ŵ����� ��ũ��Ʈ�� ������Ƽ�� ������ �� �ְ� ����� �˴ϴ�
-    public StringLocalizer stringLocallizer { get; set; } // �̰� �Ŵ����� UI�� ���� ���� ���� ���� ����
+    // 여기 Getset으로 특정 UI 매니저급 스크립트는 프로퍼티로 가져갈 수 있게 만들면 됩니당
+    public StringLocalizer stringLocallizer { get; set; } // 이건 매니저급 UI에 대한 예시 추후 삭제 예정
     #endregion
 
     private static UIManager _instance = null;
@@ -61,7 +61,7 @@ public class UIManager : UIBase
         _processManager = this.gameObject.AddComponent<ProcessManager>();
         _processManager.processingUIStack.Push(this);
 
-        // Type�� Canvas ����
+        // Type별 Canvas 생성
         foreach (var type in Enum.GetValues(typeof(LayoutType)))
         {
             CreateCanvas((LayoutType)type);
@@ -82,7 +82,7 @@ public class UIManager : UIBase
         language = (LanguageType)languagePrefData;
     }
 
-    // ������Ʈ�� ��ũ��Ʈ�� �־�� �մϴ�
+    // 오브젝트에 스크립트가 있어야 합니다
     public T CreateObject<T>(string argPath, LayoutType type)
     {
         if (false == _canvases.ContainsKey(type))
@@ -101,7 +101,7 @@ public class UIManager : UIBase
         return newUIInstance.GetComponent<T>();
     }
 
-    // GameObject�� ���� ��ȯ �մϴ�.
+    // GameObject를 생성 반환 합니다.
     public GameObject CreateUIObject(string argPath, LayoutType type)
     {
         if (false == _canvases.ContainsKey(type))
@@ -116,7 +116,7 @@ public class UIManager : UIBase
         return newUIInstance;
     }
 
-    // enum Ÿ�Կ� ���ǵ� �� ��ŭ ĵ������ �����մϴ�.
+    // enum 타입에 정의된 수 만큼 캔버스를 생성합니다.
     private void CreateCanvas(LayoutType type)
     {
         if (true == _canvases.ContainsKey(type))

@@ -10,7 +10,7 @@ public partial class Player
     public Rigidbody2D playerRb;
     public Bullet bullet;
 
-    // �ӽ� : �����κ��� �޾ƾߵ�
+    // 임시 : 서버로부터 받아야됨
     [Header("User Setting")]
     public float playerSpeed;
     public int playerMaxHp;
