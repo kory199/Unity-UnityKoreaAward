@@ -11,7 +11,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private float _spawnTime = 3f;
     [SerializeField] private float _SpawnRandomFactor = 1f;
     [SerializeField] private bool _isBoss = false;
-    WaitForSeconds spawnDelay;
+    [SerializeField] WaitForSeconds spawnDelay;
 
     private Coroutine _monsterSpawnRoutine = null;
 
