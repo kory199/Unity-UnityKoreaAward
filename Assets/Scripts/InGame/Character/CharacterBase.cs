@@ -17,7 +17,7 @@ public abstract class CharacterBase : MonoBehaviour
 {
     private PlayerInfo _playerInfo;
 
-    // ���� ������ ���� ���� ĳ���͸� Ȥ�� ���͸�
+    // 추후 서버를 통해 받은 캐릭터명 혹은 몬스터명
     protected string CharacterName;
     protected int hp;
     protected int mp;
@@ -27,7 +27,7 @@ public abstract class CharacterBase : MonoBehaviour
 
     protected virtual void Start()
     {
-        // �ڽĿ� �ǿ� ȣ�� ������ �ʱ�ȭ �۾�
+        // 자식에 의에 호출 됐을 초기화 작업
     }
 
     protected virtual void OnDisable()
@@ -35,7 +35,7 @@ public abstract class CharacterBase : MonoBehaviour
 
     }
 
-    // player, monster ���� ���� ����
+    // player, monster 별로 개별 구현
     public abstract void Attack();
 
     public abstract void Move();
@@ -46,6 +46,6 @@ public abstract class CharacterBase : MonoBehaviour
 
     }
 
-    // player, monster ���� ���� ����
+    // player, monster 별로 개별 구현
     protected abstract void Die();
 }

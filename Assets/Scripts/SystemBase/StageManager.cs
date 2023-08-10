@@ -19,7 +19,7 @@ public class StageManager : MonoSingleton<StageManager>
     #region Uinity lifeCycle
     private void Awake()
     {
-        // �����κ��� ���� ���� ���� ��û (�ӽ�)
+        // 서버로부터 몬스터 스폰 정보 요청 (임시)
         RequestMonsterInfo();
 
         //체인 등록
@@ -60,7 +60,7 @@ public class StageManager : MonoSingleton<StageManager>
     }
     public void SetStageNum()
     {
-        if (_stageNum >= 5) //5 ��� ���� �������� �ƽ��� �־������
+        if (_stageNum >= 5) //5 대신 서버 스테이지 맥스값 넣어줘야함
         {
             InGameManager.Instance.InvokeCallBacks(EnumTypes.InGameParamType.Stage, (int)EnumTypes.StageStateType.End);
             return;

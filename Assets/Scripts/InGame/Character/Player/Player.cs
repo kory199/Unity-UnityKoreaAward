@@ -25,7 +25,7 @@ public partial class Player : CharacterBase
 
     protected override void Start()
     {
-        // ��Ÿ �ʱ�ȭ �׸� �߰�
+        // 기타 초기화 항목 추가
         base.Start();
     }
 
