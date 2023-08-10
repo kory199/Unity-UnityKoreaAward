@@ -21,7 +21,7 @@ public class Monster : CharacterBase
 
     public override void Attack()
     {
-        // ���� ���� ����
+        // ¸ó½ºÅÍ °ø°Ý ±¸Çö
     }
 
     protected override void Die()
