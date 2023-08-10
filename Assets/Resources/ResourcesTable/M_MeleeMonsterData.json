@@ -4,13 +4,13 @@
         "type": "MeleeMonster",
         "level": 1,
         "exp": 10,
-        "hp": 15,
+        "hp": 15.0,
         "speed": 0.5,
         "rate_of_fire": 0.3,
-        "projectile_speed": 5,
-        "collision_damage": 15,
+        "projectile_speed": 5.0,
+        "collision_damage": 15.0,
         "score": 10,
-        "ranged": 1
+        "ranged": 1.0
     },
     {
         "Id": 2,
@@ -23,20 +23,20 @@
         "projectile_speed": 7.5,
         "collision_damage": 16.5,
         "score": 20,
-        "ranged": 1
+        "ranged": 1.0
     },
     {
         "Id": 3,
         "type": "MeleeMonster",
         "level": 3,
         "exp": 20,
-        "hp": 30,
+        "hp": 30.0,
         "speed": 0.55,
         "rate_of_fire": 0.4,
-        "projectile_speed": 10,
-        "collision_damage": 18,
+        "projectile_speed": 10.0,
+        "collision_damage": 18.0,
         "score": 30,
-        "ranged": 1
+        "ranged": 1.0
     },
     {
         "Id": 4,
@@ -56,12 +56,12 @@
         "type": "MeleeMonster",
         "level": 5,
         "exp": 30,
-        "hp": 45,
+        "hp": 45.0,
         "speed": 0.6,
         "rate_of_fire": 0.5,
-        "projectile_speed": 15,
-        "collision_damage": 21,
+        "projectile_speed": 15.0,
+        "collision_damage": 21.0,
         "score": 50,
-        "ranged": 1
+        "ranged": 1.0
     }
 ]
