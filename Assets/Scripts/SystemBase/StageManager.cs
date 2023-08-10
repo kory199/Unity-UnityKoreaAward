@@ -22,7 +22,7 @@ public class StageManager : MonoSingleton<StageManager>
         // 서버로부터 몬스터 스폰 정보 요청 (임시)
         RequestMonsterInfo();
 
-        //체인 등록
+        // 체인 등록
         InGameManager.Instance.RegisterParams(EnumTypes.InGameParamType.Stage, (int)EnumTypes.StageStateType.Max);
     }
     private void Start()
