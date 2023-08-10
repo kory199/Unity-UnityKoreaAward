@@ -169,6 +169,31 @@ public class GameDb : BaseDb<GameData>, IGameDb
         }
     }
 
+    public async Task<(ResultCode, Int32 statusnum)> CheckStatusAsync(Int64 account_id)
+    {
+        try
+        {
+            // TO : CREATE랑 현재 시간을 체크해서 오래 되었으면, 상태를 0으로 변경해서, 로그인 판넬 띄어주기
+            var updatedData = await _queryFactory.Query(_tableName)
+                                .Where(GameDbTable.player_uid, account_id)
+                                .FirstOrDefaultAsync<GameData>();
+
+            if(updatedData == null)
+            {
+                return (ResultCode.CheckStatusFail, 0);
+            }
+
+            return (ResultCode.None, updatedData.status);
+        }
+        catch(Exception e)
+        {
+            _logger.ZLogError(e,
+                $"[{GetType().Name}.CheckStatusAsync] ErrorCode : {ResultCode.CheckStatusFailException}");
+
+            return (ResultCode.CheckStatusFailException, 0);
+        }
+    }
+
     public async Task<ResultCode> StatusChangedAsync(Int64 account_id)
     {
         try
@@ -177,7 +202,8 @@ public class GameDb : BaseDb<GameData>, IGameDb
                 .Where(GameDbTable.player_uid, account_id)
                 .UpdateAsync(new
                 {
-                    status = (int)UserState.LogOut
+                    status = (int)UserState.LogOut,
+                    created_at = DateTime.Now
                 });
 
             if(scoreUpdata == 0)

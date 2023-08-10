@@ -20,7 +20,14 @@ public class VersionRes : BaseResponse
 
 public class LoginRes : BaseResponse
 {
-    [Required] public string AuthToken { get; set; } = "";
+    [Required] public Int64 AccountId { get; set; }
+    [Required] public String AuthToken { get; set; } = "";
+}
+
+public class CheckStatusRes : BaseResponse
+{
+    [Required] public String ID { get; set; } = "";
+    [Required] public String AuthToken { get; set; } = "";
 }
 
 public class GameDataRes : BaseResponse

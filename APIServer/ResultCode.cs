@@ -12,17 +12,19 @@ public enum ResultCode
 
     // === SuccessCode 50 ~ ===
     LoadGameVersionSuccess = 50,
-    LoadMasterDataSuccess = 51,
-    CreateAccountSuccess = 52,
-    LoginSuccess = 53,
-    CreateGameDataSuccess = 54,
-    LoadGameDataSuccess = 55,
-    LoadRankingDataSuccess = 56,
-    UpdateScoreSuccess = 57,
-    LoadStageSuccess = 58,
-    GetNewStageSuccess = 59,
-    PingSuccess = 60,
-    LogOutSuccess = 61,
+    CheckStatusSuccess = 51,
+    LoadMasterDataSuccess = 52,
+    CreateAccountSuccess = 53,
+    LoginSuccess = 54,
+    CreateGameDataSuccess = 55,
+    LoadGameDataSuccess = 56,
+    LoadRankingDataSuccess = 57,
+    UpdateScoreSuccess = 58,
+    LoadStageSuccess = 59,
+    GetNewStageSuccess = 60,
+    PingSuccess = 61,
+    LogOutSuccess = 62,
+    UserLogOut = 63,
 
     // === GameVersion 80~ ===
     LoadGameVersionFail = 80,
@@ -51,6 +53,8 @@ public enum ResultCode
     // === Account ErrorCode 200~ ===
     CreateAccountFailInsert = 200,
     FailedtoCreateAccount = 201,
+    VerifyAccountIdFail = 202,
+    VerifyAccountIdFailException = 203,
 
     //CreateAccountFailException = 201,
     LoginFailUserNotExist = 202,
@@ -61,7 +65,7 @@ public enum ResultCode
     LoginFailSetAuthToken = 208,
     CheckAuthFailNotExist = 200,
     AuthTokenFailSetNx = 206,
-
+    
     // === User Game Data 300 ~ ===
     CreateDefaultGameDataFailInsert = 301,
     CreateGameDataFailInsert = 302,
@@ -70,6 +74,10 @@ public enum ResultCode
     PlayerGameDataNotFound = 305,
     LoadGameDataFailException = 306,
     DeleteGameDataFailException = 307,
+    ChangedStatusFail = 308,
+    ChangedStatusFailException = 309,
+    CheckStatusFail = 310,
+    CheckStatusFailException = 311,
 
     // === Ranking Data 400 ~ ===
     LoadRankingDataFail = 400,

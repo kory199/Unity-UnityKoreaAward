@@ -14,6 +14,7 @@ public class AccountDbTable
 {
     public const String Account = "account";
     public const String id = "id";
+    public const String AccountId = "account_id";
 }
 
 public class ColumnUid

@@ -74,5 +74,33 @@ public class AccountDb : BaseDb<Account>, IAccountDb
         }
     }
 
+    public async Task<(ResultCode, String id, String pw)> VerifyAccountIdAsync(Int64 account_id)
+    {
+        string empty = "";
+
+        try
+        {
+            var accountInfo = await _queryFactory.Query(_tableName)
+                          .Where(AccountDbTable.AccountId, account_id)
+                          .FirstOrDefaultAsync<Account>();
+
+            if(accountInfo == null)
+            {
+                return (ResultCode.VerifyAccountIdFail, empty, empty);
+            }
+
+            // TODO : 비밀번호를 해쉬 풀어서 전달해줘야 한다 ㅠㅠ
+            return (ResultCode.None, accountInfo.id, accountInfo.hashed_password);
+
+        }
+        catch(Exception e) 
+        {
+            _logger.ZLogError(e, $"[{GetType().Name}.VerifyAccountIdAsync] ResultCode : {ResultCode.VerifyAccountIdFailException}");
+
+            return (ResultCode.VerifyAccountIdFailException, empty, empty);
+
+        }
+    }
+
     public void Dispose() => _dbConnectionHandler.Dispose();
 }

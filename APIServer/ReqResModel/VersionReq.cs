@@ -11,3 +11,8 @@ public class MasterDataReq
 {
     [Required] public String MasterData { get; set; } = "GetMasterData";
 }
+
+public class CheckStatus
+{
+    [Required] public Int64 AccountId { get; set; }
+}
