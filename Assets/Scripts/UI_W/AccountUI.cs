@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AccountUI : MonoBehaviour
+public class AccountUI : UIBase
 {
     [SerializeField] TMP_InputField[] inputFields = null;
     [SerializeField] Button createAccountBtn = null;
@@ -14,13 +14,18 @@ public class AccountUI : MonoBehaviour
 
     private int _currentIndex = 0;
 
-    private void Awake()
+    IProcess.NextProcess _nextProcess = IProcess.NextProcess.Continue;
+    public override IProcess.NextProcess ProcessInput()
+    {
+        return _nextProcess;
+    }
+    protected override void Awake()
     {
         infoText.gameObject.SetActive(false);
         inputFields[1].contentType = TMP_InputField.ContentType.Password;
     }
 
-    private void Start()
+    protected override void Start()
     {
         StartCoroutine(SetInitialFocus());
     }
@@ -116,6 +121,10 @@ public class AccountUI : MonoBehaviour
             if(result)
             {
                 infoText.text = $"Login Successful {user.ID}, {user.Password}";
+                
+                //Move Scene
+                GameManager.Instance.MoveScene("SceneLobby");
+                OnHide();
             }
             else
             {
@@ -189,4 +198,6 @@ public class AccountUI : MonoBehaviour
     {
         this.gameObject.SetActive(false);
     }
+
+ 
 }

@@ -32,25 +32,36 @@ public class UI_SceneLobby : UIBase
     {
 
     }
-    UI_GPopupOption gPopupOption = null;
+    UI_GPopupOption _gPopupOption = null;
     public void OnClick_Options()
     {
-        Debug.Log("click button");
         OnHide();
-        if (gPopupOption == null)
+        if (_gPopupOption == null)
         {
-            gPopupOption = UIManager.Instance.CreateObject
+            _gPopupOption = UIManager.Instance.CreateObject
               <UI_GPopupOption>("GPopup_Options", EnumTypes.LayoutType.Global);
-            gPopupOption.uI_SceneLobby = this;
+            _gPopupOption.uI_SceneLobby = this;
         }
-            gPopupOption.OnShow();
+        _gPopupOption.OnShow();
     }
+    RankUI _rankUi = null;
     public void OnClick_RankingList()
     {
-
+        OnHide();
+        if (_rankUi == null)
+        {
+            _rankUi = UIManager.Instance.CreateObject
+              <RankUI>("Popup_Ranking", EnumTypes.LayoutType.Middle);
+            _rankUi.uI_SceneLobby = this;
+        }
     }
     public void OnClick_ApplicationQuit()
     {
-
+        Application.Quit();
+    }
+    public void OnClick_LogOut()
+    {
+        OnHide();
+        GameManager.Instance.MoveScene("SceneTitle");
     }
 }
