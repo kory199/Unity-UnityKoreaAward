@@ -76,7 +76,7 @@ public class ObjectPooler : MonoBehaviour
             if (_dictionaryPool[pool.Name].Count <= 0)
                 Debug.LogError($"{pool.Name}{INFO}");
             else if (_dictionaryPool[pool.Name].Count != pool.Number)
-                Debug.LogError($"{pool.Name}�� returnToPool�� �ߺ��˴ϴ�");
+                Debug.LogError($"{pool.name}에 returnToPool이 중복됩니다");
         }
     }
 
