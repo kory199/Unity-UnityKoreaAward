@@ -7,7 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RankUI : MonoBehaviour
+public class RankUI : UIBase
 {
     [SerializeField] Button r_goBackBut = null;
     [SerializeField] TextMeshProUGUI[] rankTopThreeName = null;
@@ -18,7 +18,12 @@ public class RankUI : MonoBehaviour
     private float debounceTime = 0.5f;
     private float lastAPICallTime;
 
-    private void Awake()
+    IProcess.NextProcess _nextProcess = IProcess.NextProcess.Continue;
+    public override IProcess.NextProcess ProcessInput()
+    {
+        return _nextProcess;
+    }
+    protected override void Awake()
     {
         //OnClickRank();
         r_infoText.gameObject.SetActive(true);
@@ -36,7 +41,7 @@ public class RankUI : MonoBehaviour
 
         lastAPICallTime = currentTime;
 
-        (List<RankingData> rankingDataList, string _id)= await APIManager.Instance.GetRankingAPI();
+        (List<RankingData> rankingDataList, string _id) = await APIManager.Instance.GetRankingAPI();
 
         r_infoText.gameObject.SetActive(false);
 
@@ -106,10 +111,11 @@ public class RankUI : MonoBehaviour
             rankTopTen[i].text = "";
         }
     }
-
+    public UI_SceneLobby uI_SceneLobby = null;
     public void OnClickRankBackBut()
     {
-        this.gameObject.SetActive(false);
+        uI_SceneLobby.OnShow();
+        OnHide();
     }
 
     private void OnEnable()

@@ -75,8 +75,8 @@ public class StageManager : MonoSingleton<StageManager>
     public int GetStageNum() => _stageNum;
 
     // Spawn Logic Edit
-    private void SetMeleeMonster() => _spawnMeleeNum = GetMonsterInfo(_stageNum, EnumTypes.MonsterType.MeleeMonster);
-    private void SetRangedMonster() => _spawnRangedNum = GetMonsterInfo(_stageNum, EnumTypes.MonsterType.RangedMonster);
+    private void SetMeleeMonster() => _spawnMeleeNum = GetMonsterInfo(_stageNum-1, EnumTypes.MonsterType.MeleeMonster);
+    private void SetRangedMonster() => _spawnRangedNum = GetMonsterInfo(_stageNum-1, EnumTypes.MonsterType.RangedMonster);
     private void SetMonsterSpawn()
     {
         if (_stageNum < 4)
