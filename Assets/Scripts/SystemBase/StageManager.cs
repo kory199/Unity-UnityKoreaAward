@@ -7,11 +7,11 @@ using APIModels;
 public class StageManager : MonoSingleton<StageManager>
 {
     [SerializeField] private int _stageNum = 0;
-    [SerializeField] private int _spawnMeleeNum = 0; //=>��ũ���ͺ� ������Ʈ���� �о���� ������� ���濹��
-    [SerializeField] private int _spawnRangedNum = 0; //=>��ũ���ͺ� ������Ʈ���� �о���� ������� ���濹��
-    [SerializeField] private int _score = 0; //=>��ũ���ͺ� ������Ʈ���� �о���� ������� ���濹��
-    [SerializeField] private int _deathMonsters = 0; //=>��ũ���ͺ� ������Ʈ���� �о���� ������� ���濹��
-    [SerializeField] private float _time = 0; //=>��ũ���ͺ� ������Ʈ���� �о���� ������� ���濹��
+    [SerializeField] private int _spawnMeleeNum = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
+    [SerializeField] private int _spawnRangedNum = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
+    [SerializeField] private int _score = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
+    [SerializeField] private int _deathMonsters = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
+    [SerializeField] private float _time = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
     [SerializeField] private SpawnManager _spawnManager;
 
     private int _onclickNum;
