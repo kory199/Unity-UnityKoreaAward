@@ -112,6 +112,22 @@ public class APIManager : MonoSingleton<APIManager>
         return gameData;
     }
 
+    public async UniTask<bool> LogOutAPI()
+    {
+        bool result = await CallAPI<Dictionary<string, object>, GameData>(APIUrls.LogOut, NewGameData(), APISuccessCode.LogOutSuccess, null);
+
+        if (result)
+        {
+            _id = "";
+            _authToken = "";
+            return result;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public async UniTask<PlayerData> GetGameDataAPI()
     {
 

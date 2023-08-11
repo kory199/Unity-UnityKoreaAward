@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using APIModels;
+using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +12,7 @@ public class AccountUI : UIBase
     [SerializeField] Button createAccountBtn = null;
     [SerializeField] Button loginBut = null;
     [SerializeField] TextMeshProUGUI infoText = null;
+    [SerializeField] TextMeshProUGUI versionText = null;
     [SerializeField] Button a_backBtn = null;
 
     private int _currentIndex = 0;
@@ -21,6 +24,7 @@ public class AccountUI : UIBase
     }
     protected override void Awake()
     {
+        GetGameVersion();
         infoText.gameObject.SetActive(false);
         inputFields[1].contentType = TMP_InputField.ContentType.Password;
     }
@@ -28,6 +32,11 @@ public class AccountUI : UIBase
     protected override void Start()
     {
         StartCoroutine(SetInitialFocus());
+    }
+
+    private async void GetGameVersion()
+    {
+        versionText.text = "Ver :  " + await APIManager.Instance.GetGameVersionAPI();
     }
 
     private IEnumerator SetInitialFocus()
@@ -103,7 +112,7 @@ public class AccountUI : UIBase
 
             if(result)
             {
-                infoText.text = $"Created New Account Successful ! {user.ID}, {user.Password}";
+                infoText.text = $"Created New Account Successful !";
             }
             else
             {
@@ -120,8 +129,9 @@ public class AccountUI : UIBase
 
             if(result)
             {
-                infoText.text = $"Login Successful {user.ID}, {user.Password}";
-                
+                infoText.text = $"Login Successful !";
+                await UniTask.Delay(TimeSpan.FromSeconds(0.5));
+
                 //Move Scene
                 GameManager.Instance.MoveScene("SceneLobby");
                 OnHide();
@@ -196,8 +206,10 @@ public class AccountUI : UIBase
 
     public void OnClickBackBtn()
     {
-        this.gameObject.SetActive(false);
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+    Application.Quit();
+#endif
     }
-
- 
 }

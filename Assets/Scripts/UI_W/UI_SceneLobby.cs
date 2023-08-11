@@ -57,11 +57,20 @@ public class UI_SceneLobby : UIBase
     }
     public void OnClick_ApplicationQuit()
     {
-        Application.Quit();
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+    Application.Quit();
+#endif
     }
-    public void OnClick_LogOut()
+
+    public async void OnClick_LogOut()
     {
-        OnHide();
-        GameManager.Instance.MoveScene("SceneTitle");
+        bool result = await APIManager.Instance.LogOutAPI();
+        if(result)
+        {
+            GameManager.Instance.MoveScene("SceneTitle");
+            OnHide();
+        }
     }
 }
