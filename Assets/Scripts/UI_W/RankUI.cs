@@ -9,7 +9,6 @@ using UnityEngine.UI;
 
 public class RankUI : UIBase
 {
-    [SerializeField] Button r_goBackBut = null;
     [SerializeField] TextMeshProUGUI[] rankTopThreeName = null;
     [SerializeField] TextMeshProUGUI[] rankTopTen = null;
     [SerializeField] TextMeshProUGUI userRank = null;

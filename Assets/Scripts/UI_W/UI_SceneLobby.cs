@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class UI_SceneLobby : UIBase
@@ -17,13 +19,30 @@ public class UI_SceneLobby : UIBase
         return _nextProcess;
     }
 
-    public void OnClick_GameStart()
+    protected override void Awake()
     {
-        GameManager.Instance.MoveScene("SceneInGame");
-        GameManager.Instance.SceneState = SceneState.Game;
-
-        OnHide();
+        GetStageNum();
     }
+
+    private async void GetStageNum()
+    {
+        await UniTask.Delay(TimeSpan.FromSeconds(2));
+        bool result = await APIManager.Instance.GetStageAPI();
+    }
+
+    public async void OnClick_GameStart()
+    {
+        bool playGameTask = await APIManager.Instance.PlayGameAPI();
+
+        if (playGameTask)
+        {
+            GameManager.Instance.MoveScene("SceneInGame");
+            GameManager.Instance.SceneState = SceneState.Game;
+
+            OnHide();
+        }
+    }
+
     public void OnClick_Explane()
     {
 

@@ -7,6 +7,7 @@ public class APIUrls
     public static readonly string MasterDataApi = url + "MasterData";
     public static readonly string CreateAccountApi = url + "CreateAccount";
     public static readonly string LoginApi = url + "Login";
+    public static readonly string PlayGame = url + "PlayGame";
     public static readonly string GameDataApi = url + "GameData";
     public static readonly string RankingApi = url + "Ranking";
     public static readonly string StageApi = url + "Stage";
@@ -20,6 +21,7 @@ public class APIUrls
         MasterDataApi,
         CreateAccountApi,
         LoginApi,
+        PlayGame,
         GameDataApi,
         RankingApi,
         StageApi,

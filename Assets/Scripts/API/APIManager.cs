@@ -112,6 +112,18 @@ public class APIManager : MonoSingleton<APIManager>
         return gameData;
     }
 
+    public async UniTask<bool> PlayGameAPI()
+    {
+        bool result = await CallAPI<Dictionary<string, object>, GameData>(APIUrls.PlayGame, NewGameData(), APISuccessCode.RedisUpdateStatusSuccess, null);
+
+        if (result == false)
+        {
+            return false;
+        }
+
+        return result;
+    }
+
     public async UniTask<bool> LogOutAPI()
     {
         bool result = await CallAPI<Dictionary<string, object>, GameData>(APIUrls.LogOut, NewGameData(), APISuccessCode.LogOutSuccess, null);
@@ -128,20 +140,25 @@ public class APIManager : MonoSingleton<APIManager>
         }
     }
 
-    public async UniTask<PlayerData> GetGameDataAPI()
+    public async UniTask<bool> GetGameDataAPI()
     {
-
-        PlayerData playerData = null;
 
         bool result = await CallAPI<Dictionary<string, object>, GameData>(APIUrls.GameDataApi, NewGameData(), APISuccessCode.LoadGameDataSuccess, (apiResponse) =>
         {
             if (apiResponse.Data.TryGetValue("playerData", out var playerDataObj) && playerDataObj is JObject)
             {
-                playerData = (playerDataObj as JObject).ToObject<PlayerData>();
+                Debug.Log($"playerDataObj: {playerDataObj}");
+
+                GameManager.Instance.playerData = (playerDataObj as JObject).ToObject<PlayerData>();
             }
         });
 
-        return playerData;
+        if (result == false)
+        {
+            return false;
+        }
+
+        return result;
     }
 
     public async UniTask<(List<RankingData>, string)> GetRankingAPI()
@@ -175,16 +192,14 @@ public class APIManager : MonoSingleton<APIManager>
         }
     }
 
-    public async UniTask<int> GetStageAPI(int stageNum)
+    public async UniTask<bool> GetStageAPI()
     {
         StageData stageData = new StageData
         {
             ID = NewGameData().ID,
             AuthToken = NewGameData().AuthToken,
-            StageNum = stageNum,
+            StageNum = 0,
         };
-
-        int lastStageId = 0;
 
         bool result = await CallAPI<Dictionary<string, object>, StageData>(APIUrls.StageApi, stageData, APISuccessCode.LoadStageSuccess, (apiResponse) =>
         {
@@ -193,12 +208,17 @@ public class APIManager : MonoSingleton<APIManager>
                 List<StageInfo> stageDataList = JsonConvert.DeserializeObject<List<StageInfo>>(stageDataObj.ToString());
                 if (stageDataList != null && stageDataList.Count > 0)
                 {
-                    lastStageId = stageDataList.Last().stage_id;
+                    GameManager.Instance.StageNum = stageDataList.Last().stage_id;
                 }
             }
         });
 
-        return lastStageId;
+        if (result == false)
+        {
+            return false;
+        }
+
+        return result;
     }
 
     public async UniTask StageUpToServer(int stageNum, int score)

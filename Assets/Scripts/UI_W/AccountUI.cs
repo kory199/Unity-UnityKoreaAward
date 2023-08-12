@@ -9,11 +9,8 @@ using UnityEngine.UI;
 public class AccountUI : UIBase
 {
     [SerializeField] TMP_InputField[] inputFields = null;
-    [SerializeField] Button createAccountBtn = null;
-    [SerializeField] Button loginBut = null;
     [SerializeField] TextMeshProUGUI infoText = null;
     [SerializeField] TextMeshProUGUI versionText = null;
-    [SerializeField] Button a_backBtn = null;
 
     private int _currentIndex = 0;
 
@@ -25,6 +22,8 @@ public class AccountUI : UIBase
     protected override void Awake()
     {
         GetGameVersion();
+        GetMasterData();
+
         infoText.gameObject.SetActive(false);
         inputFields[1].contentType = TMP_InputField.ContentType.Password;
     }
@@ -37,6 +36,11 @@ public class AccountUI : UIBase
     private async void GetGameVersion()
     {
         versionText.text = "Ver :  " + await APIManager.Instance.GetGameVersionAPI();
+    }
+
+    private async void GetMasterData()
+    {
+        await APIManager.Instance.GetMasterDataAPI();
     }
 
     private IEnumerator SetInitialFocus()
@@ -112,7 +116,7 @@ public class AccountUI : UIBase
 
             if(result)
             {
-                infoText.text = $"Created New Account Successful !";
+                infoText.text = $"Created New Account Successful ! Please Login";
             }
             else
             {
@@ -125,16 +129,25 @@ public class AccountUI : UIBase
     {
         if (TryProcessUserInput(out User user))
         {
-            bool result = await APIManager.Instance.LoginAPI(user);
+            bool loginResult = await APIManager.Instance.LoginAPI(user);
 
-            if(result)
+            if (loginResult)
             {
-                infoText.text = $"Login Successful !";
-                await UniTask.Delay(TimeSpan.FromSeconds(0.5));
+                bool gameDataResult = await APIManager.Instance.GetGameDataAPI();
 
-                //Move Scene
-                GameManager.Instance.MoveScene("SceneLobby");
-                OnHide();
+                if (gameDataResult)
+                {
+                    infoText.text = $"Login Successful !";
+                    await UniTask.Delay(TimeSpan.FromSeconds(0.5));
+
+                    // Move Scene
+                    GameManager.Instance.MoveScene("SceneLobby");
+                    OnHide();
+                }
+                else
+                {
+                    infoText.text = $"Failed to load game data.";
+                }
             }
             else
             {

@@ -1,6 +1,8 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
+using APIModels;
 
 [System.Serializable]
 public enum SceneState
@@ -13,6 +15,9 @@ public class GameManager : MonoSingleton<GameManager>
 {
     public int OnclickStageNum { get; private set; }
     public SceneState SceneState { get; set; }
+
+    public PlayerData playerData { get; set; }
+    public int StageNum { get; set; }
     // private EventSystem _eventSystem;
 
     // Runtume init Gamemanager 
