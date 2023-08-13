@@ -5,7 +5,6 @@ using APIModels;
 
 public abstract class MonsterBase : MonoBehaviour
 {
-    protected MonsterData monsterData; //=> 나중에 스크립터블 오브젝트 or 엑셀파일로 정보 받아온 클래스 등등
     [SerializeField] protected MonsterStateType state;
     [SerializeField] protected Player player;
     protected Vector3 playerTargetDirection;
@@ -17,14 +16,15 @@ public abstract class MonsterBase : MonoBehaviour
     // 편집 필요
     protected MonsterData_res[] meleeMonsterStatus;
     protected MonsterData_res[] rangedMonsterStatus;
+    protected MonsterData_res bossMonsterStatus;
     protected MonsterData_res[] monsterData_Res;
 
     // protected bool Death { get { return curHP <= 0; } }
 
     protected void Awake()
     {
+        _monsterInfo = new MonsterInfo();
         GetInitMonsterStatus();
-
         //체인 등록
         InGameManager.Instance.RegisterParams(EnumTypes.InGameParamType.Monster, (int)EnumTypes.StageStateType.Max);
         InGameManager.Instance.RegisterParams(EnumTypes.InGameParamType.Stage, (int)EnumTypes.StageStateType.Max);
@@ -72,6 +72,7 @@ public abstract class MonsterBase : MonoBehaviour
         {
             meleeMonsterStatus = APIManager.Instance.GetValueByKey<MonsterData_res[]>(MasterDataDicKey.MeleeMonster.ToString());
             rangedMonsterStatus = APIManager.Instance.GetValueByKey<MonsterData_res[]>(MasterDataDicKey.RangedMonster.ToString());
+            bossMonsterStatus = APIManager.Instance.GetValueByKey<MonsterData_res>(MasterDataDicKey.BOSS.ToString());
         }
 
         if (meleeMonsterStatus == null)
@@ -82,6 +83,11 @@ public abstract class MonsterBase : MonoBehaviour
         if (rangedMonsterStatus == null)
         {
             Debug.LogError("rangedMonsterStatus Data is null");
+        }
+
+        if (bossMonsterStatus == null)
+        {
+            Debug.LogError("bossMonsterStatus Data is Null");
         }
     }
 
@@ -200,7 +206,7 @@ public abstract class MonsterBase : MonoBehaviour
             gameObject.transform.Translate(dirVector * 2f * Time.deltaTime);
 
             // 플레이어와 자기자신(몬스터)사이의 거리와 본인의 공격 가능범위를 비교하여 수행(다른 방식으로 구현해도 ㅇㅋ)
-            if (Vector3.Distance(player.transform.position, this.gameObject.transform.position) <= _monsterInfo.Range)
+            if (Vector3.Distance(player.transform.position, this.gameObject.transform.position) <= _monsterInfo.ranged)
             {
                 TransferState(MonsterStateType.Attack);
                 yield break;
@@ -217,7 +223,7 @@ public abstract class MonsterBase : MonoBehaviour
         {
             // 공격가능상태인지 체크
             // 범위밖이면 Move State로 이동 
-            if (Vector3.Distance(player.transform.position, this.gameObject.transform.position) <= _monsterInfo.Range)
+            if (Vector3.Distance(player.transform.position, this.gameObject.transform.position) <= _monsterInfo.ranged)
             {
                 //공격
                 Attack();
@@ -228,7 +234,7 @@ public abstract class MonsterBase : MonoBehaviour
                 yield break;
             }
 
-            yield return new WaitForSeconds(_monsterInfo.RateOfFire); // 3f 대신 monsterData.RateOfFire 등등 만들어서 대체
+            yield return new WaitForSeconds(_monsterInfo.rate_of_fire); // 3f 대신 monsterData.RateOfFire 등등 만들어서 대체
         }
     }
 

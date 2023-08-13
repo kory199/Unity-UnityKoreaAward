@@ -14,8 +14,10 @@ public class BossOne : BossBase
     [SerializeField] private float tempHP = 100;
     [Header("BossProjectile")]
     [SerializeField] private string projectileName;
-    void Start()
+    protected override void Start()
     {
+        //SetRangedMonsterStatus(stageNum);
+        SetRangedMonsterStatus(1); //보스 테스트
         //회전 초기값
         foreach (var pos in _spawners)
         {
@@ -24,7 +26,8 @@ public class BossOne : BossBase
             _initDegree.Add(Mathf.Atan2(tempVector.x, tempVector.y));
         }
 
-        monsterData = new MonsterData();
+        //임시 몬스터 데이터
+     /*   monsterData = new MonsterData();
         monsterData.InsertMonsterInfo();
         if (monsterData.TryGetMonsterInfo(MonsterName, out _monsterInfo))
         {
@@ -33,7 +36,7 @@ public class BossOne : BossBase
         else
         {
             Debug.Log("Not Found Data");
-        }
+        }*/
         StartCoroutine(Co_BossPattern());
     }
     IEnumerator Co_BossPattern()
@@ -62,9 +65,9 @@ public class BossOne : BossBase
     }
     private void RotateAttack()
     {
-        for (int i = 0; i <_spawners.Count;i++)
+        for (int i = 0; i < _spawners.Count; i++)
         {
-            StartCoroutine(Co_halfMoveSpawner(_spawners[i].gameObject,_initDegree[i],_rad[i]));
+            StartCoroutine(Co_halfMoveSpawner(_spawners[i].gameObject, _initDegree[i], _rad[i]));
         }
     }
     IEnumerator Co_halfMoveSpawner(GameObject spawner, float initDegree, float rad)
@@ -96,7 +99,7 @@ public class BossOne : BossBase
             // 공격가능상태인지 체크
             // 범위밖이면 Move State로 이동 
             Attack();
-            yield return new WaitForSeconds(_monsterInfo.RateOfFire); // 3f 대신 monsterData.RateOfFire 등등 만들어서 대체
+            yield return new WaitForSeconds(_monsterInfo.rate_of_fire); // 3f 대신 monsterData.RateOfFire 등등 만들어서 대체
         }
     }
     protected override IEnumerator State_Move()
@@ -112,7 +115,7 @@ public class BossOne : BossBase
         while (state == MonsterStateType.Phase1)
         {
             Attack();
-            yield return new WaitForSeconds(_monsterInfo.RateOfFire);
+            yield return new WaitForSeconds(_monsterInfo.rate_of_fire);
         }
     }
     IEnumerator State_Phase2()
@@ -123,7 +126,7 @@ public class BossOne : BossBase
         while (state == MonsterStateType.Phase2)
         {
             Attack();
-            yield return new WaitForSeconds(_monsterInfo.RateOfFire-0.4f);
+            yield return new WaitForSeconds(_monsterInfo.rate_of_fire - 0.4f);
         }
     }
     IEnumerator State_Phase3()
@@ -134,21 +137,21 @@ public class BossOne : BossBase
         while (state == MonsterStateType.Phase3)
         {
             Attack();
-            yield return new WaitForSeconds(Mathf.Sin(Mathf.Deg2Rad*i+0.15f));
-            Debug.Log(Mathf.Sin(Mathf.Deg2Rad * i));
+            yield return new WaitForSeconds(Mathf.Sin(Mathf.Deg2Rad * i + 0.15f));
+           // Debug.Log(Mathf.Sin(Mathf.Deg2Rad * i));
             i--;
             if (i < 0) i = 10;
-          /*  Attack();
-            yield return new WaitForSeconds(0.2f);
-            Attack();
-            yield return new WaitForSeconds(0.2f);
-            Attack();
-            yield return new WaitForSeconds(0.5f);
+            /*  Attack();
+              yield return new WaitForSeconds(0.2f);
+              Attack();
+              yield return new WaitForSeconds(0.2f);
+              Attack();
+              yield return new WaitForSeconds(0.5f);
 
-            Attack();
-            yield return new WaitForSeconds(0.3f);
-            Attack();
-            yield return new WaitForSeconds(0.3f);*/
+              Attack();
+              yield return new WaitForSeconds(0.3f);
+              Attack();
+              yield return new WaitForSeconds(0.3f);*/
         }
     }
 
@@ -156,7 +159,7 @@ public class BossOne : BossBase
     {
         MonsterName = "BossOne";
     }
-   IEnumerator Co_BossDie()
+    IEnumerator Co_BossDie()
     {
         yield return null;
         //죽을 경우 나타나는 이펙트 알림 모두 처리
@@ -170,4 +173,20 @@ public class BossOne : BossBase
     {
         throw new System.NotImplementedException();
     }
+
+
+    private void SetRangedMonsterStatus(int inputStageNum)
+    {
+        _monsterInfo.level = bossMonsterStatus.level;
+        _monsterInfo.exp = bossMonsterStatus.exp;
+        _monsterInfo.hp = bossMonsterStatus.hp;
+        _monsterInfo.curHp = bossMonsterStatus.hp;
+        _monsterInfo.speed = bossMonsterStatus.speed;
+        _monsterInfo.rate_of_fire = bossMonsterStatus.rate_of_fire;
+        _monsterInfo.projectile_speed = bossMonsterStatus.projectile_speed;
+        _monsterInfo.collision_damage = bossMonsterStatus.collision_damage;
+        _monsterInfo.score = bossMonsterStatus.score;
+        _monsterInfo.ranged = bossMonsterStatus.ranged;
+    }
+
 }

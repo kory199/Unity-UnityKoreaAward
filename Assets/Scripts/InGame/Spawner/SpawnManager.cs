@@ -40,8 +40,7 @@ public class SpawnManager : MonoBehaviour
         {
             StopCoroutine(_monsterSpawnRoutine);
         }
-
-        StartCoroutine(Co_MonsterSpawn());
+        _monsterSpawnRoutine = StartCoroutine(Co_MonsterSpawn());
     }
     IEnumerator Co_MonsterSpawn(string name = null)
     {
@@ -75,7 +74,7 @@ public class SpawnManager : MonoBehaviour
         {
             tempMeleeNum.Add(i);
             tempRangeNum.Add(i);
-        }
+        }   
         // 근접 몬스터 생성
         for (int i = 0; i < _meleeMonsterNum; i++)
         {
