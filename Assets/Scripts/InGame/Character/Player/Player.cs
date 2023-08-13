@@ -6,13 +6,14 @@ using TMPro;
 
 public partial class Player : CharacterBase
 {
-    
+
     // UI Test Component
     [SerializeField] private TextMeshProUGUI ui_Hp;
     [SerializeField] private TextMeshProUGUI ui_Exp;
     [SerializeField] private TextMeshProUGUI ui_Stage;
     [SerializeField] private TextMeshProUGUI ui_LV;
     [SerializeField] private TextMeshProUGUI ui_Attack;
+    public UI_SceneGame uI_SceneGame;
 
 
     #region unity event func
@@ -49,6 +50,8 @@ public partial class Player : CharacterBase
         ui_Stage.text = StageManager.Instance.GetStageNum().ToString();
         ui_LV.text = playerLv.ToString();
         ui_Attack.text = playerAttackPower.ToString();
+
+        // uI_SceneGame.Set~~()시리즈로 필요한 부분에 사용해주세용
     }
 
     #endregion

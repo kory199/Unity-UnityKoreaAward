@@ -45,7 +45,7 @@ public class MeleeMonster : MonsterBase
 
     protected void SetMeleeMonsterStatus(int inputStageNum)
     {
-        Debug.LogError("SetMeleeMonsterStatus : " + inputStageNum);
+        //Debug.LogError("SetMeleeMonsterStatus : " + inputStageNum);
 
         meleeMonster_Level = meleeMonsterStatus[inputStageNum - 1].level;
         meleeMonster_exp = meleeMonsterStatus[inputStageNum - 1].exp;
@@ -61,7 +61,7 @@ public class MeleeMonster : MonsterBase
 
     protected override void MonsterStatusUpdate()
     {
-        Debug.LogError("MonsterStatusUpdate : " + stageNum);
+      //  Debug.LogError("MonsterStatusUpdate : " + stageNum);
         SetMeleeMonsterStatus(stageNum);
     }
 

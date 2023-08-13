@@ -73,6 +73,7 @@ public class UI_SceneLobby : UIBase
               <RankUI>("Popup_Ranking", EnumTypes.LayoutType.Middle);
             _rankUi.uI_SceneLobby = this;
         }
+        _rankUi.OnShow();
     }
     public void OnClick_ApplicationQuit()
     {
