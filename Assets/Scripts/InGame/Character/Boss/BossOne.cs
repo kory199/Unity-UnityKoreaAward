@@ -25,18 +25,6 @@ public class BossOne : BossBase
             _rad.Add(Vector3.Distance(pos.transform.position, _boss.transform.position));
             _initDegree.Add(Mathf.Atan2(tempVector.x, tempVector.y));
         }
-
-        //임시 몬스터 데이터
-     /*   monsterData = new MonsterData();
-        monsterData.InsertMonsterInfo();
-        if (monsterData.TryGetMonsterInfo(MonsterName, out _monsterInfo))
-        {
-            Debug.Log("Insert Data");
-        }
-        else
-        {
-            Debug.Log("Not Found Data");
-        }*/
         StartCoroutine(Co_BossPattern());
     }
     IEnumerator Co_BossPattern()
@@ -105,7 +93,7 @@ public class BossOne : BossBase
     protected override IEnumerator State_Move()
     {
         // 추후 몬스터 별 이동속도 및 공격 범위 추가
-        return base.State_Move();
+        yield return base.State_Move();
     }
 
     IEnumerator State_Phase1()
@@ -186,7 +174,7 @@ public class BossOne : BossBase
         _monsterInfo.projectile_speed = bossMonsterStatus.projectile_speed;
         _monsterInfo.collision_damage = bossMonsterStatus.collision_damage;
         _monsterInfo.score = bossMonsterStatus.score;
-        _monsterInfo.ranged = bossMonsterStatus.ranged;
+        _monsterInfo.ranged = bossMonsterStatus.ranged-12;
     }
 
 }
