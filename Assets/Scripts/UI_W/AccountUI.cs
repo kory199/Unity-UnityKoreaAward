@@ -12,6 +12,9 @@ public class AccountUI : UIBase
     [SerializeField] TextMeshProUGUI infoText = null;
     [SerializeField] TextMeshProUGUI versionText = null;
 
+    [SerializeField] Button createBtn = null;
+    [SerializeField] Button loginBtn = null;
+
     private int _currentIndex = 0;
 
     IProcess.NextProcess _nextProcess = IProcess.NextProcess.Continue;
@@ -26,6 +29,10 @@ public class AccountUI : UIBase
 
         infoText.gameObject.SetActive(false);
         inputFields[1].contentType = TMP_InputField.ContentType.Password;
+
+        // === Test ===
+        createBtn.onClick.AddListener(() => SoundTest_W.Instance.ButtonSFXPlay());
+        loginBtn.onClick.AddListener(() => SoundTest_W.Instance.ButtonSFXPlay());
     }
 
     protected override void Start()
