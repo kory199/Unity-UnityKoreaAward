@@ -49,7 +49,6 @@ public class SoundTest_W : MonoSingleton<SoundTest_W>
 
         float sfxValue = ButSfxSlider.value;
         float test = sfxValue == -40f ? -80 : sfxValue;
-        Debug.Log($"SFX Slider Value: {sfxValue}, Mixer Value: {test}");
 
         if (sfxValue == -40f)
             myAudioMixer.SetFloat("SFXSoundValue", -80);
