@@ -145,6 +145,7 @@ public abstract class MonsterBase : MonoBehaviour
 
     private void CallMonster(EnumTypes.StageStateType stageType)
     {
+        Debug.LogError("CallBackMonster");
         InGameManager.Instance.InvokeCallBacks(EnumTypes.InGameParamType.Monster, (int)stageType);
     }
 
