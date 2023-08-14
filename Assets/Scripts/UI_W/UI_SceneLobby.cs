@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using APIModels;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -21,6 +22,28 @@ public class UI_SceneLobby : UIBase
 
     protected override void Awake()
     {
+        DevelopmentModeLogin();
+    }
+
+    private async void DevelopmentModeLogin()
+    {
+        User devUser = new User
+        {
+            ID = "Wally3",
+            Password = "1234!"
+        };
+
+        bool loginResult = await APIManager.Instance.LoginAPI(devUser);
+
+        if (loginResult)
+        {
+            bool gameDataResult = await APIManager.Instance.GetGameDataAPI();
+            if (gameDataResult)
+            {
+                Debug.Log("Login Successful!");
+            }
+        }
+
         GetStageNum();
     }
 
@@ -40,7 +63,24 @@ public class UI_SceneLobby : UIBase
             GameManager.Instance.SceneState = SceneState.Game;
 
             OnHide();
+
+            // LodingBar Clon Method 
+            // 사용 방법 : 위에 OnHide() 위 코드 두줄 주석 처리 후, 아래 메서드 주석 풀어주기!
+            //CreateLodingBar();
         }
+    }
+
+    // Canvas는 임시로 First 로 해둠, 변경 편하게 해주세요 
+    private void CreateLodingBar()
+    {
+        UI_LodingBar uI_lodingBar = null;
+        if(uI_lodingBar == null)
+        {
+            uI_lodingBar = UIManager.Instance.CreateObject
+                <UI_LodingBar>("UI_LodingBar", EnumTypes.LayoutType.First);
+        }
+
+        uI_lodingBar.OnShow();
     }
 
     public void OnClick_Explane()
