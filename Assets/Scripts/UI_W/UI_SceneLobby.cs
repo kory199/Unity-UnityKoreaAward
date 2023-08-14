@@ -27,24 +27,29 @@ public class UI_SceneLobby : UIBase
 
     private async void DevelopmentModeLogin()
     {
-        User devUser = new User
-        {
-            ID = "Wally3",
-            Password = "1234!"
-        };
+        bool MasterDataResult = await APIManager.Instance.GetMasterDataAPI();
 
-        bool loginResult = await APIManager.Instance.LoginAPI(devUser);
-
-        if (loginResult)
+        if(MasterDataResult)
         {
-            bool gameDataResult = await APIManager.Instance.GetGameDataAPI();
-            if (gameDataResult)
+            User devUser = new User
             {
-                Debug.Log("Login Successful!");
-            }
-        }
+                ID = "Wally3",
+                Password = "1234!"
+            };
 
-        GetStageNum();
+            bool loginResult = await APIManager.Instance.LoginAPI(devUser);
+
+            if (loginResult)
+            {
+                bool gameDataResult = await APIManager.Instance.GetGameDataAPI();
+                if (gameDataResult)
+                {
+                    Debug.Log("Login Successful!");
+                }
+            }
+
+            GetStageNum();
+        }
     }
 
     private async void GetStageNum()
