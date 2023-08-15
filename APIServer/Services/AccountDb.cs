@@ -74,7 +74,7 @@ public class AccountDb : BaseDb<Account>, IAccountDb
         }
     }
 
-    public async Task<(ResultCode, String id, String pw)> VerifyAccountIdAsync(Int64 account_id)
+    public async Task<(ResultCode, String id)> VerifyAccountIdAsync(Int64 account_id)
     {
         string empty = "";
 
@@ -86,19 +86,17 @@ public class AccountDb : BaseDb<Account>, IAccountDb
 
             if(accountInfo == null)
             {
-                return (ResultCode.VerifyAccountIdFail, empty, empty);
+                return (ResultCode.VerifyAccountIdFail, empty);
             }
 
-            // TODO : 비밀번호를 해쉬 풀어서 전달해줘야 한다 ㅠㅠ
-            return (ResultCode.None, accountInfo.id, accountInfo.hashed_password);
+            return (ResultCode.None, accountInfo.id);
 
         }
         catch(Exception e) 
         {
             _logger.ZLogError(e, $"[{GetType().Name}.VerifyAccountIdAsync] ResultCode : {ResultCode.VerifyAccountIdFailException}");
 
-            return (ResultCode.VerifyAccountIdFailException, empty, empty);
-
+            return (ResultCode.VerifyAccountIdFailException, empty);
         }
     }
 

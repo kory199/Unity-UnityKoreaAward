@@ -24,7 +24,7 @@ public enum ResultCode
     GetNewStageSuccess = 60,
     PingSuccess = 61,
     LogOutSuccess = 62,
-    UserLogOut = 63,
+    RedisUpdateStatusSuccess = 64,
 
     // === GameVersion 80~ ===
     LoadGameVersionFail = 80,
@@ -39,6 +39,10 @@ public enum ResultCode
     RedisPingException = 105,
     InValidRequestHttpBody = 106,
     AuthTokenFailWrongAuthToken = 107,
+    RedisUpdateStatusFail = 108,
+    RedisUpdateStatusFailException = 109,
+    RedisUserNotFound = 110,
+    UserLogOut = 111,
 
     // === Master Data 150 ~ ===
     LoadMasterMonsterDataFail = 150,
@@ -65,7 +69,9 @@ public enum ResultCode
     LoginFailSetAuthToken = 208,
     CheckAuthFailNotExist = 200,
     AuthTokenFailSetNx = 206,
-    
+    AuthTokenFailWrongKeyword = 207,
+
+
     // === User Game Data 300 ~ ===
     CreateDefaultGameDataFailInsert = 301,
     CreateGameDataFailInsert = 302,

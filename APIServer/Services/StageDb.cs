@@ -23,14 +23,14 @@ public class StageDb : BaseDb<Stage>, IStageDb
                 is_achieved = false,
             };
 
-            var count = await ExecuteInsertAsync(defaultStage);
+            var result = await ExecuteInsertAsync(defaultStage);
 
-            if (count == 0)
+            if (result != ResultCode.None)
             {
                 return (ResultCode.CreateDefaultStageFailInsert, null);
             }
 
-            return (ResultCode.None, defaultStage);
+            return (result, defaultStage);
         }
         catch (Exception e)
         {

@@ -16,8 +16,13 @@ public class CreateAccountController : BaseApiController
     }
 
     [HttpPost]
-    public async Task<PkResponse> Post(AccountReq request)
+    public async Task<ActionResult<PkResponse>> Post(AccountReq request)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
         var resultCode = await _accountDb.CreateAccountAsync(request.ID, request.Password);
 
         if (resultCode != ResultCode.None)

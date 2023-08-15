@@ -32,7 +32,6 @@ DROP TABLE IF EXISTS gameDb.`stage`;
 CREATE TABLE IF NOT EXISTS gameDb.`stage`
 (
     stage_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '스테이지 ID', 
-    //stage_name VARCHAR(50) NOT NULL COMMENT  '스테이지 이름',
     prev_stage_id INT DEFAULT NULL COMMENT '이전 스테이지 ID',
     FOREIGN KEY (prev_stage_id) REFERENCES gameDb.`stage`(stage_id)
 ) COMMENT '스테이지 정보 테이블';
@@ -44,10 +43,8 @@ USE gameDb;
 DROP TABLE IF EXISTS gameDb.`player_stage`;
 CREATE TABLE IF NOT EXISTS gameDb.`player_stage`
 (
-    player_uid BIGINT NOT NULL COMMENT '고유 번호', 
+    player_uid BIGINT NOT NULL PRIMARY KEY COMMENT '고유 번호', 
     stage_id INT NOT NULL COMMENT '스테이지 ID',
-    is_achieved BOOLEAN NOT NULL DEFAULT 0 COMMENT '스테이지 달성 여부',
-    FOREIGN KEY (player_uid) REFERENCES gameDb.`player_data`(player_uid),
-    FOREIGN KEY (stage_id) REFERENCES gameDb.`stage`(stage_id)
+    is_achieved BOOLEAN NOT NULL DEFAULT 0 COMMENT '스테이지 달성 여부'
 ) COMMENT '유저와 스테이지 정보 연결 테이블';
 ```

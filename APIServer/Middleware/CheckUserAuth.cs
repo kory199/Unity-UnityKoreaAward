@@ -90,15 +90,15 @@ public class CheckUserAuth
             return false;
         }
 
-        //var errorJsonResponse = JsonSerializer.Serialize(new MiddlewareResponse
-        //{
-        //Result = ResultCode.InValidRequestHttpBody
-        //});
+        var errorJsonResponse = JsonSerializer.Serialize(new MiddlewareResponse
+        {
+            Result = ResultCode.InValidRequestHttpBody,
+            ResultMessage = ResultCode.InValidRequestHttpBody.ToString()
+        });
 
-        //var bytes = Encoding.UTF8.GetBytes(errorJsonResponse);
-        //await context.Response.Body.WriteAsync(bytes, 0, bytes.Length);
-
-        await SendErrorAsync(context, ResultCode.InValidRequestHttpBody, HttpStatusCode.BadRequest).ConfigureAwait(false);
+        var bytes = Encoding.UTF8.GetBytes(errorJsonResponse);
+        await context.Response.Body.WriteAsync(bytes, 0, bytes.Length);
+        //await SendErrorAsync(context, ResultCode.InValidRequestHttpBody, HttpStatusCode.BadRequest).ConfigureAwait(false);
         return true;
     }
 
@@ -115,15 +115,15 @@ public class CheckUserAuth
             id = "";
             authToken = "";
 
-            //var errorJsonResponse = JsonSerializer.Serialize(new MiddlewareResponse
-            //{
-            //    Result = ResultCode.AuthTokenFailWrongAuthToken
-            //});
-            //
-            //var bytes = Encoding.UTF8.GetBytes(errorJsonResponse);
-            //context.Response.Body.Write(bytes, 0, bytes.Length);
+            var errorJsonResponse = JsonSerializer.Serialize(new MiddlewareResponse
+            {
+                Result = ResultCode.AuthTokenFailWrongKeyword,
+                ResultMessage = ResultCode.AuthTokenFailWrongKeyword.ToString()
+            });
 
-            SendErrorAsync(context, ResultCode.AuthTokenFailWrongAuthToken, HttpStatusCode.Unauthorized).GetAwaiter().GetResult();  // Do not await here
+            var bytes = Encoding.UTF8.GetBytes(errorJsonResponse);
+            context.Response.Body.WriteAsync(bytes, 0, bytes.Length);
+            //SendErrorAsync(context, ResultCode.AuthTokenFailWrongAuthToken, HttpStatusCode.Unauthorized).GetAwaiter().GetResult();  // Do not await here
             return true;
         }
     }

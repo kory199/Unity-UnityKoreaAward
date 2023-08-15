@@ -10,7 +10,7 @@ public class AuthUser
 
 public class RediskeyExpireTime
 {
-    public const ushort NxKeyExpireSecond = 3;
+    public const ushort NxKeyExpireSecond = 1;
     public const ushort RedisKeyExpireSecong = 6000;
     public const ushort LoginKeyExpireMin = 60;
     public const ushort TicketKeyExpireSecond = 6000;

@@ -8,6 +8,6 @@ public enum EventType
     Login = 5,
     LoginAddRedis = 6,
     LogOut = 10,
-
+    UpdateStatus = 11,
     UpdateScore = 15,
 }

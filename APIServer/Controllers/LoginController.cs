@@ -36,6 +36,7 @@ public class LoginController : BaseApiController
 
             var response = CreateResponse<LoginRes>(ResultCode.LoginSuccess);
             response.AuthToken = authToken;
+            response.AccountId = account_id;
 
             return response;
         }

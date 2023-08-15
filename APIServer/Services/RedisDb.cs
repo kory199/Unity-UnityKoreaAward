@@ -3,7 +3,6 @@ using APIServer.StateType;
 using CloudStructures;
 using CloudStructures.Structures;
 using StackExchange.Redis;
-using System.Diagnostics;
 using ZLogger;
 using static APIServer.Services.RedisTimeSpan;
 
@@ -50,7 +49,7 @@ public class RedisDb : IMemoryDb
         }
         catch (Exception e)
         {
-            s_logger.ZLogError(LogManager.EventIdDic[EventType.LoginAddRedis], e,
+            s_logger.ZLogError(LogManager.EventIdDic[EventType.LoginAddRedis], e.Message,
                 $"ID : {id}, AuthToken : {authToken}, ErrorMessage : Redis Connection Error");
 
             result = ResultCode.LoginFailAddRedisException;
@@ -59,7 +58,49 @@ public class RedisDb : IMemoryDb
         return result;
     }
 
-    public async Task<ResultCode> CheckUserAuthAsync(string id, string authToken)
+    public async Task<ResultCode> UpdateUserStateAsync(String id)
+    {
+        var key = MemoryDbKeyMaker.MakeUIDKey(id);
+        var result = ResultCode.None;
+
+        try
+        {
+            var redis = new RedisString<AuthUser>(redisConn, key, LoginTimeSpan());
+            var redisResult = await redis.GetAsync();
+
+            if (redisResult.HasValue && redisResult.Value != null)
+            {
+                var user = redisResult.Value;
+                user.State = UserState.GamePlay.ToString();
+
+                if (await redis.SetAsync(user, LoginTimeSpan()) == false)
+                {
+                    s_logger.ZLogError(LogManager.EventIdDic[EventType.UpdateStatus],
+                        $"ID : {id}, ErrorMessage : Redis UpdateStatus Error");
+
+                    result = ResultCode.RedisUpdateStatusFail;
+                }
+            }
+            else
+            {
+                s_logger.ZLogError(LogManager.EventIdDic[EventType.UpdateStatus],
+                        $"ID : {id}, ErrorMessage : User not found");
+
+                result = ResultCode.RedisUserNotFound;
+            }
+        }   
+        catch (Exception e)
+        {
+            s_logger.ZLogError(LogManager.EventIdDic[EventType.UpdateStatus], e.Message,
+                    $"ID : {id}, ErrorMessage : Redis UpdateStatus Error");
+
+            return ResultCode.RedisUpdateStatusFailException;
+        }
+
+        return result;
+    }
+
+    public async Task<ResultCode> CheckUserAuthAsync(String id, String authToken)
     {
         var key = MemoryDbKeyMaker.MakeUIDKey(id);
         var result = ResultCode.None;

@@ -7,6 +7,5 @@ public class GameData
     public Int32 exp { get; set; }
     public Int32 hp { get; set; }
     public Int32 score { get; set; }
-    public Int32 level { get; set; }
     public Int32 status { get; set; }
 }

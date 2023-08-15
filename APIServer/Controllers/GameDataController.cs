@@ -39,7 +39,7 @@ public class GameDataController : BaseApiController
         }
 
         var response = CreateResponse<GameDataRes>(ResultCode.LoadGameDataSuccess);
-        response.PlayerData.Add(gameData);
+        response.PlayerData = gameData;
         return response;
     }
 }

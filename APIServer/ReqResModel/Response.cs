@@ -32,7 +32,7 @@ public class CheckStatusRes : BaseResponse
 
 public class GameDataRes : BaseResponse
 {
-    [Required] public List<GameData> PlayerData { get; set; } = new List<GameData>();
+    [Required] public GameData PlayerData { get; set; } = new GameData(); //객체로 변경
 }
 
 public class RankingDataRes : BaseResponse

@@ -24,11 +24,10 @@ public class GameDb : BaseDb<GameData>, IGameDb
                 exp = 1,
                 hp = 10,
                 score = 0,
-                level = 0,
                 status = (int)UserState.Login
             };
 
-            await ExecuteInsertAsync(gameData);
+            var result = await ExecuteInsertAsync(gameData);
             return (ResultCode.None, gameData);
 
         }
