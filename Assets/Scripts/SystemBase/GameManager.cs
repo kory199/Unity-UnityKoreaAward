@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using APIModels;
+using System.Collections;
 
 [System.Serializable]
 public enum SceneState
@@ -43,7 +44,17 @@ public class GameManager : MonoSingleton<GameManager>
     {
         OnclickStageNum = stageNum;
     }
-
+    public void EndStage(int stageNum)
+    {
+        //브레이크 이미지 띄우고 씬이동
+        Debug.Log("승리");
+        StartCoroutine(Co_EndStage());
+    }
+    IEnumerator Co_EndStage()
+    {
+        yield return new WaitForSeconds(3);
+        MoveScene("SceneLobby");
+    }
     public void MoveScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);

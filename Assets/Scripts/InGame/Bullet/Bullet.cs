@@ -14,6 +14,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] GameObject bossMonster;
     [SerializeField] MeleeMonster meleeMonster;
     [SerializeField] RangedMonster rangedMonster;
+    [SerializeField] BossOne _bossOne;
     [SerializeField] GameObject setShooter;
 
     Vector2 dirBullet;
@@ -105,6 +106,10 @@ public class Bullet : MonoBehaviour
                 case "RangedMonster":
                     rangedMonster = other.gameObject.GetComponent<RangedMonster>();
                     rangedMonster.Hit();
+                    break;
+                case "BossOne":
+                    _bossOne = other.gameObject.GetComponent<BossOne>();
+                    _bossOne.Hit();
                     break;
                 default:
                     break;

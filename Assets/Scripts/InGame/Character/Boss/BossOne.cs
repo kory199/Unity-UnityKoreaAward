@@ -25,24 +25,27 @@ public class BossOne : BossBase
             _rad.Add(Vector3.Distance(pos.transform.position, _boss.transform.position));
             _initDegree.Add(Mathf.Atan2(tempVector.x, tempVector.y));
         }
+        _monsterInfo.rate_of_fire = 5f;
         TransferState(MonsterStateType.Move);
-        StartCoroutine(Co_BossPattern());
+        // StartCoroutine(Co_BossPattern());
     }
+
     IEnumerator Co_BossPattern()
     {
         yield return new WaitForSeconds(_delayTime);
 
         TransferState(MonsterStateType.Phase1);
-        yield return new WaitUntil(() => tempHP < 50);
+        yield return new WaitUntil(() => _monsterInfo.curHp < _monsterInfo.hp * 0.5f);
 
         TransferState(MonsterStateType.Phase2);
-        yield return new WaitUntil(() => tempHP < 30);
+        yield return new WaitUntil(() => tempHP < _monsterInfo.hp * 0.3f);
 
         TransferState(MonsterStateType.Phase3);
         yield return new WaitUntil(() => tempHP == 0);
 
         StartCoroutine(Co_BossDie());
     }
+
     public void GetDamage(int damage)
     {
         // curHP : 서버에서 받아오깅
@@ -94,7 +97,34 @@ public class BossOne : BossBase
     protected override IEnumerator State_Move()
     {
         // 추후 몬스터 별 이동속도 및 공격 범위 추가
-        yield return base.State_Move();
+        while (state == MonsterStateType.Move)
+        {
+            // 플레이어가 죽으면 실행
+            if (player.IsDeath)
+            {
+                // 몬스터들을 특정 State로 옮겨준다
+                // TransferState(MonsterStateType.Dance);
+                yield break;
+            }
+
+            // 플레이어를 향한 방향벡터를 구함.
+            Vector3 dirVector = (player.transform.position - gameObject.transform.position).normalized;
+            //gameObject.transform.LookAt(player.transform.position);
+
+            // 몬스터를 해당 방향으로 움직임(다른 방식으로 구현해도 ㅇㅋ)
+            // gameObject.transform.Translate(dirVector * _monsterInfo.MoveSpeed * Time.deltaTime);
+            // 임시 이동속도
+            gameObject.transform.Translate(dirVector * 2f * Time.deltaTime);
+
+            // 플레이어와 자기자신(몬스터)사이의 거리와 본인의 공격 가능범위를 비교하여 수행(다른 방식으로 구현해도 ㅇㅋ)
+            if (Vector3.Distance(player.transform.position, this.gameObject.transform.position) <= _monsterInfo.ranged)
+            {
+                StartCoroutine(Co_BossPattern());
+                yield break;
+            }
+
+            yield return null;
+        }
     }
 
     IEnumerator State_Phase1()
@@ -127,7 +157,7 @@ public class BossOne : BossBase
         {
             Attack();
             yield return new WaitForSeconds(Mathf.Sin(Mathf.Deg2Rad * i + 0.15f));
-           // Debug.Log(Mathf.Sin(Mathf.Deg2Rad * i));
+            // Debug.Log(Mathf.Sin(Mathf.Deg2Rad * i));
             i--;
             if (i < 0) i = 10;
             /*  Attack();
@@ -160,7 +190,12 @@ public class BossOne : BossBase
 
     public override void Hit()
     {
-        throw new System.NotImplementedException();
+        _monsterInfo.curHp -= player.playerAttackPower;
+        if (_monsterInfo.curHp < 0)
+        {
+            //player.Reward(_monsterInfo.exp);
+            GameManager.Instance.EndStage(0);
+        }
     }
 
 
@@ -175,7 +210,7 @@ public class BossOne : BossBase
         _monsterInfo.projectile_speed = bossMonsterStatus.projectile_speed;
         _monsterInfo.collision_damage = bossMonsterStatus.collision_damage;
         _monsterInfo.score = bossMonsterStatus.score;
-        _monsterInfo.ranged = bossMonsterStatus.ranged-12;
+        _monsterInfo.ranged = bossMonsterStatus.ranged - 12;
     }
 
 }
