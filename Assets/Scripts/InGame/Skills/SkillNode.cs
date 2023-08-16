@@ -6,7 +6,7 @@ public partial class ParentSkillNode : Skills
 {
     public List<ChildrenSkillNode> children;
 
-    // ÀÔ·Â¹ŞÀº ¸Å°³ º¯¼ö¸¦ ±âÁØÀ¸·Î ºÎ¸ğ Å¬·¡½ºÀÇ »ı¼ºÀÚ ÃÊ±âÈ­
+    // ì…ë ¥ë°›ì€ ë§¤ê°œ ë³€ìˆ˜ë¥¼ ê¸°ì¤€ìœ¼ë¡œ ë¶€ëª¨ í´ë˜ìŠ¤ì˜ ìƒì„±ì ì´ˆê¸°í™”
     public ParentSkillNode(EnumTypes.PlayerSkiilsType skiils, int maxLv, int reqLv) : base(skiils, maxLv, reqLv)
     {
         children = new List<ChildrenSkillNode>();
@@ -17,16 +17,16 @@ public partial class ChildrenSkillNode : Skills
 {
     public ParentSkillNode parent;
 
-    // ºÎ¸ğ Å¬·¡½º »ı¼ºÀÚ ÃÊ±âÈ­ ¹× ParentSkillNode ¿¬°á
+    // ë¶€ëª¨ í´ë˜ìŠ¤ ìƒì„±ì ì´ˆê¸°í™” ë° ParentSkillNode ì—°ê²°
     public ChildrenSkillNode(EnumTypes.PlayerSkiilsType skiils, int maxLv, int reqLv, ParentSkillNode parentNode) : base(skiils, maxLv, reqLv)
     {
         parent = parentNode;
     }
 
-    // ½ºÅ³ ÇØ±İ Á¶°Ç ÆÇ´Ü
+    // ìŠ¤í‚¬ í•´ê¸ˆ ì¡°ê±´ íŒë‹¨
     public override bool CanSkillOpen()
     {
-        // ºÎ¸ğ ³ëµå¿¡¼­ Á¤ÀÇµÈ ÇØ±İÁ¶°Ç (ex °¢ ½ºÅ³ÀÇ ºÎ¸ğ ³ëµå¿¡ Á¤ÀÇµÈ ÇØ±İ ·¹º§ Á¶°Ç)
+        // ë¶€ëª¨ ë…¸ë“œì—ì„œ ì •ì˜ëœ í•´ê¸ˆì¡°ê±´ (ex ê° ìŠ¤í‚¬ì˜ ë¶€ëª¨ ë…¸ë“œì— ì •ì˜ëœ í•´ê¸ˆ ë ˆë²¨ ì¡°ê±´)
         return parent.curSkillLevel >= requiredUnlockSkillLevel && base.CanSkillOpen();
     }
 }

@@ -20,6 +20,9 @@ public class GameManager : MonoSingleton<GameManager>
     public int StageNum { get; set; }
     // private EventSystem _eventSystem;
 
+    // === Cursor
+    Texture2D _cursorImg;
+
     // Runtume init Gamemanager 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void InstSceneManager()
@@ -31,6 +34,9 @@ public class GameManager : MonoSingleton<GameManager>
     protected void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
+
+        _cursorImg = Resources.Load<Texture2D>("cursor");
+        Cursor.SetCursor(_cursorImg, Vector2.zero, CursorMode.Auto);
     }
 
     public void SetStageNum(int stageNum)
