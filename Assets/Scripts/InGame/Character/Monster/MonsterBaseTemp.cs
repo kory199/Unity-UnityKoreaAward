@@ -49,8 +49,6 @@ public abstract class MonsterBase : MonoBehaviour
 
     protected virtual void Start()
     {
-        Debug.LogError("Base Start");
-
         // Next Chain
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Next, SetStageNum);
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Monster, EnumTypes.StageStateType.Next, MonsterStatusUpdate);
