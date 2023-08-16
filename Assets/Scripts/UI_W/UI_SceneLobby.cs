@@ -54,7 +54,7 @@ public class UI_SceneLobby : UIBase
 
     private async void GetStageNum()
     {
-        await UniTask.Delay(TimeSpan.FromSeconds(2));
+        await UniTask.Delay(TimeSpan.FromSeconds(1));
         bool result = await APIManager.Instance.GetStageAPI();
     }
 
