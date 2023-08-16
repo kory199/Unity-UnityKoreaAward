@@ -21,6 +21,7 @@ public class UI_Enhance : UIBase
 
     private Vector3 nextSpawnPos = Vector3.zero;
     private int zigzagDirection = 1;
+    private int maxtreeNum = 15;
 
     IProcess.NextProcess _nextProcess = IProcess.NextProcess.Continue;
     public override IProcess.NextProcess ProcessInput()
@@ -96,7 +97,7 @@ public class UI_Enhance : UIBase
     {
         Debug.Log($"BulletNum : {bulletNum}");
 
-        if(skillNodePrefab != null)
+        if (skillNodePrefab != null)
         {
             CreateSkillNodePrefab(clickedBtn);
         }
@@ -107,8 +108,7 @@ public class UI_Enhance : UIBase
     // TODO : 프리펩 생성 나중에 오브젝트 풀링으로 변경 
     private void CreateSkillNodePrefab(Button clickedBtn)
     {
-        // 우선 10개만 생성되게 셋팅 해둠
-        if (skillTreeList.Count >= 10)
+        if (skillTreeList.Count >= maxtreeNum)
         {
             return; 
         }
