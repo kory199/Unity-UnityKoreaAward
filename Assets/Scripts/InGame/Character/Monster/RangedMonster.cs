@@ -18,23 +18,36 @@ public class RangedMonster : MonsterBase
     [SerializeField] protected float rangedMonster_CollisionDamage;
     [SerializeField] protected int rangedMonster_Score;
     [SerializeField] protected float rangedMonster_Range;
+    [SerializeField] private bool isRangedMonsterDead;
 
     #region unity event func
-    // stage 변경에 따른 Level별 능력치 부여 => 서버 정보 받아오기
-    protected override void OnEnable()
+    protected override void Awake()
     {
-        base.OnEnable();
+        base.Awake();
+        isRangedMonsterDead = false;
     }
 
     protected override void Start()
     {
         base.Start();
-        SetRangedMonsterStatus(1);
+        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Monster, EnumTypes.StageStateType.Awake, GetRangedMonsterInfo);
+    }
+
+
+    // stage 변경에 따른 Level별 능력치 부여 => 서버 정보 받아오기
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        if (isRangedMonsterDead == true)
+        {
+            SetRangedMonsterStatus(stageNum);
+        }
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
+        isRangedMonsterDead = true;
     }
 
     protected override void SetMonsterName()
@@ -44,16 +57,16 @@ public class RangedMonster : MonsterBase
 
     private void SetRangedMonsterStatus(int inputStageNum)
     {
-        rangedMonster_Level = rangedMonsterStatus[inputStageNum - 1].level;
-        rangedMonster_exp = rangedMonsterStatus[inputStageNum - 1].exp;
-        rangedMonster_Hp = rangedMonsterStatus[inputStageNum - 1].hp;
+        rangedMonster_Level = rangedMonsterStatus[inputStageNum].level;
+        rangedMonster_exp = rangedMonsterStatus[inputStageNum].exp;
+        rangedMonster_Hp = rangedMonsterStatus[inputStageNum].hp;
         rangedMonster_CurHp = rangedMonster_Hp;
-        rangedMonster_Speed = rangedMonsterStatus[inputStageNum - 1].speed;
-        rangedMonster_RateOfFire = rangedMonsterStatus[inputStageNum - 1].rate_of_fire;
-        rangedMonster_ProjectileSpeed = rangedMonsterStatus[inputStageNum - 1].projectile_speed;
-        rangedMonster_CollisionDamage = rangedMonsterStatus[inputStageNum - 1].collision_damage;
-        rangedMonster_Score = rangedMonsterStatus[inputStageNum - 1].score;
-        rangedMonster_Range = rangedMonsterStatus[inputStageNum - 1].ranged;
+        rangedMonster_Speed = rangedMonsterStatus[inputStageNum].speed;
+        rangedMonster_RateOfFire = rangedMonsterStatus[inputStageNum].rate_of_fire;
+        rangedMonster_ProjectileSpeed = rangedMonsterStatus[inputStageNum].projectile_speed;
+        rangedMonster_CollisionDamage = rangedMonsterStatus[inputStageNum].collision_damage;
+        rangedMonster_Score = rangedMonsterStatus[inputStageNum].score;
+        rangedMonster_Range = rangedMonsterStatus[inputStageNum].ranged;
     }
 
     protected override void MonsterStatusUpdate()

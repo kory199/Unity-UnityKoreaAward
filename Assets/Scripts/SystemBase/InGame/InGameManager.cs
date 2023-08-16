@@ -11,7 +11,6 @@ public class InGameManager : MonoSingleton<InGameManager>
 
     private void Awake()
     {
-        //
         RegisterParams(EnumTypes.InGameParamType.Player, (int)EnumTypes.PlayerSkiilsType.MAX);
     }
 
@@ -19,6 +18,8 @@ public class InGameManager : MonoSingleton<InGameManager>
     {
         if (_parameters.ContainsKey(paramType)) return;
         _parameters.Add(paramType, new InGamePlayerParams(maxTypeNum));
+
+        // Debug.LogError("paramType : " + paramType.ToString() + " " + maxTypeNum);
     }
     public void InvokeCallBacks(EnumTypes.InGameParamType type, int callBackIndex)
     {
@@ -56,7 +57,9 @@ public class InGameManager : MonoSingleton<InGameManager>
             Debug.LogError("This Enum Type is not exist");
             return;
         }
-        //Debug.Log("actionType : " + actionType.ToString()+" " + _parameters[param].GetActionCount());
+        // Debug.LogError("param : " + param.ToString());
+        // Debug.LogError("actionType : " + actionType.ToString());
+        // Debug.LogError("action : " + action.Method.Name);
         _parameters[param].AddCallBack(idx, action);
     }
     private void Start()

@@ -7,11 +7,13 @@ public abstract class MonsterBase : MonoBehaviour
 {
     [SerializeField] protected MonsterStateType state;
     [SerializeField] protected Player player;
-    protected Vector3 playerTargetDirection;
     [SerializeField] protected MonsterInfo _monsterInfo = null;
+    protected Vector3 playerTargetDirection;
+    protected int stageNum;
+
     public string MonsterName;
 
-    protected int stageNum;
+    [SerializeField]protected bool isFirst;
 
     // 편집 필요
     protected MonsterData_res[] meleeMonsterStatus;
@@ -21,31 +23,37 @@ public abstract class MonsterBase : MonoBehaviour
 
     // protected bool Death { get { return curHP <= 0; } }
 
-    protected void Awake()
+    protected virtual void Awake()
     {
         _monsterInfo = new MonsterInfo();
         GetInitMonsterStatus();
         //체인 등록
         InGameManager.Instance.RegisterParams(EnumTypes.InGameParamType.Monster, (int)EnumTypes.StageStateType.Max);
-        InGameManager.Instance.RegisterParams(EnumTypes.InGameParamType.Stage, (int)EnumTypes.StageStateType.Max);
+
+        stageNum = 0;
+        isFirst = true;
     }
 
     protected virtual void OnEnable()
     {
+        // Debug.LogError("OnEnable : " + isFirst);
+        if (isFirst == false)
+        {
+            stageNum = StageManager.Instance.GetStageNum();
+            //Debug.LogError("stageNum : " + stageNum);
+        }
+
         state = MonsterStateType.None;
         StartCoroutine("State_" + state);
     }
 
     protected virtual void Start()
     {
-        // Start Chain
-        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Monster, EnumTypes.StageStateType.Awake, GetMeleeMonsterInfo);
-        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Monster, EnumTypes.StageStateType.Awake, GetRangedMonsterInfo);
+        Debug.LogError("Base Start");
 
         // Next Chain
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Next, SetStageNum);
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Monster, EnumTypes.StageStateType.Next, MonsterStatusUpdate);
-        stageNum = 1;
 
         CallMonster(EnumTypes.StageStateType.Awake);
 
@@ -56,7 +64,7 @@ public abstract class MonsterBase : MonoBehaviour
     protected virtual void OnDisable()
     {
         ObjectPooler.ReturnToPool(gameObject);
-
+        isFirst = false;
         // CancelInvoke(); //invoke 함수를 사용하는 경우적어주세요
     }
     /// <summary>
@@ -91,8 +99,8 @@ public abstract class MonsterBase : MonoBehaviour
         }
     }
 
-    private void GetMeleeMonsterInfo() => MonsterSetting(stageNum, EnumTypes.MonsterType.MeleeMonster);
-    private void GetRangedMonsterInfo() => MonsterSetting(stageNum, EnumTypes.MonsterType.RangedMonster);
+    protected void GetMeleeMonsterInfo() => MonsterSetting(stageNum, EnumTypes.MonsterType.MeleeMonster);
+    protected void GetRangedMonsterInfo() => MonsterSetting(stageNum, EnumTypes.MonsterType.RangedMonster);
 
     private void MonsterSetting(int curStageNum, EnumTypes.MonsterType monsterType)
     {
@@ -108,7 +116,7 @@ public abstract class MonsterBase : MonoBehaviour
         MonsterStatusSetting(monsterType);
     }
 
-    private void MonsterStatusSetting(EnumTypes.MonsterType monsterType)
+    protected void MonsterStatusSetting(EnumTypes.MonsterType monsterType)
     {
         if (monsterType == EnumTypes.MonsterType.MeleeMonster)
         {
@@ -242,7 +250,6 @@ public abstract class MonsterBase : MonoBehaviour
     protected virtual IEnumerator State_Death()
     {
         // 점수+, exp+, 비활성화 되고 풀에 다시 들어가고 등등...
-
 
         MonsterDeath();
         yield return null;
