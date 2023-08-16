@@ -17,7 +17,7 @@ public class BossOne : BossBase
     protected override void Start()
     {
         //SetRangedMonsterStatus(stageNum);
-        SetRangedMonsterStatus(1); //보스 테스트
+        SetBossMonsterStatus(1); //보스 테스트
         //회전 초기값
         foreach (var pos in _spawners)
         {
@@ -25,6 +25,7 @@ public class BossOne : BossBase
             _rad.Add(Vector3.Distance(pos.transform.position, _boss.transform.position));
             _initDegree.Add(Mathf.Atan2(tempVector.x, tempVector.y));
         }
+        TransferState(MonsterStateType.Move);
         StartCoroutine(Co_BossPattern());
     }
     IEnumerator Co_BossPattern()
@@ -163,7 +164,7 @@ public class BossOne : BossBase
     }
 
 
-    private void SetRangedMonsterStatus(int inputStageNum)
+    private void SetBossMonsterStatus(int inputStageNum)
     {
         _monsterInfo.level = bossMonsterStatus.level;
         _monsterInfo.exp = bossMonsterStatus.exp;
