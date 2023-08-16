@@ -31,10 +31,10 @@ public class StageManager : MonoSingleton<StageManager>
     }
     private void Start()
     {
-        _stageNum = 1;
         //start 체인
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetMonsterSpawnum);
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetMonsterSpawn);
+        
         //Next 체인
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Next, SetStageNum);
 
@@ -151,7 +151,7 @@ public class StageManager : MonoSingleton<StageManager>
             Debug.LogError("StageSpawnMonsterData_res is Null");
         }
 
-        _spawnMeleeNum = stageSpawnMonsterData_Res[stageNum - 1].meleemonster_spawn;
-        _spawnRangedNum = stageSpawnMonsterData_Res[stageNum - 1].rangedmonster_spawn;
+        _spawnMeleeNum = stageSpawnMonsterData_Res[stageNum].meleemonster_spawn;
+        _spawnRangedNum = stageSpawnMonsterData_Res[stageNum].rangedmonster_spawn;
     }
 }

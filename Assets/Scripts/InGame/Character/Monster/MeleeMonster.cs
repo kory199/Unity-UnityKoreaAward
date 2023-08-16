@@ -15,27 +15,39 @@ public class MeleeMonster : MonsterBase
     [SerializeField] private float meleeMonster_CollisionDamage;
     [SerializeField] private int meleeMonster_Score;
     [SerializeField] private float meleeMonster_Range;
-
+    [SerializeField] private bool isMeleeMonsterDead;
 
 
     #region unity event func
+
+    protected override void Awake()
+    {
+        base.Awake();
+        isMeleeMonsterDead = false;
+    }
+
     // stage 변경에 따른 Level별 능력치 부여 => 서버 정보 받아오기
     protected override void OnEnable()
     {
         base.OnEnable();
 
+        if (isMeleeMonsterDead == true)
+        {
+            SetMeleeMonsterStatus(stageNum);
+        }
         // init melee monster variable
     }
 
     protected override void Start()
     {
+        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Monster, EnumTypes.StageStateType.Awake, GetMeleeMonsterInfo);
         base.Start();
-        SetMeleeMonsterStatus(1);
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
+        isMeleeMonsterDead = true;
     }
     #endregion
     protected override void SetMonsterName()
@@ -47,21 +59,21 @@ public class MeleeMonster : MonsterBase
     {
         //Debug.LogError("SetMeleeMonsterStatus : " + inputStageNum);
 
-        meleeMonster_Level = meleeMonsterStatus[inputStageNum - 1].level;
-        meleeMonster_exp = meleeMonsterStatus[inputStageNum - 1].exp;
-        meleeMonster_Hp = meleeMonsterStatus[inputStageNum - 1].hp;
+        meleeMonster_Level = meleeMonsterStatus[inputStageNum].level;
+        meleeMonster_exp = meleeMonsterStatus[inputStageNum].exp;
+        meleeMonster_Hp = meleeMonsterStatus[inputStageNum].hp;
         meleeMonster_CurHp = meleeMonster_Hp;
-        meleeMonster_Speed = meleeMonsterStatus[inputStageNum - 1].speed;
-        meleeMonster_RateOfFire = meleeMonsterStatus[inputStageNum - 1].rate_of_fire;
-        meleeMonster_ProjectileSpeed = meleeMonsterStatus[inputStageNum - 1].projectile_speed;
-        meleeMonster_CollisionDamage = meleeMonsterStatus[inputStageNum - 1].collision_damage;
-        meleeMonster_Score = meleeMonsterStatus[inputStageNum - 1].score;
-        meleeMonster_Range = meleeMonsterStatus[inputStageNum - 1].ranged;
+        meleeMonster_Speed = meleeMonsterStatus[inputStageNum].speed;
+        meleeMonster_RateOfFire = meleeMonsterStatus[inputStageNum].rate_of_fire;
+        meleeMonster_ProjectileSpeed = meleeMonsterStatus[inputStageNum].projectile_speed;
+        meleeMonster_CollisionDamage = meleeMonsterStatus[inputStageNum].collision_damage;
+        meleeMonster_Score = meleeMonsterStatus[inputStageNum].score;
+        meleeMonster_Range = meleeMonsterStatus[inputStageNum].ranged;
     }
 
     protected override void MonsterStatusUpdate()
     {
-      //  Debug.LogError("MonsterStatusUpdate : " + stageNum);
+        //  Debug.LogError("MonsterStatusUpdate : " + stageNum);
         SetMeleeMonsterStatus(stageNum);
     }
 
