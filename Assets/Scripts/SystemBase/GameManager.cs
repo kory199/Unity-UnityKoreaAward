@@ -64,7 +64,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         UniTask loadSceneUnitask = LoadScene(scene);
 
-        await UniTask.WhenAll(loadSceneUnitask);
+        await loadSceneUnitask;
     }
 
     public async UniTask LoadScene(EnumTypes.ScenesType scene)
