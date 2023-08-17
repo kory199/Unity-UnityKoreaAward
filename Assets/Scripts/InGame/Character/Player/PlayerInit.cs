@@ -45,18 +45,15 @@ public partial class Player
         Cursor.lockState = CursorLockMode.Confined;
     }
 
-    private async void InitPlayer(int playerLv)
+    private void InitPlayer(int playerLv)
     {
-        // 추후 변경
-        bool result = await APIManager.Instance.GetMasterDataAPI();
+        playerStatus = APIManager.Instance.GetValueByKey<PlayerStatus_res[]>(MasterDataDicKey.PlayerStatus.ToString());
+        // Level 1 기준 초기 셋팅
+        // playerMaxHp = playerStatus[0].hp;
+        this.playerLv = playerLv;
 
-        if (result)
+        if (playerStatus != null)
         {
-            playerStatus = APIManager.Instance.GetValueByKey<PlayerStatus_res[]>(MasterDataDicKey.PlayerStatus.ToString());
-            // Level 1 기준 초기 셋팅
-            // playerMaxHp = playerStatus[0].hp;
-            this.playerLv = playerLv;
-
             playerMaxHp = 1000;
             playerCurHp = playerMaxHp;
             playerAttackPower = playerStatus[playerLv - 1].attack_power;
@@ -64,15 +61,16 @@ public partial class Player
             playerMovementSpeed = playerStatus[playerLv - 1].movement_speed;
             playerProjectileSpeed = playerStatus[playerLv - 1].projectile_speed;
             playerRateOfFire = playerStatus[playerLv - 1].rate_of_fire;
-
-            // PlayerData player = APIDataSO.Instance.GetValueByKey<PlayerData>(APIDataDicKey.PlayerData);
-            // TODO : 로그인 후 해당 유저 데이터 추가예정
-            // playerMaxHp = player.hp;
-            // playerCurHp = playerMaxHp;
-            // playerMaxExp = player.exp;
-
-            IsDeath = false;
         }
+               
+
+        // PlayerData player = APIDataSO.Instance.GetValueByKey<PlayerData>(APIDataDicKey.PlayerData);
+        // TODO : 로그인 후 해당 유저 데이터 추가예정
+        // playerMaxHp = player.hp;
+        // playerCurHp = playerMaxHp;
+        // playerMaxExp = player.exp;
+
+        IsDeath = false;
     }
 
     // 추후 InitPlayer로 병합 예정 (서버 연결 확인 후 MasterData로부터 받아오기)

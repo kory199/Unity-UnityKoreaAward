@@ -19,9 +19,6 @@ public class StageManager : MonoSingleton<StageManager>
     #region Uinity lifeCycle
     private void Awake()
     {
-        // 서버로부터 몬스터 스폰 정보 요청 (임시)
-        RequestMonsterInfo();
-
         // 플레이어 UI 켜기
         if (_uI_SceneGame == null)
             _uI_SceneGame = UIManager.Instance.CreateObject<UI_SceneGame>("UI_SceneGame", EnumTypes.LayoutType.First);
@@ -135,11 +132,6 @@ public class StageManager : MonoSingleton<StageManager>
     {
         yield return null;
         //보스 클리어시 띄울 창 켜거나 이펙트 만들기
-    }
-
-    public async void RequestMonsterInfo()
-    {
-        await APIManager.Instance.GetMasterDataAPI();
     }
 
     public void GetMonsterInfo(int stageNum)

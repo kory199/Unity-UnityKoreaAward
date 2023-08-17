@@ -13,7 +13,7 @@ public abstract class MonsterBase : MonoBehaviour
 
     public string MonsterName;
 
-    [SerializeField]protected bool isFirst;
+    [SerializeField] protected bool isFirst;
 
     // 편집 필요
     protected MonsterData_res[] meleeMonsterStatus;
@@ -70,16 +70,11 @@ public abstract class MonsterBase : MonoBehaviour
     /// </summary>
     protected abstract void SetMonsterName();
 
-    protected virtual async void GetInitMonsterStatus()
+    protected virtual void GetInitMonsterStatus()
     {
-        bool result = await APIManager.Instance.GetMasterDataAPI();
-
-        if (result)
-        {
-            meleeMonsterStatus = APIManager.Instance.GetValueByKey<MonsterData_res[]>(MasterDataDicKey.MeleeMonster.ToString());
-            rangedMonsterStatus = APIManager.Instance.GetValueByKey<MonsterData_res[]>(MasterDataDicKey.RangedMonster.ToString());
-            bossMonsterStatus = APIManager.Instance.GetValueByKey<MonsterData_res>(MasterDataDicKey.BOSS.ToString());
-        }
+        meleeMonsterStatus = APIManager.Instance.GetValueByKey<MonsterData_res[]>(MasterDataDicKey.MeleeMonster.ToString());
+        rangedMonsterStatus = APIManager.Instance.GetValueByKey<MonsterData_res[]>(MasterDataDicKey.RangedMonster.ToString());
+        bossMonsterStatus = APIManager.Instance.GetValueByKey<MonsterData_res>(MasterDataDicKey.BOSS.ToString());
 
         if (meleeMonsterStatus == null)
         {

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 [System.Serializable]
-public class MonsterInfo
+public class MonsterInfo 
 {
     public string type;
     public int level;
@@ -18,4 +18,6 @@ public class MonsterInfo
     /// <summary>
     /// 아래데이터 삭제예정
     /// </summary>
+    /// 
+    
 }
