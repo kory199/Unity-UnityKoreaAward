@@ -187,14 +187,16 @@ public class BossOne : BossBase
         FindObjectOfType<StageManager>().BossDeath();
 
     }
-
+    bool _stageOver = false;
     public override void Hit()
     {
         _monsterInfo.curHp -= player.playerAttackPower;
-        if (_monsterInfo.curHp < 0)
+        if (_monsterInfo.curHp <= 0)
         {
+            if (_stageOver == true) return;
+            _stageOver = true;
+            UIManager.Instance.CreateObject<Popup_StageClear>("Popup_StageClear",LayoutType.Middle);
             //player.Reward(_monsterInfo.exp);
-            GameManager.Instance.EndStage(0);
         }
     }
 

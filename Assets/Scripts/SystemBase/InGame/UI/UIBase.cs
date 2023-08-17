@@ -23,7 +23,7 @@ public abstract class UIBase : MonoBehaviour, IProcess
         {
             _processManager.processingUIStack.Push(this);
 
-            Debug.Log(_processManager.processingUIStack.Count + " show " + gameObject.name);
+            //Debug.Log(_processManager.processingUIStack.Count + " show " + gameObject.name);
         }
 
     }
@@ -34,10 +34,9 @@ public abstract class UIBase : MonoBehaviour, IProcess
 
         if (true == _processManager.processingUIStack.Contains(this))
         {
-
             _processManager.processingUIStack.Pop();
-            Debug.Log(_processManager.processingUIStack.Count + " hide " + gameObject.name);
 
+            // Debug.Log(_processManager.processingUIStack.Count + " hide " + gameObject.name);
         }
     }
 

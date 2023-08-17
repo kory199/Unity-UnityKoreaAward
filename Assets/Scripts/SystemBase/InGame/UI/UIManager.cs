@@ -28,8 +28,8 @@ public class UIManager : UIBase
 
     private const string _languageKey = "LANGUAGE";
 
-    private int     _sortingOrder = 0;
-    private string  _basePath = "UI/";
+    private int _sortingOrder = 0;
+    private string _basePath = "UI/";
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void InstUIManager()
@@ -54,7 +54,7 @@ public class UIManager : UIBase
         DontDestroyOnLoad(this.gameObject);
     }
 
-    protected override void Start() => SetUp();       
+    protected override void Start() => SetUp();
 
     private void SetUp()
     {
@@ -155,4 +155,5 @@ public class UIManager : UIBase
         return IProcess.NextProcess.Continue;
 
     }
+  
 }

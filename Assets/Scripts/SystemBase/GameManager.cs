@@ -48,13 +48,9 @@ public class GameManager : MonoSingleton<GameManager>
     {
         //브레이크 이미지 띄우고 씬이동
         Debug.Log("승리");
-        StartCoroutine(Co_EndStage());
-    }
-    IEnumerator Co_EndStage()
-    {
-        yield return new WaitForSeconds(3);
         MoveScene("SceneLobby");
     }
+   
     public void MoveScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);

@@ -347,7 +347,7 @@ GameObject:
   - component: {fileID: 4352249269084086717}
   m_Layer: 0
   m_Name: BossOne
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -593,7 +593,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 31.07, y: 36.21591}
+    oldSize: {x: 1.5535, y: 1.8107957}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

@@ -25,6 +25,7 @@ public abstract class MonsterBase : MonoBehaviour
 
     protected virtual void Awake()
     {
+        gameObject.tag = "Monster";
         _monsterInfo = new MonsterInfo();
         GetInitMonsterStatus();
         //체인 등록

@@ -42,7 +42,7 @@ public abstract class BossBase : MonsterBase
         while (i < Utils.PROJECTILE_MAXDISTANCE)
         {
             yield return null;
-            ball.transform.Translate(dir.normalized * Utils.PROJECTILE_SPEED); 
+            ball.transform.Translate(dir.normalized * Utils.PROJECTILE_SPEED);
             i++;
         }
         ball.gameObject.SetActive(false);
