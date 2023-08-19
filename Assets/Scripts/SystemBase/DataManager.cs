@@ -4,13 +4,29 @@ using UnityEngine;
 
 public class DataManager :MonoSingleton<DataManager>
 {
+    #region Unity lifecycle
+    private void Awake()
+    {
+         
+    }
+
     private void Start()
     {
         
     }
+    #endregion
 
-    private async void ConfirmConnected()
+    private void GameDataSetting()
     {
-        // await APIManager.Instance.LoginAPI();
+        foreach (var gamedata in collection)
+        {
+
+        }
+    }
+
+    // 추후 서버에 저장될 데이터 
+    private void GameInfoData()
+    {
+
     }
 }
