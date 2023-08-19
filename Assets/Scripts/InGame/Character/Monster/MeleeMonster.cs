@@ -95,7 +95,7 @@ public class MeleeMonster : MonsterBase
 
         if (_monsterInfo.curHp <= 0)
         {
-            player.Reward(_monsterInfo.exp);
+            player.Reward(_monsterInfo.exp, _monsterInfo.score);
             MonsterDeath();
         }
     }
