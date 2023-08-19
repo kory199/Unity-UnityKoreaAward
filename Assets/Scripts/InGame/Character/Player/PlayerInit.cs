@@ -76,7 +76,7 @@ public partial class Player
     // 추후 InitPlayer로 병합 예정 (서버 연결 확인 후 MasterData로부터 받아오기)
     private void retrunPlayerInfo(int inputPlayerLV)
     {
-        playerMaxHp = 1000;
+        playerMaxHp = 10000;
         playerCurHp = playerMaxHp;
         playerAttackPower = playerStatus[inputPlayerLV - 1].attack_power;
         playerMaxExp = playerStatus[inputPlayerLV - 1].xp_requiredfor_levelup;

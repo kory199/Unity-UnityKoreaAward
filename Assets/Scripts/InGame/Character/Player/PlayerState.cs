@@ -46,9 +46,10 @@ public partial class Player
         }
     }
 
-    public void Reward(int exp)
+    public void Reward(int exp, int score)
     {
         playerCurExp += exp;
+        GameManager.Instance.playerData.score += score;
 
         if (playerCurExp >= playerMaxExp)
         {

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DataManager :MonoSingleton<DataManager>
 {
+
+
     #region Unity lifecycle
     private void Awake()
     {

@@ -119,7 +119,7 @@ public class RangedMonster : MonsterBase
 
         if (rangedMonster_CurHp <= 0)
         {
-            player.Reward(rangedMonster_exp);
+            player.Reward(rangedMonster_exp, rangedMonster_Score);
             MonsterDeath();
         }
     }
