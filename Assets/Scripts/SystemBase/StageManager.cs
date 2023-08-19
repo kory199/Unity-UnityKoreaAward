@@ -31,27 +31,18 @@ public class StageManager : MonoSingleton<StageManager>
         //start 체인
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetMonsterSpawnum);
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetMonsterSpawn);
-        
+
         //Next 체인
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Next, SetStageNum);
 
         //End 체인
         //InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.End, SendStageData);
+        StartCoroutine(Co_GameStart());
     }
-    private void Update()
+    IEnumerator Co_GameStart()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            Debug.Log("Stage " + _stageNum + " Start");
-
-            CallStage(EnumTypes.StageStateType.Start);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            Debug.Log("Next Stage Setting");
-
-            CallStage(EnumTypes.StageStateType.Next);
-        }
+        yield return new WaitForSeconds(3f);
+        CallStage(EnumTypes.StageStateType.Start);
     }
     #endregion
     public void CallStage(EnumTypes.StageStateType stageType)
@@ -82,15 +73,16 @@ public class StageManager : MonoSingleton<StageManager>
     }
     public void StageClear()
     {
-        UIManager.Instance.CreateObject<Popup_StageClear>("Popup_StageClear",EnumTypes.LayoutType.Middle);
-        
+        UIManager.Instance.CreateObject<Popup_StageClear>("Popup_StageClear", EnumTypes.LayoutType.Middle);
+
     }
     private async void SendStageData()
     {
         Debug.Log("Send StageEndData to Server ...");
 
-        _score = GameManager.Instance.playerData.score;
-        await APIManager.Instance.StageUpToServer(_stageNum,_score);
+        _score = 777;
+        //  _score = GameManager.Instance.playerData.score;
+        await APIManager.Instance.StageUpToServer(_stageNum, _score);
     }
 
     public async void PlayerDeath()
