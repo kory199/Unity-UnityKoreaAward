@@ -16,7 +16,6 @@ public abstract class MonsterBase : MonoBehaviour
     [SerializeField] protected bool isFirst;
 
     // 편집 필요
-    protected MonsterData_res[] meleeMonsterStatus;
     protected MonsterData_res[] rangedMonsterStatus;
     protected MonsterData_res bossMonsterStatus;
     protected MonsterData_res[] monsterData_Res;
@@ -73,14 +72,8 @@ public abstract class MonsterBase : MonoBehaviour
 
     protected virtual void GetInitMonsterStatus()
     {
-        meleeMonsterStatus = APIManager.Instance.GetValueByKey<MonsterData_res[]>(MasterDataDicKey.MeleeMonster.ToString());
         rangedMonsterStatus = APIManager.Instance.GetValueByKey<MonsterData_res[]>(MasterDataDicKey.RangedMonster.ToString());
         bossMonsterStatus = APIManager.Instance.GetValueByKey<MonsterData_res>(MasterDataDicKey.BOSS.ToString());
-
-        if (meleeMonsterStatus == null)
-        {
-            Debug.LogError("meleeMonsterStatus Data is Null");
-        }
 
         if (rangedMonsterStatus == null)
         {
@@ -112,11 +105,7 @@ public abstract class MonsterBase : MonoBehaviour
 
     protected void MonsterStatusSetting(EnumTypes.MonsterType monsterType)
     {
-        if (monsterType == EnumTypes.MonsterType.MeleeMonster)
-        {
-            meleeMonsterStatus = APIManager.Instance.GetValueByKey<MonsterData_res[]>(MasterDataDicKey.MeleeMonster.ToString());
-        }
-        else if (monsterType == EnumTypes.MonsterType.RangedMonster)
+         if (monsterType == EnumTypes.MonsterType.RangedMonster)
         {
             rangedMonsterStatus = APIManager.Instance.GetValueByKey<MonsterData_res[]>(MasterDataDicKey.RangedMonster.ToString());
         }

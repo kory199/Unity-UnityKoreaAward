@@ -19,5 +19,4 @@ public class MonsterInfo
     /// 아래데이터 삭제예정
     /// </summary>
     /// 
-    
 }

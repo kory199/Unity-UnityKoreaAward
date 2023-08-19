@@ -122,8 +122,6 @@ public class ObjectPooler : MonoBehaviour
         objectToSpawn.transform.rotation = rotation;
         objectToSpawn.SetActive(true);
 
-        _dictionaryPool[name].Enqueue(objectToSpawn);
-
         return objectToSpawn;
     }
     public static List<GameObject> GetAllPools(string name)

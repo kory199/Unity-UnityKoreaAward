@@ -47,7 +47,6 @@ public partial class Player : CharacterBase
         // temp ui (추후 각 컴포넌트 별 변경 시 반영)
         ui_Hp.text = playerCurHp.ToString();
         ui_Exp.text = playerCurExp.ToString();
-        ui_Stage.text = StageManager.Instance.GetStageNum().ToString();
         ui_LV.text = playerLv.ToString();
         ui_Attack.text = playerAttackPower.ToString();
 
