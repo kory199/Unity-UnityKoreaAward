@@ -18,10 +18,7 @@ public class DataManager :MonoSingleton<DataManager>
 
     private void GameDataSetting()
     {
-        foreach (var gamedata in collection)
-        {
-
-        }
+        
     }
 
     // 추후 서버에 저장될 데이터 
