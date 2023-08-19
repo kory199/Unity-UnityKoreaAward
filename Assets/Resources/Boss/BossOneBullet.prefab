@@ -97,3 +97,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aa3b2bae60824a49a947345ff713143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletSpeed: 0
+  bulletLifeTime: 0
+  rangedBulletDamage: 0
+  meleeBulletDamage: 0
+  playerBulletDamage: 0
+  playerObject: {fileID: 0}
+  player: {fileID: 0}
+  bossMonster: {fileID: 0}
+  meleeMonster: {fileID: 0}
+  rangedMonster: {fileID: 0}
+  _bossOne: {fileID: 0}
+  setShooter: {fileID: 0}

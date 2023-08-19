@@ -25,7 +25,7 @@ public class BossOne : BossBase
             _rad.Add(Vector3.Distance(pos.transform.position, _boss.transform.position));
             _initDegree.Add(Mathf.Atan2(tempVector.x, tempVector.y));
         }
-        _monsterInfo.rate_of_fire = 5f;
+        _monsterInfo.rate_of_fire = 1f;
         TransferState(MonsterStateType.Move);
         // StartCoroutine(Co_BossPattern());
     }
@@ -35,13 +35,13 @@ public class BossOne : BossBase
         yield return new WaitForSeconds(_delayTime);
 
         TransferState(MonsterStateType.Phase1);
-        yield return new WaitUntil(() => _monsterInfo.curHp < _monsterInfo.hp * 0.5f);
+        yield return new WaitUntil(() => _monsterInfo.curHp < _monsterInfo.hp * 0.6f);
 
         TransferState(MonsterStateType.Phase2);
-        yield return new WaitUntil(() => tempHP < _monsterInfo.hp * 0.3f);
+        yield return new WaitUntil(() => _monsterInfo.curHp < _monsterInfo.hp * 0.3f);
 
         TransferState(MonsterStateType.Phase3);
-        yield return new WaitUntil(() => tempHP == 0);
+        yield return new WaitUntil(() => _monsterInfo.curHp == 0);
 
         StartCoroutine(Co_BossDie());
     }
@@ -111,8 +111,6 @@ public class BossOne : BossBase
             Vector3 dirVector = (player.transform.position - gameObject.transform.position).normalized;
             //gameObject.transform.LookAt(player.transform.position);
 
-            // 몬스터를 해당 방향으로 움직임(다른 방식으로 구현해도 ㅇㅋ)
-            // gameObject.transform.Translate(dirVector * _monsterInfo.MoveSpeed * Time.deltaTime);
             // 임시 이동속도
             gameObject.transform.Translate(dirVector * 2f * Time.deltaTime);
 
@@ -126,10 +124,22 @@ public class BossOne : BossBase
             yield return null;
         }
     }
-
+    IEnumerator Co_SpanwerSpin()
+    {
+        int i = 0;
+        while (state == MonsterStateType.Phase1)
+        {
+            _spawners[i].transform.Rotate(new Vector3(0, 0, 1f));
+            i++;
+            if (i > 3) i = 0;
+            yield return null;
+        }
+    }
     IEnumerator State_Phase1()
     {
         Debug.Log("페이즈 1");
+        
+        RotateAttack();
         // 공격 가능한 상태일때 무한반복
         while (state == MonsterStateType.Phase1)
         {
@@ -145,13 +155,16 @@ public class BossOne : BossBase
         while (state == MonsterStateType.Phase2)
         {
             Attack();
-            yield return new WaitForSeconds(_monsterInfo.rate_of_fire - 0.4f);
+            yield return new WaitForSeconds(_monsterInfo.rate_of_fire - 0.5f);
         }
     }
     IEnumerator State_Phase3()
     {
         Debug.Log("페이즈 3");
         int i = 10;
+        StartCoroutine(Co_SpanwerSpin());
+        SpreadOutLine outline= gameObject.AddComponent<SpreadOutLine>();
+        outline.MyColor = new Color(0, 255, 255, 1);
         // 공격 가능한 상태일때 무한반복
         while (state == MonsterStateType.Phase3)
         {
@@ -160,17 +173,6 @@ public class BossOne : BossBase
             // Debug.Log(Mathf.Sin(Mathf.Deg2Rad * i));
             i--;
             if (i < 0) i = 10;
-            /*  Attack();
-              yield return new WaitForSeconds(0.2f);
-              Attack();
-              yield return new WaitForSeconds(0.2f);
-              Attack();
-              yield return new WaitForSeconds(0.5f);
-
-              Attack();
-              yield return new WaitForSeconds(0.3f);
-              Attack();
-              yield return new WaitForSeconds(0.3f);*/
         }
     }
 
@@ -195,7 +197,8 @@ public class BossOne : BossBase
         {
             if (_stageOver == true) return;
             _stageOver = true;
-            UIManager.Instance.CreateObject<Popup_StageClear>("Popup_StageClear",LayoutType.Middle);
+            gameObject.SetActive(false);
+            StageManager.Instance.StageClear();
             //player.Reward(_monsterInfo.exp);
         }
     }

@@ -67,6 +67,7 @@ public class StageManager : MonoSingleton<StageManager>
         }
         Debug.Log("Stage Up ...");
         _stageNum++;
+        SendStageData();
     }
     public int GetStageNum() => _stageNum;
 
@@ -79,11 +80,17 @@ public class StageManager : MonoSingleton<StageManager>
         else
             _spawnManager.SettingMonsterSpawnNum(_spawnMeleeNum, _spawnRangedNum, true, "BossOne");
     }
+    public void StageClear()
+    {
+        UIManager.Instance.CreateObject<Popup_StageClear>("Popup_StageClear",EnumTypes.LayoutType.Middle);
+        
+    }
     private async void SendStageData()
     {
         Debug.Log("Send StageEndData to Server ...");
 
-        //await APIManager.Instance.StageUpToServer(_stageNum, _score);
+        _score = GameManager.Instance.playerData.score;
+        await APIManager.Instance.StageUpToServer(_stageNum,_score);
     }
 
     public async void PlayerDeath()
@@ -106,6 +113,8 @@ public class StageManager : MonoSingleton<StageManager>
         if (_deathMonsters >= (_spawnMeleeNum + _spawnRangedNum) * 1 * 60)
         {
             SetStageNum();
+
+
             CallStage(EnumTypes.StageStateType.Start);
             _deathMonsters = 0;
             // Debug.Log("stageNum : " + _stageNum);
