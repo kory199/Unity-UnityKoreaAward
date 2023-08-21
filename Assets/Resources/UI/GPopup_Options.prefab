@@ -295,8 +295,8 @@ MonoBehaviour:
   m_FillRect: {fileID: 7702442679230868981}
   m_HandleRect: {fileID: 2001256637351315629}
   m_Direction: 0
-  m_MinValue: -40
-  m_MaxValue: 0
+  m_MinValue: 0
+  m_MaxValue: 1
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
@@ -1995,8 +1995,8 @@ MonoBehaviour:
   m_FillRect: {fileID: 2636428033152559002}
   m_HandleRect: {fileID: 7453296399583243350}
   m_Direction: 0
-  m_MinValue: -40
-  m_MaxValue: 0
+  m_MinValue: 0
+  m_MaxValue: 1
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
@@ -2920,10 +2920,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be8bf499bf01a184b97b2b01fbd39efb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  masterSlider: {fileID: 6392582822280054725}
-  bgmSlider: {fileID: 8037420487030686154}
-  sfxSlider: {fileID: 826635489634983604}
-  uI_SceneLobby: {fileID: 0}
 --- !u!1 &4575519747097567233
 GameObject:
   m_ObjectHideFlags: 0
@@ -3447,8 +3443,8 @@ MonoBehaviour:
   m_FillRect: {fileID: 3109616868016721811}
   m_HandleRect: {fileID: 5208411522261665394}
   m_Direction: 0
-  m_MinValue: -40
-  m_MaxValue: 0
+  m_MinValue: 0
+  m_MaxValue: 1
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:

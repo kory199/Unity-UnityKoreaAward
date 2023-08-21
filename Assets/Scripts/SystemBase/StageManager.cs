@@ -1,6 +1,8 @@
 using System.Collections;
-using APIModels;
+using System.Collections.Generic;
 using UnityEngine;
+using System;
+using APIModels;
 
 public class StageManager : MonoSingleton<StageManager>
 {
@@ -23,8 +25,6 @@ public class StageManager : MonoSingleton<StageManager>
         _uI_SceneGame.OnShow();
         //체인 등록
         InGameManager.Instance.RegisterParams(EnumTypes.InGameParamType.Stage, (int)EnumTypes.StageStateType.Max);
-
-        PlayBGMForStage(_stageNum);
     }
     private void Start()
     {
@@ -58,8 +58,6 @@ public class StageManager : MonoSingleton<StageManager>
         }
         Debug.Log("Stage Up ...");
         _stageNum++;
-        PlayBGMForStage(_stageNum);
-
         _uI_SceneGame.SetStageNum(_stageNum + 1);
         SendStageData();
     }
@@ -154,21 +152,5 @@ public class StageManager : MonoSingleton<StageManager>
 
         _spawnMeleeNum = stageSpawnMonsterData_Res[stageNum].meleemonster_spawn;
         _spawnRangedNum = stageSpawnMonsterData_Res[stageNum].rangedmonster_spawn;
-    }
-
-    private void PlayBGMForStage(int stage)
-    {
-        EnumTypes.StageBGMType bgmType; 
-        switch (stage)
-        {
-            case 0: bgmType = EnumTypes.StageBGMType.Stage1; break;
-            case 1: bgmType = EnumTypes.StageBGMType.Stage2; break;
-            case 2: bgmType = EnumTypes.StageBGMType.Stage3; break;
-            case 3: bgmType = EnumTypes.StageBGMType.Stage4; break;
-            case 4: bgmType = EnumTypes.StageBGMType.Stage5; break;
-            default: return; 
-        }
-
-        SoundMgr.Instance.BGMPlay(bgmType);
     }
 }

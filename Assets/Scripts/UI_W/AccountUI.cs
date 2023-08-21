@@ -53,7 +53,6 @@ public class AccountUI : UIBase
     public void ValidateID()
     {
         string id = inputFields[0].text;
-        SoundMgr.Instance.SFXPlay(EnumTypes.SFXType.Typing);
 
         if (string.IsNullOrWhiteSpace(id))
         {
@@ -86,7 +85,6 @@ public class AccountUI : UIBase
     public void ValidatePassword()
     {
         string password = inputFields[1].text;
-        SoundMgr.Instance.SFXPlay(EnumTypes.SFXType.Typing);
 
         if (string.IsNullOrWhiteSpace(password))
         {
@@ -112,13 +110,11 @@ public class AccountUI : UIBase
 
     public async void OnClickCreateAccount()
     {
-        SoundMgr.Instance.SFXPlay(EnumTypes.SFXType.Button);
-
         if (TryProcessUserInput(out User user))
         {
             bool result = await APIManager.Instance.CreateAccountAPI(user);
 
-            if (result)
+            if(result)
             {
                 infoText.text = $"Created New Account Successful ! Please Login";
             }
@@ -131,8 +127,6 @@ public class AccountUI : UIBase
 
     public async void OnClickLogin()
     {
-        SoundMgr.Instance.SFXPlay(EnumTypes.SFXType.Button);
-
         if (TryProcessUserInput(out User user))
         {
             bool loginResult = await APIManager.Instance.LoginAPI(user);
@@ -225,17 +219,8 @@ public class AccountUI : UIBase
 
     public void OnClickBackBtn()
     {
-        // TODO : 로그인 안한 상태 이면 바로 나가, 로그인 했으면 서버에게 알리기 로직 추가
-        StartCoroutine(QuitGameAfterSFX());
-    }
-
-    private IEnumerator QuitGameAfterSFX()
-    {
-        SoundMgr.Instance.SFXPlay(EnumTypes.SFXType.Button);
-        yield return new WaitForSeconds(SoundMgr.Instance.GetSFXLength(EnumTypes.SFXType.Button));
-
 #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
+        UnityEditor.EditorApplication.isPlaying = false;
 #else
     Application.Quit();
 #endif

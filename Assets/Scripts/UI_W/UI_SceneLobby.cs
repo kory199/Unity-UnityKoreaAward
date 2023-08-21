@@ -23,7 +23,6 @@ public class UI_SceneLobby : UIBase
     protected override void Awake()
     {
         DevelopmentModeLogin();
-        SoundMgr.Instance.BGMPlay(EnumTypes.StageBGMType.Lobby);
     }
 
     private async void DevelopmentModeLogin()
@@ -61,7 +60,6 @@ public class UI_SceneLobby : UIBase
 
     public async void OnClick_GameStart()
     {
-        SoundMgr.Instance.SFXPlay(EnumTypes.SFXType.Button);
         bool playGameTask = await APIManager.Instance.PlayGameAPI();
 
         if (playGameTask)
@@ -92,16 +90,15 @@ public class UI_SceneLobby : UIBase
 
     public void OnClick_Explane()
     {
-        SoundMgr.Instance.SFXPlay(EnumTypes.SFXType.Button);
+
     }
     public void OnClick_UnlockList()
     {
-        SoundMgr.Instance.SFXPlay(EnumTypes.SFXType.Button);
+
     }
     UI_GPopupOption _gPopupOption = null;
     public void OnClick_Options()
     {
-        SoundMgr.Instance.SFXPlay(EnumTypes.SFXType.Button);
         OnHide();
         if (_gPopupOption == null)
         {
@@ -114,7 +111,6 @@ public class UI_SceneLobby : UIBase
     RankUI _rankUi = null;
     public void OnClick_RankingList()
     {
-        SoundMgr.Instance.SFXPlay(EnumTypes.SFXType.Button);
         OnHide();
         if (_rankUi == null)
         {
@@ -124,23 +120,17 @@ public class UI_SceneLobby : UIBase
         }
         _rankUi.OnShow();
     }
-    public async void OnClick_ApplicationQuit()
+    public void OnClick_ApplicationQuit()
     {
-        SoundMgr.Instance.SFXPlay(EnumTypes.SFXType.Button);
-        bool result = await APIManager.Instance.LogOutAPI();
-        if (result)
-        {
 #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
+        UnityEditor.EditorApplication.isPlaying = false;
 #else
     Application.Quit();
 #endif
-        }
     }
 
     public async void OnClick_LogOut()
     {
-        SoundMgr.Instance.SFXPlay(EnumTypes.SFXType.Button);
         bool result = await APIManager.Instance.LogOutAPI();
         if(result)
         {

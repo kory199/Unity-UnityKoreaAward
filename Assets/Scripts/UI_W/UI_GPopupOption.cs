@@ -1,20 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UI_GPopupOption : UIBase
 {
-    [SerializeField] Slider masterSlider = null;
-    [SerializeField] Slider bgmSlider = null;
-    [SerializeField] Slider sfxSlider = null;
-
     private void OnEnable()
     {
-        masterSlider.onValueChanged.AddListener(OnChangedMasterControl);
-        bgmSlider.onValueChanged.AddListener(OnChangedBGMControl);
-        sfxSlider.onValueChanged.AddListener(OnChangedSFXControl);
     }
+
 
     IProcess.NextProcess _nextProcess = IProcess.NextProcess.Continue;
     public override IProcess.NextProcess ProcessInput()
@@ -25,7 +18,6 @@ public class UI_GPopupOption : UIBase
     public UI_SceneLobby uI_SceneLobby = null;
     public void OnClick_GoBack()
     {
-        SoundMgr.Instance.SFXPlay(EnumTypes.SFXType.Button);
         OnHide();
         switch (GameManager.Instance.SceneState)
         {
@@ -37,20 +29,4 @@ public class UI_GPopupOption : UIBase
                 break;
         }
     }
-
-    private void OnChangedMasterControl(float sound)
-    {
-        SoundMgr.Instance.MasterControl(masterSlider);
-    }
-
-    private void OnChangedBGMControl(float sound)
-    {
-        SoundMgr.Instance.BGMControl(bgmSlider);
-    }
-
-    private void OnChangedSFXControl(float sound)
-    {
-        SoundMgr.Instance.SFXControl(sfxSlider);
-    }
-
 }

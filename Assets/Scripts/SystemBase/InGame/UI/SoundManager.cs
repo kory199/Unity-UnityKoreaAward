@@ -1,7 +1,8 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundManager : MonoBehaviour
+public class SoundManager : MonoSingleton<SoundManager>
 {
     [System.Serializable]
     public class EffSoundInfo
@@ -25,10 +26,9 @@ public class SoundManager : MonoBehaviour
     {
         _audioSource = gameObject.AddComponent<AudioSource>();
         SetSoundSourceToDic();
-        DontDestroyOnLoad(this.gameObject);
     }
     /// <summary>
-    /// ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³Ê¸ï¿½ ï¿½Ö±ï¿½
+    /// ¸ðµç »ç¿îµå µñ¼Å³Ê¸® ³Ö±â
     /// </summary>
     public void SetSoundSourceToDic()
     {
