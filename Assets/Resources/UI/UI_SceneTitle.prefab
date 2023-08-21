@@ -1598,21 +1598,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: 023b0ac15392140b8945f3cc19fc1429, type: 3}
-        m_TargetAssemblyTypeName: UnityEngine.Object, UnityEngine
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SoundTest_W, Assembly-CSharp
-        m_MethodName: ButtonSFXPlay
+      - m_Target: {fileID: 7640640312569852755}
+        m_TargetAssemblyTypeName: AccountUI, Assembly-CSharp
+        m_MethodName: OnClickCreateAccount
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2698,5 +2686,3 @@ MonoBehaviour:
   - {fileID: 2341073876823258937}
   infoText: {fileID: 2341073878234908070}
   versionText: {fileID: 6087098147261320190}
-  createBtn: {fileID: 2341073877567120380}
-  loginBtn: {fileID: 2341073878515863358}

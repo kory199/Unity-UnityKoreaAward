@@ -38,6 +38,8 @@ public class StageManager : MonoSingleton<StageManager>
         //End 체인
         //InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.End, SendStageData);
         StartCoroutine(Co_GameStart());
+
+        PlayBGMForStage(_stageNum);
     }
     IEnumerator Co_GameStart()
     {
@@ -58,6 +60,8 @@ public class StageManager : MonoSingleton<StageManager>
         }
         Debug.Log("Stage Up ...");
         _stageNum++;
+
+        PlayBGMForStage(_stageNum);
         _uI_SceneGame.SetStageNum(_stageNum + 1);
         SendStageData();
     }
@@ -152,5 +156,21 @@ public class StageManager : MonoSingleton<StageManager>
 
         _spawnMeleeNum = stageSpawnMonsterData_Res[stageNum].meleemonster_spawn;
         _spawnRangedNum = stageSpawnMonsterData_Res[stageNum].rangedmonster_spawn;
+    }
+
+    private void PlayBGMForStage(int stage)
+    {
+        EnumTypes.StageBGMType bgmType;
+        switch (stage)
+        {
+            case 0: bgmType = EnumTypes.StageBGMType.Stage1; break;
+            case 1: bgmType = EnumTypes.StageBGMType.Stage2; break;
+            case 2: bgmType = EnumTypes.StageBGMType.Stage3; break;
+            case 3: bgmType = EnumTypes.StageBGMType.Stage4; break;
+            case 4: bgmType = EnumTypes.StageBGMType.Stage5; break;
+            default: return;
+        }
+
+        SoundMgr.Instance.BGMPlay(bgmType);
     }
 }
