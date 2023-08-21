@@ -1,7 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using APIModels;
+using UnityEngine;
 
 public class MeleeMonster : MonsterBase
 {
@@ -20,7 +19,7 @@ public class MeleeMonster : MonsterBase
         isMeleeMonsterDead = false;
     }
 
-    // stage º¯°æ¿¡ µû¸¥ Levelº° ´É·ÂÄ¡ ºÎ¿© => ¼­¹ö Á¤º¸ ¹Ş¾Æ¿À±â
+    // stage ë³€ê²½ì— ë”°ë¥¸ Levelë³„ ëŠ¥ë ¥ì¹˜ ë¶€ì—¬ => ì„œë²„ ì •ë³´ ë°›ì•„ì˜¤ê¸°
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -85,7 +84,7 @@ public class MeleeMonster : MonsterBase
     public override void Attack()
     {
         transform.Rotate(0, 0, 30);
-        // ÀÓ½Ã
+        // ì„ì‹œ
         PlayerHit();
     }
 
@@ -107,7 +106,7 @@ public class MeleeMonster : MonsterBase
 
     protected override IEnumerator State_Move()
     {
-        // ÃßÈÄ ¸ó½ºÅÍ º° ÀÌµ¿¼Óµµ ¹× °ø°İ ¹üÀ§ Ãß°¡
+        // ì¶”í›„ ëª¬ìŠ¤í„° ë³„ ì´ë™ì†ë„ ë° ê³µê²© ë²”ìœ„ ì¶”ê°€
         return base.State_Move();
     }
 }

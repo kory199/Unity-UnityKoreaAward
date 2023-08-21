@@ -132,8 +132,6 @@ public class Bullet : MonoBehaviour
                 default:
                     break;
             }
-
-            EffectMgr.Instance.CreateEffect(EnumTypes.EffectType.Bullet, transform.position, other.transform);
             gameObject.SetActive(false);
         }
         else if (hitCount <= 3 && other.gameObject.tag == "Wall" && setShooter == "Player")
@@ -157,14 +155,5 @@ public class Bullet : MonoBehaviour
         hitCount = 0;
         ObjectPooler.ReturnToPool(gameObject);
         CancelInvoke();
-
-        foreach(Transform child in transform)
-        {
-            if (child.gameObject.CompareTag("Effect")) 
-            {
-                child.gameObject.SetActive(false);
-                EffectMgr.Instance.DeactivateEffect(child.gameObject);
-            }
-        }
     }
 }
