@@ -29,9 +29,7 @@ public class Bullet : MonoBehaviour
 
     private void OnEnable()
     {
-        bulletLifeTime = 10f;
-
-        // 발사 후 10초 뒤 Bullet 비활성화
+        // 발사 후 5초 뒤 Bullet 비활성화
         Invoke("ReturnBullet", bulletLifeTime);
     }
 
@@ -80,6 +78,7 @@ public class Bullet : MonoBehaviour
 
         // 레벨업 등에 따라 바뀜 (초기 값으로 추후 스크립터블 오브젝트에서 값을 받아와야됨)
         bulletSpeed = 10f;
+        bulletLifeTime = 10f;
         rangedBulletDamage = 10f;
         meleeBulletDamage = 20f;
         playerBulletDamage = 10f;
