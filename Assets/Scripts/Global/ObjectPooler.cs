@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -9,7 +10,7 @@ using UnityEditor;
 [CustomEditor(typeof(ObjectPooler))]
 public class ObjectPoolerEditor : Editor
 {
-    const string INFO = 
+    const string INFO =
         " 풀링될 오브젝트의 OnDisable() 안에 다음을 적으세용~ " +
         "\nvoid OnDisable()\n" +
         "{\nObjectPooler.ReturnToPool(gameobject); \n" +
@@ -117,12 +118,24 @@ public class ObjectPooler : MonoBehaviour
             return null;
         }
 
-        GameObject objectToSpawn = _dictionaryPool[name].Dequeue();
-        objectToSpawn.transform.position = position;
-        objectToSpawn.transform.rotation = rotation;
-        objectToSpawn.SetActive(true);
+        if (_dictionaryPool[name].Count > 0)
+        {
+            GameObject objectToSpawn = _dictionaryPool[name].Dequeue();
+            objectToSpawn.transform.position = position;
+            objectToSpawn.transform.rotation = rotation;
+            objectToSpawn.SetActive(true);
+            return objectToSpawn;
+        }
+        // 큐 개수 부족 시 프리팹 추가 생성
+        else
+        {
+            GameObject newObj = CreateNewObject(name, _pools.FirstOrDefault(pool => pool.Name == name).Prefab);
+            newObj.transform.position = position;
+            newObj.transform.rotation = rotation;
+            newObj.SetActive(true);
+            return newObj;
+        }
 
-        return objectToSpawn;
     }
     public static List<GameObject> GetAllPools(string name)
     {
