@@ -76,6 +76,10 @@ public partial class Player
         }
         retrunPlayerInfo(playerLv);
         InitPlayerUI();
+
+        uI_SceneGame.OnHide();
+        ui_Enhance.OnShow();
+        Time.timeScale = 0;
     }
 
     private IEnumerator MonveAble()
@@ -85,14 +89,15 @@ public partial class Player
         isMoveable = true;
     }
 
-    /*private void OnTriggerEnter2D(Collider2D other)
+    private void UI_Control()
     {
-        if (other.tag == "Wall" && isMoveable)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            gameObject.transform.position *= -1;
-            StartCoroutine("MonveAble");
+            ui_Enhance.OnHide();
+            uI_SceneGame.OnShow();
+            Time.timeScale = 1;
         }
-    }*/
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
