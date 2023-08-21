@@ -58,6 +58,7 @@ public class StageManager : MonoSingleton<StageManager>
         }
         Debug.Log("Stage Up ...");
         _stageNum++;
+        // _uI_SceneGame.SetStageNum(_stageNum);
         SendStageData();
     }
     public int GetStageNum() => _stageNum;

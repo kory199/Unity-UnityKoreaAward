@@ -78,7 +78,7 @@ public class Bullet : MonoBehaviour
 
         // 레벨업 등에 따라 바뀜 (초기 값으로 추후 스크립터블 오브젝트에서 값을 받아와야됨)
         bulletSpeed = 10f;
-        bulletLifeTime = 5f;
+        bulletLifeTime = 8f;
         rangedBulletDamage = 10f;
         meleeBulletDamage = 20f;
         playerBulletDamage = 10f;
@@ -107,11 +107,11 @@ public class Bullet : MonoBehaviour
                     break;
                 case "Monster":
                     player.PlayerHit(player.playerAttackPower);
+                    gameObject.SetActive(false);
                     break;
                 default:
                     break;
             }
-            // gameObject.SetActive(false);
         }
         // Monster Hit
         else if (other.gameObject.tag == "Monster" && setShooter == "Player")

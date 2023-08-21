@@ -36,8 +36,7 @@ public partial class Player
     public void PlayerHit(float damageAmount)
     {
         playerCurHp -= damageAmount;
-
-        Debug.Log($"Player Hit Cur HP : {playerCurHp}");
+        InitPlayerUI();
 
         if (playerCurHp <= 0)
         {
@@ -50,6 +49,7 @@ public partial class Player
     {
         playerCurExp += exp;
         GameManager.Instance.playerData.score += score;
+        InitPlayerUI();
 
         if (playerCurExp >= playerMaxExp)
         {
@@ -74,8 +74,8 @@ public partial class Player
         {
             return;
         }
-        // InitPlayer(playerLv);
         retrunPlayerInfo(playerLv);
+        InitPlayerUI();
     }
 
     private IEnumerator MonveAble()
