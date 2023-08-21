@@ -215,7 +215,7 @@ public class BossOne : BossBase
         _monsterInfo.projectile_speed = bossMonsterStatus.projectile_speed;
         _monsterInfo.collision_damage = bossMonsterStatus.collision_damage;
         _monsterInfo.score = bossMonsterStatus.score;
-        _monsterInfo.ranged = bossMonsterStatus.ranged - 12;
+        _monsterInfo.ranged = bossMonsterStatus.ranged;
     }
 
 }

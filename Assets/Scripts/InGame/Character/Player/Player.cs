@@ -23,8 +23,8 @@ public partial class Player : CharacterBase
         InitSetting();
         InitComponent();
         InitPlayerUI();
-        retrunPlayerInfo(1);
-        InitPlayer(1);
+        retrunPlayerInfo(0);
+        InitPlayer();
     }
 
     protected override void Start()
