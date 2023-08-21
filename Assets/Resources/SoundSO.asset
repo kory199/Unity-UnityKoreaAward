@@ -12,25 +12,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 181afdb8575184ad194c57a6dc46e113, type: 3}
   m_Name: SoundSO
   m_EditorClassIdentifier: 
-  BGMClips:
-  - {fileID: 8300000, guid: d838beee77239184080fc351f3a1deca, type: 3}
-  - {fileID: 8300000, guid: de1c7e4fe64d70b49a37acdd4381d04b, type: 3}
-  InGameBGMClips:
-  - {fileID: 8300000, guid: 484c7cb944507384e8c19e85adffdd06, type: 3}
-  - {fileID: 8300000, guid: bc6a3a5b3f37dc04280bb2fa61736e68, type: 3}
-  - {fileID: 8300000, guid: 6a846af25936dcc4d8f516d024a7e672, type: 3}
-  - {fileID: 8300000, guid: c02311b898bdb4d43a1af9059a6910fb, type: 3}
+  BGMSoundClips:
+  - AudioClip: {fileID: 8300000, guid: d838beee77239184080fc351f3a1deca, type: 3}
+    StageBGM: 0
+  - AudioClip: {fileID: 8300000, guid: de1c7e4fe64d70b49a37acdd4381d04b, type: 3}
+    StageBGM: 1
+  - AudioClip: {fileID: 8300000, guid: 484c7cb944507384e8c19e85adffdd06, type: 3}
+    StageBGM: 2
+  - AudioClip: {fileID: 8300000, guid: 6b4f82b5b865e0e4eb6dbbee901447cf, type: 3}
+    StageBGM: 3
+  - AudioClip: {fileID: 8300000, guid: c02311b898bdb4d43a1af9059a6910fb, type: 3}
+    StageBGM: 4
+  - AudioClip: {fileID: 8300000, guid: bc6a3a5b3f37dc04280bb2fa61736e68, type: 3}
+    StageBGM: 5
+  - AudioClip: {fileID: 8300000, guid: 6a846af25936dcc4d8f516d024a7e672, type: 3}
+    StageBGM: 6
   BossBGMClips:
-  - {fileID: 8300000, guid: df4d8aed0c7f53344a17911cf060d308, type: 3}
-  - {fileID: 8300000, guid: 5cee786076dd23f4080537673df5c2a1, type: 3}
-  - {fileID: 8300000, guid: c2366fda82861e2468274439f7bb1c39, type: 3}
-  playerAttackSFX: {fileID: 8300000, guid: 9db176e1ad4d89647a0bbcbd8b28693b, type: 3}
-  playerDeathSFX: {fileID: 8300000, guid: d8591ce332c791a488082ab8054c4224, type: 3}
-  playerHitSFX: {fileID: 8300000, guid: eb3b9518c60ccb444b446a176b3dd1ac, type: 3}
-  monsterHitSFX: {fileID: 8300000, guid: 733a0ff7727334749a0381b7092162b3, type: 3}
-  monsterDeathSFX: {fileID: 0}
-  skiilsSFX: {fileID: 0}
-  stageChangeSFX: {fileID: 0}
-  buttonSFX: {fileID: 0}
-  escSFX: {fileID: 0}
-  resultWindowSFX: {fileID: 0}
+  - AudioClip: {fileID: 8300000, guid: df4d8aed0c7f53344a17911cf060d308, type: 3}
+    BossBGMType: 0
+  - AudioClip: {fileID: 8300000, guid: 5cee786076dd23f4080537673df5c2a1, type: 3}
+    BossBGMType: 1
+  - AudioClip: {fileID: 8300000, guid: c2366fda82861e2468274439f7bb1c39, type: 3}
+    BossBGMType: 2
+  SFXSoundClips:
+  - AudioClip: {fileID: 8300000, guid: 9db176e1ad4d89647a0bbcbd8b28693b, type: 3}
+    SfxSound: 0
+  - AudioClip: {fileID: 8300000, guid: d8591ce332c791a488082ab8054c4224, type: 3}
+    SfxSound: 1
+  - AudioClip: {fileID: 8300000, guid: eb3b9518c60ccb444b446a176b3dd1ac, type: 3}
+    SfxSound: 2
+  - AudioClip: {fileID: 8300000, guid: 7fcfc9f20678ed343b2e4b4275400551, type: 3}
+    SfxSound: 3
+  - AudioClip: {fileID: 8300000, guid: 733a0ff7727334749a0381b7092162b3, type: 3}
+    SfxSound: 4
+  - AudioClip: {fileID: 8300000, guid: 78d337d65ba9dab4e87886e20bcff19c, type: 3}
+    SfxSound: 5
+  - AudioClip: {fileID: 8300000, guid: 62d550b820bf3c24396db0cfeb04ed76, type: 3}
+    SfxSound: 6
+  - AudioClip: {fileID: 8300000, guid: 0456f97d88afda24e95af21c223e20df, type: 3}
+    SfxSound: 7
+  - AudioClip: {fileID: 8300000, guid: e00797bb3cdc1424bb8cc457a6a0e458, type: 3}
+    SfxSound: 11
+  - AudioClip: {fileID: 8300000, guid: 8e7c3e07810bb1c468cc0172974e901a, type: 3}
+    SfxSound: 8
+  - AudioClip: {fileID: 8300000, guid: 7fcfc9f20678ed343b2e4b4275400551, type: 3}
+    SfxSound: 9

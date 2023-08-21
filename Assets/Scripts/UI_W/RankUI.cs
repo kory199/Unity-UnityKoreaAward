@@ -113,6 +113,7 @@ public class RankUI : UIBase
     public UI_SceneLobby uI_SceneLobby = null;
     public void OnClickRankBackBut()
     {
+        SoundMgr.Instance.SFXPlay(EnumTypes.SFXType.Button);
         uI_SceneLobby.OnShow();
         OnHide();
     }
