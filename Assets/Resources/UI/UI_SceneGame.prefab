@@ -1536,7 +1536,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hpBar: {fileID: 8627143655742222893}
   _expBar: {fileID: 3271615620129156995}
-  _stage: {fileID: 0}
+  _stage: {fileID: 2541893470258961190}
   _level: {fileID: 8855389990362683517}
   _attackPower: {fileID: 1029096445566641962}
 --- !u!1 &5868569555059011010

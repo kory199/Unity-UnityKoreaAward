@@ -8,6 +8,7 @@ public abstract class MonsterBase : MonoBehaviour
     [SerializeField] protected MonsterStateType state;
     [SerializeField] protected Player player;
     [SerializeField] protected MonsterInfo _monsterInfo = null;
+
     protected Vector3 playerTargetDirection;
     protected int stageNum;
 

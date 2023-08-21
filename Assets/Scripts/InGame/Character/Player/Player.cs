@@ -6,7 +6,6 @@ using TMPro;
 
 public partial class Player : CharacterBase
 {
-
     // UI Test Component
     [SerializeField] private TextMeshProUGUI ui_Hp;
     [SerializeField] private TextMeshProUGUI ui_Exp;
@@ -19,9 +18,13 @@ public partial class Player : CharacterBase
     #region unity event func
     private void Awake()
     {
+        playerStatus = APIManager.Instance.GetValueByKey<PlayerStatus_res[]>(MasterDataDicKey.PlayerStatus.ToString());
+
         InitSetting();
         InitComponent();
-        InitPlayer(1);
+        InitPlayerUI();
+        retrunPlayerInfo(0);
+        InitPlayer();
     }
 
     protected override void Start()
@@ -47,7 +50,7 @@ public partial class Player : CharacterBase
         // temp ui (추후 각 컴포넌트 별 변경 시 반영)
         ui_Hp.text = playerCurHp.ToString();
         ui_Exp.text = playerCurExp.ToString();
-        ui_LV.text = playerLv.ToString();
+        ui_LV.text = (playerLv + 1).ToString();
         ui_Attack.text = playerAttackPower.ToString();
 
         // uI_SceneGame.Set~~()시리즈로 필요한 부분에 사용해주세용

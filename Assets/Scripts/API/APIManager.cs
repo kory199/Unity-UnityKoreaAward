@@ -61,6 +61,7 @@ public class APIManager : MonoSingleton<APIManager>
     private void HandleMasterDataResponse(APIResponse<MasterDataResponse> apiResponse)
     {
         SetDicData(MasterDataDicKey.MeleeMonster, apiResponse.Data.masterDataDic.MeleeMonster);
+        // TODO : 주석 처리 
         SetDicData(MasterDataDicKey.RangedMonster, apiResponse.Data.masterDataDic.RangedMonster);
         SetDicData(MasterDataDicKey.BOSS, apiResponse.Data.masterDataDic.BOSS);
         SetDicData(MasterDataDicKey.PlayerStatus, apiResponse.Data.masterDataDic.PlayerStatus);
@@ -225,6 +226,8 @@ public class APIManager : MonoSingleton<APIManager>
     {
         string id = NewGameData().ID;
         string authToken = NewGameData().AuthToken;
+
+        Debug.Log($"id : {id}, authToken : {authToken}");
 
         StageData stageData = new StageData
         {

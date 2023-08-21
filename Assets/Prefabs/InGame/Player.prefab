@@ -200,7 +200,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e064eb3db55ce8644a74096857052c88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerBaseData: {fileID: 0}
+  ui_Hp: {fileID: 0}
+  ui_Exp: {fileID: 0}
+  ui_Stage: {fileID: 0}
+  ui_LV: {fileID: 0}
+  ui_Attack: {fileID: 0}
+  uI_SceneGame: {fileID: 0}
   bulletRb: {fileID: 0}
   playerRb: {fileID: 0}
   bullet: {fileID: 0}
@@ -210,9 +215,10 @@ MonoBehaviour:
   playerAttackPower: 0
   playerLv: 0
   playerMaxExp: 0
+  playerCurExp: 0
   playerMovementSpeed: 0
-  projectileSpeed: 5
-  rateOfFire: 0.3
+  playerProjectileSpeed: 0
+  playerRateOfFire: 0.3
   lastAttackTime: 0
   IsDeath: 0
 --- !u!61 &344230256

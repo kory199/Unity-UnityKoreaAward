@@ -19,7 +19,7 @@ public partial class Player
             bullet = pullBullet.AddComponent<Bullet>();
         }
 
-        bullet.SetShooter(gameObject);
+        bullet.SetShooter(gameObject.name);
 
         if (pullBullet.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
         {
@@ -36,8 +36,7 @@ public partial class Player
     public void PlayerHit(float damageAmount)
     {
         playerCurHp -= damageAmount;
-
-        Debug.Log($"Player Hit Cur HP : {playerCurHp}");
+        InitPlayerUI();
 
         if (playerCurHp <= 0)
         {
@@ -50,6 +49,7 @@ public partial class Player
     {
         playerCurExp += exp;
         GameManager.Instance.playerData.score += score;
+        InitPlayerUI();
 
         if (playerCurExp >= playerMaxExp)
         {
@@ -57,6 +57,7 @@ public partial class Player
             playerCurExp = 0;
         }
     }
+
     protected override void Die()
     {
         Debug.LogError("Player Die");
@@ -73,7 +74,32 @@ public partial class Player
         {
             return;
         }
-        // InitPlayer(playerLv);
         retrunPlayerInfo(playerLv);
+        InitPlayerUI();
+    }
+
+    private IEnumerator MonveAble()
+    {
+        isMoveable = false;
+        yield return moveAble;
+        isMoveable = true;
+    }
+
+    /*private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Wall" && isMoveable)
+        {
+            gameObject.transform.position *= -1;
+            StartCoroutine("MonveAble");
+        }
+    }*/
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Wall" && isMoveable)
+        {
+            gameObject.transform.position *= -1;
+            StartCoroutine("MonveAble");
+        }
     }
 }

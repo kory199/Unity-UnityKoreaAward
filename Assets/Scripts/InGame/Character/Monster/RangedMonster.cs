@@ -98,7 +98,7 @@ public class RangedMonster : MonsterBase
             bullet = pullBullet.AddComponent<Bullet>();
         }
 
-        bullet.SetShooter(gameObject);
+        bullet.SetShooter(gameObject.name);
 
         if (pullBullet.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
         {

@@ -17,8 +17,8 @@ public class BossOne : BossBase
     protected override void Start()
     {
         //SetRangedMonsterStatus(stageNum);
-        SetBossMonsterStatus(1); //º¸½º Å×½ºÆ®
-        //È¸Àü ÃÊ±â°ª
+        SetBossMonsterStatus(1); //ë³´ìŠ¤ í…ŒìŠ¤íŠ¸
+        //íšŒì „ ì´ˆê¸°ê°’
         foreach (var pos in _spawners)
         {
             Vector2 tempVector = _boss.transform.position - pos.position;
@@ -48,7 +48,7 @@ public class BossOne : BossBase
 
     public void GetDamage(int damage)
     {
-        // curHP : ¼­¹ö¿¡¼­ ¹Ş¾Æ¿À±ë
+        // curHP : ì„œë²„ì—ì„œ ë°›ì•„ì˜¤ê¹…
         // curHP -= damage;
     }
     public override void Attack()
@@ -85,36 +85,36 @@ public class BossOne : BossBase
     }
     protected override IEnumerator State_Attack()
     {
-        // °ø°İ °¡´ÉÇÑ »óÅÂÀÏ¶§ ¹«ÇÑ¹İº¹
+        // ê³µê²© ê°€ëŠ¥í•œ ìƒíƒœì¼ë•Œ ë¬´í•œë°˜ë³µ
         while (state == MonsterStateType.Attack)
         {
-            // °ø°İ°¡´É»óÅÂÀÎÁö Ã¼Å©
-            // ¹üÀ§¹ÛÀÌ¸é Move State·Î ÀÌµ¿ 
+            // ê³µê²©ê°€ëŠ¥ìƒíƒœì¸ì§€ ì²´í¬
+            // ë²”ìœ„ë°–ì´ë©´ Move Stateë¡œ ì´ë™ 
             Attack();
-            yield return new WaitForSeconds(_monsterInfo.rate_of_fire); // 3f ´ë½Å monsterData.RateOfFire µîµî ¸¸µé¾î¼­ ´ëÃ¼
+            yield return new WaitForSeconds(_monsterInfo.rate_of_fire); // 3f ï¿½ï¿½ï¿½ monsterData.RateOfFire ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½î¼­ ï¿½ï¿½Ã¼
         }
     }
     protected override IEnumerator State_Move()
     {
-        // ÃßÈÄ ¸ó½ºÅÍ º° ÀÌµ¿¼Óµµ ¹× °ø°İ ¹üÀ§ Ãß°¡
+        // ì¶”í›„ ëª¬ìŠ¤í„° ë³„ ì´ë™ì†ë„ ë° ê³µê²© ë²”ìœ„ ì¶”ê°€
         while (state == MonsterStateType.Move)
         {
-            // ÇÃ·¹ÀÌ¾î°¡ Á×À¸¸é ½ÇÇà
+            // ì¶”í›„ ëª¬ìŠ¤í„° ë³„ ì´ë™ì†ë„ ë° ê³µê²© ë²”ìœ„ ì¶”ê°€
             if (player.IsDeath)
             {
-                // ¸ó½ºÅÍµéÀ» Æ¯Á¤ State·Î ¿Å°ÜÁØ´Ù
+                // ëª¬ìŠ¤í„°ë“¤ì„ íŠ¹ì • Stateë¡œ ì˜®ê²¨ì¤€ë‹¤
                 // TransferState(MonsterStateType.Dance);
                 yield break;
             }
 
-            // ÇÃ·¹ÀÌ¾î¸¦ ÇâÇÑ ¹æÇâº¤ÅÍ¸¦ ±¸ÇÔ.
+            // í”Œë ˆì´ì–´ë¥¼ í–¥í•œ ë°©í–¥ë²¡í„°ë¥¼ êµ¬í•¨.
             Vector3 dirVector = (player.transform.position - gameObject.transform.position).normalized;
             //gameObject.transform.LookAt(player.transform.position);
 
-            // ÀÓ½Ã ÀÌµ¿¼Óµµ
+            // ì„ì‹œ ì´ë™ì†ë„
             gameObject.transform.Translate(dirVector * 2f * Time.deltaTime);
 
-            // ÇÃ·¹ÀÌ¾î¿Í ÀÚ±âÀÚ½Å(¸ó½ºÅÍ)»çÀÌÀÇ °Å¸®¿Í º»ÀÎÀÇ °ø°İ °¡´É¹üÀ§¸¦ ºñ±³ÇÏ¿© ¼öÇà(´Ù¸¥ ¹æ½ÄÀ¸·Î ±¸ÇöÇØµµ ¤·¤»)
+            // í”Œë ˆì´ì–´ì™€ ìê¸°ìì‹ (ëª¬ìŠ¤í„°)ì‚¬ì´ì˜ ê±°ë¦¬ì™€ ë³¸ì¸ì˜ ê³µê²© ê°€ëŠ¥ë²”ìœ„ë¥¼ ë¹„êµí•˜ì—¬ ìˆ˜í–‰(ë‹¤ë¥¸ ë°©ì‹ìœ¼ë¡œ êµ¬í˜„í•´ë„ ã…‡ã…‹)
             if (Vector3.Distance(player.transform.position, this.gameObject.transform.position) <= _monsterInfo.ranged)
             {
                 StartCoroutine(Co_BossPattern());
@@ -137,10 +137,10 @@ public class BossOne : BossBase
     }
     IEnumerator State_Phase1()
     {
-        Debug.Log("ÆäÀÌÁî 1");
-        
+        Debug.Log("í˜ì´ì¦ˆ 1");
+
         RotateAttack();
-        // °ø°İ °¡´ÉÇÑ »óÅÂÀÏ¶§ ¹«ÇÑ¹İº¹
+        // ê³µê²© ê°€ëŠ¥í•œ ìƒíƒœì¼ë•Œ ë¬´í•œë°˜ë³µ
         while (state == MonsterStateType.Phase1)
         {
             Attack();
@@ -149,9 +149,9 @@ public class BossOne : BossBase
     }
     IEnumerator State_Phase2()
     {
-        Debug.Log("ÆäÀÌÁî 2");
+        Debug.Log("í˜ì´ì¦ˆ 2");
         RotateAttack();
-        // °ø°İ °¡´ÉÇÑ »óÅÂÀÏ¶§ ¹«ÇÑ¹İº¹
+        // ê³µê²© ê°€ëŠ¥í•œ ìƒíƒœì¼ë•Œ ë¬´í•œë°˜ë³µ
         while (state == MonsterStateType.Phase2)
         {
             Attack();
@@ -160,12 +160,12 @@ public class BossOne : BossBase
     }
     IEnumerator State_Phase3()
     {
-        Debug.Log("ÆäÀÌÁî 3");
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 3");
         int i = 10;
         StartCoroutine(Co_SpanwerSpin());
         SpreadOutLine outline= gameObject.AddComponent<SpreadOutLine>();
         outline.MyColor = new Color(0, 255, 255, 1);
-        // °ø°İ °¡´ÉÇÑ »óÅÂÀÏ¶§ ¹«ÇÑ¹İº¹
+        // ê³µê²© ê°€ëŠ¥í•œ ìƒíƒœì¼ë•Œ ë¬´í•œë°˜ë³µ
         while (state == MonsterStateType.Phase3)
         {
             Attack();
@@ -183,9 +183,9 @@ public class BossOne : BossBase
     IEnumerator Co_BossDie()
     {
         yield return null;
-        //Á×À» °æ¿ì ³ªÅ¸³ª´Â ÀÌÆåÆ® ¾Ë¸² ¸ğµÎ Ã³¸®
+        //ì£½ì„ ê²½ìš° ë‚˜íƒ€ë‚˜ëŠ” ì´í™íŠ¸ ì•Œë¦¼ ëª¨ë‘ ì²˜ë¦¬
         Debug.Log("boss die");
-        //½ºÅ×ÀÌÁö ¸Å´ÏÀú¿¡ º¸½º Á×À½¾Ë¸²
+        //ìŠ¤í…Œì´ì§€ ë§¤ë‹ˆì €ì— ë³´ìŠ¤ ì£½ìŒì•Œë¦¼
         FindObjectOfType<StageManager>().BossDeath();
 
     }
@@ -215,7 +215,7 @@ public class BossOne : BossBase
         _monsterInfo.projectile_speed = bossMonsterStatus.projectile_speed;
         _monsterInfo.collision_damage = bossMonsterStatus.collision_damage;
         _monsterInfo.score = bossMonsterStatus.score;
-        _monsterInfo.ranged = bossMonsterStatus.ranged - 12;
+        _monsterInfo.ranged = bossMonsterStatus.ranged;
     }
 
 }
