@@ -5,10 +5,10 @@ using UnityEngine;
 public class MeleeMonster : MonsterBase
 {
     private MonsterData_res[] meleeMonsterStatus;
+    private GameObject childObject;
 
     // temp monster status
     [SerializeField] private bool isMeleeMonsterDead;
-
     #region unity event func
 
     protected override void Awake()
@@ -17,6 +17,12 @@ public class MeleeMonster : MonsterBase
         GetInitMonsterStatus();
 
         isMeleeMonsterDead = false;
+
+        if (transform.childCount > 0)
+        {
+            childObject = transform.GetChild(0).gameObject;
+            childObject.SetActive(false);
+        }
     }
 
     // stage 변경에 따른 Level별 능력치 부여 => 서버 정보 받아오기
@@ -29,6 +35,11 @@ public class MeleeMonster : MonsterBase
             SetMeleeMonsterStatus(stageNum);
         }
         // init melee monster variable
+
+        if (childObject != null)
+        {
+            childObject.SetActive(false);
+        }
     }
 
     protected override void Start()
@@ -96,6 +107,11 @@ public class MeleeMonster : MonsterBase
         {
             player.Reward(_monsterInfo.exp, _monsterInfo.score);
             MonsterDeath();
+        }
+
+        if (childObject != null)
+        {
+            childObject.SetActive(true);
         }
     }
 
