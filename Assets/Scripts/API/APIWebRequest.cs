@@ -57,7 +57,7 @@ public class APIWebRequest
             };
 
 #if UNITY_EDITOR
-            Debug.Log($"jsonResponse : {JsonConvert.SerializeObject(response)}");
+            Debug.Log($"Response : {JsonConvert.SerializeObject(response)}");
 #endif
 
             return response;
