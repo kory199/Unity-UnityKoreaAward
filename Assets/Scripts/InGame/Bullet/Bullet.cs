@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using static EnumTypes;
 
@@ -8,6 +9,9 @@ public class Bullet : MonoBehaviour
     [SerializeField] public float rangedBulletDamage;
     [SerializeField] public float meleeBulletDamage;
     [SerializeField] public float playerBulletDamage;
+    [SerializeField] public int hitCount;
+    private bool isMove;
+    WaitForSeconds moveAble;
 
     [SerializeField] GameObject playerObject;
     [SerializeField] Player player;
@@ -15,13 +19,19 @@ public class Bullet : MonoBehaviour
     [SerializeField] MeleeMonster meleeMonster;
     [SerializeField] RangedMonster rangedMonster;
     [SerializeField] BossOne _bossOne;
-    [SerializeField] GameObject setShooter;
+    [SerializeField] string setShooter;
 
     Vector2 dirBullet;
 
     private Transform bulletSpawner;
     private CircleCollider2D bulletCollider;
     private Rigidbody2D bulletRb;
+
+    private void OnEnable()
+    {
+        // 발사 후 5초 뒤 Bullet 비활성화
+        Invoke("ReturnBullet", bulletLifeTime);
+    }
 
     private void Start()
     {
@@ -48,8 +58,6 @@ public class Bullet : MonoBehaviour
             bulletCollider = gameObject.AddComponent<CircleCollider2D>();
         }
 
-        bulletRb.gravityScale = 0;
-        bulletCollider.isTrigger = true;
 
         playerObject = FindObjectOfType<Player>().gameObject;
 
@@ -63,39 +71,57 @@ public class Bullet : MonoBehaviour
         }
 
         bulletSpawner = playerObject.transform;
+        bulletRb.gravityScale = 0;
+        bulletCollider.isTrigger = true;
+        isMove = true;
+        moveAble = new WaitForSeconds(0.3f);
 
         // 레벨업 등에 따라 바뀜 (초기 값으로 추후 스크립터블 오브젝트에서 값을 받아와야됨)
         bulletSpeed = 10f;
-        bulletLifeTime = 5f;
+        bulletLifeTime = 10f;
         rangedBulletDamage = 10f;
         meleeBulletDamage = 20f;
         playerBulletDamage = 10f;
+
+        hitCount = 0;
     }
 
 
-    public void SetShooter(GameObject shooter)
+    public void SetShooter(string shooter)
     {
         setShooter = shooter;
     }
 
-    private void ReturnBullet() => gameObject.SetActive(false);
+    private IEnumerator MoveAble()
+    {
+        isMove = false;
+        yield return moveAble;
+        isMove = true;
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         // Player Hit
         if (other.gameObject.tag == "Player")
         {
-            switch (setShooter.name)
+            switch (setShooter)
             {
                 case "RangedMonster":
                     rangedMonster.PlayerHit();
                     break;
+                case "BossOne":
+                    // Boss Attack to player
+                    break;
+                case "Monster":
+                    player.PlayerHit(player.playerAttackPower);
+                    break;
                 default:
                     break;
             }
+            // gameObject.SetActive(false);
         }
         // Monster Hit
-        else if (other.gameObject.tag == "Monster" && setShooter.name == "Player")
+        else if (other.gameObject.tag == "Monster" && setShooter == "Player")
         {
             switch (other.gameObject.name)
             {
@@ -116,21 +142,22 @@ public class Bullet : MonoBehaviour
             }
             gameObject.SetActive(false);
         }
+        else if (hitCount <= 3 && other.gameObject.tag == "Wall" && setShooter == "Player")
+        {
+            hitCount++;
+            gameObject.transform.position *= -1;
+            setShooter = "Monster";
+            StartCoroutine("MoveAble");
+        }
         else
         {
-            // 벽 or 다른 collider 충돌처리
             gameObject.SetActive(false);
         }
     }
 
-    private void OnEnable()
-    {
-        // 발사 후 5초 뒤 Bullet 비활성화
-        Invoke("ReturnBullet", bulletLifeTime);
-    }
-
     private void OnDisable()
     {
+        hitCount = 0;
         ObjectPooler.ReturnToPool(gameObject);
         CancelInvoke();
     }

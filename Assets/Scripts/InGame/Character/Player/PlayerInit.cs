@@ -24,6 +24,9 @@ public partial class Player
     public float playerRateOfFire = 0.3f;
     public float lastAttackTime = 0;
 
+    bool isMoveable;
+    WaitForSeconds moveAble;
+
     PlayerStatus_res[] playerStatus;
 
     public bool IsDeath;
@@ -71,6 +74,8 @@ public partial class Player
         // playerMaxExp = player.exp;
 
         IsDeath = false;
+        isMoveable = true;
+        moveAble = new WaitForSeconds(0.5f);
     }
 
     // 추후 InitPlayer로 병합 예정 (서버 연결 확인 후 MasterData로부터 받아오기)
