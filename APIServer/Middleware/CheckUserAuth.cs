@@ -18,7 +18,7 @@ public class CheckUserAuth
         _next = next;
     }
 
-    public async Task Invoke(HttpContext context)
+    public async Task InvokeAsync(HttpContext context)
     {
         var formString = context.Request.Path.Value;
 
@@ -27,8 +27,8 @@ public class CheckUserAuth
             string.Compare(formString, "/Account", StringComparison.OrdinalIgnoreCase) == 0 ||
             string.Compare(formString, "/Account/GoogleResponse", StringComparison.OrdinalIgnoreCase) == 0 ||
             string.Compare(formString, "/Login", StringComparison.OrdinalIgnoreCase) == 0 ||
-           string.Compare(formString, "/CreateAccount", StringComparison.OrdinalIgnoreCase) == 0 ||
-                string.Compare(formString, "/Message", StringComparison.OrdinalIgnoreCase) == 0)
+            string.Compare(formString, "/CreateAccount", StringComparison.OrdinalIgnoreCase) == 0 ||
+            string.Compare(formString, "/Message", StringComparison.OrdinalIgnoreCase) == 0)
         {
             await _next(context);
             return;

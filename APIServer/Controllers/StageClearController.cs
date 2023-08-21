@@ -10,11 +10,13 @@ namespace APIServer.Controllers;
 public class StageClearController : BaseApiController
 {
     private readonly IGameDb _gameDb;
+    private readonly IStageDb _stageDb;
 
-    public StageClearController(ILogger<StageClearController> logger, IGameDb gameDb, IMemoryDb memoryDb, IAccountDb accountDb)
+    public StageClearController(ILogger<StageClearController> logger, IStageDb stageDb, IGameDb gameDb, IMemoryDb memoryDb, IAccountDb accountDb)
         : base(logger, memoryDb, accountDb)
     {
         _gameDb = gameDb;
+        _stageDb = stageDb;
     }
 
     [HttpPost]
@@ -22,6 +24,8 @@ public class StageClearController : BaseApiController
     {
         var userInfo = (AuthUser)HttpContext.Items[nameof(AuthUser)]!;
         var (resultCode, gameData) = await _gameDb.UpdataScoreDataAsync(userInfo.AccountId, request.Score);
+
+        resultCode = await _stageDb.UpdataStageAsync(userInfo.AccountId, request.StageNum);
 
         if (gameData == null || resultCode != ResultCode.None)
         {

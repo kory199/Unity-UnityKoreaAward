@@ -4,7 +4,7 @@ public interface IMasterDataDb
 {
     public Task<ResultCode> LoadAllMasterDataAsync();
 
-    public Task<(ResultCode, String?)> VerifyGmaeVersionAsync();
+    public Task<(ResultCode, String?)> VerifyGameVersionAsync();
 
     public Task<ResultCode> VerifyMonsterDataAsync();
 

@@ -42,7 +42,7 @@ public class RankingDataRes : BaseResponse
 
 public class StageDataRes : BaseResponse
 {
-    [Required] public List<Stage> StageData { get; set; } = new List<Stage>();
+    [Required] public Int32 StageNum { get; set; }
 }
 
 public class MasterDataRes : BaseResponse

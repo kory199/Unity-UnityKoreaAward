@@ -7,7 +7,6 @@ public class Security
 {
     private const String AllowableCharacters = "abcdefghijklmnopqrstuvwxyz0123456789";
 
-
     public static string MakeHashingPassWord(String saltValue, String pw)
     {
         var sha = SHA256.Create();

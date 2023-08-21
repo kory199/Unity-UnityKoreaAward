@@ -43,8 +43,9 @@ USE gameDb;
 DROP TABLE IF EXISTS gameDb.`player_stage`;
 CREATE TABLE IF NOT EXISTS gameDb.`player_stage`
 (
-    player_uid BIGINT NOT NULL PRIMARY KEY COMMENT '고유 번호', 
+    player_uid BIGINT NOT NULL COMMENT '고유 번호', 
     stage_id INT NOT NULL COMMENT '스테이지 ID',
-    is_achieved BOOLEAN NOT NULL DEFAULT 0 COMMENT '스테이지 달성 여부'
+    is_achieved BOOLEAN NOT NULL DEFAULT 0 COMMENT '스테이지 달성 여부',
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '생성 날짜'
 ) COMMENT '유저와 스테이지 정보 연결 테이블';
 ```

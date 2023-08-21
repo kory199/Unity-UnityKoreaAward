@@ -28,8 +28,13 @@ public class GameDb : BaseDb<GameData>, IGameDb
             };
 
             var result = await ExecuteInsertAsync(gameData);
-            return (ResultCode.None, gameData);
 
+            if(result != ResultCode.None)
+            {
+                return (result, null);
+            }
+
+            return (ResultCode.None, gameData);
         }
         catch (Exception e)
         {
@@ -81,8 +86,8 @@ public class GameDb : BaseDb<GameData>, IGameDb
             }
 
             var updatedData = await _queryFactory.Query(_tableName)
-            .Where(GameDbTable.player_uid, account_id)
-            .FirstOrDefaultAsync<GameData>();
+                .Where(GameDbTable.player_uid, account_id)
+                .FirstOrDefaultAsync<GameData>();
 
             if (updatedData == null)
             {

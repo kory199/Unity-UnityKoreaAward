@@ -18,58 +18,30 @@ public class StageController : BaseApiController
     }
 
     [HttpPost]
-    public async Task<StageDataRes> Post(StageReq request)
+    public async Task<StageDataRes> Post(PlayerInfoReq request)
     {
         var userInfo = (AuthUser)HttpContext.Items[nameof(AuthUser)]!;
+        ResultCode resultCode;
+        Int32? stageNum;
 
-        var resultCode = ResultCode.None;
-        var stageList = new List<Stage>();
+        (resultCode, stageNum) = await _stageDb.VerifyStageAsync(userInfo.AccountId);
 
-        if (request.StageNum != 0 && NextStageDb.StageInfoDic.ContainsKey(request.StageNum) == false)
+        if (!stageNum.HasValue || stageNum == 0)
         {
-            return CreateResponse<StageDataRes>(ResultCode.StageNumNotMatch);
-        }
+            (resultCode, var defaultStage) = await _stageDb.CreateDefaultStageData(userInfo.AccountId);
 
-        if (request.StageNum == 0)
-        {
-            (resultCode, stageList) = await _stageDb.VerifyStageAsync(userInfo.AccountId);
-
-            if (stageList.Count() == 0)
+            if (defaultStage == null || resultCode != ResultCode.None)
             {
-                (resultCode, var defaultStage) = await _stageDb.CreateDefaultStageData(userInfo.AccountId);
-                stageList.Add(defaultStage);
-
-                if (defaultStage == null || resultCode != ResultCode.None)
-                {
-                    return CreateResponse<StageDataRes>(resultCode);
-                }
+                return CreateResponse<StageDataRes>(resultCode);
             }
 
-            resultCode = ResultCode.LoadStageSuccess;
+            stageNum = defaultStage.stage_id;
         }
-        else 
-        {
 
-            if (!stageList.Any(s => s.stage_id == request.StageNum))
-            {
-                resultCode = await _stageDb.UpdataStageAsync(userInfo.AccountId, request.StageNum);
-
-                if (resultCode != ResultCode.None)
-                {
-                    return CreateResponse<StageDataRes>(resultCode);
-                }
-            }
-
-            resultCode = ResultCode.GetNewStageSuccess;
-        }
+        resultCode = ResultCode.LoadStageSuccess;
 
         var response = CreateResponse<StageDataRes>(resultCode);
-        response.StageData = stageList;
-        if(response.StageData.Count() == 0)
-        {
-            response.StageData = null;
-        }
-
+        response.StageNum = stageNum ?? 0;
         return response;
     }
 }

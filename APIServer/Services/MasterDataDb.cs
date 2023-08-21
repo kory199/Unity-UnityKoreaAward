@@ -34,7 +34,7 @@ public class MasterDataDb : BaseDb<MasterDataDic>, IMasterDataDb
         }
     }
 
-    public async Task<(ResultCode, String?)> VerifyGmaeVersionAsync()
+    public async Task<(ResultCode, String?)> VerifyGameVersionAsync()
     {
         var gameVer = await _queryFactory.Query(_tableName)
             .Select(MasterDataTable.version)
@@ -69,7 +69,7 @@ public class MasterDataDb : BaseDb<MasterDataDic>, IMasterDataDb
             }
 
             List<MonsterData> meleeMonsters = new List<MonsterData>();
-            List<MonsterData> rangedMonsters = new List<MonsterData>();
+            //List<MonsterData> rangedMonsters = new List<MonsterData>();
             MonsterData bossMonster = null;
 
             foreach (var monster in monsterdata)
@@ -80,7 +80,7 @@ public class MasterDataDb : BaseDb<MasterDataDic>, IMasterDataDb
                         meleeMonsters.Add(monster);
                         break;
                     case "RangedMonster":
-                        rangedMonsters.Add(monster);
+                        meleeMonsters.Add(monster);
                         break;
                     case "BOSS":
                         bossMonster = monster;
@@ -89,7 +89,7 @@ public class MasterDataDb : BaseDb<MasterDataDic>, IMasterDataDb
             }
 
             MasterDataDic.masterDataDic.Add(MasterDataDicKey.MeleeMonster, meleeMonsters);
-            MasterDataDic.masterDataDic.Add(MasterDataDicKey.RangedMonster, rangedMonsters);
+            //MasterDataDic.masterDataDic.Add(MasterDataDicKey.RangedMonster, rangedMonsters);
             MasterDataDic.masterDataDic.Add(MasterDataDicKey.BOSS, bossMonster);
 
             return ResultCode.None;

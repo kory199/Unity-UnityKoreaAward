@@ -29,7 +29,7 @@ public class VersionController : ControllerBase
         }
         else
         {
-            var (resultcode, verStr) = await _masterDataDb.VerifyGmaeVersionAsync();
+            var (resultcode, verStr) = await _masterDataDb.VerifyGameVersionAsync();
 
             if (verStr == null)
             {

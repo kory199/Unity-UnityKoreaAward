@@ -30,7 +30,7 @@ public class StageDb : BaseDb<Stage>, IStageDb
                 return (ResultCode.CreateDefaultStageFailInsert, null);
             }
 
-            return (result, defaultStage);
+            return (ResultCode.None, defaultStage);
         }
         catch (Exception e)
         {
@@ -41,18 +41,22 @@ public class StageDb : BaseDb<Stage>, IStageDb
         }
     }
 
-    public async Task<(ResultCode, List<Stage>?)> VerifyStageAsync(Int64 account_id)
+    public async Task<(ResultCode, Int32?)> VerifyStageAsync(Int64 account_id)
     {
         try
         {
-            var stageList = await ExecutGetByListAsync(ColumnUid.player_uid, account_id);
+            Int32? stageNum = await _queryFactory.Query(StageTable.player_stage)
+            .Where(GameDbTable.player_uid, account_id)
+            .OrderByDesc(StageTable.stage_id)
+            .Select(StageTable.stage_id)
+            .FirstOrDefaultAsync<Int32?>();
 
-            if(stageList == null)
+            if (!stageNum.HasValue || stageNum.Value == 0)
             {
                 return (ResultCode.LoadStageDataNotFound, null);
             }
 
-            return (ResultCode.None, stageList);
+            return (ResultCode.None, stageNum);
         }
         catch(Exception e)
         {
@@ -70,9 +74,11 @@ public class StageDb : BaseDb<Stage>, IStageDb
             var stageClear = await _queryFactory.Query(_tableName)
                 .Where(ColumnUid.player_uid, account_id)
                 .Where(StageTable.stage_id, stage_id)
-                .UpdateAsync(new { is_achieved = true });
+                .UpdateAsync(new { 
+                    is_achieved = true,
+                });
 
-            if(stageClear == 0)
+            if(stageClear == 0 && stage_id >= 5)
             {
                 return ResultCode.UpdateStageDataFail;
             }
@@ -80,11 +86,18 @@ public class StageDb : BaseDb<Stage>, IStageDb
             var getNextStage = NextStageDb.StageInfoDic[stage_id];
             var newStage = new Stage
             {
+                player_uid = account_id,
                 stage_id = getNextStage,
                 is_achieved = false,
             };
 
-            await ExecuteInsertAsync(newStage);
+            var result = await ExecuteInsertAsync(newStage);
+
+            if(result != ResultCode.None)
+            {
+                return ResultCode.InertNewStageDatatFail;
+            }
+
             return ResultCode.None;
         }
         catch(Exception e)
