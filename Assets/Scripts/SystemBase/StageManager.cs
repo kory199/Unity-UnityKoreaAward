@@ -71,10 +71,15 @@ public class StageManager : MonoSingleton<StageManager>
         else
             _spawnManager.SettingMonsterSpawnNum(_spawnMeleeNum, _spawnRangedNum, true, "BossOne");
     }
-    public void StageClear()
+    public async void StageClear()
     {
         UIManager.Instance.CreateObject<Popup_StageClear>("Popup_StageClear", EnumTypes.LayoutType.Middle);
 
+        bool result = await APIManager.Instance.LogOutAPI();
+        if (result == false)
+        {
+            Debug.LogWarning("StageClear to Server Fail");
+        }
     }
     private async void SendStageData()
     {
