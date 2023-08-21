@@ -10,9 +10,6 @@ interface ISkillBase
 }
 public class DobleShotEX : MonoBehaviour, ISkillBase
 {
-
-
-
     GameObject obj;
     Player player;
     // Start is called before the first frame update
