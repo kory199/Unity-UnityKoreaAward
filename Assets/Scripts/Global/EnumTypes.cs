@@ -84,6 +84,12 @@ public static partial class EnumTypes
         QuitGame,
     }
 
+    public enum EffectType
+    {
+        Button,
+        Bullet,
+    }
+
     public enum ScenesType
     { 
         SceneTitle,
