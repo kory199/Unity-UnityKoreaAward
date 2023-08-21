@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using DG.Tweening;
+using UnityEngine;
 public class SpreadOutLine : MonoBehaviour
 {
     [Range(0, 1)]
@@ -35,11 +33,11 @@ public class SpreadOutLine : MonoBehaviour
         spread = DOTween.Sequence();
         Vector3 max = Vector3.one * Max;
 
-        //¼øÂ÷ ½ºÇÁ·¹µå
+        //ìˆœì°¨ ìŠ¤í”„ë ˆë“œ
         spread.Append(spreadImage.transform.DOScale(spreadImage.transform.localScale + max, Freq)).
             Append(followImage.transform.DOScale(followImage.transform.localScale + max, Freq));
 
-        //µ¿½Ã ½ºÇÁ·¹µå
+        //ë™ì‹œ ìŠ¤í”„ë ˆë“œ
         /*spread.Append(spreadImage.transform.DOScale(spreadImage.transform.localScale + max, _freq)).
             Join(followImage.transform.DOScale(followImage.transform.localScale + max, _freq));*/
 
