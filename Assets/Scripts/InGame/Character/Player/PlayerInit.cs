@@ -48,7 +48,7 @@ public partial class Player
         Cursor.lockState = CursorLockMode.Confined;
     }
 
-    private void InitPlayer(int playerLv)
+    private void InitPlayer()
     {
         IsDeath = false;
         isMoveable = true;
@@ -57,13 +57,13 @@ public partial class Player
 
     private void retrunPlayerInfo(int inputPlayerLV)
     {
-        playerMaxHp = playerStatus[inputPlayerLV - 1].hp;
+        playerMaxHp = playerStatus[inputPlayerLV].hp;
         playerCurHp = playerMaxHp;
-        playerAttackPower = playerStatus[inputPlayerLV - 1].attack_power;
-        playerMaxExp = playerStatus[inputPlayerLV - 1].xp_requiredfor_levelup;
-        playerMovementSpeed = playerStatus[inputPlayerLV - 1].movement_speed;
-        playerProjectileSpeed = playerStatus[inputPlayerLV - 1].projectile_speed;
-        playerRateOfFire = playerStatus[inputPlayerLV - 1].rate_of_fire;
+        playerAttackPower = playerStatus[inputPlayerLV].attack_power;
+        playerMaxExp = playerStatus[inputPlayerLV].xp_requiredfor_levelup;
+        playerMovementSpeed = playerStatus[inputPlayerLV].movement_speed;
+        playerProjectileSpeed = playerStatus[inputPlayerLV ].projectile_speed;
+        playerRateOfFire = playerStatus[inputPlayerLV ].rate_of_fire;
 
         InitPlayerUI();
     }
