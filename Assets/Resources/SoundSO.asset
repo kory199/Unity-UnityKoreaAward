@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 181afdb8575184ad194c57a6dc46e113, type: 3}
+  m_Name: SoundSO
+  m_EditorClassIdentifier: 
+  BGMClips:
+  - {fileID: 8300000, guid: d838beee77239184080fc351f3a1deca, type: 3}
+  - {fileID: 8300000, guid: de1c7e4fe64d70b49a37acdd4381d04b, type: 3}
+  InGameBGMClips:
+  - {fileID: 8300000, guid: 484c7cb944507384e8c19e85adffdd06, type: 3}
+  - {fileID: 8300000, guid: bc6a3a5b3f37dc04280bb2fa61736e68, type: 3}
+  - {fileID: 8300000, guid: 6a846af25936dcc4d8f516d024a7e672, type: 3}
+  - {fileID: 8300000, guid: c02311b898bdb4d43a1af9059a6910fb, type: 3}
+  BossBGMClips:
+  - {fileID: 8300000, guid: df4d8aed0c7f53344a17911cf060d308, type: 3}
+  - {fileID: 8300000, guid: 5cee786076dd23f4080537673df5c2a1, type: 3}
+  - {fileID: 8300000, guid: c2366fda82861e2468274439f7bb1c39, type: 3}
+  playerAttackSFX: {fileID: 8300000, guid: 9db176e1ad4d89647a0bbcbd8b28693b, type: 3}
+  playerDeathSFX: {fileID: 8300000, guid: d8591ce332c791a488082ab8054c4224, type: 3}
+  playerHitSFX: {fileID: 8300000, guid: eb3b9518c60ccb444b446a176b3dd1ac, type: 3}
+  monsterHitSFX: {fileID: 8300000, guid: 733a0ff7727334749a0381b7092162b3, type: 3}
+  monsterDeathSFX: {fileID: 0}
+  skiilsSFX: {fileID: 0}
+  stageChangeSFX: {fileID: 0}
+  buttonSFX: {fileID: 0}
+  escSFX: {fileID: 0}
+  resultWindowSFX: {fileID: 0}
