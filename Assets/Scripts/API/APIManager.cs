@@ -226,6 +226,8 @@ public class APIManager : MonoSingleton<APIManager>
         string id = NewGameData().ID;
         string authToken = NewGameData().AuthToken;
 
+        Debug.Log($"id : {id}, authToken : {authToken}");
+
         StageData stageData = new StageData
         {
             ID = id,
