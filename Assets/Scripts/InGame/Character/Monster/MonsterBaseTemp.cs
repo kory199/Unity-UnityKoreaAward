@@ -8,13 +8,12 @@ public abstract class MonsterBase : MonoBehaviour
     [SerializeField] protected MonsterStateType state;
     [SerializeField] protected Player player;
     [SerializeField] protected MonsterInfo _monsterInfo = null;
+    [SerializeField] protected bool isFirst;
+    [SerializeField] protected bool isSelfDestruct;
 
     protected Vector3 playerTargetDirection;
     protected int stageNum;
-
     public string MonsterName;
-
-    [SerializeField] protected bool isFirst;
 
     // 편집 필요
     protected MonsterData_res[] rangedMonsterStatus;
@@ -37,11 +36,9 @@ public abstract class MonsterBase : MonoBehaviour
 
     protected virtual void OnEnable()
     {
-        // Debug.LogError("OnEnable : " + isFirst);
         if (isFirst == false)
         {
             stageNum = StageManager.Instance.GetStageNum();
-            //Debug.LogError("stageNum : " + stageNum);
         }
 
         state = MonsterStateType.None;
@@ -106,7 +103,7 @@ public abstract class MonsterBase : MonoBehaviour
 
     protected void MonsterStatusSetting(EnumTypes.MonsterType monsterType)
     {
-         if (monsterType == EnumTypes.MonsterType.RangedMonster)
+        if (monsterType == EnumTypes.MonsterType.RangedMonster)
         {
             rangedMonsterStatus = APIManager.Instance.GetValueByKey<MonsterData_res[]>(MasterDataDicKey.RangedMonster.ToString());
         }
@@ -249,6 +246,10 @@ public abstract class MonsterBase : MonoBehaviour
     protected virtual void MonsterDeath()
     {
         gameObject.SetActive(false);
-        StageManager.Instance.MonsterDeath();
+
+        if (isSelfDestruct == false)
+        {
+            StageManager.Instance.MonsterDeath();
+        }
     }
 }

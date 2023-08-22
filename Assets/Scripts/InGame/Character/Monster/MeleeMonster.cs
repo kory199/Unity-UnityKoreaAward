@@ -8,7 +8,6 @@ public class MeleeMonster : MonsterBase
     [SerializeField] private GameObject monsterHitVFX;
     [SerializeField] private GameObject monsterAttackVFX;
 
-    // temp monster status
     [SerializeField] private bool isMeleeMonsterDead;
     #region unity event func
 
@@ -24,6 +23,7 @@ public class MeleeMonster : MonsterBase
     protected override void OnEnable()
     {
         base.OnEnable();
+        isSelfDestruct = false;
 
         if (isMeleeMonsterDead == true)
         {
@@ -87,9 +87,10 @@ public class MeleeMonster : MonsterBase
 
     public override void Attack()
     {
-        transform.Rotate(0, 0, 30);
-        // 임시
+        isSelfDestruct = true;
+
         PlayerHit();
+        MonsterDeath(); // 자폭에 의한 공격은 보상 X
     }
 
     public override void Hit()
