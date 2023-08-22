@@ -45,6 +45,15 @@ public partial class Player
         }
     }
 
+    private void UIControl()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            uI_SceneGame.OnShow();
+            uI_Enhance.OnClick_ReturnGame();
+        }
+    }
+
     public void Reward(int exp, int score)
     {
         playerCurExp += exp;
@@ -76,6 +85,10 @@ public partial class Player
         }
         retrunPlayerInfo(playerLv);
         InitPlayerUI();
+
+        uI_SceneGame.OnHide();
+        uI_Enhance.OnShow();
+        Time.timeScale = 0;
     }
 
     private IEnumerator MonveAble()

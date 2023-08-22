@@ -23,11 +23,12 @@ public partial class Player
     public float playerProjectileSpeed;
     public float playerRateOfFire;
     public float lastAttackTime = 0;
+    private bool isMoveable;
 
-    bool isMoveable;
-    WaitForSeconds moveAble;
-
-    PlayerStatus_res[] playerStatus;
+    private WaitForSeconds moveAble;
+    public UI_SceneGame uI_SceneGame;
+    private UI_Enhance uI_Enhance;
+    private PlayerStatus_res[] playerStatus;
 
     public bool IsDeath;
 
@@ -62,8 +63,8 @@ public partial class Player
         playerAttackPower = playerStatus[inputPlayerLV].attack_power;
         playerMaxExp = playerStatus[inputPlayerLV].xp_requiredfor_levelup;
         playerMovementSpeed = playerStatus[inputPlayerLV].movement_speed;
-        playerProjectileSpeed = playerStatus[inputPlayerLV ].projectile_speed;
-        playerRateOfFire = playerStatus[inputPlayerLV ].rate_of_fire;
+        playerProjectileSpeed = playerStatus[inputPlayerLV].projectile_speed;
+        playerRateOfFire = playerStatus[inputPlayerLV].rate_of_fire;
 
         InitPlayerUI();
     }
@@ -76,5 +77,12 @@ public partial class Player
         uI_SceneGame.SetLevel(playerLv + 1);
         uI_SceneGame.SetMaxExp(playerMaxExp);
         uI_SceneGame.SetNowExp(playerCurExp);
+    }
+
+    private void InitUI_Enhance()
+    {
+        uI_Enhance = UIManager.Instance.CreateObject<UI_Enhance>("UI_Enhance", EnumTypes.LayoutType.First);
+        uI_Enhance.OnHide();
+        Time.timeScale = 1;
     }
 }
