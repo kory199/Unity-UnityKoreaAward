@@ -5,8 +5,8 @@ using UnityEngine;
 public class MeleeMonster : MonsterBase
 {
     private MonsterData_res[] meleeMonsterStatus;
-    private GameObject monsterHitVFX;
-    private GameObject monsterAttackVFX;
+    [SerializeField] private GameObject monsterHitVFX;
+    [SerializeField] private GameObject monsterAttackVFX;
 
     // temp monster status
     [SerializeField] private bool isMeleeMonsterDead;
@@ -18,8 +18,6 @@ public class MeleeMonster : MonsterBase
         GetInitMonsterStatus();
 
         isMeleeMonsterDead = false;
-
-        InitMonsterVFX();
     }
 
     // stage 변경에 따른 Level별 능력치 부여 => 서버 정보 받아오기
@@ -68,8 +66,6 @@ public class MeleeMonster : MonsterBase
     
     protected void SetMeleeMonsterStatus(int inputStageNum)
     {
-        //Debug.LogError("SetMeleeMonsterStatus : " + inputStageNum);
-
         _monsterInfo.level = meleeMonsterStatus[inputStageNum].level;
         _monsterInfo.exp = meleeMonsterStatus[inputStageNum].exp;
         _monsterInfo.hp = meleeMonsterStatus[inputStageNum].hp;
@@ -98,6 +94,7 @@ public class MeleeMonster : MonsterBase
 
     public override void Hit()
     {
+        Debug.LogError("monsterHit!!");
         _monsterInfo.curHp -= player.playerAttackPower;
 
         if (_monsterInfo.curHp <= 0)
@@ -108,6 +105,7 @@ public class MeleeMonster : MonsterBase
 
         if (monsterHitVFX != null)
         {
+            Debug.LogError("monsterHitVFX!!");
             monsterHitVFX.SetActive(true);
         }
     }
@@ -121,18 +119,5 @@ public class MeleeMonster : MonsterBase
     {
         // 추후 몬스터 별 이동속도 및 공격 범위 추가
         return base.State_Move();
-    }
-
-    private void InitMonsterVFX()
-    {
-        if (transform.childCount > 0)
-        {
-            // Add hit VFX
-            monsterHitVFX = transform.GetChild(0).gameObject;
-            monsterHitVFX.SetActive(false);
-
-            // Add attack VFX
-            monsterAttackVFX = transform.GetChild(1).gameObject;
-        }
     }
 }
