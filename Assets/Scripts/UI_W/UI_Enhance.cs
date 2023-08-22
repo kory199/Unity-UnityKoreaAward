@@ -164,17 +164,21 @@ public class UI_Enhance : UIBase
         // 스킬포인트가 없으면 스킬 선택 버튼 비활성화 및 알파값 조절
         for (int i = 0; i < skillBtn.Length; i++)
         {
-            if (skillPoint <= 0)
+            Color newColor = skillBtn[i].GetComponent<Image>().color;
+
+            if (skillPoint > 0)
             {
-                Color newColor = skillBtn[i].GetComponent<Image>().color;
+                newColor.a = 1f;
+                skillBtn[i].GetComponent<Image>().color = newColor;
+                skillBtn[i].interactable = true;
+            }
+            else
+            {
                 newColor.a = 0.5f;
                 skillBtn[i].GetComponent<Image>().color = newColor;
                 skillBtn[i].interactable = false;
-                continue;
             }
         }
-
         enhanceNum.text = "enhanceNum : " + skillPoint.ToString();
-
     }
 }
