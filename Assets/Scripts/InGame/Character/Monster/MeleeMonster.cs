@@ -5,7 +5,8 @@ using UnityEngine;
 public class MeleeMonster : MonsterBase
 {
     private MonsterData_res[] meleeMonsterStatus;
-    private GameObject childObject;
+    private GameObject monsterHitVFX;
+    private GameObject monsterAttackVFX;
 
     // temp monster status
     [SerializeField] private bool isMeleeMonsterDead;
@@ -20,8 +21,8 @@ public class MeleeMonster : MonsterBase
 
         if (transform.childCount > 0)
         {
-            childObject = transform.GetChild(0).gameObject;
-            childObject.SetActive(false);
+            monsterHitVFX = transform.GetChild(0).gameObject;
+            monsterHitVFX.SetActive(false);
         }
     }
 
@@ -36,9 +37,9 @@ public class MeleeMonster : MonsterBase
         }
         // init melee monster variable
 
-        if (childObject != null)
+        if (monsterHitVFX != null)
         {
-            childObject.SetActive(false);
+            monsterHitVFX.SetActive(false);
         }
     }
 
@@ -109,9 +110,9 @@ public class MeleeMonster : MonsterBase
             MonsterDeath();
         }
 
-        if (childObject != null)
+        if (monsterHitVFX != null)
         {
-            childObject.SetActive(true);
+            monsterHitVFX.SetActive(true);
         }
     }
 
