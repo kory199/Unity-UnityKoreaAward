@@ -27,6 +27,11 @@ public class Bullet : MonoBehaviour
     private CircleCollider2D bulletCollider;
     private Rigidbody2D bulletRb;
 
+    private void Awake()
+    {
+        BulletInit();
+    }
+
     private void OnEnable()
     {
         // 발사 후 5초 뒤 Bullet 비활성화        
@@ -35,7 +40,7 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
-        BulletInit();
+        // BulletInit();
     }
 
     private void BulletInit()
