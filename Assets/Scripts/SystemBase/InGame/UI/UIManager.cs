@@ -25,6 +25,7 @@ public class UIManager : UIBase
     private static UIManager _instance = null;
     private ProcessManager _processManager = null;
     private Dictionary<LayoutType, GameObject> _canvases = new();
+    private Dictionary<string, GameObject> createdUIs = new();
 
     private const string _languageKey = "LANGUAGE";
 
@@ -85,6 +86,11 @@ public class UIManager : UIBase
     // 오브젝트에 스크립트가 있어야 합니다
     public T CreateObject<T>(string argPath, LayoutType type)
     {
+        if (createdUIs.ContainsKey(argPath))
+        {
+            return createdUIs[argPath].GetComponent<T>();
+        }
+
         if (false == _canvases.ContainsKey(type))
         {
             CreateCanvas(type);
@@ -98,6 +104,8 @@ public class UIManager : UIBase
         targetcanvas.overrideSorting = true;
         targetcanvas.sortingOrder = _canvases[type].GetComponent<Canvas>().sortingOrder + 1;
         var targetComponent = newUIInstance.GetComponent<T>();
+
+        createdUIs[argPath] = newUIInstance;
         return newUIInstance.GetComponent<T>();
     }
 

@@ -1,8 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
 using APIModels;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StageManager : MonoSingleton<StageManager>
 {
@@ -137,11 +136,16 @@ public class StageManager : MonoSingleton<StageManager>
     }
     IEnumerator Co_GameOverUI()
     {
+        //Popup_StageClear popup_StageFail = UIManager.Instance.CreateObject<Popup_StageClear>("Popup_StageFail", EnumTypes.LayoutType.Middle);
+        //popup_StageFail.OnShow();
+        SoundMgr.Instance.SFXPlay(EnumTypes.SFXType.StageFile);
+        _uI_SceneGame.OnHide();
         yield return null;
         //게임 오버시 띄울 창 켜거나 이펙트 만들기
     }
     IEnumerator Co_GameClearUI()
     {
+        _uI_SceneGame.OnHide();
         yield return null;
         //보스 클리어시 띄울 창 켜거나 이펙트 만들기
     }

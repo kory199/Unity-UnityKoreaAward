@@ -76,7 +76,7 @@ public static partial class EnumTypes
         Skills,
         StageChange,
         StageClear,
-        //StageFile,
+        StageFile,
         Button,
         EseKey,
         ResultWindow,

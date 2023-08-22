@@ -23,6 +23,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     // === Cursor
     Texture2D _cursorImg;
+    private AccountUI accountUI;
 
     // Runtume init Gamemanager 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -46,8 +47,8 @@ public class GameManager : MonoSingleton<GameManager>
     }
     public void EndStage(int stageNum)
     {
-        //ºê·¹ÀÌÅ© ÀÌ¹ÌÁö ¶ç¿ì°í ¾ÀÀÌµ¿
-        Debug.Log("½Â¸®");
+        //ë¸Œë ˆì´í¬ ì´ë¯¸ì§€ ë„ìš°ê³  ì”¬ì´ë™
+        Debug.Log("ìŠ¹ë¦¬");
         MoveScene("SceneLobby");
     }
    

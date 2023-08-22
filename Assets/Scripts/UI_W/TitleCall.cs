@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TitleCall : MonoBehaviour
@@ -13,6 +12,7 @@ public class TitleCall : MonoBehaviour
             account = UIManager.Instance.CreateObject<AccountUI>("UI_SceneTitle", EnumTypes.LayoutType.First);
             yield return new WaitUntil(() => account != null);
         }
+
         account.OnShow();
     }
 }
