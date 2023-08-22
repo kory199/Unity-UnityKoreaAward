@@ -8,8 +8,9 @@ public partial class Player
     public override void Attack()
     {
         GameObject pullBullet = ObjectPooler.SpawnFromPool("Bullet2D", gameObject.transform.position);
+        SoundMgr.Instance.SFXPlay(EnumTypes.SFXType.PlayerAttack);
 
-        // Bullet¿¡ ¹ß»ç Á¤º¸ Àü´Ş
+        // Bulletì— ë°œì‚¬ ì •ë³´ ì „ë‹¬
         if (pullBullet.TryGetComponent<Bullet>(out Bullet bull))
         {
             bullet = bull;
@@ -30,13 +31,15 @@ public partial class Player
             bulletRb = pullBullet.AddComponent<Rigidbody2D>();
         }
 
-        // ¼Óµµ °¡ÁßÄ¡´Â ¼­¹ö µ¥ÀÌÅÍ ¾÷·Îµå ÈÄ º¯°æ
+        // ì†ë„ ê°€ì¤‘ì¹˜ëŠ” ì„œë²„ ë°ì´í„° ì—…ë¡œë“œ í›„ ë³€ê²½
         bulletRb.velocity = targetDirection * playerProjectileSpeed;
     }
     public void PlayerHit(float damageAmount)
     {
         playerCurHp -= damageAmount;
         InitPlayerUI();
+
+        SoundMgr.Instance.SFXPlay(EnumTypes.SFXType.PlayerHit);
 
         if (playerCurHp <= 0)
         {
@@ -69,13 +72,14 @@ public partial class Player
 
     protected override void Die()
     {
+        SoundMgr.Instance.SFXPlay(EnumTypes.SFXType.PlayerDeath);
         Debug.LogError("Player Die");
         StageManager.Instance.PlayerDeath();
     }
 
     public void LevelyUp()
     {
-        // ½ºÅ©¸³ÅÍºí ¿ÀºêÁ§Æ®·Î ºÎÅÍ »õ·Î¿î Á¤º¸¸¦ ¹Ş¾Æ¿Í player setting
+        // ìŠ¤í¬ë¦½í„°ë¸” ì˜¤ë¸Œì íŠ¸ë¡œ ë¶€í„° ìƒˆë¡œìš´ ì •ë³´ë¥¼ ë°›ì•„ì™€ player setting
         // InitPlayer();
 
         playerLv++;

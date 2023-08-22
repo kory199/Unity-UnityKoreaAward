@@ -246,6 +246,7 @@ public abstract class MonsterBase : MonoBehaviour
     protected virtual void MonsterDeath()
     {
         gameObject.SetActive(false);
+        SoundMgr.Instance.SFXPlay(EnumTypes.SFXType.MonsterDeath);
 
         if (isSelfDestruct == false)
         {

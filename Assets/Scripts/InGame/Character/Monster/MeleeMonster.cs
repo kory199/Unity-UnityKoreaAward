@@ -96,6 +96,7 @@ public class MeleeMonster : MonsterBase
     public override void Hit()
     {
         _monsterInfo.curHp -= player.playerAttackPower;
+        SoundMgr.Instance.SFXPlay(EnumTypes.SFXType.MonsterHit);
 
         if (_monsterInfo.curHp <= 0)
         {

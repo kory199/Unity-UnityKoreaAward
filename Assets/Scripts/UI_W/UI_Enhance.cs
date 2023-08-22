@@ -52,6 +52,7 @@ public class UI_Enhance : UIBase
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            SoundMgr.Instance.SFXPlay(EnumTypes.SFXType.EseKey);
             OnClick_ReturnGame();
         }
     }

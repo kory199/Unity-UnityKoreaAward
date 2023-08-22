@@ -35,7 +35,7 @@ MonoBehaviour:
   - AudioClip: {fileID: 8300000, guid: c2366fda82861e2468274439f7bb1c39, type: 3}
     BossBGMType: 2
   SFXSoundClips:
-  - AudioClip: {fileID: 8300000, guid: a28f97506cbe82d479cd46f40fa6efe0, type: 3}
+  - AudioClip: {fileID: 8300000, guid: 08f78eba48bb21c44ac5a74ca84efc83, type: 3}
     SfxSound: 0
   - AudioClip: {fileID: 8300000, guid: de1c7e4fe64d70b49a37acdd4381d04b, type: 3}
     SfxSound: 1
@@ -51,13 +51,13 @@ MonoBehaviour:
     SfxSound: 6
   - AudioClip: {fileID: 8300000, guid: 29a7d9c08340eab41986a20a347f1a7d, type: 3}
     SfxSound: 7
-  - AudioClip: {fileID: 8300000, guid: 6b872a5c2f1a84f639ec3e0b0071d301, type: 3}
+  - AudioClip: {fileID: 8300000, guid: cfa8d29008627b54d8376f0e3c8f5d42, type: 3}
     SfxSound: 8
-  - AudioClip: {fileID: 8300000, guid: 7dee34e3dd8942845adc14871cbdcd2a, type: 3}
+  - AudioClip: {fileID: 8300000, guid: 6b872a5c2f1a84f639ec3e0b0071d301, type: 3}
     SfxSound: 9
-  - AudioClip: {fileID: 8300000, guid: 4872c3adf623846bd9f78507d9690a56, type: 3}
+  - AudioClip: {fileID: 8300000, guid: 27224868daeda4fbeb1647b99d0d0ddb, type: 3}
     SfxSound: 10
-  - AudioClip: {fileID: 8300000, guid: 84057f1e80d924eb6a5d471d6fb37083, type: 3}
+  - AudioClip: {fileID: 8300000, guid: 4872c3adf623846bd9f78507d9690a56, type: 3}
     SfxSound: 11
-  - AudioClip: {fileID: 8300000, guid: adf8eea18cb5e47eb95c7c80d6c21366, type: 3}
+  - AudioClip: {fileID: 8300000, guid: 84057f1e80d924eb6a5d471d6fb37083, type: 3}
     SfxSound: 12
