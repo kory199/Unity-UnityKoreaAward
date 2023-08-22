@@ -2,8 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-
-public abstract class SkillBase : MonoBehaviour
+interface ISkillBase
+{
+    void SkillLevelUp();
+    void SkillShot();
+}
+public abstract class SkillBase : MonoBehaviour, ISkillBase
 {
     protected Player _player;
     protected int _skillLevel = 1;
