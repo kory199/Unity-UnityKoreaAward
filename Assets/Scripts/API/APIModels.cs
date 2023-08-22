@@ -23,14 +23,10 @@ namespace APIModels
         public string AuthToken { get; set; }
     }
 
-    public class StageData : GameData
-    {
-        public int StageNum { get; set; }
-    }
-
     public class StageClear : GameData
     {
         public int Score { get; set; }
+        public int StageNum { get; set; }
     }
 
     // === MasterData ===
