@@ -22,6 +22,7 @@ public class UI_Enhance : UIBase
     private Vector3 nextSpawnPos = Vector3.zero;
     private int zigzagDirection = 1;
     private int maxtreeNum = 15;
+    private int skillPoint = 0;
 
     IProcess.NextProcess _nextProcess = IProcess.NextProcess.Continue;
     public override IProcess.NextProcess ProcessInput()
@@ -29,6 +30,7 @@ public class UI_Enhance : UIBase
         return _nextProcess;
     }
 
+    #region unity lifecycle
     protected override void Awake()
     {
         if (skillSO == null)
@@ -53,6 +55,7 @@ public class UI_Enhance : UIBase
             OnClick_ReturnGame();
         }
     }
+    #endregion
 
     private void SetSkillData()
     {
@@ -83,6 +86,12 @@ public class UI_Enhance : UIBase
         }
     }
 
+    public override void OnShow()
+    {
+        SkillBtnControl();
+        base.OnShow();
+    }
+
     public void MouseReachSkill(Button targetButton, string skillInfoText)
     {
         EventTrigger trigger = targetButton.gameObject.AddComponent<EventTrigger>();
@@ -95,7 +104,8 @@ public class UI_Enhance : UIBase
     // 나중에 필요한 객체로 변경
     public int OnClick_Skill(Button clickedBtn, int bulletNum)
     {
-        Debug.Log($"BulletNum : {bulletNum}");
+        skillPoint--;
+        SkillBtnControl();
 
         if (skillNodePrefab != null)
         {
@@ -142,5 +152,29 @@ public class UI_Enhance : UIBase
     {
         OnHide();
         Time.timeScale = 1;
+    }
+
+    public void GetSkillPoint(int playerSkillPoint)
+    {
+        skillPoint += playerSkillPoint;
+    }
+
+    private void SkillBtnControl()
+    {
+        // 스킬포인트가 없으면 스킬 선택 버튼 비활성화 및 알파값 조절
+        for (int i = 0; i < skillBtn.Length; i++)
+        {
+            if (skillPoint <= 0)
+            {
+                Color newColor = skillBtn[i].GetComponent<Image>().color;
+                newColor.a = 0.5f;
+                skillBtn[i].GetComponent<Image>().color = newColor;
+                skillBtn[i].interactable = false;
+                continue;
+            }
+        }
+
+        enhanceNum.text = "enhanceNum : " + skillPoint.ToString();
+
     }
 }

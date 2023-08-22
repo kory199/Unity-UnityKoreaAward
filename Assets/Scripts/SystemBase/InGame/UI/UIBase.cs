@@ -16,7 +16,7 @@ public abstract class UIBase : MonoBehaviour, IProcess
     }
 
 
-    public void OnShow()
+    public virtual void OnShow()
     {
         gameObject.SetActive(true);
         if (false == _processManager.processingUIStack.Contains(this))
@@ -25,10 +25,9 @@ public abstract class UIBase : MonoBehaviour, IProcess
 
             //Debug.Log(_processManager.processingUIStack.Count + " show " + gameObject.name);
         }
-
     }
 
-    public void OnHide()
+    public virtual void OnHide()
     {
         gameObject.SetActive(false);
 

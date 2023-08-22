@@ -1621,7 +1621,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stageNum: 1
-  enhanceNum: {fileID: 4850716717769782330}
+  enhanceNum: {fileID: 7326835577020560934}
   rerollNum: {fileID: 3389411106310119494}
   infoText: {fileID: 4850716718378013019}
   skillNodePrefab: {fileID: 6331922395903526014, guid: 0cd8423243d944cf3a3a90bf5553bd5f, type: 3}

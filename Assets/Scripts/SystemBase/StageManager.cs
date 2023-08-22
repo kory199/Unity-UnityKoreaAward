@@ -39,6 +39,7 @@ public class StageManager : MonoSingleton<StageManager>
         //InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.End, SendStageData);
         StartCoroutine(Co_GameStart());
 
+        _uI_SceneGame.SetStageNum(_stageNum + 1);
         PlayBGMForStage(_stageNum);
     }
     IEnumerator Co_GameStart()
@@ -61,9 +62,8 @@ public class StageManager : MonoSingleton<StageManager>
         Debug.Log("Stage Up ...");
         _stageNum++;
 
-        _uI_SceneGame.SetStageNum(_stageNum);
-        PlayBGMForStage(_stageNum);
         _uI_SceneGame.SetStageNum(_stageNum + 1);
+        PlayBGMForStage(_stageNum);
         SendStageData();
     }
     public int GetStageNum() => _stageNum;
