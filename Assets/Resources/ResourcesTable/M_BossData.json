@@ -10,6 +10,6 @@
         "projectile_speed": 1.0,
         "collision_damage": 10.0,
         "score": 500,
-        "ranged": 15.0
+        "ranged": 4.0
     }
 ]

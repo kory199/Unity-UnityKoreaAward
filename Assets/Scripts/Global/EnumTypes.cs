@@ -59,6 +59,37 @@ public static partial class EnumTypes
         Stage5,
     }
 
+    public enum BossBGMType
+    {
+        Stage1,
+        Stage2,
+        Stage3,
+    }
+
+    public enum SFXType
+    {
+        PlayerAttack,
+        PlayerDeath,
+        PlayerHit,
+        MonsterHit,
+        MonsterDeath,
+        Skills,
+        StageChange,
+        StageClear,
+        //StageFile,
+        Button,
+        EseKey,
+        ResultWindow,
+        Typing,
+        QuitGame,
+    }
+
+    public enum EffectType
+    {
+        Button,
+        Bullet,
+    }
+
     public enum ScenesType
     { 
         SceneTitle,

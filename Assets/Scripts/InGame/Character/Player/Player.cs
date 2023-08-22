@@ -6,15 +6,19 @@ using TMPro;
 
 public partial class Player : CharacterBase
 {
+    // UI Test Component
+    [SerializeField] private TextMeshProUGUI ui_Hp;
+    [SerializeField] private TextMeshProUGUI ui_Exp;
+    [SerializeField] private TextMeshProUGUI ui_Stage;
+    [SerializeField] private TextMeshProUGUI ui_LV;
+    [SerializeField] private TextMeshProUGUI ui_Attack;
     public UI_SceneGame uI_SceneGame;
-    private UI_Enhance ui_Enhance;
 
 
     #region unity event func
     private void Awake()
     {
         playerStatus = APIManager.Instance.GetValueByKey<PlayerStatus_res[]>(MasterDataDicKey.PlayerStatus.ToString());
-
 
         InitSetting();
         InitComponent();
@@ -32,7 +36,6 @@ public partial class Player : CharacterBase
     void Update()
     {
         Move();
-        UI_Control();
 
         if (Input.GetKey(KeyCode.Mouse0))
         {
@@ -43,6 +46,15 @@ public partial class Player : CharacterBase
                 lastAttackTime = Time.time;
             }
         }
+
+        // temp ui (추후 각 컴포넌트 별 변경 시 반영)
+        ui_Hp.text = playerCurHp.ToString();
+        ui_Exp.text = playerCurExp.ToString();
+        ui_LV.text = (playerLv + 1).ToString();
+        ui_Attack.text = playerAttackPower.ToString();
+
+        // uI_SceneGame.Set~~()시리즈로 필요한 부분에 사용해주세용
     }
+
     #endregion
 }

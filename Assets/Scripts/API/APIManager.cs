@@ -195,14 +195,7 @@ public class APIManager : MonoSingleton<APIManager>
 
     public async UniTask<bool> GetStageAPI()
     {
-        StageData stageData = new StageData
-        {
-            ID = NewGameData().ID,
-            AuthToken = NewGameData().AuthToken,
-            StageNum = 0,
-        };
-
-        bool result = await CallAPI<Dictionary<string, object>, StageData>(APIUrls.StageApi, stageData, APISuccessCode.LoadStageSuccess, (apiResponse) =>
+        bool result = await CallAPI<Dictionary<string, object>, GameData>(APIUrls.StageApi, NewGameData(), APISuccessCode.LoadStageSuccess, (apiResponse) =>
         {
             if (apiResponse.Data.TryGetValue("stageData", out object stageDataObj))
             {
@@ -222,31 +215,27 @@ public class APIManager : MonoSingleton<APIManager>
         return result;
     }
 
-    public async UniTask StageUpToServer(int stageNum, int score)
+    public async UniTask<bool> StageUpToServer(int stageNum, int score)
     {
         string id = NewGameData().ID;
         string authToken = NewGameData().AuthToken;
-
-        Debug.Log($"id : {id}, authToken : {authToken}");
-
-        StageData stageData = new StageData
-        {
-            ID = id,
-            AuthToken = authToken,
-            StageNum = stageNum
-        };
 
         StageClear stageClear = new StageClear
         {
             ID = id,
             AuthToken = authToken,
-            Score = score
+            Score = score,
+            StageNum = stageNum
         };
 
-        UniTask callStageApi = CallAPI<Dictionary<string, object>, StageData>(APIUrls.StageApi, stageData, APISuccessCode.LoadStageSuccess, null);
-        UniTask callStageClear = CallAPI<Dictionary<string, object>, StageClear>(APIUrls.StageClear, stageClear, APISuccessCode.UpdateScoreSuccess, null);
+        var result = await CallAPI<Dictionary<string, object>, StageClear>(APIUrls.StageClear, stageClear, APISuccessCode.UpdateScoreSuccess, null);
 
-        await UniTask.WhenAll(callStageApi, callStageClear);
+        if(result == false)
+        {
+            return result;
+        }
+
+        return result;
     }
 
     private async UniTask<bool> CallAPI<T, TRequest>(string apiUrl, TRequest requestBody, APISuccessCode successCode, Action<APIResponse<T>> handler)

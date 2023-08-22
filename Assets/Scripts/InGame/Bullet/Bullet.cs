@@ -29,9 +29,7 @@ public class Bullet : MonoBehaviour
 
     private void OnEnable()
     {
-        bulletLifeTime = 10f;
-
-        // ¹ß»ç ÈÄ 10ÃÊ µÚ Bullet ºñÈ°¼ºÈ­
+        // ë°œì‚¬ í›„ 5ì´ˆ ë’¤ Bullet ë¹„í™œì„±í™”        
         Invoke("ReturnBullet", bulletLifeTime);
     }
 
@@ -78,8 +76,8 @@ public class Bullet : MonoBehaviour
         isMove = true;
         moveAble = new WaitForSeconds(0.3f);
 
-        // ·¹º§¾÷ µî¿¡ µû¶ó ¹Ù²ñ (ÃÊ±â °ªÀ¸·Î ÃßÈÄ ½ºÅ©¸³ÅÍºí ¿ÀºêÁ§Æ®¿¡¼­ °ªÀ» ¹Ş¾Æ¿Í¾ßµÊ)
-        bulletSpeed = 10f;
+        // ë ˆë²¨ì—… ë“±ì— ë”°ë¼ ë°”ë€œ (ì´ˆê¸° ê°’ìœ¼ë¡œ ì¶”í›„ ìŠ¤í¬ë¦½í„°ë¸” ì˜¤ë¸Œì íŠ¸ì—ì„œ ê°’ì„ ë°›ì•„ì™€ì•¼ë¨)
+        bulletLifeTime = 10f;
         rangedBulletDamage = 10f;
         meleeBulletDamage = 20f;
         playerBulletDamage = 10f;

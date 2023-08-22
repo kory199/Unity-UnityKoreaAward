@@ -38,13 +38,6 @@ public partial class Player
         else
             playerRb = gameObject.AddComponent<Rigidbody2D>();
         playerRb.gravityScale = 0;
-
-        if (ui_Enhance == null)
-        {
-            ui_Enhance = UIManager.Instance.CreateObject<UI_Enhance>("UI_Enhance", EnumTypes.LayoutType.First);
-            ui_Enhance.OnHide();
-            Time.timeScale = 1;
-        }
     }
 
     private void InitSetting()

@@ -6,7 +6,7 @@ using APIModels;
 
 public class StageManager : MonoSingleton<StageManager>
 {
-    [SerializeField] private int _stageNum = 0;
+    [SerializeField] private int _stageNum = 1;
     [SerializeField] private int _spawnMeleeNum = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
     [SerializeField] private int _spawnRangedNum = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
     [SerializeField] private int _score = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
@@ -38,6 +38,8 @@ public class StageManager : MonoSingleton<StageManager>
         //End 체인
         //InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.End, SendStageData);
         StartCoroutine(Co_GameStart());
+
+        PlayBGMForStage(_stageNum);
     }
     IEnumerator Co_GameStart()
     {
@@ -58,6 +60,8 @@ public class StageManager : MonoSingleton<StageManager>
         }
         Debug.Log("Stage Up ...");
         _stageNum++;
+
+        PlayBGMForStage(_stageNum);
         _uI_SceneGame.SetStageNum(_stageNum + 1);
         SendStageData();
     }
@@ -88,7 +92,7 @@ public class StageManager : MonoSingleton<StageManager>
 
         _score = 777;
         //  _score = GameManager.Instance.playerData.score;
-        await APIManager.Instance.StageUpToServer(_stageNum, _score);
+        //await APIManager.Instance.StageUpToServer(_stageNum, _score);
     }
 
     public async void PlayerDeath()
@@ -152,5 +156,21 @@ public class StageManager : MonoSingleton<StageManager>
 
         _spawnMeleeNum = stageSpawnMonsterData_Res[stageNum].meleemonster_spawn;
         _spawnRangedNum = stageSpawnMonsterData_Res[stageNum].rangedmonster_spawn;
+    }
+
+    private void PlayBGMForStage(int stage)
+    {
+        EnumTypes.StageBGMType bgmType;
+        switch (stage)
+        {
+            case 1: bgmType = EnumTypes.StageBGMType.Stage1; break;
+            case 2: bgmType = EnumTypes.StageBGMType.Stage2; break;
+            case 3: bgmType = EnumTypes.StageBGMType.Stage3; break;
+            case 4: bgmType = EnumTypes.StageBGMType.Stage4; break;
+            case 5: bgmType = EnumTypes.StageBGMType.Stage5; break;
+            default: return;
+        }
+
+        SoundMgr.Instance.BGMPlay(bgmType);
     }
 }
