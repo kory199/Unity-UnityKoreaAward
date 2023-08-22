@@ -134,26 +134,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 6694471686000787052, guid: 447dfd2202628a04a9c407b170214b88, type: 3}
-      propertyPath: ui_Hp
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6694471686000787052, guid: 447dfd2202628a04a9c407b170214b88, type: 3}
-      propertyPath: ui_LV
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6694471686000787052, guid: 447dfd2202628a04a9c407b170214b88, type: 3}
-      propertyPath: ui_Exp
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6694471686000787052, guid: 447dfd2202628a04a9c407b170214b88, type: 3}
-      propertyPath: ui_Stage
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6694471686000787052, guid: 447dfd2202628a04a9c407b170214b88, type: 3}
-      propertyPath: ui_Attack
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 8516200050958493884, guid: 447dfd2202628a04a9c407b170214b88, type: 3}
       propertyPath: m_RootOrder
       value: 7

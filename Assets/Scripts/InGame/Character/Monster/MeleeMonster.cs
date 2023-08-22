@@ -94,7 +94,6 @@ public class MeleeMonster : MonsterBase
 
     public override void Hit()
     {
-        Debug.LogError("monsterHit!!");
         _monsterInfo.curHp -= player.playerAttackPower;
 
         if (_monsterInfo.curHp <= 0)
@@ -105,7 +104,6 @@ public class MeleeMonster : MonsterBase
 
         if (monsterHitVFX != null)
         {
-            Debug.LogError("monsterHitVFX!!");
             monsterHitVFX.SetActive(true);
         }
     }
