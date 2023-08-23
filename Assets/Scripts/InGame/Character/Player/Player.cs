@@ -10,21 +10,8 @@ public partial class Player : CharacterBase
     private void Awake()
     {
         playerRb = GetComponent<Rigidbody2D>();
+        isStart = false;
         StartCoroutine(InitializationAfterDelay());
-    }
-
-    private IEnumerator InitializationAfterDelay()
-    {
-        yield return new WaitForSeconds(_spawnTime);
-
-        playerStatus = APIManager.Instance.GetValueByKey<PlayerStatus_res[]>(MasterDataDicKey.PlayerStatus.ToString());
-
-        InitUI_Enhance();
-        InitSetting();
-        InitComponent();
-        InitPlayerUI();
-        retrunPlayerInfo(0);
-        InitPlayer();
     }
 
     protected override void Start()
@@ -35,16 +22,19 @@ public partial class Player : CharacterBase
 
     void Update()
     {
-        Move();
-        UIControl();
-
-        if (Input.GetKey(KeyCode.Mouse0))
+        if (isStart)
         {
-            if (Time.time - lastAttackTime >= 0.1f)
-            {
-                Attack();
+            Move();
+            UIControl();
 
-                lastAttackTime = Time.time;
+            if (Input.GetKey(KeyCode.Mouse0))
+            {
+                if (Time.time - lastAttackTime >= 0.1f)
+                {
+                    Attack();
+
+                    lastAttackTime = Time.time;
+                }
             }
         }
     }

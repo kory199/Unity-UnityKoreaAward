@@ -80,7 +80,6 @@ public class MeleeMonster : MonsterBase
     public override void Attack()
     {
         isSelfDestruct = true;
-        // monsterAttackVFX = ObjectPooler.SpawnFromPool("Eff_MeleeMonster_Attack", gameObject.transform.position);
 
         PlayerHit();
         MonsterDeath(); // 자폭에 의한 공격은 보상 X
@@ -95,11 +94,6 @@ public class MeleeMonster : MonsterBase
         {
             player.Reward(_monsterInfo.exp, _monsterInfo.score);
             MonsterDeath();
-        }
-
-        if (monsterHitVFX != null)
-        {
-            monsterHitVFX.SetActive(true);
         }
     }
 
