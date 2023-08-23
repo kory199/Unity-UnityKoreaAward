@@ -151,8 +151,7 @@ public class StageManager : MonoSingleton<StageManager>
 
         //서버 데이터 전달
         SendStageData();
-        GameManager.Instance.MoveScene(EnumTypes.ScenesType.SceneLobby.ToString());
-        //await GameManager.Instance.LoadScene(EnumTypes.ScenesType.SceneLobby);
+        GameManager.Instance.MoveSceneWithAction(EnumTypes.ScenesType.SceneLobby);
     }
     IEnumerator Co_GameClearUI()
     {

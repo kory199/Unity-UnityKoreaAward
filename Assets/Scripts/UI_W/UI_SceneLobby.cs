@@ -63,8 +63,8 @@ public class UI_SceneLobby : UIBase
 
         if (playGameTask)
         {
-            OnHide();
-            GameManager.Instance.MoveScene("SceneInGame");
+            //OnHide();
+            await GameManager.Instance.MoveSceneWithAction(EnumTypes.ScenesType.SceneInGame, OnHide);
             GameManager.Instance.SceneState = SceneState.Game;
         }
     }
@@ -123,8 +123,7 @@ public class UI_SceneLobby : UIBase
         bool result = await APIManager.Instance.LogOutAPI();
         if(result)
         {
-            GameManager.Instance.MoveScene("SceneTitle");
-            OnHide();
+            await GameManager.Instance.MoveSceneWithAction(EnumTypes.ScenesType.SceneTitle, OnHide);
         }
     }
 }

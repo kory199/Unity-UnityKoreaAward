@@ -1,9 +1,8 @@
+using APIModels;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Collections.Generic;
-using APIModels;
-using System.Collections;
+using System;
 
 [System.Serializable]
 public enum SceneState
@@ -45,32 +44,29 @@ public class GameManager : MonoSingleton<GameManager>
     {
         OnclickStageNum = stageNum;
     }
-    public void EndStage(int stageNum)
+    public async void EndStage(int stageNum)
     {
         //브레이크 이미지 띄우고 씬이동
         Debug.Log("승리");
-        MoveScene("SceneLobby");
+        await MoveSceneWithAction(EnumTypes.ScenesType.SceneLobby);
     }
-   
-    public void MoveScene(string sceneName)
+  
+    public async UniTask MoveSceneWithAction(EnumTypes.ScenesType scene, Action actionBeforeLoad = null)
     {
-        SceneManager.LoadScene(sceneName);
-    }
-
-    public async UniTask LoadAsync(EnumTypes.ScenesType scene)
-    {
-        UniTask loadSceneUnitask = LoadScene(scene);
-
-        await loadSceneUnitask;
-    }
-
-    public async UniTask LoadScene(EnumTypes.ScenesType scene)
-    {
-        AsyncOperation sceneLoad = SceneManager.LoadSceneAsync(scene.ToString());
-
-        while (!sceneLoad.isDone)
+        if (actionBeforeLoad != null)
         {
-            await UniTask.Yield(PlayerLoopTiming.Update);
+            actionBeforeLoad.Invoke();
+        }
+
+        try
+        {
+            var sceneLoad = SceneManager.LoadSceneAsync(scene.ToString());
+
+            await UniTask.WaitUntil(() => sceneLoad.isDone);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Error loading scene: {e.Message}");
         }
     }
 }
