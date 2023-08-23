@@ -24,6 +24,7 @@ public partial class Player
     public float playerRateOfFire;
     public float lastAttackTime = 0;
     private bool isMoveable;
+    private bool isStart;
 
     private WaitForSeconds moveAble;
     public UI_SceneGame uI_SceneGame;
@@ -51,6 +52,7 @@ public partial class Player
 
     private void InitPlayer()
     {
+        isStart = true;
         IsDeath = false;
         isMoveable = true;
         moveAble = new WaitForSeconds(0.5f);
@@ -84,5 +86,19 @@ public partial class Player
         uI_Enhance = UIManager.Instance.CreateObject<UI_Enhance>("UI_Enhance", EnumTypes.LayoutType.First);
         uI_Enhance.OnHide();
         Time.timeScale = 1;
+    }
+
+    private IEnumerator InitializationAfterDelay()
+    {
+        playerStatus = APIManager.Instance.GetValueByKey<PlayerStatus_res[]>(MasterDataDicKey.PlayerStatus.ToString());
+        
+        yield return new WaitForSeconds(_spawnTime);
+
+        InitUI_Enhance();
+        InitSetting();
+        InitComponent();
+        InitPlayerUI();
+        retrunPlayerInfo(0);
+        InitPlayer();
     }
 }

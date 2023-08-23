@@ -101,27 +101,23 @@ MonoBehaviour:
   state: 0
   player: {fileID: 0}
   _monsterInfo:
-    Name: 
-    Exp: 0
-    Score: 0
-    Hp: 0
-    RateOfFire: 0
-    Range: 0
-    MoveSpeed: 0
+    type: 
+    level: 0
+    exp: 0
+    hp: 0
+    curHp: 0
+    speed: 0
+    rate_of_fire: 0
+    projectile_speed: 0
+    collision_damage: 0
+    score: 0
+    ranged: 0
+  isFirst: 0
+  isSelfDestruct: 0
   MonsterName: 
-  curHP: 10
-  exp: 10
-  score: 10
-  meleeMonster_Level: 0
-  meleeMonster_exp: 0
-  meleeMonster_Hp: 0
-  meleeMonster_CurHp: 0
-  meleeMonster_Speed: 0
-  meleeMonster_RateOfFire: 0
-  meleeMonster_ProjectileSpeed: 0
-  meleeMonster_CollisionDamage: 0
-  meleeMonster_Score: 0
-  meleeMonster_Range: 0
+  monsterHitVFX: {fileID: 0}
+  monsterAttackVFX: {fileID: 5345714286809512649}
+  isMeleeMonsterDead: 0
 --- !u!58 &1557498549645304856
 CircleCollider2D:
   m_ObjectHideFlags: 0
