@@ -1,14 +1,22 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using APIModels;
-using TMPro;
+using UnityEngine;
 
 public partial class Player : CharacterBase
 {
+    [SerializeField] private float _spawnTime = 3f;
+
     #region unity event func
     private void Awake()
     {
+        playerRb = GetComponent<Rigidbody2D>();
+        StartCoroutine(InitializationAfterDelay());
+    }
+
+    private IEnumerator InitializationAfterDelay()
+    {
+        yield return new WaitForSeconds(_spawnTime);
+
         playerStatus = APIManager.Instance.GetValueByKey<PlayerStatus_res[]>(MasterDataDicKey.PlayerStatus.ToString());
 
         InitUI_Enhance();

@@ -21,6 +21,8 @@ public class StageManager : MonoSingleton<StageManager>
         if (_uI_SceneGame == null)
             _uI_SceneGame = UIManager.Instance.CreateObject<UI_SceneGame>("UI_SceneGame", EnumTypes.LayoutType.First);
         _uI_SceneGame.OnShow();
+
+        CallCountDown();
         //체인 등록
         InGameManager.Instance.RegisterParams(EnumTypes.InGameParamType.Stage, (int)EnumTypes.StageStateType.Max);
     }
@@ -40,6 +42,13 @@ public class StageManager : MonoSingleton<StageManager>
         _uI_SceneGame.SetStageNum(_stageNum + 1);
         PlayBGMForStage(_stageNum);
     }
+
+    private void CallCountDown()
+    {
+        UI_CountDown countDown = UIManager.Instance.CreateObject<UI_CountDown>("UI_CountDown", EnumTypes.LayoutType.Middle);
+        countDown.OnShow();
+    }
+
     IEnumerator Co_GameStart()
     {
         yield return new WaitForSeconds(3f);
