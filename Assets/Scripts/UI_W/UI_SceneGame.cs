@@ -139,15 +139,15 @@ public class UI_SceneGame : UIBase
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            AddSkillTest("Skill_Flash", "Skill_Flash");
+            AddSkill("Skill_Flash", "Skill_Flash");
         }
     }
-
+    [SerializeField] string _basePath = "SkillSprites/";
     int _skillKeyNum = 0;
     /// <summary>
     /// UI_Enhance에서 호출해야함
     /// /// </summary>
-    public void AddSkillTest(string skillName , string imagePath)
+    public void AddSkill(string skillName , string imagePath)
     {
         if (_skillKeyNum >= 5) return;
 
@@ -159,7 +159,9 @@ public class UI_SceneGame : UIBase
         {
             Component newSkillType = player.gameObject.AddComponent(type);
             (newSkillType as SkillBase).ShotKey = GetSkillKeyCode();
-            _skillImage[_skillKeyNum].texture = Resources.Load<Sprite>(imagePath).texture;
+            Debug.Log(imagePath);
+            string path = string.Concat(_basePath, imagePath);
+            _skillImage[_skillKeyNum].texture = Resources.Load<Sprite>(path).texture;
         }
         else
         {

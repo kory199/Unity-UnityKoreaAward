@@ -7,10 +7,12 @@ public class SkillInfo
     public Sprite skillImg;
     public string infotext;
     public int bulletNum;
+    public string SkillClassName;
 }
 
 [CreateAssetMenu(fileName = "SKillSO", menuName = "ScriptableObjects/SKillSO", order = int.MaxValue)]
 public class StageSkillSO : ScriptableObject
 {
-    public SkillInfo[] sateOne = new SkillInfo[3];
+    public SkillInfo[] setOne = new SkillInfo[3];
+    public SkillInfo[] setTwo = new SkillInfo[3];
 }

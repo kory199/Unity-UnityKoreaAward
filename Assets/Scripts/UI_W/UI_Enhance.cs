@@ -17,6 +17,8 @@ public class UI_Enhance : UIBase
     [SerializeField] Button[] skillBtn = null;
     [SerializeField] StageSkillSO skillSO = null;
 
+    private UI_SceneGame _ui_SceneGame = null;
+
     private List<SkillTreeNode> skillTreeList;
 
     private Vector3 nextSpawnPos = Vector3.zero;
@@ -41,6 +43,8 @@ public class UI_Enhance : UIBase
         Time.timeScale = 0;
 
         skillTreeList = new List<SkillTreeNode>();
+
+        _ui_SceneGame = FindObjectOfType<UI_SceneGame>();
     }
 
     protected override void Start()
@@ -65,8 +69,14 @@ public class UI_Enhance : UIBase
         switch(_stageNum)
         {
             case 1:
-                skillInfos = skillSO.sateOne;
+                skillInfos = skillSO.setOne;
                 break;
+
+            case 2:
+                skillInfos = skillSO.setOne;
+                break;
+
+                //스테이지마다 다른스킬
         }
 
         if(skillInfos != null && skillInfos.Length == skillBtn.Length)
@@ -82,7 +92,7 @@ public class UI_Enhance : UIBase
 
                 // 로직 확정 후 버튼 컴포넌트에 추가, 코드 삭제
                 Button currentBtn = skillBtn[i];
-                currentBtn.onClick.AddListener(() => OnClick_Skill(currentBtn, currentBulletNum));
+                currentBtn.onClick.AddListener(() => OnClick_Skill(currentBtn, currentBulletNum, skillInfos[index]));
             }
         }
     }
@@ -103,7 +113,7 @@ public class UI_Enhance : UIBase
     }
 
     // 나중에 필요한 객체로 변경
-    public int OnClick_Skill(Button clickedBtn, int bulletNum)
+    public int OnClick_Skill(Button clickedBtn, int bulletNum,SkillInfo skillInfo)
     {
         skillPoint--;
         SkillBtnControl();
@@ -111,6 +121,8 @@ public class UI_Enhance : UIBase
         if (skillNodePrefab != null)
         {
             CreateSkillNodePrefab(clickedBtn);
+            string imagePath = skillInfo.skillImg.ToString().Split(' ')[0];
+            _ui_SceneGame.AddSkill(skillInfo.SkillClassName, imagePath);
         }
 
         return bulletNum;
