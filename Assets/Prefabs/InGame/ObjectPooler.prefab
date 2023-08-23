@@ -52,9 +52,17 @@ MonoBehaviour:
     IsUi: 0
   - Name: BasicMeleeMonster
     Prefab: {fileID: 2311305897999876828, guid: e2136717026b3da47ab912210318a5a3, type: 3}
-    Number: 20
+    Number: 10
     IsUi: 0
   - Name: Bullet2D
     Prefab: {fileID: 8885433462564445170, guid: ed54ded7b6f3eb842acb98c188ef2ae2, type: 3}
-    Number: 50
+    Number: 10
+    IsUi: 0
+  - Name: RangedMonster
+    Prefab: {fileID: 739570210054639162, guid: 077f8cdf593ccab4a93bf37afcb4bc4b, type: 3}
+    Number: 10
+    IsUi: 0
+  - Name: BossOne
+    Prefab: {fileID: 2862526812506830541, guid: 49f3ef9950432214aacc07265a2eebd0, type: 3}
+    Number: 1
     IsUi: 0

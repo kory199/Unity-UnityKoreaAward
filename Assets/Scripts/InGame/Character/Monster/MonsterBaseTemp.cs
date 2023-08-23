@@ -7,6 +7,7 @@ public abstract class MonsterBase : MonoBehaviour
 {
     [SerializeField] protected MonsterStateType state;
     [SerializeField] protected Player player;
+    [SerializeField] protected MonsterSFX monsterSFX;
     [SerializeField] protected MonsterInfo _monsterInfo = null;
     [SerializeField] protected bool isFirst;
     [SerializeField] protected bool isSelfDestruct;
@@ -26,6 +27,15 @@ public abstract class MonsterBase : MonoBehaviour
     {
         gameObject.tag = "Monster";
         _monsterInfo = new MonsterInfo();
+
+        if (gameObject.TryGetComponent<MonsterSFX>(out MonsterSFX monsterSFX))
+        {
+            this.monsterSFX = monsterSFX;
+        }
+        else
+        {
+            this.monsterSFX = gameObject.AddComponent<MonsterSFX>();
+        }
 
         GetInitMonsterStatus();
         //체인 등록

@@ -6,16 +6,17 @@ public class MeleeMonster : MonsterBase
 {
     private MonsterData_res[] meleeMonsterStatus;
 
-    [SerializeField] private MonsterSFX monsterSFX; 
     [SerializeField] private bool isMeleeMonsterDead;
-    
+
+    WaitForSeconds waitForAttackSFX;
+    WaitForSeconds waitForHitSFX;
+
     #region unity event func
 
     protected override void Awake()
     {
         base.Awake();
         GetInitMonsterStatus();
-        monsterSFX = gameObject.AddComponent<MonsterSFX>();
 
         isMeleeMonsterDead = false;
     }
@@ -34,6 +35,8 @@ public class MeleeMonster : MonsterBase
 
     protected override void Start()
     {
+        waitForAttackSFX = new WaitForSeconds(2f);
+        waitForHitSFX = new WaitForSeconds(0.5f);
         base.Start();
     }
 
@@ -84,8 +87,9 @@ public class MeleeMonster : MonsterBase
     {
         isSelfDestruct = true;
 
+        monsterSFX.MonsterStateSFX(gameObject.transform, EnumTypes.MonsterStateType.Attack);
+
         PlayerHit();
-        monsterSFX.AttackSFX();
         MonsterDeath(); // 자폭에 의한 공격은 보상 X
     }
 
@@ -93,9 +97,11 @@ public class MeleeMonster : MonsterBase
     {
         _monsterInfo.curHp -= player.playerAttackPower;
         SoundMgr.Instance.SFXPlay(EnumTypes.SFXType.MonsterHit);
+        monsterSFX.MonsterStateSFX(gameObject.transform, EnumTypes.MonsterStateType.Hit);
 
         if (_monsterInfo.curHp <= 0)
         {
+            monsterSFX.MonsterStateSFX(gameObject.transform, EnumTypes.MonsterStateType.Death);
             player.Reward(_monsterInfo.exp, _monsterInfo.score);
             MonsterDeath();
         }

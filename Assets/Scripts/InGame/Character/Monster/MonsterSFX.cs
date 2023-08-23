@@ -4,42 +4,47 @@ using UnityEngine;
 
 public class MonsterSFX : MonoBehaviour
 {
-    [SerializeField] private GameObject monsterHitVFX;
-    [SerializeField] private GameObject monsterAttackVFX;
+    [SerializeField] private GameObject inputMonsterHitVFX;
+    [SerializeField] private GameObject inputMonsterAttackVFX;
 
-    WaitForSeconds waitForSeconds;
+    private GameObject monsterHitVFX;
+    private GameObject monsterAttackVFX;
+    private float lifeTime;
 
-    private void Awake()
+    private void Start()
     {
-        InitAttackSFX();
+        InitSFX();
     }
 
-    private void OnEnable()
+    public void InitSFX()
     {
+        inputMonsterAttackVFX = Resources.Load<GameObject>("Effect/Eff_MeleeMonster_Attack");
+        inputMonsterHitVFX = Resources.Load<GameObject>("Effect/Eff_MeleeMonster_Hit");
+
+        lifeTime = 2f;
     }
 
-    private void OnDisable()
+    public void MonsterStateSFX(Transform meleeMonsterTransform, EnumTypes.MonsterStateType state)
     {
-        ObjectPooler.ReturnToPool(gameObject);
-    }
-
-    public void InitAttackSFX()
-    {
-        monsterAttackVFX = ObjectPooler.SpawnFromPool("Eff_MeleeMonster_Attack", gameObject.transform.position);
-
-        waitForSeconds = new WaitForSeconds(2f);
-    }
-
-    public void AttackSFX()
-    {
-        monsterAttackVFX.SetActive(true);
-        StartCoroutine(DisappearMonsterSFX());
-    }
-
-    private IEnumerator DisappearMonsterSFX()
-    {
-        yield return waitForSeconds;
-
-        gameObject.SetActive(false);
+        switch (state)
+        {
+            case EnumTypes.MonsterStateType.Attack:
+                monsterAttackVFX = Instantiate(inputMonsterAttackVFX, meleeMonsterTransform);
+                monsterAttackVFX.transform.SetParent(null);
+                Destroy(monsterAttackVFX, lifeTime);
+                break;
+            case EnumTypes.MonsterStateType.Hit:
+                monsterHitVFX = Instantiate(inputMonsterHitVFX, meleeMonsterTransform);
+                monsterHitVFX.transform.SetParent(null);
+                Destroy(monsterAttackVFX, lifeTime);
+                break;
+            case EnumTypes.MonsterStateType.Death:
+                monsterAttackVFX = Instantiate(inputMonsterAttackVFX, meleeMonsterTransform);
+                monsterAttackVFX.transform.SetParent(null);
+                Destroy(monsterAttackVFX, lifeTime);
+                break;
+            default:
+                break;
+        }
     }
 }
