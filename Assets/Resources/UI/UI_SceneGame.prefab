@@ -2010,6 +2010,7 @@ MonoBehaviour:
   - {fileID: 8844198113597848855}
   - {fileID: 975596242659841013}
   - {fileID: 173926414505437496}
+  _pausebtn: {fileID: 8841704044815642282}
 --- !u!1 &5868569555059011010
 GameObject:
   m_ObjectHideFlags: 0

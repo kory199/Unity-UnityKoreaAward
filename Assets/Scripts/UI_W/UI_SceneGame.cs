@@ -16,6 +16,8 @@ public class UI_SceneGame : UIBase
     [SerializeField] private RawImage[] _skillCover = null;
     [SerializeField] private Image[] _skillCool = null;
 
+    [SerializeField] Button _pausebtn = null;
+
     IProcess.NextProcess _nextProcess = IProcess.NextProcess.Continue;
     public override IProcess.NextProcess ProcessInput()
     {
@@ -28,7 +30,16 @@ public class UI_SceneGame : UIBase
     {
         player = FindObjectOfType<Player>();
         player.uI_SceneGame = this;
+        StartCoroutine(ActivatePauseButtonAfterDelay());
     }
+
+    private IEnumerator ActivatePauseButtonAfterDelay()
+    {
+        _pausebtn.interactable = false; 
+        yield return new WaitForSeconds(3f);
+        _pausebtn.interactable = true; 
+    }
+
     #endregion
     Popup_GamePause _popup_GamePause = null;
     public void OnClick_GamePause()

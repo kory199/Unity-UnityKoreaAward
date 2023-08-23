@@ -151,8 +151,15 @@ public class StageManager : MonoSingleton<StageManager>
 
         //서버 데이터 전달
         SendStageData();
-        GameManager.Instance.MoveSceneWithAction(EnumTypes.ScenesType.SceneLobby);
+
+        MoveToLobby();
     }
+
+    private async void MoveToLobby()
+    {
+        await GameManager.Instance.MoveSceneWithAction(EnumTypes.ScenesType.SceneLobby);
+    }
+
     IEnumerator Co_GameClearUI()
     {
         _uI_SceneGame.OnHide();
@@ -188,4 +195,6 @@ public class StageManager : MonoSingleton<StageManager>
 
         SoundMgr.Instance.BGMPlay(bgmType);
     }
+
+    public void UIScneeGameOnHide() => _uI_SceneGame.OnHide();
 }
