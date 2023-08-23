@@ -4,6 +4,7 @@ using APIModels;
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AccountUI : UIBase
 {
@@ -18,6 +19,7 @@ public class AccountUI : UIBase
     {
         return _nextProcess;
     }
+
     protected override void Awake()
     {
         GetGameVersion();

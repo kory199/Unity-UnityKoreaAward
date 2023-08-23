@@ -13,7 +13,6 @@ public class StageManager : MonoSingleton<StageManager>
     [SerializeField] private float _time = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
     [SerializeField] private SpawnManager _spawnManager;
     [SerializeField] private UI_SceneGame _uI_SceneGame;
-    private int _onclickNum;
 
     #region Uinity lifeCycle
     private void Awake()
@@ -92,20 +91,20 @@ public class StageManager : MonoSingleton<StageManager>
 
         _score = 777;
         //  _score = GameManager.Instance.playerData.score;
-        //await APIManager.Instance.StageUpToServer(_stageNum, _score);
+        //bool result = await APIManager.Instance.StageUpToServer(_stageNum, _score);
+        //if(result)
+        //{
+            //씬 이동 : Logic edit
+            await GameManager.Instance.LoadScene(EnumTypes.ScenesType.SceneLobby);
+        //}
     }
 
-    public async void PlayerDeath()
+    public void PlayerDeath()
     {
         //게임 오버 코루틴
         StartCoroutine(Co_GameOverUI());
-
-        //서버 데이터 전달
-        SendStageData();
-
-        //씬 이동 : Logic edit 
-        await GameManager.Instance.LoadScene(EnumTypes.ScenesType.SceneLobby);
     }
+
     public void MonsterDeath()
     {
         //_deathMonsters++;
@@ -116,32 +115,31 @@ public class StageManager : MonoSingleton<StageManager>
         {
             SetStageNum();
 
-
             CallStage(EnumTypes.StageStateType.Start);
             _deathMonsters = 0;
             // Debug.Log("stageNum : " + _stageNum);
         }
     }
 
-    public async void BossDeath()
+    public void BossDeath()
     {
         //게임 클리어 코루틴
         StartCoroutine(Co_GameOverUI());
-
-        //서버 데이터 전달 
-        //SendStageData();
-
-        //씬 이동 : Logic edit 
-        await GameManager.Instance.LoadScene(EnumTypes.ScenesType.SceneLobby);
     }
+
     IEnumerator Co_GameOverUI()
     {
-        //Popup_StageClear popup_StageFail = UIManager.Instance.CreateObject<Popup_StageClear>("Popup_StageFail", EnumTypes.LayoutType.Middle);
-        //popup_StageFail.OnShow();
-        SoundMgr.Instance.SFXPlay(EnumTypes.SFXType.StageFile);
         _uI_SceneGame.OnHide();
-        yield return null;
+        Popup_StageClear popup_StageFail = UIManager.Instance.CreateObject<Popup_StageClear>("Popup_StageFail", EnumTypes.LayoutType.Middle);
+        popup_StageFail.OnShow();
+        SoundMgr.Instance.SFXPlay(EnumTypes.SFXType.StageFile);
+        yield return new WaitForSeconds(1f);
+        popup_StageFail.OnHide();
+        //yield return null;
         //게임 오버시 띄울 창 켜거나 이펙트 만들기
+
+        //서버 데이터 전달
+        SendStageData();
     }
     IEnumerator Co_GameClearUI()
     {
