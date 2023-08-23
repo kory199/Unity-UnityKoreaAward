@@ -431,4 +431,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 2033177790384626300}
-  scenesType: 2
+  scenesType: 1

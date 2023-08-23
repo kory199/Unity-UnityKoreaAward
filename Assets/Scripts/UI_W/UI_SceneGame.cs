@@ -1,9 +1,8 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using System;
 
 public class UI_SceneGame : UIBase
 {
@@ -22,7 +21,6 @@ public class UI_SceneGame : UIBase
     {
         return _nextProcess;
     }
-
 
     #region unity life cycle
     Player player = null;
@@ -152,6 +150,5 @@ public class UI_SceneGame : UIBase
                 _skillImage[0].texture = Resources.Load<Sprite>(imagePath).texture;
                 break;
         }
-    
     }
 }

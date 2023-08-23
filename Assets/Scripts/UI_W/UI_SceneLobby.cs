@@ -5,12 +5,11 @@ using UnityEngine;
 
 public class UI_SceneLobby : UIBase
 {
-    private string _basePath = "UI/";
+    //private string _basePath = "UI/";
     private void OnEnable()
     {
         GameManager.Instance.SceneState = SceneState.Lobby;
     }
-
 
     IProcess.NextProcess _nextProcess = IProcess.NextProcess.Continue;
     public override IProcess.NextProcess ProcessInput()
@@ -64,28 +63,10 @@ public class UI_SceneLobby : UIBase
 
         if (playGameTask)
         {
+            OnHide();
             GameManager.Instance.MoveScene("SceneInGame");
             GameManager.Instance.SceneState = SceneState.Game;
-
-            OnHide();
-
-            // LodingBar Clon Method 
-            // 사용 방법 : 위에 OnHide() 위 코드 두줄 주석 처리 후, 아래 메서드 주석 풀어주기!
-            //CreateLodingBar();
         }
-    }
-
-    // Canvas는 임시로 First 로 해둠, 변경 편하게 해주세요 
-    private void CreateLodingBar()
-    {
-        UI_LodingBar uI_lodingBar = null;
-        if(uI_lodingBar == null)
-        {
-            uI_lodingBar = UIManager.Instance.CreateObject
-                <UI_LodingBar>("UI_LodingBar", EnumTypes.LayoutType.First);
-        }
-
-        uI_lodingBar.OnShow();
     }
 
     public void OnClick_Explane()

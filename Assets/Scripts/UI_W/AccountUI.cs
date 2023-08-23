@@ -148,10 +148,9 @@ public class AccountUI : UIBase
                 {
                     infoText.text = $"Login Successful !";
                     await UniTask.Delay(TimeSpan.FromSeconds(0.5));
-
-                    // Move Scene
-                    GameManager.Instance.MoveScene("SceneLobby");
+                    
                     OnHide();
+                    CreateLodingBar();
                 }
                 else
                 {
@@ -163,6 +162,17 @@ public class AccountUI : UIBase
                 infoText.text = $"Incorrect username or password.";
             }
         }
+    }
+
+    private void CreateLodingBar()
+    {
+        UI_LodingBar uI_lodingBar = null;
+        if (uI_lodingBar == null)
+        {
+            uI_lodingBar = UIManager.Instance.CreateObject<UI_LodingBar>("UI_LodingBar", EnumTypes.LayoutType.Middle);
+        }
+
+        uI_lodingBar.OnShow();
     }
 
     private bool TryProcessUserInput(out User user)

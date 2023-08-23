@@ -23,7 +23,7 @@ public class UI_LodingBar : UIBase
 
     IEnumerator LoadAsyncSceneCoroutine()
     {
-        float duration = 3f;
+        float duration = 2f;
         float currentTime = 0f;
 
         while (currentTime <= duration)
