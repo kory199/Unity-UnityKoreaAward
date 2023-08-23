@@ -26,6 +26,7 @@ public abstract class MonsterBase : MonoBehaviour
     {
         gameObject.tag = "Monster";
         _monsterInfo = new MonsterInfo();
+
         GetInitMonsterStatus();
         //체인 등록
         InGameManager.Instance.RegisterParams(EnumTypes.InGameParamType.Monster, (int)EnumTypes.StageStateType.Max);

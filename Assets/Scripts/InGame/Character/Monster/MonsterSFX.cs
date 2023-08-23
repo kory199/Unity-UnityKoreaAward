@@ -7,39 +7,39 @@ public class MonsterSFX : MonoBehaviour
     [SerializeField] private GameObject monsterHitVFX;
     [SerializeField] private GameObject monsterAttackVFX;
 
+    WaitForSeconds waitForSeconds;
+
     private void Awake()
     {
-
+        InitAttackSFX();
     }
 
     private void OnEnable()
     {
-
     }
 
     private void OnDisable()
     {
-        ObjectPooler.ReturnToPool(monsterAttackVFX);
+        ObjectPooler.ReturnToPool(gameObject);
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void InitAttackSFX()
     {
+        monsterAttackVFX = ObjectPooler.SpawnFromPool("Eff_MeleeMonster_Attack", gameObject.transform.position);
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        waitForSeconds = new WaitForSeconds(2f);
     }
 
     public void AttackSFX()
     {
-        monsterAttackVFX = ObjectPooler.SpawnFromPool("Eff_MeleeMonster_Attack", gameObject.transform.position);
+        monsterAttackVFX.SetActive(true);
+        StartCoroutine(DisappearMonsterSFX());
     }
-    public void DisappearMonsterSFX()
-    {
 
+    private IEnumerator DisappearMonsterSFX()
+    {
+        yield return waitForSeconds;
+
+        gameObject.SetActive(false);
     }
 }

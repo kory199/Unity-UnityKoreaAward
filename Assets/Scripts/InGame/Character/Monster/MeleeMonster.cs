@@ -6,13 +6,16 @@ public class MeleeMonster : MonsterBase
 {
     private MonsterData_res[] meleeMonsterStatus;
 
+    [SerializeField] private MonsterSFX monsterSFX; 
     [SerializeField] private bool isMeleeMonsterDead;
+    
     #region unity event func
 
     protected override void Awake()
     {
         base.Awake();
         GetInitMonsterStatus();
+        monsterSFX = gameObject.AddComponent<MonsterSFX>();
 
         isMeleeMonsterDead = false;
     }
@@ -82,6 +85,7 @@ public class MeleeMonster : MonsterBase
         isSelfDestruct = true;
 
         PlayerHit();
+        monsterSFX.AttackSFX();
         MonsterDeath(); // 자폭에 의한 공격은 보상 X
     }
 
