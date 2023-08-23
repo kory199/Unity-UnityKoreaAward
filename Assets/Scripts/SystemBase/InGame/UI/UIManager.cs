@@ -142,7 +142,7 @@ public class UIManager : UIBase
         _canvases.Add(type, newCanvas.gameObject);
     }
 
-    private void ShowUI(LayoutType layoutType)
+    public void ShowUI(LayoutType layoutType)
     {
         if (_canvases.ContainsKey(layoutType))
         {

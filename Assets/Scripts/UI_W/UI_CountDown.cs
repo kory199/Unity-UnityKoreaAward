@@ -25,6 +25,12 @@ public class UI_CountDown : UIBase
         StartCoroutine(RunCountdown());
     }
 
+    private void OnEnable()
+    {
+        Time.timeScale = 1;
+        StartCoroutine(RunCountdown());
+    }
+
     IEnumerator RunCountdown()
     {
         for (int i = 3; i > 0; i--)
