@@ -36,7 +36,7 @@ public class MonsterSFX : MonoBehaviour
             case EnumTypes.MonsterStateType.Hit:
                 monsterHitVFX = Instantiate(inputMonsterHitVFX, meleeMonsterTransform);
                 monsterHitVFX.transform.SetParent(null);
-                Destroy(monsterAttackVFX, lifeTime);
+                Destroy(monsterHitVFX, lifeTime);
                 break;
             case EnumTypes.MonsterStateType.Death:
                 monsterAttackVFX = Instantiate(inputMonsterAttackVFX, meleeMonsterTransform);
