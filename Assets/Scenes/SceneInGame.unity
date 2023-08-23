@@ -835,7 +835,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3553034056798106049, guid: 0c54e70e9c041c941bf6cbbfd45471e8, type: 3}
       propertyPath: _pools.Array.size
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3553034056798106049, guid: 0c54e70e9c041c941bf6cbbfd45471e8, type: 3}
       propertyPath: _pools.Array.data[3].Name
@@ -844,6 +844,10 @@ PrefabInstance:
     - target: {fileID: 3553034056798106049, guid: 0c54e70e9c041c941bf6cbbfd45471e8, type: 3}
       propertyPath: _pools.Array.data[4].Name
       value: BossOne
+      objectReference: {fileID: 0}
+    - target: {fileID: 3553034056798106049, guid: 0c54e70e9c041c941bf6cbbfd45471e8, type: 3}
+      propertyPath: _pools.Array.data[5].Name
+      value: Eff_MeleeMonster_Attack
       objectReference: {fileID: 0}
     - target: {fileID: 3553034056798106049, guid: 0c54e70e9c041c941bf6cbbfd45471e8, type: 3}
       propertyPath: _pools.Array.data[1].Number
@@ -869,6 +873,14 @@ PrefabInstance:
       propertyPath: _pools.Array.data[4].Prefab
       value: 
       objectReference: {fileID: 2862526812506830541, guid: 49f3ef9950432214aacc07265a2eebd0, type: 3}
+    - target: {fileID: 3553034056798106049, guid: 0c54e70e9c041c941bf6cbbfd45471e8, type: 3}
+      propertyPath: _pools.Array.data[5].Number
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3553034056798106049, guid: 0c54e70e9c041c941bf6cbbfd45471e8, type: 3}
+      propertyPath: _pools.Array.data[5].Prefab
+      value: 
+      objectReference: {fileID: 100008, guid: 95cb04c70e05847c0a30450e4c714700, type: 3}
     - target: {fileID: 3553034056798106062, guid: 0c54e70e9c041c941bf6cbbfd45471e8, type: 3}
       propertyPath: m_Name
       value: ObjectPooler

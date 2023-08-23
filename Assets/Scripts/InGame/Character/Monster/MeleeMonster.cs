@@ -5,8 +5,6 @@ using UnityEngine;
 public class MeleeMonster : MonsterBase
 {
     private MonsterData_res[] meleeMonsterStatus;
-    [SerializeField] private GameObject monsterHitVFX;
-    [SerializeField] private GameObject monsterAttackVFX;
 
     [SerializeField] private bool isMeleeMonsterDead;
     #region unity event func
@@ -28,12 +26,6 @@ public class MeleeMonster : MonsterBase
         if (isMeleeMonsterDead == true)
         {
             SetMeleeMonsterStatus(stageNum);
-        }
-        // init melee monster variable
-
-        if (monsterHitVFX != null)
-        {
-            monsterHitVFX.SetActive(false);
         }
     }
 
@@ -63,7 +55,7 @@ public class MeleeMonster : MonsterBase
     {
         MonsterName = "BasicMeleeMonster";
     }
-    
+
     protected void SetMeleeMonsterStatus(int inputStageNum)
     {
         _monsterInfo.level = meleeMonsterStatus[inputStageNum].level;
@@ -88,6 +80,7 @@ public class MeleeMonster : MonsterBase
     public override void Attack()
     {
         isSelfDestruct = true;
+        // monsterAttackVFX = ObjectPooler.SpawnFromPool("Eff_MeleeMonster_Attack", gameObject.transform.position);
 
         PlayerHit();
         MonsterDeath(); // 자폭에 의한 공격은 보상 X
