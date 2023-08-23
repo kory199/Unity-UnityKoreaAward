@@ -94,8 +94,8 @@ public class StageManager : MonoSingleton<StageManager>
         //bool result = await APIManager.Instance.StageUpToServer(_stageNum, _score);
         //if(result)
         //{
-            //씬 이동 : Logic edit
-            await GameManager.Instance.LoadScene(EnumTypes.ScenesType.SceneLobby);
+            
+            
         //}
     }
 
@@ -103,6 +103,8 @@ public class StageManager : MonoSingleton<StageManager>
     {
         //게임 오버 코루틴
         StartCoroutine(Co_GameOverUI());
+
+
     }
 
     public void MonsterDeath()
@@ -140,6 +142,8 @@ public class StageManager : MonoSingleton<StageManager>
 
         //서버 데이터 전달
         SendStageData();
+        GameManager.Instance.MoveScene(EnumTypes.ScenesType.SceneLobby.ToString());
+        //await GameManager.Instance.LoadScene(EnumTypes.ScenesType.SceneLobby);
     }
     IEnumerator Co_GameClearUI()
     {
