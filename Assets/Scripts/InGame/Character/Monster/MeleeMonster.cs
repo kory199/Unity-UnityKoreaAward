@@ -7,6 +7,7 @@ public class MeleeMonster : MonsterBase
     private MonsterData_res[] meleeMonsterStatus;
 
     [SerializeField] private bool isMeleeMonsterDead;
+    public float damageReduction;
 
     WaitForSeconds waitForAttackSFX;
     WaitForSeconds waitForHitSFX;
@@ -26,6 +27,7 @@ public class MeleeMonster : MonsterBase
     {
         base.OnEnable();
         isSelfDestruct = false;
+        damageReduction = 1f;
 
         if (isMeleeMonsterDead == true)
         {
@@ -116,5 +118,10 @@ public class MeleeMonster : MonsterBase
     {
         // 추후 몬스터 별 이동속도 및 공격 범위 추가
         return base.State_Move();
+    }
+
+    private void ApplySkillEffect()
+    {
+
     }
 }

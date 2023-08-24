@@ -4,7 +4,16 @@ using UnityEngine;
 
 public class Skill_NerfShot : SkillBase
 {
+    private Sprite Sprite_NerfShot;
+    float damageReduction;
+
     #region Unity Life Cycle
+
+    private void Awake()
+    {
+        Sprite_NerfShot = Resources.Load<Sprite>("SkillSprites/Skill_NurfShot");
+    }
+
     protected override void Start()
     {
         base.Start();
@@ -29,7 +38,19 @@ public class Skill_NerfShot : SkillBase
 
     public override void SkillShot()
     {
-        // monster damage decrease
-        // 감소율 : _skillLevel*0.1f
+        GameObject Bullet_NerfShot = ObjectPooler.SpawnFromPool("Bullet2D", _player.transform.position);
+
+        if (Bullet_NerfShot != null)
+        {
+            Bullet bullet = Bullet_NerfShot.GetComponent<Bullet>();
+
+            // 데미지 감소율 계산
+            damageReduction = 1 - (_skillLevel * 0.1f);
+
+            // 스프라이트 변경
+            bullet.GetComponent<SpriteRenderer>().sprite = Sprite_NerfShot; // 스킬에 맞는 새로운 스프라이트
+
+            bullet.bulletDamageReduction = damageReduction;
+        }
     }
 }

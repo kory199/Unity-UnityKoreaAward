@@ -10,6 +10,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] public float meleeBulletDamage;
     [SerializeField] public float playerBulletDamage;
     [SerializeField] public int hitCount;
+    public float bulletDamageReduction;
     private bool isMove;
     WaitForSeconds moveAble;
 
@@ -36,6 +37,7 @@ public class Bullet : MonoBehaviour
 
     private void OnEnable()
     {
+        SkillVariableReset();
         // 발사 후 5초 뒤 Bullet 비활성화        
         Invoke("ReturnBullet", bulletLifeTime);
     }
@@ -99,6 +101,12 @@ public class Bullet : MonoBehaviour
 
         hitCount = 0;
     }
+
+    private void SkillVariableReset()
+    {
+        bulletDamageReduction = 1f;
+    }
+
     private void ReturnBullet() => gameObject.SetActive(false);
 
     public void SetShooter(string shooter)

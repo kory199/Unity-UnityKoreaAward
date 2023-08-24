@@ -30,9 +30,17 @@ public static partial class EnumTypes
     }
     public enum PlayerSkiilsType
     {
+        NerfShot,
+        RapidShot,
         DoubleShot,
-        TripleShot,
         MultiShot,
+        SlowingShot,
+        PoisonShot,
+        PiercingShot,
+        SplitShot,
+        NapalmShot,
+        HealingShot,
+        BlackHoleShot,
         MAX
     }
 

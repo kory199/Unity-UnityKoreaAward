@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: SKillSO
   m_EditorClassIdentifier: 
   setOne:
-  - skillImg: {fileID: 21300000, guid: 9f922002032136c4687b8dced9bc624c, type: 3}
+  - skillImg: {fileID: 21300000, guid: 96fc9d8d5aa2d7240bae603ff98c7a6d, type: 3}
     infotext: "\uBAAC\uC2A4\uD130\uC758 \uAE30\uBCF8 \uB2A5\uB825\uCE58 (\uACF5\uACA9\uB825)
       \uC744 \uAC10\uC18C\uC2DC\uD0B4 (\uBCF4\uC2A4\uB294 50% \uD6A8\uACFC\uB9CC
       \uC801\uC6A9)"
     bulletNum: 15
     SkillClassName: Skill_NerfShot
-  - skillImg: {fileID: 21300000, guid: 8cc7ca0e29ced7b4f84e8c4ef7deb28b, type: 3}
+  - skillImg: {fileID: 21300000, guid: 129f89ca4a50eb0459126bf1abdbf12e, type: 3}
     infotext: "\uCD1D\uC54C\uC758 \uC774\uB3D9 \uC18D\uB3C4\uC640 \uC5F0\uC0AC \uC18D\uB3C4
       \uC0C1\uC2B9"
     bulletNum: 50
