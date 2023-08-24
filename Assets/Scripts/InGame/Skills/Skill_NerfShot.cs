@@ -38,6 +38,8 @@ public class Skill_NerfShot : SkillBase
 
     public override void SkillShot()
     {
+        Debug.LogError("NerfShot ");
+
         GameObject Bullet_NerfShot = ObjectPooler.SpawnFromPool("Bullet2D", _player.transform.position);
 
         if (Bullet_NerfShot != null)
