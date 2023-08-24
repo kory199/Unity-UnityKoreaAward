@@ -26,11 +26,11 @@ public class UI_SceneGame : UIBase
     }
 
     #region unity life cycle
-    Player player = null;
+    Player _player = null;
     private void OnEnable()
     {
-        player = FindObjectOfType<Player>();
-        player.uI_SceneGame = this;
+        _player = FindObjectOfType<Player>();
+        _player.uI_SceneGame = this;
         StartCoroutine(ActivatePauseButtonAfterDelay());
     }
 
@@ -157,7 +157,7 @@ public class UI_SceneGame : UIBase
 
         if(type !=null)
         {
-            Component newSkillType = player.gameObject.AddComponent(type);
+            Component newSkillType = _player.gameObject.AddComponent(type);
             (newSkillType as SkillBase).ShotKey = GetSkillKeyCode();
             Debug.Log(imagePath);
             string path = string.Concat(_basePath, imagePath);
