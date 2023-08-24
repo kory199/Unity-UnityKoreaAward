@@ -15,4 +15,7 @@ public class StageSkillSO : ScriptableObject
 {
     public SkillInfo[] setOne = new SkillInfo[3];
     public SkillInfo[] setTwo = new SkillInfo[3];
+    public SkillInfo[] setThree = new SkillInfo[3];
+    public SkillInfo[] SetFour = new SkillInfo[3];
+    public SkillInfo[] SetFive = new SkillInfo[3];
 }
