@@ -108,7 +108,8 @@ public class BossOne : BossBase
             }
 
             // 플레이어를 향한 방향벡터를 구함.
-            Vector3 dirVector = (player.transform.position - gameObject.transform.position).normalized;
+            //Vector3 dirVector = (player.transform.position - gameObject.transform.position).normalized;
+            Vector3 dirVector = (player.transform.position - Vector3.zero).normalized;
             //gameObject.transform.LookAt(player.transform.position);
 
             // 임시 이동속도
@@ -216,6 +217,7 @@ public class BossOne : BossBase
         _monsterInfo.collision_damage = bossMonsterStatus.collision_damage;
         _monsterInfo.score = bossMonsterStatus.score;
         _monsterInfo.ranged = bossMonsterStatus.ranged;
+        _monsterInfo.collision_damage = bossMonsterStatus.collision_damage;
     }
 
 }

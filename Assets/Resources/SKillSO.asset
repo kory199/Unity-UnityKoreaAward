@@ -24,10 +24,11 @@ MonoBehaviour:
       \uC0C1\uC2B9"
     bulletNum: 50
     SkillClassName: Skill_RapidShot
-  - skillImg: {fileID: 0}
-    infotext: 
+  - skillImg: {fileID: 21300000, guid: bb59d6f340a0a4007a062f4223c8e109, type: 3}
+    infotext: "\uC810\uBA78 : \uBC14\uB77C\uBCF4\uB294 \uBC29\uD5A5\uC73C\uB85C \uC77C\uC815
+      \uAC70\uB9AC \uC21C\uAC04\uC774\uB3D9"
     bulletNum: 0
-    SkillClassName: 
+    SkillClassName: Skill_Flash
   setTwo:
   - skillImg: {fileID: 21300000, guid: bb59d6f340a0a4007a062f4223c8e109, type: 3}
     infotext: "\uC810\uBA78 : \uBC14\uB77C\uBCF4\uB294 \uBC29\uD5A5\uC73C\uB85C \uC77C\uC815

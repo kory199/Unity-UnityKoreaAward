@@ -9,19 +9,19 @@ interface ISkillBase
 }
 public abstract class SkillBase : MonoBehaviour, ISkillBase
 {
-    protected Player _player;
+    [SerializeField] protected Player _player;
     protected int _skillLevel = 1;
     protected float _coolTime = 10f;
     protected bool _isCool = false;
     protected KeyCode _shotKey;
-    protected UI_SceneGame _uI_SceneGame;
+    [SerializeField] protected UI_SceneGame _uI_SceneGame;
+    public UI_SceneGame UI_SceneGame { get { return _uI_SceneGame; } set { _uI_SceneGame = value; } }
     public KeyCode ShotKey { get { return _shotKey; } set { _shotKey = value; } }
 
     #region Unity LifeCycle
     protected virtual void Start()
     {
         _player = gameObject.GetComponent<Player>();
-        _uI_SceneGame = FindObjectOfType<UI_SceneGame>();
     }
     // Update is called once per frame
     protected virtual void Update()

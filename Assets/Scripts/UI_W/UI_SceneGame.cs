@@ -159,6 +159,7 @@ public class UI_SceneGame : UIBase
         {
             Component newSkillType = _player.gameObject.AddComponent(type);
             (newSkillType as SkillBase).ShotKey = GetSkillKeyCode();
+            (newSkillType as SkillBase).UI_SceneGame = this;
             Debug.Log(imagePath);
             string path = string.Concat(_basePath, imagePath);
             _skillImage[_skillKeyNum].texture = Resources.Load<Sprite>(path).texture;
@@ -188,5 +189,10 @@ public class UI_SceneGame : UIBase
                 return KeyCode.Alpha0;
         }
     }
-
+    public override void OnHide()
+    {
+        _skillKeyNum = 0;
+        _skillImage[_skillKeyNum].texture = null;
+        base.OnHide();
+    }
 }
