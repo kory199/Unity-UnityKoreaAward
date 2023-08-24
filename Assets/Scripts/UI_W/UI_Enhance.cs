@@ -18,6 +18,7 @@ public class UI_Enhance : UIBase
     [SerializeField] StageSkillSO skillSO = null;
 
     private UI_SceneGame _ui_SceneGame = null;
+    private Player _player = null;
 
     private List<SkillTreeNode> skillTreeList;
 
@@ -45,6 +46,7 @@ public class UI_Enhance : UIBase
         skillTreeList = new List<SkillTreeNode>();
 
         _ui_SceneGame = FindObjectOfType<UI_SceneGame>();
+        _player = FindObjectOfType<Player>();
     }
 
     protected override void Start()
@@ -66,7 +68,7 @@ public class UI_Enhance : UIBase
     {
         SkillInfo[] skillInfos = null;
 
-        switch(_stageNum)
+        switch (_stageNum)
         {
             case 1:
                 skillInfos = skillSO.setOne;
@@ -79,9 +81,9 @@ public class UI_Enhance : UIBase
                 //스테이지마다 다른스킬
         }
 
-        if(skillInfos != null && skillInfos.Length == skillBtn.Length)
+        if (skillInfos != null && skillInfos.Length == skillBtn.Length)
         {
-            for(int i = 0; i < skillBtn.Length; ++ i)
+            for (int i = 0; i < skillBtn.Length; ++i)
             {
                 skillBtn[i].GetComponent<Image>().sprite = skillInfos[i].skillImg;
 
@@ -113,7 +115,7 @@ public class UI_Enhance : UIBase
     }
 
     // 나중에 필요한 객체로 변경
-    public int OnClick_Skill(Button clickedBtn, int bulletNum,SkillInfo skillInfo)
+    public int OnClick_Skill(Button clickedBtn, int bulletNum, SkillInfo skillInfo)
     {
         skillPoint--;
         SkillBtnControl();
@@ -123,6 +125,8 @@ public class UI_Enhance : UIBase
             CreateSkillNodePrefab(clickedBtn);
             string imagePath = skillInfo.skillImg.ToString().Split(' ')[0];
             _ui_SceneGame.AddSkill(skillInfo.SkillClassName, imagePath);
+
+            _player.AddPlayerSkills(skillInfo);
         }
 
         return bulletNum;
@@ -133,7 +137,7 @@ public class UI_Enhance : UIBase
     {
         if (skillTreeList.Count >= maxtreeNum)
         {
-            return; 
+            return;
         }
 
         GameObject newSkillNode = Instantiate(skillNodePrefab, skillTreePos.position + nextSpawnPos, Quaternion.identity, skillTreePos);
