@@ -53,6 +53,7 @@ public class Skill_NerfShot : SkillBase
             bullet.GetComponent<SpriteRenderer>().sprite = Sprite_NerfShot; // 스킬에 맞는 새로운 스프라이트
 
             bullet.bulletDamageReduction = damageReduction;
+            Debug.LogError("bulletDamageReduction : " + damageReduction);
         }
     }
 }
