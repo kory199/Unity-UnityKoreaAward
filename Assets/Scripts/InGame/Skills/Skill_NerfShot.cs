@@ -4,30 +4,32 @@ using UnityEngine;
 
 public class Skill_NerfShot : SkillBase
 {
+    #region Unity Life Cycle
+    protected override void Start()
+    {
+        base.Start();
+    }
+
+    // Update is called once per frame
+    protected override void Update()
+    {
+        base.Update();
+    }
+    #endregion
+
     public override void SkillCoolTime()
     {
-        throw new System.NotImplementedException();
+        _coolTime = 1f;
     }
 
     public override void SkillLevelUp()
     {
-        throw new System.NotImplementedException();
+        _skillLevel++;
     }
 
     public override void SkillShot()
     {
-        throw new System.NotImplementedException();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        // monster damage decrease
+        // ∞®º“¿≤ : _skillLevel*0.1f
     }
 }

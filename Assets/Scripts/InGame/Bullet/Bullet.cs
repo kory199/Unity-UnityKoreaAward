@@ -26,7 +26,9 @@ public class Bullet : MonoBehaviour
     private Transform bulletSpawner;
     private CircleCollider2D bulletCollider;
     private Rigidbody2D bulletRb;
+    private Sprite originalSprite;
 
+    #region Unity Life Cycle
     private void Awake()
     {
         BulletInit();
@@ -40,8 +42,16 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
-        // BulletInit();
+        SetSprite();
     }
+
+    private void OnDisable()
+    {
+        hitCount = 0;
+        ObjectPooler.ReturnToPool(gameObject);
+        CancelInvoke();
+    }
+    #endregion
 
     private void BulletInit()
     {
@@ -137,6 +147,8 @@ public class Bullet : MonoBehaviour
                 default:
                     break;
             }
+
+            ReSetSprite();
             gameObject.SetActive(false);
         }
         else if (hitCount <= 3 && other.gameObject.tag == "Wall" && setShooter == "Player")
@@ -147,6 +159,7 @@ public class Bullet : MonoBehaviour
         }
         else if (other.gameObject.tag == "Gun")
         {
+            ReSetSprite();
             gameObject.SetActive(false);
         }
         else
@@ -155,10 +168,20 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    private void OnDisable()
+    private void SetSprite()
     {
-        hitCount = 0;
-        ObjectPooler.ReturnToPool(gameObject);
-        CancelInvoke();
+        if (gameObject.TryGetComponent<SpriteRenderer>(out SpriteRenderer spriteRenderer))
+        {
+            originalSprite = spriteRenderer.sprite; ;
+        }
+        else
+        {
+            Debug.Log("Bullet spriteRenderer is null");
+        }
+    }
+
+    public void ReSetSprite()
+    {
+        gameObject.GetComponent<SpriteRenderer>().sprite = originalSprite;
     }
 }
