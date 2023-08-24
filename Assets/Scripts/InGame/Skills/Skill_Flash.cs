@@ -21,11 +21,16 @@ public class Skill_Flash : SkillBase
         //자유 기능 구현
         Debug.Log("점멸");
     }
+    private void Awake()
+    {
+        Debug.Log("skill flash awake");
 
+    }
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
+        Debug.Log("skill flash start");
     }
 
     // Update is called once per frame

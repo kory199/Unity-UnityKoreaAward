@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Reflection;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -129,9 +130,6 @@ public class UI_SceneGame : UIBase
             yield return null;
             nowTime += Time.deltaTime;
             _skillCool[num].fillAmount = nowTime / coolTime;
-#if UNITY_EDITOR
-            Debug.Log(nowTime / coolTime);
-#endif
         }
         _skillCover[num].gameObject.SetActive(false);
         callback();
@@ -141,25 +139,54 @@ public class UI_SceneGame : UIBase
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            AddSkillTest("Skill_Flash", "Skill_Flash");
+            AddSkill("Skill_Flash", "Skill_Flash");
         }
     }
-
+    [SerializeField] string _basePath = "SkillSprites/";
+    int _skillKeyNum = 0;
     /// <summary>
     /// UI_Enhance에서 호출해야함
     /// /// </summary>
-    public void AddSkillTest(string skillName , string imagePath)
+    public void AddSkill(string skillName , string imagePath)
     {
-        Debug.Log("스킬 추가");
-        switch (skillName)
-        {
-            case "Skill_Flash":
-                Skill_Flash newskill = player.gameObject.AddComponent<Skill_Flash>();
+        if (_skillKeyNum >= 5) return;
 
-                //스킬 번호 지정 로직 수정필요
-                newskill.ShotKey = KeyCode.Q;
-                _skillImage[0].texture = Resources.Load<Sprite>(imagePath).texture;
-                break;
+        Assembly assembly = Assembly.GetExecutingAssembly();
+
+        Type type = assembly.GetType(skillName);
+
+        if(type !=null)
+        {
+            Component newSkillType = player.gameObject.AddComponent(type);
+            (newSkillType as SkillBase).ShotKey = GetSkillKeyCode();
+            Debug.Log(imagePath);
+            string path = string.Concat(_basePath, imagePath);
+            _skillImage[_skillKeyNum].texture = Resources.Load<Sprite>(path).texture;
+        }
+        else
+        {
+            Debug.LogError("There is no Skills");
+        }
+        _skillKeyNum++;
+    }
+    private KeyCode GetSkillKeyCode()
+    {
+        switch(_skillKeyNum)
+        {
+            case 0:
+                return KeyCode.Alpha1;
+            case 1:
+                return KeyCode.Alpha2;
+            case 2:
+                return KeyCode.Alpha3;
+            case 3:
+                return KeyCode.Alpha4;
+            case 4:
+                return KeyCode.Alpha5;
+            default:
+                Debug.LogError("It Can not add skill. Because your skills is full.");
+                return KeyCode.Alpha0;
         }
     }
+
 }
