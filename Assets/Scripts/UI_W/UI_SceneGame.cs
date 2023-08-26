@@ -36,9 +36,9 @@ public class UI_SceneGame : UIBase
 
     private IEnumerator ActivatePauseButtonAfterDelay()
     {
-        _pausebtn.interactable = false; 
+        _pausebtn.interactable = false;
         yield return new WaitForSeconds(3f);
-        _pausebtn.interactable = true; 
+        _pausebtn.interactable = true;
     }
 
     #endregion
@@ -136,11 +136,11 @@ public class UI_SceneGame : UIBase
     }
 
     [SerializeField] string _basePath = "SkillSprites/";
-   int _skillKeyNum = 0;
+    int _skillKeyNum = 0;
     /// <summary>
     /// UI_Enhance에서 호출해야함
     /// /// </summary>
-    public void AddSkill(string skillName , string imagePath)
+    public void AddSkill(string skillName, string imagePath)
     {
         if (_skillKeyNum >= 5) return;
 
@@ -148,24 +148,38 @@ public class UI_SceneGame : UIBase
 
         Type type = assembly.GetType(skillName);
 
-        if(type !=null)
+        if (type != null)
         {
-            Component newSkillType = _player.gameObject.AddComponent(type);
-            (newSkillType as SkillBase).ShotKey = GetSkillKeyCode();
-            (newSkillType as SkillBase).UI_SceneGame = this;
-            Debug.Log(imagePath);
-            string path = string.Concat(_basePath, imagePath);
-            _skillImage[_skillKeyNum].texture = Resources.Load<Sprite>(path).texture;
+            Component newSkillType = _player.GetComponent(type);
+            if (newSkillType == null)
+            {
+                newSkillType = _player.gameObject.AddComponent(type);
+                (newSkillType as SkillBase).ShotKey = GetSkillKeyCode();
+                (newSkillType as SkillBase).UI_SceneGame = this;
+                string path = string.Concat(_basePath, imagePath);
+                _skillImage[_skillKeyNum].texture = Resources.Load<Sprite>(path).texture;
+                _skillKeyNum++;
+            }
+            else
+            {
+                (newSkillType as SkillBase).SkillLevelUp();
+            }
+
+            /* Component newSkillType = _player.gameObject.AddComponent(type);
+             (newSkillType as SkillBase).ShotKey = GetSkillKeyCode();
+             (newSkillType as SkillBase).UI_SceneGame = this;
+             string path = string.Concat(_basePath, imagePath);
+             _skillImage[_skillKeyNum].texture = Resources.Load<Sprite>(path).texture;*/
         }
         else
         {
             Debug.LogError("There is no Skills");
         }
-        _skillKeyNum++;
+        //_skillKeyNum++;
     }
     private KeyCode GetSkillKeyCode()
     {
-        switch(_skillKeyNum)
+        switch (_skillKeyNum)
         {
             case 0:
                 return KeyCode.Alpha1;
@@ -185,7 +199,10 @@ public class UI_SceneGame : UIBase
     public override void OnHide()
     {
         _skillKeyNum = 0;
-        _skillImage[_skillKeyNum].texture = null;
+        foreach (var image in _skillImage)
+        {
+            image.texture = null;
+        }
         base.OnHide();
     }
 }
