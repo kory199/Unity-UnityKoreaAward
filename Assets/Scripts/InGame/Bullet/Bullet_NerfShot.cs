@@ -12,10 +12,10 @@ public class Bullet_NerfShot : MonoBehaviour
 
     private void Awake()
     {
-        NerfShotInit();
+        InitNerfShot();
     }
 
-    private void NerfShotInit()
+    private void InitNerfShot()
     {
         if (gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D rigidbody2D))
         {
