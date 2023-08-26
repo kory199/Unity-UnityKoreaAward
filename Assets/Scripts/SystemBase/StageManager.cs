@@ -25,7 +25,6 @@ public class StageManager : MonoSingleton<StageManager>
 
         CallCountDown();
         InitUI_Enhance();
-        _uI_Enhance.OnHide();
 
         //체인 등록
         InGameManager.Instance.RegisterParams(EnumTypes.InGameParamType.Stage, (int)EnumTypes.StageStateType.Max);
@@ -77,7 +76,6 @@ public class StageManager : MonoSingleton<StageManager>
    
         _uI_Enhance.GetSkillPoint(_stageNum);
         _uI_Enhance.OnShow();
-        Time.timeScale = 1;
 
         _uI_SceneGame.SetStageNum(_stageNum + 1);
         PlayBGMForStage(_stageNum);
@@ -212,6 +210,6 @@ public class StageManager : MonoSingleton<StageManager>
     private void InitUI_Enhance()
     {
         _uI_Enhance = UIManager.Instance.CreateObject<UI_Enhance>("UI_Enhance", EnumTypes.LayoutType.Middle);
-        //Time.timeScale = 0;
+        _uI_Enhance.OnHide();
     }
 }
