@@ -44,19 +44,17 @@ MonoBehaviour:
     bulletNum: 0
     SkillClassName: 
   setThree:
-  - skillImg: {fileID: 21300000, guid: 2ae620337af924b64947bc9fb1c9dd50, type: 3}
-    infotext: "\uB354\uBE14 \uC0F7: \uC9C1\uC120\uBC29\uD5A5\uC73C\uB85C \uCD1D\uC54C\uC744
-      2\uBC1C \uBC1C\uC0AC"
-    bulletNum: 20
-    SkillClassName: 
-  - skillImg: {fileID: 21300000, guid: 24ee309fad3074ccda5daf48db4cd90c, type: 3}
-    infotext: "\uBA40\uD2F0 \uC0F7: \uC77C\uC815 \uAC01\uB3C4\uB85C \uCD1D\uC54C\uC744
-      \uC5EC\uB7EC\uBC1C \uBC1C\uC0AC"
-    bulletNum: 30
-    SkillClassName: 
-  - skillImg: {fileID: 21300000, guid: 635771adc8a414b44a6978b90f44eb3b, type: 3}
+  - skillImg: {fileID: 0}
     infotext: 
-    bulletNum: 10
+    bulletNum: 0
+    SkillClassName: 
+  - skillImg: {fileID: 0}
+    infotext: 
+    bulletNum: 0
+    SkillClassName: 
+  - skillImg: {fileID: 0}
+    infotext: 
+    bulletNum: 0
     SkillClassName: 
   SetFour:
   - skillImg: {fileID: 0}

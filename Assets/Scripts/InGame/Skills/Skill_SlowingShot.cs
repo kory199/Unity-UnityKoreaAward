@@ -4,50 +4,30 @@ using UnityEngine;
 
 public class Skill_SlowingShot : SkillBase
 {
-    [SerializeField] private GameObject _eff = null;
-
-    private float _damage;
-
     public override void SkillCoolTime()
     {
-        _coolTime -= 0.5f;
+        throw new System.NotImplementedException();
     }
 
     public override void SkillLevelUp()
     {
-        _skillLevel++;
-        _damage += 1f;
+        throw new System.NotImplementedException();
     }
 
     public override void SkillShot()
     {
-        StartCoroutine(Co_EffectOff());
+        throw new System.NotImplementedException();
     }
 
-    IEnumerator Co_EffectOff()
+    // Start is called before the first frame update
+    void Start()
     {
-        yield return new WaitForSeconds(1f);
-        _eff.SetActive(false);
+        
     }
 
-    private void Awake()
+    // Update is called once per frame
+    void Update()
     {
-        Debug.Log("skill slowingshot awake");
-        _eff = Instantiate(Resources.Load<GameObject>("Effect/"));
-    }
-
-    protected override void Start()
-    {
-        Debug.Log("skill slowingshot start");
-        base.Start();
-        if (_uI_SceneGame == null)
-        {
-            _uI_SceneGame = FindObjectOfType<UI_SceneGame>();
-        }
-    }
-
-    protected override void Update()
-    {
-        base.Update();
+        
     }
 }
