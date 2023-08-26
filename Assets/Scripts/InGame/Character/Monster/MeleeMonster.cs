@@ -7,7 +7,6 @@ public class MeleeMonster : MonsterBase
     private MonsterData_res[] meleeMonsterStatus;
 
     [SerializeField] private bool isMeleeMonsterDead;
-    public float damageReduction;
 
     WaitForSeconds waitForAttackSFX;
     WaitForSeconds waitForHitSFX;
@@ -27,7 +26,6 @@ public class MeleeMonster : MonsterBase
     {
         base.OnEnable();
         isSelfDestruct = false;
-        damageReduction = 1f;
 
         if (isMeleeMonsterDead == true)
         {
@@ -120,8 +118,10 @@ public class MeleeMonster : MonsterBase
         return base.State_Move();
     }
 
-    private void ApplySkillEffect()
+    public void HitNerfShot(float damageReduction)
     {
-
+        Debug.LogError("1. collision_damage : " + _monsterInfo.collision_damage);
+        _monsterInfo.collision_damage = _monsterInfo.collision_damage * damageReduction;
+        Debug.LogError("2. collision_damage : " + _monsterInfo.collision_damage);
     }
 }
