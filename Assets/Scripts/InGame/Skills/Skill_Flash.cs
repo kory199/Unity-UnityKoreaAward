@@ -17,6 +17,7 @@ public class Skill_Flash : SkillBase
         //스킬 레벨업시 효과
         _skillLevel++;
         _distance += 1f;
+        _coolTime--;
     }
 
     public override void SkillShot()
