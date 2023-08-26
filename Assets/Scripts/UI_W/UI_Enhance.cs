@@ -268,8 +268,5 @@ public class UI_Enhance : UIBase
     private void AddSkillArray()
     {
         skillSO.setOne.CopyTo(skillArray, 0);
-        skillSO.setTwo.CopyTo(skillArray, 3);
-        skillSO.setThree.CopyTo(skillArray, 6);
-        skillSO.SetFour.CopyTo(skillArray, 9);
     }
 }

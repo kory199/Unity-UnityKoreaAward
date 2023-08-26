@@ -198,6 +198,7 @@ public class UI_SceneGame : UIBase
     }
     public override void OnHide()
     {
+     
         base.OnHide();
     }
     public override void OnShow()
