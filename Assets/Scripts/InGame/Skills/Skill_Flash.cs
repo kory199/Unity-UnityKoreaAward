@@ -5,6 +5,7 @@ using UnityEngine;
 public class Skill_Flash : SkillBase
 {
     [SerializeField] private GameObject _eff = null;
+    private GameObject _effOut = null;
     public override void SkillCoolTime()
     {
         //스킬 쿨타임
@@ -27,20 +28,24 @@ public class Skill_Flash : SkillBase
         Vector3 dir = (newPos - gameObject.transform.position).normalized;
         gameObject.transform.position = new Vector3(gameObject.transform.position.x + dir.x * _distance,
             gameObject.transform.position.y + dir.y * _distance, 0);
+        StartCoroutine(Co_EffectOff(_eff));
 
-        StartCoroutine(Co_EffectOff());
-        Debug.Log("점멸");
+        _effOut.SetActive(true);
+        _effOut.transform.position = gameObject.transform.position;
+        StartCoroutine(Co_EffectOff(_effOut));
+
+
     }
     WaitForSeconds wait = new WaitForSeconds(1f);
-    IEnumerator Co_EffectOff()
+    IEnumerator Co_EffectOff(GameObject eff)
     {
         yield return wait;
-        _eff.SetActive(false);
+        eff.SetActive(false);
     }
     private void Awake()
     {
-        Debug.Log("skill flash awake");
         _eff = Instantiate(Resources.Load<GameObject>("Effect/Eff_Player_Flash"));
+        _effOut = Instantiate(Resources.Load<GameObject>("Effect/Eff_Player_Flash"));
     }
     // Start is called before the first frame update
     protected override void Start()
@@ -50,7 +55,7 @@ public class Skill_Flash : SkillBase
         {
             _uI_SceneGame = FindObjectOfType<UI_SceneGame>();
         }
-        Debug.Log("skill flash start");
+     
     }
 
     // Update is called once per frame
