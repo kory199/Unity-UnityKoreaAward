@@ -31,6 +31,7 @@ public partial class Player
     private UI_Enhance uI_Enhance;
     private PlayerStatus_res[] playerStatus;
 
+    public Vector3 targetDirection;
     public bool IsDeath;
 
     private void InitComponent()
