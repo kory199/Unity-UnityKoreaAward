@@ -29,7 +29,6 @@ public class Skill_Flash : SkillBase
             gameObject.transform.position.y + dir.y * _distance, 0);
 
         StartCoroutine(Co_EffectOff());
-        Debug.Log("점멸");
     }
     WaitForSeconds wait = new WaitForSeconds(1f);
     IEnumerator Co_EffectOff()
@@ -39,7 +38,6 @@ public class Skill_Flash : SkillBase
     }
     private void Awake()
     {
-        Debug.Log("skill flash awake");
         _eff = Instantiate(Resources.Load<GameObject>("Effect/Eff_Player_Flash"));
     }
     // Start is called before the first frame update
@@ -50,7 +48,6 @@ public class Skill_Flash : SkillBase
         {
             _uI_SceneGame = FindObjectOfType<UI_SceneGame>();
         }
-        Debug.Log("skill flash start");
     }
 
     // Update is called once per frame

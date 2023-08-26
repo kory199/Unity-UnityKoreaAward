@@ -169,7 +169,6 @@ public abstract class MonsterBase : MonoBehaviour
             // 플레이어를 찾아두고
             player = FindObjectOfType<Player>();
 
-            Debug.Log(player == null);
             // 작동하고있던 코루틴이 있다면 종료한다.
             StopAllCoroutines();
             //이동시킴

@@ -161,7 +161,6 @@ public class UI_SceneGame : UIBase
         {
             Debug.LogError("There is no Skills");
         }
-        Debug.Log("스킬 인덱스 " + _skillKeyNum);
         _skillKeyNum++;
     }
     private KeyCode GetSkillKeyCode()
