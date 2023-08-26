@@ -13,11 +13,7 @@ public class SkillInfo
 [CreateAssetMenu(fileName = "SKillSO", menuName = "ScriptableObjects/SKillSO", order = int.MaxValue)]
 public class StageSkillSO : ScriptableObject
 {
-    public SkillInfo[] setOne = new SkillInfo[3];
-    public SkillInfo[] setTwo = new SkillInfo[3];
-    public SkillInfo[] setThree = new SkillInfo[3];
-    public SkillInfo[] SetFour = new SkillInfo[3];
-    public SkillInfo[] SetFive = new SkillInfo[3];
+    public SkillInfo[] setOne = new SkillInfo[12];
 }
 
 // NerfShot : 몬스터의 기본 능력치 (공격력) 을 감소시킴 (보스는 50% 효과만 적용)

@@ -10,24 +10,12 @@ public class Bullet_NerfShot : MonoBehaviour
 
     private float damageReduction;
 
-
     private void Awake()
     {
-        NerfShotInit();
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+        InitNerfShot();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void NerfShotInit()
+    private void InitNerfShot()
     {
         if (gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D rigidbody2D))
         {
@@ -78,7 +66,7 @@ public class Bullet_NerfShot : MonoBehaviour
             }
             else
             {
-
+                // 다른 몬스터 종류
             }
         }
         else if (collision.gameObject.tag == "Wall")
@@ -87,7 +75,7 @@ public class Bullet_NerfShot : MonoBehaviour
         }
         else
         {
-            
+            // 다른 오브젝트 추가 시
         }
     }
 }

@@ -25,6 +25,8 @@ public class Skill_NerfShot : SkillBase
     protected override void Start()
     {
         base.Start();
+
+        SkillCoolTime();
         InitNerfShotSkill();
     }
 
