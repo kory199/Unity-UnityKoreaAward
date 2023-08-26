@@ -59,7 +59,7 @@ public class Bullet_NerfShot : MonoBehaviour
         {
             if (collision.gameObject.name == "BossOne")
             {
-
+                // 보스 로직 추가 필요
             }
             else if (collision.gameObject.name == "BasicMeleeMonster")
             {
