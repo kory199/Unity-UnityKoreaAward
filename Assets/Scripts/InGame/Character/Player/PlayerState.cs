@@ -52,7 +52,7 @@ public partial class Player
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            uI_SceneGame.OnShow();
+            // uI_SceneGame.OnShow();
             uI_Enhance.OnClick_ReturnGame();
         }
     }

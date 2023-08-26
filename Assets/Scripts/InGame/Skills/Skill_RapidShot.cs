@@ -25,6 +25,8 @@ public class Skill_RapidShot : SkillBase
     protected override void Start()
     {
         base.Start();
+
+        SkillCoolTime();
         projectileSpeed = 1f;
         rateOfFire = 1f;
         originProjectileSpeed = 0;
