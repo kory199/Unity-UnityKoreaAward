@@ -193,7 +193,11 @@ public class BossOne : BossBase
     bool _stageOver = false;
     public override void Hit()
     {
-        _monsterInfo.curHp -= player.playerAttackPower;
+        BossHit();
+    }
+    public  void BossHit(float multiple = 1)
+    {
+        _monsterInfo.curHp -= player.playerAttackPower * multiple;
         if (_monsterInfo.curHp <= 0)
         {
             if (_stageOver == true) return;
@@ -203,7 +207,6 @@ public class BossOne : BossBase
             //player.Reward(_monsterInfo.exp);
         }
     }
-
 
     private void SetBossMonsterStatus(int inputStageNum)
     {

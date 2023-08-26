@@ -12,8 +12,8 @@ public class StageManager : MonoSingleton<StageManager>
     [SerializeField] private int _deathMonsters = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
     [SerializeField] private float _time = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
     [SerializeField] private SpawnManager _spawnManager;
-    [SerializeField] private UI_SceneGame _uI_SceneGame;
-    [SerializeField] private UI_Enhance _uI_Enhance;
+    private UI_SceneGame _uI_SceneGame;
+    private UI_Enhance _uI_Enhance;
 
     #region Uinity lifeCycle
     private void Awake()
@@ -23,8 +23,10 @@ public class StageManager : MonoSingleton<StageManager>
             _uI_SceneGame = UIManager.Instance.CreateObject<UI_SceneGame>("UI_SceneGame", EnumTypes.LayoutType.First);
         _uI_SceneGame.OnShow();
 
-        InitUI_Enhance();
         CallCountDown();
+        InitUI_Enhance();
+        _uI_Enhance.OnHide();
+
         //체인 등록
         InGameManager.Instance.RegisterParams(EnumTypes.InGameParamType.Stage, (int)EnumTypes.StageStateType.Max);
     }
@@ -71,17 +73,17 @@ public class StageManager : MonoSingleton<StageManager>
         Debug.Log("Stage Up ...");
         _stageNum++;
 
-
-
-        // uI_SceneGame.OnHide();
+        //_uI_SceneGame.OnHide();
+   
         _uI_Enhance.GetSkillPoint(_stageNum);
         _uI_Enhance.OnShow();
-        Time.timeScale = 0;
+        Time.timeScale = 1;
 
         _uI_SceneGame.SetStageNum(_stageNum + 1);
         PlayBGMForStage(_stageNum);
         SendStageData();
     }
+
     public int GetStageNum() => _stageNum;
 
     // Spawn Logic Edit
@@ -209,8 +211,7 @@ public class StageManager : MonoSingleton<StageManager>
 
     private void InitUI_Enhance()
     {
-        _uI_Enhance = UIManager.Instance.CreateObject<UI_Enhance>("UI_Enhance", EnumTypes.LayoutType.First);
-        _uI_Enhance.OnHide();
-        Time.timeScale = 1;
+        _uI_Enhance = UIManager.Instance.CreateObject<UI_Enhance>("UI_Enhance", EnumTypes.LayoutType.Middle);
+        //Time.timeScale = 0;
     }
 }
