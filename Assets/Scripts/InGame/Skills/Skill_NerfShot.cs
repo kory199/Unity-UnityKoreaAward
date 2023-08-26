@@ -28,7 +28,7 @@ public class Skill_NerfShot : SkillBase
 
     public override void SkillCoolTime()
     {
-        _coolTime = 1f;
+        _coolTime = 5f;
     }
 
     public override void SkillLevelUp()
