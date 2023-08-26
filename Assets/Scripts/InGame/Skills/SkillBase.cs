@@ -10,7 +10,7 @@ interface ISkillBase
 public abstract class SkillBase : MonoBehaviour, ISkillBase
 {
     [SerializeField] protected Player _player;
-    protected int _skillLevel = 1;
+    [SerializeField] protected int _skillLevel = 1;
     protected float _coolTime = 10f;
     protected bool _isCool = false;
     protected KeyCode _shotKey;

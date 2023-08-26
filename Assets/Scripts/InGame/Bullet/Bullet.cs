@@ -22,11 +22,11 @@ public class Bullet : MonoBehaviour
     [SerializeField] BossOne _bossOne;
     [SerializeField] string setShooter;
 
-    Vector2 dirBullet;
+    public Vector2 dirBullet;
+    public CircleCollider2D bulletCollider;
+    public Rigidbody2D bulletRb;
 
     private Transform bulletSpawner;
-    private CircleCollider2D bulletCollider;
-    private Rigidbody2D bulletRb;
     private Sprite originalSprite;
 
     #region Unity Life Cycle
@@ -44,7 +44,7 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
-        SetSprite();
+
     }
 
     private void OnDisable()
@@ -155,8 +155,6 @@ public class Bullet : MonoBehaviour
                 default:
                     break;
             }
-
-            ReSetSprite();
             gameObject.SetActive(false);
         }
         else if (hitCount <= 3 && other.gameObject.tag == "Wall" && setShooter == "Player")
@@ -167,29 +165,11 @@ public class Bullet : MonoBehaviour
         }
         else if (other.gameObject.tag == "Gun")
         {
-            ReSetSprite();
             gameObject.SetActive(false);
         }
         else
         {
             // gameObject.SetActive(false);
         }
-    }
-
-    private void SetSprite()
-    {
-        if (gameObject.TryGetComponent<SpriteRenderer>(out SpriteRenderer spriteRenderer))
-        {
-            originalSprite = spriteRenderer.sprite; ;
-        }
-        else
-        {
-            Debug.Log("Bullet spriteRenderer is null");
-        }
-    }
-
-    public void ReSetSprite()
-    {
-        gameObject.GetComponent<SpriteRenderer>().sprite = originalSprite;
     }
 }

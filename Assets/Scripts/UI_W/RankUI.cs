@@ -13,6 +13,9 @@ public class RankUI : UIBase
     [SerializeField] TextMeshProUGUI[] rankTopTen = null;
     [SerializeField] TextMeshProUGUI userRank = null;
     [SerializeField] TextMeshProUGUI r_infoText = null;
+    [Header("Scroll")]
+    [SerializeField] private GameObject _infinityScrollObj = null;
+    [SerializeField] private InfinityScroll _InfinityScroll = null;
 
     private float debounceTime = 0.5f;
     private float lastAPICallTime;
@@ -27,6 +30,7 @@ public class RankUI : UIBase
         //OnClickRank();
         r_infoText.gameObject.SetActive(true);
         r_infoText.text = "Please Wait ...";
+
     }
 
     private async void OnClickRank()
@@ -54,39 +58,27 @@ public class RankUI : UIBase
             else
             {
 
-                ClearRankData();
-
-                for (int i = 0; i < rankingDataList.Count; i++)
+                if (_InfinityScroll == null)
                 {
-                    RankingData rankingData = rankingDataList[i];
+                    _InfinityScroll = Instantiate(_infinityScrollObj, gameObject.transform).GetComponent<InfinityScroll>();
+                }
+                _InfinityScroll.SetData(rankingDataList);
 
-                    if (i < rankTopThreeName.Length)
-                    {
-                        rankTopThreeName[i].text = rankingData.id;
-                    }
+                ClearRankData();
+                for (int i = 0; i < rankTopThreeName.Length; ++i)
+                {
+                    rankTopThreeName[i].text = rankingDataList[i].id;
+                }
 
-                    if (i < rankTopTen.Length)
-                    {
-                        rankTopTen[i].text = $"ID: {rankingData.id}, Score: {rankingData.score}, Rank: {rankingData.ranking}";
-                    }
+                RankingData userRankingData = rankingDataList.Find(r => r.id == _id);
 
-                    if (rankingDataList.Count == 11)
-                    {
-                        userRank.text = $"ID: {rankingData.id}, Score: {rankingData.score}, Rank: {rankingData.ranking}";
-                    }
-                    else if (rankingDataList.Count == 10)
-                    {
-                        RankingData userRankingData = rankingDataList.Find(r => r.id == _id);
-
-                        if (userRankingData != null)
-                        {
-                            userRank.text = $"ID: {userRankingData.id}, Score: {userRankingData.score}, Rank: {userRankingData.ranking}";
-                        }
-                        else
-                        {
-                            Debug.LogError("User's ranking data not found.");
-                        }
-                    }
+                if (userRankingData != null)
+                {
+                    userRank.text = $"ID: {userRankingData.id}, Score: {userRankingData.score}, Rank: {userRankingData.ranking}";
+                }
+                else
+                {
+                    Debug.LogError("User's ranking data not found.");
                 }
 
             }
@@ -104,11 +96,6 @@ public class RankUI : UIBase
             rankTopThreeName[i].text = "";
         }
         userRank.text = "";
-
-        for (int i = 0; i < rankTopTen.Length; ++i)
-        {
-            rankTopTen[i].text = "";
-        }
     }
     public UI_SceneLobby uI_SceneLobby = null;
     public void OnClickRankBackBut()

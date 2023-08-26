@@ -90,10 +90,10 @@ public partial class Player
         retrunPlayerInfo(playerLv);
         InitPlayerUI();
 
-        uI_SceneGame.OnHide();
-        uI_Enhance.GetSkillPoint(1);
-        uI_Enhance.OnShow();
-        Time.timeScale = 0;
+       // uI_SceneGame.OnHide();
+        // uI_Enhance.GetSkillPoint(1);
+        // uI_Enhance.OnShow();
+        // Time.timeScale = 0;
     }
 
     private IEnumerator MonveAble()
