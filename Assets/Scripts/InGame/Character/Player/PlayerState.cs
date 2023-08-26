@@ -91,9 +91,9 @@ public partial class Player
         InitPlayerUI();
 
        // uI_SceneGame.OnHide();
-        uI_Enhance.GetSkillPoint(1);
-        uI_Enhance.OnShow();
-        Time.timeScale = 0;
+        // uI_Enhance.GetSkillPoint(1);
+        // uI_Enhance.OnShow();
+        // Time.timeScale = 0;
     }
 
     private IEnumerator MonveAble()

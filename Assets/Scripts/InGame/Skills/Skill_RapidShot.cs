@@ -6,7 +6,7 @@ public class Skill_RapidShot : SkillBase
 {
     public override void SkillCoolTime()
     {
-        throw new System.NotImplementedException();
+        _coolTime = 0.5f;
     }
 
     public override void SkillLevelUp()
