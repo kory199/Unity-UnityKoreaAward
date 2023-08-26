@@ -43,9 +43,6 @@ public class UI_Enhance : UIBase
             skillSO = Resources.Load<StageSkillSO>("SKillSO");
         }
 
-        Time.timeScale = 0;
-
-        _stageNum = StageManager.Instance.GetStageNum();
         skillTreeList = new List<SkillTreeNode>();
         skillArray = new SkillInfo[12];
         AddSkillArray();
@@ -58,7 +55,8 @@ public class UI_Enhance : UIBase
 
     protected override void Start()
     {
-        StageButtonSet();
+        Debug.Log($"start _stageNum : {_stageNum}");
+        //StageButtonSet();
     }
 
     private void Update()
@@ -69,11 +67,19 @@ public class UI_Enhance : UIBase
             OnClick_ReturnGame();
         }
     }
+
+    private void OnEnable()
+    {
+        _stageNum = StageManager.Instance.GetStageNum();
+        Debug.Log($"OnEnable _stageNum : {_stageNum}");
+        StageButtonSet();
+    }
     #endregion
 
     private void StageButtonSet()
     {
-        Debug.Log($"_stageNum {_stageNum}");
+        if (_stageNum == 0)
+            return;
 
         switch (_stageNum)
         {
@@ -188,6 +194,7 @@ public class UI_Enhance : UIBase
             _ui_SceneGame.AddSkill(skillInfo.SkillClassName, imagePath);
         }
 
+        OnHide();
         return bulletNum;
     }
 
@@ -226,8 +233,8 @@ public class UI_Enhance : UIBase
 
     public void OnClick_ReturnGame()
     {
-        OnHide();
         Time.timeScale = 1;
+        OnHide();
     }
 
     public void GetSkillPoint(int playerSkillPoint)
