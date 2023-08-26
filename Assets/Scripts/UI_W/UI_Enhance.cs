@@ -80,6 +80,10 @@ public class UI_Enhance : UIBase
     {
         if (_stageNum == 0)
             return;
+        else
+        {
+            Time.timeScale = 0;
+        }
 
         switch (_stageNum)
         {
@@ -233,7 +237,6 @@ public class UI_Enhance : UIBase
 
     public void OnClick_ReturnGame()
     {
-        Time.timeScale = 1;
         OnHide();
     }
 
@@ -268,5 +271,10 @@ public class UI_Enhance : UIBase
     private void AddSkillArray()
     {
         skillSO.setOne.CopyTo(skillArray, 0);
+    }
+
+    private void OnDisable()
+    {
+        Time.timeScale = 1;
     }
 }
