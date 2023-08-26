@@ -6,11 +6,10 @@ using UnityEngine.UI;
 
 public class UI_Enhance : UIBase
 {
-    [SerializeField] int _stageNum; // 추후 받아온 데이터로 셋
     [SerializeField] TextMeshProUGUI enhanceNum = null;
-    [SerializeField] TextMeshProUGUI rerollNum = null;
     [SerializeField] TextMeshProUGUI infoText = null;
 
+    [SerializeField] GameObject infotextObj = null;
     [SerializeField] GameObject skillNodePrefab;
     [SerializeField] RectTransform skillTreePos = null;
 
@@ -21,7 +20,10 @@ public class UI_Enhance : UIBase
     private Player _player = null;
 
     private List<SkillTreeNode> skillTreeList;
+    private SkillInfo[] skillArray;
+    private RectTransform infoTextPos;
 
+    private int _stageNum; 
     private Vector3 nextSpawnPos = Vector3.zero;
     private int zigzagDirection = 1;
     private int maxtreeNum = 15;
@@ -43,15 +45,20 @@ public class UI_Enhance : UIBase
 
         Time.timeScale = 0;
 
+        _stageNum = StageManager.Instance.GetStageNum();
         skillTreeList = new List<SkillTreeNode>();
+        skillArray = new SkillInfo[12];
+        AddSkillArray();
 
         _ui_SceneGame = FindObjectOfType<UI_SceneGame>();
         _player = FindObjectOfType<Player>();
+        infotextObj.SetActive(false);
+        infoTextPos = infotextObj.GetComponent<RectTransform>();
     }
 
     protected override void Start()
     {
-        SetSkillData();
+        StageButtonSet();
     }
 
     private void Update()
@@ -64,38 +71,64 @@ public class UI_Enhance : UIBase
     }
     #endregion
 
-    private void SetSkillData()
+    private void StageButtonSet()
     {
-        SkillInfo[] skillInfos = null;
+        Debug.Log($"_stageNum {_stageNum}");
 
         switch (_stageNum)
         {
             case 1:
-                skillInfos = skillSO.setOne;
+                ButtonOnShow(3);
+                SetSkillSO(3);
                 break;
-
             case 2:
-                skillInfos = skillSO.setOne;
+                ButtonOnShow(6);
+                SetSkillSO(6);
                 break;
-
-                //스테이지마다 다른스킬
+            case 3:
+                ButtonOnShow(9);
+                SetSkillSO(9);
+                break;
+            case 4:
+                ButtonOnShow(12);
+                SetSkillSO(12);
+                break;
+            case 5:
+                ButtonOnShow(12);
+                SetSkillSO(12);
+                break;
         }
+    }
 
-        if (skillInfos != null && skillInfos.Length == skillBtn.Length)
+    private void ButtonOnShow(int num)
+    {
+        for(int i = 0; i < skillBtn.Length; ++i)
         {
-            for (int i = 0; i < skillBtn.Length; ++i)
+            if(i < num)
             {
-                skillBtn[i].GetComponent<Image>().sprite = skillInfos[i].skillImg;
+                skillBtn[i].gameObject.SetActive(true);
 
-                int index = i;
-                int currentBulletNum = skillInfos[index].bulletNum;
-
-                MouseReachSkill(skillBtn[i], skillInfos[index].infotext);
-
-                // 로직 확정 후 버튼 컴포넌트에 추가, 코드 삭제
-                Button currentBtn = skillBtn[i];
-                currentBtn.onClick.AddListener(() => OnClick_Skill(currentBtn, currentBulletNum, skillInfos[index]));
             }
+            else
+            {
+                skillBtn[i].gameObject.SetActive(false);
+            }
+        }
+    }
+
+    private void SetSkillSO(int num)
+    {
+        for (int i = 0; i < num; ++i)
+        {
+            skillBtn[i].GetComponent<Image>().sprite = skillArray[i].skillImg;
+
+            int index = i;
+            int currentBulletNum = skillArray[index].bulletNum;
+
+            MouseReachSkill(skillBtn[i], skillArray[index].infotext, index);
+
+            Button currentBtn = skillBtn[i];
+            currentBtn.onClick.AddListener(() => OnClick_Skill(currentBtn, currentBulletNum, skillArray[index]));
         }
     }
 
@@ -105,13 +138,41 @@ public class UI_Enhance : UIBase
         base.OnShow();
     }
 
-    public void MouseReachSkill(Button targetButton, string skillInfoText)
+    public void MouseReachSkill(Button targetButton, string skillInfoText, int btnIndex)
     {
         EventTrigger trigger = targetButton.gameObject.AddComponent<EventTrigger>();
         EventTrigger.Entry entry = new EventTrigger.Entry();
         entry.eventID = EventTriggerType.PointerEnter;
-        entry.callback.AddListener((eventData) => { infoText.text = skillInfoText; });
+        entry.callback.AddListener((eventData) => { MouseEvent((PointerEventData)eventData, skillInfoText, btnIndex); });
         trigger.triggers.Add(entry);
+    }
+
+    private void MouseEvent(PointerEventData eventData, string skillInfoText, int btnIndex)
+    {
+        infotextObj.SetActive(true);
+        MousePosMove(eventData, btnIndex);
+        infoText.text = skillInfoText;
+    }
+
+    private void MousePosMove(PointerEventData pointData, int btnIndex)
+    {
+        Vector2 localPoint;
+
+        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(infoTextPos, pointData.position, pointData.pressEventCamera, out localPoint))
+        {
+            if (btnIndex >= 3 && btnIndex <= 5)
+            {
+                infotextObj.transform.position = new Vector3(900f, 165f, 0f);
+            }
+            else if(btnIndex >= 6 && btnIndex <= 8)
+            {
+                infotextObj.transform.position = new Vector3(1200f, 165f, 0f);
+            }
+            else if(btnIndex >= 9 && btnIndex <= 11)
+            {
+                infotextObj.transform.position = new Vector3(1600f, 165f, 0f);
+            }
+        }
     }
 
     // 나중에 필요한 객체로 변경
@@ -195,5 +256,13 @@ public class UI_Enhance : UIBase
             }
         }
         enhanceNum.text = "enhanceNum : " + skillPoint.ToString();
+    }
+
+    private void AddSkillArray()
+    {
+        skillSO.setOne.CopyTo(skillArray, 0);
+        skillSO.setTwo.CopyTo(skillArray, 3);
+        skillSO.setThree.CopyTo(skillArray, 6);
+        skillSO.SetFour.CopyTo(skillArray, 9);
     }
 }
