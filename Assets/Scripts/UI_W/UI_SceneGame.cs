@@ -135,15 +135,8 @@ public class UI_SceneGame : UIBase
         callback();
     }
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            AddSkill("Skill_Flash", "Skill_Flash");
-        }
-    }
     [SerializeField] string _basePath = "SkillSprites/";
-    int _skillKeyNum = 0;
+   int _skillKeyNum = 0;
     /// <summary>
     /// UI_Enhance에서 호출해야함
     /// /// </summary>
@@ -168,6 +161,7 @@ public class UI_SceneGame : UIBase
         {
             Debug.LogError("There is no Skills");
         }
+        Debug.Log("스킬 인덱스 " + _skillKeyNum);
         _skillKeyNum++;
     }
     private KeyCode GetSkillKeyCode()

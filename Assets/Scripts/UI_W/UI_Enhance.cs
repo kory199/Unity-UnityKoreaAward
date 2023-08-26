@@ -125,8 +125,7 @@ public class UI_Enhance : UIBase
             CreateSkillNodePrefab(clickedBtn);
             string imagePath = skillInfo.skillImg.ToString().Split(' ')[0];
             _ui_SceneGame.AddSkill(skillInfo.SkillClassName, imagePath);
-
-            _player.AddPlayerSkills(skillInfo);
+            Debug.Log("스킬추가");  
         }
 
         return bulletNum;
