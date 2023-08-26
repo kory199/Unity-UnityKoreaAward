@@ -28,7 +28,7 @@ public class Skill_NerfShot : SkillBase
 
     public override void SkillCoolTime()
     {
-        _coolTime = 1f;
+        _coolTime = 5f;
     }
 
     public override void SkillLevelUp()
@@ -53,7 +53,6 @@ public class Skill_NerfShot : SkillBase
             bullet.GetComponent<SpriteRenderer>().sprite = Sprite_NerfShot; // 스킬에 맞는 새로운 스프라이트
 
             bullet.bulletDamageReduction = damageReduction;
-            Debug.LogError("bulletDamageReduction : " + damageReduction);
         }
     }
 }
