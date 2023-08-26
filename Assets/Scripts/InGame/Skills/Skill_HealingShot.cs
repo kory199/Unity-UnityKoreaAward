@@ -5,7 +5,7 @@ using UnityEngine;
 public class Skill_HealingShot : SkillBase
 {
     // script
-    Skill_HealingShot skill_healingShot;
+    Bullet_HealingShot bullet_HealingShot;
 
     // bullet Info
     GameObject bullet;
