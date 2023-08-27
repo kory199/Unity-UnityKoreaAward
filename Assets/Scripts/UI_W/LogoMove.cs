@@ -8,7 +8,7 @@ public class LogoMove : MonoBehaviour
     private RawImage _logo;
 
     private float moveDistance = 50f;
-    private float moveDuration = 1.5f;
+    private float moveDuration = 1f;
 
     private void Awake()
     {
