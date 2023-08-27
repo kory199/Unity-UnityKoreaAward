@@ -25,8 +25,8 @@ public class Skill_PlumShot : SkillBase
             if (_spawners[i].activeSelf == true)
             {
                 Bullet_PlumShot bullet = _bullets.Dequeue();
-                bullet.InsertPool(() => _bullets.Enqueue(bullet));
-
+                bullet.gameObject.SetActive(true);
+                bullet.InsertPool(() => _bullets.Enqueue(bullet), _spawners[i]);
             }
         }
     }
@@ -46,7 +46,8 @@ public class Skill_PlumShot : SkillBase
 
         for (int i = 0; i < 24; i++)
         {
-            GameObject spawner = new GameObject();
+            GameObject spawner = new GameObject("Spawner");
+            spawner.transform.SetParent(gameObject.transform);
             spawner.transform.position = new Vector3
             (gameObject.transform.position.x + Mathf.Cos(15 * (i + 1)), gameObject.transform.position.y + Mathf.Cos(15 * (i + 1)), 0);
 
@@ -54,8 +55,9 @@ public class Skill_PlumShot : SkillBase
             if ((i % 6) != 0)
                 spawner.SetActive(false);
 
-            Bullet_PlumShot bullet = Resources.Load<Bullet_PlumShot>("Bullet/PlumBullet");
+            Bullet_PlumShot bullet = Resources.Load<Bullet_PlumShot>("Bullet/Bullet_Skill_PlumShot");
             _bullets.Enqueue(bullet);
+
             Debug.Log(_bullets.Count);
         }
     }
