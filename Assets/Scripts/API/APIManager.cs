@@ -194,12 +194,14 @@ public class APIManager : MonoSingleton<APIManager>
     {
         bool result = await CallAPI<Dictionary<string, object>, GameData>(APIUrls.StageApi, NewGameData(), APISuccessCode.LoadStageSuccess, (apiResponse) =>
         {
-            if (apiResponse.Data.TryGetValue("stageData", out object stageDataObj))
+            if (apiResponse?.Data is Dictionary<string, object> data)
             {
-                List<StageInfo> stageDataList = JsonConvert.DeserializeObject<List<StageInfo>>(stageDataObj.ToString());
-                if (stageDataList != null && stageDataList.Count > 0)
+                if (data.TryGetValue("stageNum", out object stageNumObj))
                 {
-                    GameManager.Instance.StageNum = stageDataList.Last().stage_id;
+                    if (stageNumObj is long stageNumInt)
+                    {
+                        GameManager.Instance.StageNum = (int)stageNumInt;
+                    }
                 }
             }
         });
