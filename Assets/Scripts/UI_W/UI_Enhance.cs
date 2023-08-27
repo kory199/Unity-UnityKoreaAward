@@ -55,7 +55,7 @@ public class UI_Enhance : UIBase
 
     protected override void Start()
     {
-        Debug.Log($"start _stageNum : {_stageNum}");
+        //Debug.Log($"start _stageNum : {_stageNum}");
         //StageButtonSet();
     }
 
@@ -71,7 +71,7 @@ public class UI_Enhance : UIBase
     private void OnEnable()
     {
         _stageNum = StageManager.Instance.GetStageNum();
-        Debug.Log($"OnEnable _stageNum : {_stageNum}");
+        //Debug.Log($"OnEnable _stageNum : {_stageNum}");
         StageButtonSet();
     }
     #endregion
@@ -167,20 +167,24 @@ public class UI_Enhance : UIBase
     private void MousePosMove(PointerEventData pointData, int btnIndex)
     {
         Vector2 localPoint;
-
+        Vector3 pos = infotextObj.transform.position;
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(infoTextPos, pointData.position, pointData.pressEventCamera, out localPoint))
         {
-            if (btnIndex >= 3 && btnIndex <= 5)
+            if(btnIndex >= 0 && btnIndex <= 2)
             {
-                infotextObj.transform.position = new Vector3(900f, 165f, 0f);
+                infotextObj.transform.position = pos;
+            }
+            else if (btnIndex >= 3 && btnIndex <= 5)
+            {
+                infotextObj.transform.position = new Vector3(900f, 200f, 0f);
             }
             else if(btnIndex >= 6 && btnIndex <= 8)
             {
-                infotextObj.transform.position = new Vector3(1200f, 165f, 0f);
+                infotextObj.transform.position = new Vector3(1200f, 200f, 0f);
             }
             else if(btnIndex >= 9 && btnIndex <= 11)
             {
-                infotextObj.transform.position = new Vector3(1600f, 165f, 0f);
+                infotextObj.transform.position = new Vector3(1600f, 200f, 0f);
             }
         }
     }

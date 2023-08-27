@@ -36,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 400, y: 400}
+  m_SizeDelta: {x: 500, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3481167988204872894
 CanvasRenderer:
@@ -191,9 +191,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   countNums:
-  - {fileID: 1176943140, guid: 8eeaf5c502666436ebe266f667c08288, type: 3}
-  - {fileID: -475302143, guid: 8eeaf5c502666436ebe266f667c08288, type: 3}
   - {fileID: 1774639310, guid: 8eeaf5c502666436ebe266f667c08288, type: 3}
+  - {fileID: -475302143, guid: 8eeaf5c502666436ebe266f667c08288, type: 3}
+  - {fileID: 1176943140, guid: 8eeaf5c502666436ebe266f667c08288, type: 3}
   countDownImg: {fileID: 7293839585725677232}
   PosXCurve:
     serializedVersion: 2

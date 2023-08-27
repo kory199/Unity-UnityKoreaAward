@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8eeaf5c502666436ebe266f667c08288
+guid: 83c6ceca325894aa3b4d1b6cf5808290
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -152,64 +152,64 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Num_0
+      name: CountNum_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 205
-        width: 636
-        height: 640
+        y: 81
+        width: 222
+        height: 202
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ae9b7afe08c3f4436a52376e2658abb0
-      internalID: 1774639310
+      spriteID: a54c52f0d02914007a20056cf40df7c5
+      internalID: 1202584043
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Num_1
+      name: CountNum_1
       rect:
         serializedVersion: 2
-        x: 640
-        y: 200
-        width: 640
-        height: 640
+        x: 222
+        y: 81
+        width: 222
+        height: 202
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4c5349ff699d94ac2abb24929745b563
-      internalID: -475302143
+      spriteID: d3537031400af4a0d9340d0fdceb52b1
+      internalID: -1879389095
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Num_2
+      name: CountNum_2
       rect:
         serializedVersion: 2
-        x: 1260
-        y: 205
-        width: 640
-        height: 640
+        x: 444
+        y: 87
+        width: 222
+        height: 201
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 31b161a1f57b448559f70850d5781f32
-      internalID: 1176943140
+      spriteID: ca4a6f7dffdde495d9d7713f19a4dc59
+      internalID: 1286069923
       vertices: []
       indices: 
       edges: []
@@ -225,9 +225,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Num_1: -475302143
-      Num_0: 1774639310
-      Num_2: 1176943140
+      CountNum_2: 1286069923
+      CountNum_0: 1202584043
+      CountNum_1: -1879389095
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

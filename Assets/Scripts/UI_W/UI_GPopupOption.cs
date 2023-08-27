@@ -25,6 +25,7 @@ public class UI_GPopupOption : UIBase
     {
         SoundMgr.Instance.SFXPlay(EnumTypes.SFXType.Button);
         OnHide();
+        Time.timeScale = 1;
         switch (GameManager.Instance.SceneState)
         {
             case SceneState.Lobby:
