@@ -59,7 +59,7 @@ public class Skill_NerfShot : SkillBase
             }
             else
             {
-                bullet_NerfShot = Bullet_NerfShotOject.AddComponent<Bullet_NerfShot>();
+                this.bullet_NerfShot = Bullet_NerfShotOject.AddComponent<Bullet_NerfShot>();
             }
 
             if (Bullet_NerfShotOject.TryGetComponent<Rigidbody2D>(out Rigidbody2D rigidbody2D))
