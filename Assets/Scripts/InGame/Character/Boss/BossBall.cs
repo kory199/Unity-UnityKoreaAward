@@ -13,11 +13,12 @@ public class BossBall : MonoBehaviour
     {
         ObjectPooler.ReturnToPool(gameObject);
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(other.tag=="Player")
+        if (collision.tag == "Player")
         {
             _player.PlayerHit(20);
+            gameObject.SetActive(false);
         }
     }
 }

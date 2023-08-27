@@ -26,6 +26,8 @@ public class BossOne : BossBase
             _initDegree.Add(Mathf.Atan2(tempVector.x, tempVector.y));
         }
         _monsterInfo.rate_of_fire = 1f;
+        _monsterInfo.ranged = 1f;
+        TransferState(MonsterStateType.Move);
         TransferState(MonsterStateType.Move);
         // StartCoroutine(Co_BossPattern());
     }
@@ -116,7 +118,8 @@ public class BossOne : BossBase
             gameObject.transform.Translate(dirVector * 2f * Time.deltaTime);
 
             // 플레이어와 자기자신(몬스터)사이의 거리와 본인의 공격 가능범위를 비교하여 수행(다른 방식으로 구현해도 ㅇㅋ)
-            if (Vector3.Distance(player.transform.position, this.gameObject.transform.position) <= _monsterInfo.ranged)
+            //if (Vector3.Distance(player.transform.position, this.gameObject.transform.position) <= _monsterInfo.ranged)
+            if (Vector3.Distance(Vector3.zero, this.gameObject.transform.position) <= _monsterInfo.ranged)
             {
                 StartCoroutine(Co_BossPattern());
                 yield break;
@@ -198,11 +201,14 @@ public class BossOne : BossBase
     public  void BossHit(float multiple = 1)
     {
         _monsterInfo.curHp -= player.playerAttackPower * multiple;
+        SoundMgr.Instance.SFXPlay(EnumTypes.SFXType.MonsterHit);
+        monsterSFX.MonsterStateSFX(gameObject.transform, EnumTypes.MonsterStateType.Hit);
         if (_monsterInfo.curHp <= 0)
         {
             if (_stageOver == true) return;
             _stageOver = true;
             gameObject.SetActive(false);
+            monsterSFX.MonsterStateSFX(gameObject.transform, EnumTypes.MonsterStateType.Death);
             StageManager.Instance.StageClear();
             //player.Reward(_monsterInfo.exp);
         }

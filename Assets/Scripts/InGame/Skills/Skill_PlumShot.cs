@@ -19,12 +19,13 @@ public class Skill_PlumShot : SkillBase
 
     public override void SkillShot()
     {
-        Debug.Log("¸ÅÈ­¼¦");
         //24¹æÇâ °ø°Ý 
         for (int i = 0; i < 24; i++)
         {
             if (_spawners[i].activeSelf == true)
             {
+                Debug.Log("¸ÅÈ­¼¦ " + i + " pos  : " + _spawners[i].transform.position + " que : " + _bullets.Count);
+
                 GameObject bullet = _bullets.Dequeue();
                 bullet.SetActive(true);
                 bullet.transform.position = _spawners[i].transform.position;
@@ -50,15 +51,13 @@ public class Skill_PlumShot : SkillBase
             GameObject spawner = new GameObject("Spawner");
             spawner.transform.SetParent(gameObject.transform);
             spawner.transform.position = new Vector3
-            (gameObject.transform.position.x + Mathf.Cos(15 * (i + 1)), gameObject.transform.position.y + Mathf.Sin(15 * (i + 1)), 0);
+            (gameObject.transform.localPosition.x + Mathf.Cos(15 * (i + 1)), gameObject.transform.localPosition.y + Mathf.Sin(15 * (i + 1)), 0);
             _spawners.Add(spawner);
 
             Bullet_PlumShot bullet = Resources.Load<Bullet_PlumShot>("Bullet/Bullet_Skill_PlumShot");
             GameObject plum = Instantiate(bullet, bulletFolder.transform).gameObject;
 
-           // plum.GetComponent<Bullet_PlumShot>().InsertPool(() => _bullets.Enqueue(plum), _spawners[i]);
             plum.GetComponent<Bullet_PlumShot>().InsertPool(() => _bullets.Enqueue(plum), _spawners[i], gameObject);
-            _bullets.Enqueue(plum);
             plum.SetActive(false);
 
             if ((i % 6) != 0)

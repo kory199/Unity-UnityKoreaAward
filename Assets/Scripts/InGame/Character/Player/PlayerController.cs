@@ -28,7 +28,7 @@ public partial class Player
         if (targetDirection != Vector3.zero)
         {
             float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
-            Quaternion targetRotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            Quaternion targetRotation = Quaternion.AngleAxis(angle+90, Vector3.forward);
             playerRb.SetRotation(targetRotation);
         }
     }
