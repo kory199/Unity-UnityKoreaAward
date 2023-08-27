@@ -44,5 +44,34 @@ public class Bullet_HealingShot : MonoBehaviour
         {
             gameObject.AddComponent<CircleCollider2D>();
         }
+
+        player = FindObjectOfType<Player>();
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Monster")
+        {
+            player.playerCurHp += recoveryAmount;
+
+            if (player.playerCurHp > player.playerMaxHp)
+            {
+                player.playerCurHp = player.playerMaxHp;
+            }
+        }
+        else if (collision.gameObject.tag == "Wall")
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            // 다른 오브젝트 추가 시
+        }
+    }
+
+    public void SetRecoveryAmount(float recAmount)
+    {
+        recoveryAmount = recAmount;
     }
 }
