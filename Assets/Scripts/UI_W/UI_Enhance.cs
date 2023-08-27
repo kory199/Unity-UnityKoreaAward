@@ -167,10 +167,14 @@ public class UI_Enhance : UIBase
     private void MousePosMove(PointerEventData pointData, int btnIndex)
     {
         Vector2 localPoint;
-
+        Vector3 pos = infotextObj.transform.position;
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(infoTextPos, pointData.position, pointData.pressEventCamera, out localPoint))
         {
-            if (btnIndex >= 3 && btnIndex <= 5)
+            if(btnIndex >= 0 && btnIndex <= 2)
+            {
+                infotextObj.transform.position = pos;
+            }
+            else if (btnIndex >= 3 && btnIndex <= 5)
             {
                 infotextObj.transform.position = new Vector3(900f, 200f, 0f);
             }

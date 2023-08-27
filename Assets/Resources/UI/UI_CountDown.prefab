@@ -191,9 +191,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   countNums:
-  - {fileID: 1202584043, guid: 83c6ceca325894aa3b4d1b6cf5808290, type: 3}
-  - {fileID: -1879389095, guid: 83c6ceca325894aa3b4d1b6cf5808290, type: 3}
-  - {fileID: 1286069923, guid: 83c6ceca325894aa3b4d1b6cf5808290, type: 3}
+  - {fileID: 1774639310, guid: 8eeaf5c502666436ebe266f667c08288, type: 3}
+  - {fileID: -475302143, guid: 8eeaf5c502666436ebe266f667c08288, type: 3}
+  - {fileID: 1176943140, guid: 8eeaf5c502666436ebe266f667c08288, type: 3}
   countDownImg: {fileID: 7293839585725677232}
   PosXCurve:
     serializedVersion: 2

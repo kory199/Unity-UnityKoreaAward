@@ -204,10 +204,10 @@ public class UI_SceneGame : UIBase
     public override void OnShow()
     {
         base.OnShow();
-        foreach (var image in _skillImage)
-        {
-            image.texture = null;
-        }
+        //foreach (var image in _skillImage)
+        //{
+            //image.texture = null;
+        //}
         _skillKeyNum = 0;
     }
 }
