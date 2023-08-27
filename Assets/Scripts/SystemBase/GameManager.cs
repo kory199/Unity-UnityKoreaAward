@@ -13,16 +13,12 @@ public enum SceneState
 }
 public class GameManager : MonoSingleton<GameManager>
 {
-    public int OnclickStageNum { get; private set; }
     public SceneState SceneState { get; set; }
 
     public PlayerData playerData { get; set; }
     public int StageNum { get; set; }
-    // private EventSystem _eventSystem;
 
-    // === Cursor
     Texture2D _cursorImg;
-    private AccountUI accountUI;
 
     // Runtume init Gamemanager 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -36,14 +32,16 @@ public class GameManager : MonoSingleton<GameManager>
     {
         DontDestroyOnLoad(this.gameObject);
 
-        _cursorImg = Resources.Load<Texture2D>("cursor");
+        _cursorImg = Resources.Load<Texture2D>("Sprites/cursor");
         Cursor.SetCursor(_cursorImg, Vector2.zero, CursorMode.Auto);
     }
 
-    public void SetStageNum(int stageNum)
+    public int GetStageNum()
     {
-        OnclickStageNum = stageNum;
+        Debug.Log($"StageNum : {StageNum}");
+        return StageNum;
     }
+
     public async void EndStage(int stageNum)
     {
         //브레이크 이미지 띄우고 씬이동

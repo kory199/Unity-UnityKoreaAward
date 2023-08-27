@@ -61,7 +61,6 @@ public class APIManager : MonoSingleton<APIManager>
     private void HandleMasterDataResponse(APIResponse<MasterDataResponse> apiResponse)
     {
         SetDicData(MasterDataDicKey.MeleeMonster, apiResponse.Data.masterDataDic.MeleeMonster);
-        // TODO : 주석 처리 
         SetDicData(MasterDataDicKey.RangedMonster, apiResponse.Data.masterDataDic.RangedMonster);
         SetDicData(MasterDataDicKey.BOSS, apiResponse.Data.masterDataDic.BOSS);
         SetDicData(MasterDataDicKey.PlayerStatus, apiResponse.Data.masterDataDic.PlayerStatus);
@@ -148,8 +147,6 @@ public class APIManager : MonoSingleton<APIManager>
         {
             if (apiResponse.Data.TryGetValue("playerData", out var playerDataObj) && playerDataObj is JObject)
             {
-                Debug.Log($"playerDataObj: {playerDataObj}");
-
                 GameManager.Instance.playerData = (playerDataObj as JObject).ToObject<PlayerData>();
             }
         });
@@ -252,7 +249,7 @@ public class APIManager : MonoSingleton<APIManager>
 
             if(apiResponse.Result != (int)successCode)
             {
-                Debug.LogWarning("API Response Not Success");
+                Debug.LogError($"API Response Not Success. Body : {requestBody}");
                 return false;
             }
             

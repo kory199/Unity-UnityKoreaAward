@@ -18,11 +18,13 @@ public class StageManager : MonoSingleton<StageManager>
     #region Uinity lifeCycle
     private void Awake()
     {
+        
         // 플레이어 UI 켜기
         if (_uI_SceneGame == null)
             _uI_SceneGame = UIManager.Instance.CreateObject<UI_SceneGame>("UI_SceneGame", EnumTypes.LayoutType.First);
         _uI_SceneGame.OnShow();
 
+        ChangedStatusToServer();
         CallCountDown();
         InitUI_Enhance();
 
@@ -44,6 +46,15 @@ public class StageManager : MonoSingleton<StageManager>
 
         _uI_SceneGame.SetStageNum(_stageNum + 1);
         PlayBGMForStage(_stageNum);
+    }
+
+    private async void ChangedStatusToServer()
+    {
+        bool result = await APIManager.Instance.PlayGameAPI();
+        if(result == false)
+        {
+            Debug.LogWarning($"Status Changed Fail");
+        }    
     }
 
     private void CallCountDown()

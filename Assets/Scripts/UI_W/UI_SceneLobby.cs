@@ -1,16 +1,9 @@
-using System;
-using APIModels;
+using System.Collections;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class UI_SceneLobby : UIBase
 {
-    //private string _basePath = "UI/";
-    private void OnEnable()
-    {
-        GameManager.Instance.SceneState = SceneState.Lobby;
-    }
-
     IProcess.NextProcess _nextProcess = IProcess.NextProcess.Continue;
     public override IProcess.NextProcess ProcessInput()
     {
@@ -19,54 +12,14 @@ public class UI_SceneLobby : UIBase
 
     protected override void Awake()
     {
-        DevelopmentModeLogin();
         SoundMgr.Instance.BGMPlay(EnumTypes.StageBGMType.Lobby);
-    }
-
-    private async void DevelopmentModeLogin()
-    {
-        bool MasterDataResult = await APIManager.Instance.GetMasterDataAPI();
-
-        if(MasterDataResult)
-        {
-            User devUser = new User
-            {
-                ID = "Wally3",
-                Password = "1234!"
-            };
-
-            bool loginResult = await APIManager.Instance.LoginAPI(devUser);
-
-            if (loginResult)
-            {
-                bool gameDataResult = await APIManager.Instance.GetGameDataAPI();
-                if (gameDataResult)
-                {
-                    Debug.Log("Login Successful!");
-                }
-            }
-
-            GetStageNum();
-        }
-    }
-
-    private async void GetStageNum()
-    {
-        await UniTask.Delay(TimeSpan.FromSeconds(1));
-        bool result = await APIManager.Instance.GetStageAPI();
     }
 
     public async void OnClick_GameStart()
     {
         SoundMgr.Instance.SFXPlay(EnumTypes.SFXType.Button);
-        bool playGameTask = await APIManager.Instance.PlayGameAPI();
-
-        if (playGameTask)
-        {
-            //OnHide();
-            await GameManager.Instance.MoveSceneWithAction(EnumTypes.ScenesType.SceneInGame, OnHide);
-            GameManager.Instance.SceneState = SceneState.Game;
-        }
+        await GameManager.Instance.MoveSceneWithAction(EnumTypes.ScenesType.SceneInGame, OnHide);
+        GameManager.Instance.SceneState = SceneState.Game;
     }
 
     public void OnClick_Explane()
@@ -103,6 +56,12 @@ public class UI_SceneLobby : UIBase
         }
         _rankUi.OnShow();
     }
+
+    private void OnEnable()
+    {
+        GameManager.Instance.SceneState = SceneState.Lobby;
+    }
+
     public async void OnClick_ApplicationQuit()
     {
         SoundMgr.Instance.SFXPlay(EnumTypes.SFXType.Button);
