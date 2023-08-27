@@ -205,7 +205,7 @@ public class UI_SceneGame : UIBase
         base.OnShow();
         foreach (var image in _skillImage)
         {
-            //image.texture = null;
+            image.texture = null;
         }
         _skillKeyNum = 0;
     }
