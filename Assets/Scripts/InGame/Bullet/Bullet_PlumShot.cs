@@ -7,32 +7,17 @@ public class Bullet_PlumShot : MonoBehaviour
 {
     Action callback;
     GameObject _player;
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
+    GameObject _spawner;
+   
     private void OnEnable()
     {
         if (_player != null)
-            StartCoroutine(Co_BulletMove(_player));
-    }
-    // Update is called once per frame
-    void Update()
-    {
-
+            StartCoroutine(Co_BulletMove(_player,_spawner));
     }
     private void OnDisable()
     {
         callback();
     }
-    public void InsertPool(Action action, GameObject spanwer)
-    {
-        callback = action;
-        _player = spanwer;
-    }
-    [SerializeField] bool _isWall = false;
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Wall")
@@ -53,12 +38,20 @@ public class Bullet_PlumShot : MonoBehaviour
             }
         }
     }
-    IEnumerator Co_BulletMove(GameObject player)
+    public void InsertPool(Action action, GameObject spanwer, GameObject player)
     {
-        Vector3 dir = (gameObject.transform.position - player.transform.position).normalized;
+        callback = action;
+        _spawner = spanwer;
+        _player = player;
+    }
+    [SerializeField] bool _isWall = false;
+
+  
+    IEnumerator Co_BulletMove(GameObject player,GameObject spawner)
+    {
+        Vector3 dir = (player.transform.position - spawner.transform.position).normalized;
         while (_isWall == false)
         {
-            Debug.Log(dir);
             gameObject.transform.Translate(dir * Time.deltaTime * 4);
             yield return null;
         }

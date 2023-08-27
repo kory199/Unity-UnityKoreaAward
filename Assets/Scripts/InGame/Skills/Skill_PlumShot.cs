@@ -55,11 +55,11 @@ public class Skill_PlumShot : SkillBase
 
             Bullet_PlumShot bullet = Resources.Load<Bullet_PlumShot>("Bullet/Bullet_Skill_PlumShot");
             GameObject plum = Instantiate(bullet, bulletFolder.transform).gameObject;
-            plum.SetActive(false);
 
-            plum.GetComponent<Bullet_PlumShot>().InsertPool(() => _bullets.Enqueue(plum), _spawners[i]);
-
+           // plum.GetComponent<Bullet_PlumShot>().InsertPool(() => _bullets.Enqueue(plum), _spawners[i]);
+            plum.GetComponent<Bullet_PlumShot>().InsertPool(() => _bullets.Enqueue(plum), _spawners[i], gameObject);
             _bullets.Enqueue(plum);
+            plum.SetActive(false);
 
             if ((i % 6) != 0)
                 spawner.SetActive(false);

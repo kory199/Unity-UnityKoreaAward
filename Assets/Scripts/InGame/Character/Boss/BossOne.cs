@@ -109,7 +109,7 @@ public class BossOne : BossBase
 
             // 플레이어를 향한 방향벡터를 구함.
             //Vector3 dirVector = (player.transform.position - gameObject.transform.position).normalized;
-            Vector3 dirVector = (player.transform.position - Vector3.zero).normalized;
+            Vector3 dirVector = (Vector3.zero-gameObject.transform.position ).normalized;
             //gameObject.transform.LookAt(player.transform.position);
 
             // 임시 이동속도
