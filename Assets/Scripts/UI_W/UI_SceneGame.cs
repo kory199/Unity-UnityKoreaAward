@@ -198,16 +198,16 @@ public class UI_SceneGame : UIBase
     }
     public override void OnHide()
     {
-     
-        base.OnHide();
-    }
-    public override void OnShow()
-    {
-        base.OnShow();
         foreach (var image in _skillImage)
         {
             image.texture = null;
         }
         _skillKeyNum = 0;
+        base.OnHide();
+    }
+    public override void OnShow()
+    {
+        base.OnShow();
+      
     }
 }

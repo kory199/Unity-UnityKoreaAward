@@ -19,14 +19,15 @@ public class Skill_PlumShot : SkillBase
 
     public override void SkillShot()
     {
+        Debug.Log("매화샷");
         //24방향 공격 
         for (int i = 0; i < 24; i++)
         {
             if (_spawners[i].activeSelf == true)
             {
-                Bullet_PlumShot bullet = _bullets.Dequeue();
-                bullet.gameObject.SetActive(true);
-                bullet.InsertPool(() => _bullets.Enqueue(bullet), _spawners[i]);
+                GameObject bullet = _bullets.Dequeue();
+                bullet.SetActive(true);
+                bullet.transform.position = _spawners[i].transform.position;
             }
         }
     }
@@ -39,26 +40,29 @@ public class Skill_PlumShot : SkillBase
     }
 
     private List<GameObject> _spawners = new List<GameObject>();
-    private Queue<Bullet_PlumShot> _bullets = new Queue<Bullet_PlumShot>();
+    private Queue<GameObject> _bullets = new Queue<GameObject>();
     protected override void Start()
     {
         base.Start();
-
+        GameObject bulletFolder = new GameObject("BulletPlums");
         for (int i = 0; i < 24; i++)
         {
             GameObject spawner = new GameObject("Spawner");
             spawner.transform.SetParent(gameObject.transform);
             spawner.transform.position = new Vector3
-            (gameObject.transform.position.x + Mathf.Cos(15 * (i + 1)), gameObject.transform.position.y + Mathf.Cos(15 * (i + 1)), 0);
-
+            (gameObject.transform.position.x + Mathf.Cos(15 * (i + 1)), gameObject.transform.position.y + Mathf.Sin(15 * (i + 1)), 0);
             _spawners.Add(spawner);
-            if ((i % 6) != 0)
-                spawner.SetActive(false);
 
             Bullet_PlumShot bullet = Resources.Load<Bullet_PlumShot>("Bullet/Bullet_Skill_PlumShot");
-            _bullets.Enqueue(bullet);
+            GameObject plum = Instantiate(bullet, bulletFolder.transform).gameObject;
+            plum.SetActive(false);
 
-            Debug.Log(_bullets.Count);
+            plum.GetComponent<Bullet_PlumShot>().InsertPool(() => _bullets.Enqueue(plum), _spawners[i]);
+
+            _bullets.Enqueue(plum);
+
+            if ((i % 6) != 0)
+                spawner.SetActive(false);
         }
     }
     protected override void Update()
