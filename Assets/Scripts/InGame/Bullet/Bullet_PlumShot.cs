@@ -6,20 +6,25 @@ using UnityEngine;
 public class Bullet_PlumShot : MonoBehaviour
 {
     Action callback;
+    GameObject _spawner;
     // Start is called before the first frame update
     void Start()
     {
 
     }
-
+    private void OnEnable()
+    {
+        StartCoroutine(Co_BulletMove(_spawner));
+    }
     // Update is called once per frame
     void Update()
     {
 
     }
-    public void InsertPool(Action action)
+    public void InsertPool(Action action,GameObject spanwer)
     {
         callback = action;
+        _spawner = spanwer;
     }
     bool _isWall = false;
 
@@ -45,12 +50,12 @@ public class Bullet_PlumShot : MonoBehaviour
             }
         }
     }
-    IEnumerator Co_BulletMove(GameObject obj, GameObject spanwer)
+    IEnumerator Co_BulletMove( GameObject spanwer)
     {
         Vector3 dir = (gameObject.transform.position - spanwer.transform.position).normalized;
         while (_isWall != false)
         {
-            obj.transform.Translate(dir);
+            gameObject.transform.Translate(dir);
             yield return null;
         }
         callback();

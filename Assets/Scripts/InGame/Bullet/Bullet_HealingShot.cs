@@ -54,6 +54,7 @@ public class Bullet_HealingShot : MonoBehaviour
         if (collision.gameObject.tag == "Monster")
         {
             player.playerCurHp += recoveryAmount;
+            player.InitPlayerUI();
 
             if (player.playerCurHp > player.playerMaxHp)
             {

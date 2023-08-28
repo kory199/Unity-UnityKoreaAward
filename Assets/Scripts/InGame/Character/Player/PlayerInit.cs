@@ -72,7 +72,7 @@ public partial class Player
         InitPlayerUI();
     }
 
-    private void InitPlayerUI()
+    public void InitPlayerUI()
     {
         uI_SceneGame.SetMaxHP(playerMaxHp);
         uI_SceneGame.SetNowHP(playerCurHp);
