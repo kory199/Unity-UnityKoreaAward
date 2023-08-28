@@ -25,14 +25,19 @@ public class AccountUI : UIBase
         GetGameVersion();
         GetMasterData();
 
-        infoText.gameObject.SetActive(false);
-        inputFields[1].contentType = TMP_InputField.ContentType.Password;
-
         SoundMgr.Instance.BGMPlay(EnumTypes.StageBGMType.Title);
     }
 
     protected override void Start()
     {
+        StartInputFocus();
+    }
+
+    private void StartInputFocus()
+    {
+        infoText.gameObject.SetActive(false);
+        inputFields[1].contentType = TMP_InputField.ContentType.Password;
+
         StartCoroutine(SetInitialFocus());
     }
 
@@ -57,6 +62,7 @@ public class AccountUI : UIBase
 
     private IEnumerator SetInitialFocus()
     {
+        _currentIndex = 0;
         inputFields[_currentIndex].Select();
         inputFields[_currentIndex].ActivateInputField();
         yield return null;

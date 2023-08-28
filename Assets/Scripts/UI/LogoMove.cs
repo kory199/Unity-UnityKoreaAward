@@ -52,6 +52,7 @@ public class LogoMove : MonoBehaviour
 
         gameName.gameObject.SetActive(false);
         accountUI.SetActive(true);
+       
         this.gameObject.SetActive(false);
     }
 }
