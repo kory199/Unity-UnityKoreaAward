@@ -1,17 +1,20 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
+using DG.Tweening;
 public class UI_CountDown : UIBase
 {
     [SerializeField] Sprite[] countNums = null;
-    [SerializeField] Image countDownImg = null;
+    [SerializeField] TextMeshProUGUI countDownImg = null;
+    [SerializeField] Image countDownBG = null;
     [SerializeField] AnimationCurve PosXCurve = new AnimationCurve(new Keyframe[] { new Keyframe(0f, 7f), new Keyframe(0.9f, -1.5f) });
     [SerializeField] AnimationCurve ScaleCurve = new AnimationCurve(new Keyframe[] { new Keyframe(0f, 0.1f), new Keyframe(0.9f, 1f) });
 
     Vector3 curPos;
     Vector3 curScale;
     RectTransform rectTransform;
+    RectTransform rectTransformBG;
 
     IProcess.NextProcess _nextProcess = IProcess.NextProcess.Continue;
     public override IProcess.NextProcess ProcessInput()
@@ -22,6 +25,7 @@ public class UI_CountDown : UIBase
     protected override void Awake()
     {
         rectTransform = countDownImg.GetComponent<RectTransform>();
+        rectTransformBG = countDownBG.GetComponent<RectTransform>();
         StartCoroutine(RunCountdown());
     }
 
@@ -29,6 +33,8 @@ public class UI_CountDown : UIBase
     {
         Time.timeScale = 1;
         StartCoroutine(RunCountdown());
+        StartCoroutine(Co_BGTurn());
+        
     }
 
     IEnumerator RunCountdown()
@@ -45,7 +51,8 @@ public class UI_CountDown : UIBase
     public void Show(int number)
     {
         rectTransform.anchoredPosition = Vector2.zero;
-        countDownImg.sprite = countNums[number - 1];
+        rectTransformBG.anchoredPosition = Vector2.zero;
+        countDownImg.text = number.ToString();
         StartCoroutine(nameof(ShowCountDown));
     }
 
@@ -56,12 +63,25 @@ public class UI_CountDown : UIBase
         {
             curPos.x = PosXCurve.Evaluate(startTime);
             rectTransform.anchoredPosition = curPos;
+            rectTransformBG.anchoredPosition = curPos;
 
             curScale = Vector3.one * ScaleCurve.Evaluate(startTime);
             rectTransform.localScale = curScale;
+            rectTransformBG.localScale = curScale*6;
+
+            rectTransformBG.Rotate(Vector3.forward * 2);
+
 
             startTime += Time.deltaTime;
 
+            yield return null;
+        }
+    }
+    private IEnumerator Co_BGTurn()
+    {
+        while(true)
+        {
+            rectTransformBG.Rotate(Vector3.forward * 1);
             yield return null;
         }
     }
