@@ -1,6 +1,8 @@
 using System.Collections;
+using System.Collections.Generic;
 using APIModels;
 using UnityEngine;
+using static EnumTypes;
 
 public class MeleeMonster : MonsterBase
 {
@@ -11,19 +13,28 @@ public class MeleeMonster : MonsterBase
     WaitForSeconds waitForAttackSFX;
     WaitForSeconds waitForHitSFX;
 
-    #region unity event func
+    private List<Sprite> monsterSprite = new();
+    private SpriteRenderer meleeMonsterSpriteRenderer;
+    private float rotationSpeed;
 
+    #region unity event func
     protected override void Awake()
     {
         base.Awake();
         GetInitMonsterStatus();
+        InitMeleeMonsterInfo();
+
+        meleeMonsterSpriteRenderer = gameObject.GetComponentInChildren<SpriteRenderer>();
 
         isMeleeMonsterDead = false;
+        rotationSpeed = 25f;
     }
 
     // stage 변경에 따른 Level별 능력치 부여 => 서버 정보 받아오기
     protected override void OnEnable()
     {
+        meleeMonsterSpriteRenderer.sprite = SetMonsterSprite();
+
         base.OnEnable();
         isSelfDestruct = false;
 
@@ -37,6 +48,7 @@ public class MeleeMonster : MonsterBase
     {
         waitForAttackSFX = new WaitForSeconds(2f);
         waitForHitSFX = new WaitForSeconds(0.5f);
+
         base.Start();
     }
 
@@ -82,7 +94,6 @@ public class MeleeMonster : MonsterBase
         SetMeleeMonsterStatus(stageNum);
     }
 
-
     public override void Attack()
     {
         isSelfDestruct = true;
@@ -114,6 +125,7 @@ public class MeleeMonster : MonsterBase
 
     protected override IEnumerator State_Move()
     {
+        StartCoroutine(MonsterRotate());
         // 추후 몬스터 별 이동속도 및 공격 범위 추가
         return base.State_Move();
     }
@@ -123,5 +135,36 @@ public class MeleeMonster : MonsterBase
         Debug.LogError("1. collision_damage : " + _monsterInfo.collision_damage);
         _monsterInfo.collision_damage = _monsterInfo.collision_damage * damageReduction;
         Debug.LogError("2. collision_damage : " + _monsterInfo.collision_damage);
+    }
+
+    private void InitMeleeMonsterInfo()
+    {
+        Sprite[] sprites = Resources.LoadAll<Sprite>("Monsters");
+
+        foreach (Sprite sprite in sprites)
+        {
+            monsterSprite.Add(sprite);
+        }
+    }
+
+    private Sprite SetMonsterSprite()
+    {
+        int randomNum = Random.Range(0, monsterSprite.Count);
+
+        return monsterSprite[randomNum];
+    }
+
+    private IEnumerator MonsterRotate()
+    {
+        while (true)
+        {
+            // 회전 각도 계산 (프레임 속도에 비례하여 회전)
+            float rotationAmount = rotationSpeed * Time.deltaTime;
+
+            // 오브젝트를 회전시킴
+            meleeMonsterSpriteRenderer.gameObject.transform.Rotate(Vector3.back, rotationAmount);
+
+            yield return null;
+        }
     }
 }

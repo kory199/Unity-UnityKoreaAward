@@ -7,7 +7,7 @@ public class Bullet_RapidShot : MonoBehaviour
     Rigidbody2D bulletRb;
     CircleCollider2D bulletCollider2D;
     MeleeMonster meleeMonster;
-
+    
 
     private void Awake()
     {

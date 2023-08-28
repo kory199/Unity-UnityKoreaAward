@@ -88,7 +88,7 @@ public class StageManager : MonoSingleton<StageManager>
         }
 
         Debug.Log("Stage Up ...");
-        //_stageNum++;
+        // _stageNum++;
         
         _uI_Enhance.GetSkillPoint(_stageNum);
         _uI_Enhance.OnShow();

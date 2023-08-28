@@ -23,7 +23,7 @@ public class UI_Enhance : UIBase
     private SkillInfo[] skillArray;
     private RectTransform infoTextPos;
 
-    private int _stageNum; 
+    private int _stageNum;
     private Vector3 nextSpawnPos = Vector3.zero;
     private int zigzagDirection = 1;
     private int maxtreeNum = 15;
@@ -112,9 +112,9 @@ public class UI_Enhance : UIBase
 
     private void ButtonOnShow(int num)
     {
-        for(int i = 0; i < skillBtn.Length; ++i)
+        for (int i = 0; i < skillBtn.Length; ++i)
         {
-            if(i < num)
+            if (i < num)
             {
                 skillBtn[i].gameObject.SetActive(true);
 
@@ -169,7 +169,7 @@ public class UI_Enhance : UIBase
         Vector2 localPoint;
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(infoTextPos, pointData.position, pointData.pressEventCamera, out localPoint))
         {
-            if(btnIndex >= 0 && btnIndex <= 2)
+            if (btnIndex >= 0 && btnIndex <= 2)
             {
                 infotextObj.transform.position = new Vector3(600f, 200f, 0f); ;
             }
@@ -177,11 +177,11 @@ public class UI_Enhance : UIBase
             {
                 infotextObj.transform.position = new Vector3(900f, 200f, 0f);
             }
-            else if(btnIndex >= 6 && btnIndex <= 8)
+            else if (btnIndex >= 6 && btnIndex <= 8)
             {
                 infotextObj.transform.position = new Vector3(1200f, 200f, 0f);
             }
-            else if(btnIndex >= 9 && btnIndex <= 11)
+            else if (btnIndex >= 9 && btnIndex <= 11)
             {
                 infotextObj.transform.position = new Vector3(1600f, 200f, 0f);
             }
