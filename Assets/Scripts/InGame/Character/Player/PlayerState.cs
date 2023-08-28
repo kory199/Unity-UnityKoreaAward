@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public partial class Player
@@ -62,6 +60,7 @@ public partial class Player
         playerCurExp += exp;
         GameManager.Instance.playerData.score += score;
         InitPlayerUI();
+        uI_SceneGame.SetScore(GameManager.Instance.playerData.score);
 
         if (playerCurExp >= playerMaxExp)
         {

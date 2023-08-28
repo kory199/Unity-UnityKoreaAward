@@ -4,17 +4,16 @@ using UnityEngine;
 
 public class StageManager : MonoSingleton<StageManager>
 {
-    //[SerializeField] private int _stageNum = 1;
-    [SerializeField] private int _spawnMeleeNum = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
-    [SerializeField] private int _spawnRangedNum = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
-    [SerializeField] private int _score = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
-    [SerializeField] private int _deathMonsters = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
-    [SerializeField] private float _time = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
+    [SerializeField] private int _spawnMeleeNum = 0; 
+    [SerializeField] private int _spawnRangedNum = 0; 
+    [SerializeField] private int _deathMonsters = 0;
+    [SerializeField] private float _time = 0;
     [SerializeField] private SpawnManager _spawnManager;
     private UI_SceneGame _uI_SceneGame;
     private UI_Enhance _uI_Enhance;
 
     private int _stageNum;
+    private int _score; 
 
     #region Uinity lifeCycle
     private void Awake()
@@ -24,10 +23,9 @@ public class StageManager : MonoSingleton<StageManager>
             _uI_SceneGame = UIManager.Instance.CreateObject<UI_SceneGame>("UI_SceneGame", EnumTypes.LayoutType.First);
         _uI_SceneGame.OnShow();
 
-        _stageNum = GameManager.Instance.GetStageNum();
-
-        CallCountDown();
         ChangedStatusToServer();
+        ServerDataSet();
+        CallCountDown();
         InitUI_Enhance();
 
         //체인 등록
@@ -44,10 +42,12 @@ public class StageManager : MonoSingleton<StageManager>
 
         //End 체인
         //InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.End, SendStageData);
+
         StartCoroutine(Co_GameStart());
 
         _uI_SceneGame.SetStageNum(_stageNum);
         _uI_SceneGame.SetLevel(_stageNum);
+        _uI_SceneGame.SetScore(_score);
 
         PlayBGMForStage(_stageNum);
     }
@@ -60,6 +60,12 @@ public class StageManager : MonoSingleton<StageManager>
         {
             Debug.LogWarning($"Status Changed Fail");
         }    
+    }
+
+    private void ServerDataSet()
+    {
+        _stageNum = GameManager.Instance.GetStageNum();
+        _score = GameManager.Instance.playerData.score;
     }
 
     IEnumerator Co_GameStart()
