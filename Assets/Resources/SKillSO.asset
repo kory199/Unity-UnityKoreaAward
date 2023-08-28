@@ -37,11 +37,12 @@ MonoBehaviour:
     infotext: "\uB9E4\uD654 : 24\uBC29\uC704 \uACF5\uACA9"
     bulletNum: 0
     SkillClassName: Skill_PlumShot
-  - skillImg: {fileID: 21300000, guid: 1353e778b976bad4bbe54259fc08f592, type: 3}
-    infotext: "\uC801\uC911 \uC2DC \uCCB4\uB825 \uD68C\uBCF5"
-    bulletNum: 50
-    SkillClassName: Skill_HealingShot
   - skillImg: {fileID: 21300000, guid: eed44235dcbd621438f7c0c4f05e2356, type: 3}
+    infotext: "\uC801\uC911 \uC2DC \uBE14\uB799\uD640\uC744 \uD1B5\uD574 \uC801\uC744
+      \uB04C\uC5B4\uB2F9\uAE30\uACE0 \uD729\uC4F8\uC5B4 \uBC84\uB9BD\uB2C8\uB2E4"
+    bulletNum: 0
+    SkillClassName: Skill_BlackHoleShot
+  - skillImg: {fileID: 21300000, guid: 1353e778b976bad4bbe54259fc08f592, type: 3}
     infotext: "\uC801\uC911 \uC2DC \uCCB4\uB825 \uD68C\uBCF5"
     bulletNum: 50
     SkillClassName: Skill_HealingShot
