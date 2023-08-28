@@ -4,8 +4,6 @@ using UnityEngine;
 
 public partial class Player
 {
-    
-
     public override void Move()
     {
         if (playerRb == null)
