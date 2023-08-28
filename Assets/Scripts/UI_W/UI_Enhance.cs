@@ -55,8 +55,9 @@ public class UI_Enhance : UIBase
 
     protected override void Start()
     {
-        Debug.Log($"start _stageNum : {_stageNum}");
-        //StageButtonSet();
+        _stageNum = StageManager.Instance.GetStageNum();
+        //_stageNum = 5;
+        StageButtonSet();
     }
 
     private void Update()
@@ -70,21 +71,20 @@ public class UI_Enhance : UIBase
 
     private void OnEnable()
     {
-        _stageNum = StageManager.Instance.GetStageNum();
-        Debug.Log($"OnEnable _stageNum : {_stageNum}");
         StageButtonSet();
     }
     #endregion
 
     private void StageButtonSet()
     {
-        if (_stageNum == 0)
+        if (_stageNum == 0 || _stageNum > 5)
             return;
         else
         {
             Time.timeScale = 0;
         }
 
+        Debug.Log($"Enhance _stageNum : {_stageNum}");
         switch (_stageNum)
         {
             case 1:
@@ -167,25 +167,27 @@ public class UI_Enhance : UIBase
     private void MousePosMove(PointerEventData pointData, int btnIndex)
     {
         Vector2 localPoint;
-
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(infoTextPos, pointData.position, pointData.pressEventCamera, out localPoint))
         {
-            if (btnIndex >= 3 && btnIndex <= 5)
+            if(btnIndex >= 0 && btnIndex <= 2)
             {
-                infotextObj.transform.position = new Vector3(900f, 165f, 0f);
+                infotextObj.transform.position = new Vector3(600f, 200f, 0f); ;
+            }
+            else if (btnIndex >= 3 && btnIndex <= 5)
+            {
+                infotextObj.transform.position = new Vector3(900f, 200f, 0f);
             }
             else if(btnIndex >= 6 && btnIndex <= 8)
             {
-                infotextObj.transform.position = new Vector3(1200f, 165f, 0f);
+                infotextObj.transform.position = new Vector3(1200f, 200f, 0f);
             }
             else if(btnIndex >= 9 && btnIndex <= 11)
             {
-                infotextObj.transform.position = new Vector3(1600f, 165f, 0f);
+                infotextObj.transform.position = new Vector3(1600f, 200f, 0f);
             }
         }
     }
 
-    // 나중에 필요한 객체로 변경
     public int OnClick_Skill(Button clickedBtn, int bulletNum, SkillInfo skillInfo)
     {
         skillPoint--;
@@ -202,7 +204,6 @@ public class UI_Enhance : UIBase
         return bulletNum;
     }
 
-    // TODO : 프리펩 생성 나중에 오브젝트 풀링으로 변경 
     private void CreateSkillNodePrefab(Button clickedBtn)
     {
         if (skillTreeList.Count >= maxtreeNum)
@@ -270,7 +271,15 @@ public class UI_Enhance : UIBase
 
     private void AddSkillArray()
     {
-        skillSO.setOne.CopyTo(skillArray, 0);
+        List<SkillInfo> tempList = new List<SkillInfo>(skillSO.setOne);
+
+        int index = 0;
+        while (tempList.Count > 0)
+        {
+            int randomIndex = Random.Range(0, tempList.Count);
+            skillArray[index++] = tempList[randomIndex];
+            tempList.RemoveAt(randomIndex);
+        }
     }
 
     private void OnDisable()

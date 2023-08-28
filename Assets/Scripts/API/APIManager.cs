@@ -61,7 +61,6 @@ public class APIManager : MonoSingleton<APIManager>
     private void HandleMasterDataResponse(APIResponse<MasterDataResponse> apiResponse)
     {
         SetDicData(MasterDataDicKey.MeleeMonster, apiResponse.Data.masterDataDic.MeleeMonster);
-        // TODO : 주석 처리 
         SetDicData(MasterDataDicKey.RangedMonster, apiResponse.Data.masterDataDic.RangedMonster);
         SetDicData(MasterDataDicKey.BOSS, apiResponse.Data.masterDataDic.BOSS);
         SetDicData(MasterDataDicKey.PlayerStatus, apiResponse.Data.masterDataDic.PlayerStatus);
@@ -148,8 +147,6 @@ public class APIManager : MonoSingleton<APIManager>
         {
             if (apiResponse.Data.TryGetValue("playerData", out var playerDataObj) && playerDataObj is JObject)
             {
-                Debug.Log($"playerDataObj: {playerDataObj}");
-
                 GameManager.Instance.playerData = (playerDataObj as JObject).ToObject<PlayerData>();
             }
         });
@@ -197,12 +194,14 @@ public class APIManager : MonoSingleton<APIManager>
     {
         bool result = await CallAPI<Dictionary<string, object>, GameData>(APIUrls.StageApi, NewGameData(), APISuccessCode.LoadStageSuccess, (apiResponse) =>
         {
-            if (apiResponse.Data.TryGetValue("stageData", out object stageDataObj))
+            if (apiResponse?.Data is Dictionary<string, object> data)
             {
-                List<StageInfo> stageDataList = JsonConvert.DeserializeObject<List<StageInfo>>(stageDataObj.ToString());
-                if (stageDataList != null && stageDataList.Count > 0)
+                if (data.TryGetValue("stageNum", out object stageNumObj))
                 {
-                    GameManager.Instance.StageNum = stageDataList.Last().stage_id;
+                    if (stageNumObj is long stageNumInt)
+                    {
+                        GameManager.Instance.StageNum = (int)stageNumInt;
+                    }
                 }
             }
         });
@@ -252,7 +251,7 @@ public class APIManager : MonoSingleton<APIManager>
 
             if(apiResponse.Result != (int)successCode)
             {
-                Debug.LogWarning("API Response Not Success");
+                Debug.LogError($"API Response Not Success. Body : {requestBody}");
                 return false;
             }
             

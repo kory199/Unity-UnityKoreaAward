@@ -4,7 +4,6 @@ using APIModels;
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class AccountUI : UIBase
 {
@@ -20,6 +19,7 @@ public class AccountUI : UIBase
         return _nextProcess;
     }
 
+    #region Unity Lifecycle
     protected override void Awake()
     {
         GetGameVersion();
@@ -36,6 +36,15 @@ public class AccountUI : UIBase
         StartCoroutine(SetInitialFocus());
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            OnClickLogin();
+        }
+    }
+    #endregion
+
     private async void GetGameVersion()
     {
         versionText.text = "Ver :  " + await APIManager.Instance.GetGameVersionAPI();
@@ -48,9 +57,9 @@ public class AccountUI : UIBase
 
     private IEnumerator SetInitialFocus()
     {
-        yield return new WaitForSeconds(0.1f);
         inputFields[_currentIndex].Select();
         inputFields[_currentIndex].ActivateInputField();
+        yield return null;
     }
 
     public void ValidateID()
@@ -148,7 +157,7 @@ public class AccountUI : UIBase
                 {
                     infoText.text = $"Login Successful !";
                     await UniTask.Delay(TimeSpan.FromSeconds(0.5));
-                    
+
                     OnHide();
                     CreateLodingBar();
                 }

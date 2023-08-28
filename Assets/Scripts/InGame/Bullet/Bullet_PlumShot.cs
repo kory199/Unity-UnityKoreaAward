@@ -6,28 +6,18 @@ using UnityEngine;
 public class Bullet_PlumShot : MonoBehaviour
 {
     Action callback;
+    GameObject _player;
     GameObject _spawner;
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
+   
     private void OnEnable()
     {
-        StartCoroutine(Co_BulletMove(_spawner));
+        if (_player != null)
+            StartCoroutine(Co_BulletMove(_player,_spawner));
     }
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-
+        callback();
     }
-    public void InsertPool(Action action,GameObject spanwer)
-    {
-        callback = action;
-        _spawner = spanwer;
-    }
-    bool _isWall = false;
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Wall")
@@ -39,26 +29,32 @@ public class Bullet_PlumShot : MonoBehaviour
             if (collision.name == "BasicMeleeMonster")
             {
                 collision.GetComponent<MeleeMonster>().Hit();
-                callback();
                 gameObject.SetActive(false);
             }
             else if (collision.name == "BossOne")
             {
                 collision.GetComponent<BossOne>().BossHit(2);
-                callback();
                 gameObject.SetActive(false);
             }
         }
     }
-    IEnumerator Co_BulletMove( GameObject spanwer)
+    public void InsertPool(Action action, GameObject spanwer, GameObject player)
     {
-        Vector3 dir = (gameObject.transform.position - spanwer.transform.position).normalized;
-        while (_isWall != false)
+        callback = action;
+        _spawner = spanwer;
+        _player = player;
+    }
+    [SerializeField] bool _isWall = false;
+
+  
+    IEnumerator Co_BulletMove(GameObject player,GameObject spawner)
+    {
+        Vector3 dir = (player.transform.position - spawner.transform.position).normalized;
+        while (_isWall == false)
         {
-            gameObject.transform.Translate(dir);
+            gameObject.transform.Translate(dir * Time.deltaTime * 4);
             yield return null;
         }
-        callback();
         _isWall = false;
         gameObject.SetActive(false);
     }

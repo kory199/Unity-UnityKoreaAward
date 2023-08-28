@@ -1,14 +1,17 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class LogoMove : MonoBehaviour
 {
     [SerializeField] GameObject accountUI = null;
+    [SerializeField] TextMeshProUGUI gameName = null;
+
     private RawImage _logo;
 
     private float moveDistance = 50f;
-    private float moveDuration = 1.5f;
+    private float moveDuration = 0.8f;
 
     private void Awake()
     {
@@ -47,6 +50,7 @@ public class LogoMove : MonoBehaviour
 
         _logo.rectTransform.position = targetPositionUp;
 
+        gameName.gameObject.SetActive(false);
         accountUI.SetActive(true);
         this.gameObject.SetActive(false);
     }
