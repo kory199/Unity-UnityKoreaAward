@@ -64,11 +64,14 @@ public class Skill_NapalmShotChild : MonoBehaviour
                 if (collision.gameObject.TryGetComponent<MeleeMonster>(out MeleeMonster meleeMonster))
                 {
                     this.meleeMonster = meleeMonster;
-                    this.meleeMonster.gameObject.AddComponent<Skill_NapalmShotDotDamage>();
                 }
                 else
                 {
                     this.meleeMonster = collision.gameObject.AddComponent<MeleeMonster>();
+                }
+
+                if (!collision.gameObject.GetComponent<Skill_NapalmShotDotDamage>())
+                {
                     this.meleeMonster.gameObject.AddComponent<Skill_NapalmShotDotDamage>();
                 }
             }

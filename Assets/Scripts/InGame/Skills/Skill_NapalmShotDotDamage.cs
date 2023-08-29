@@ -21,10 +21,10 @@ public class Skill_NapalmShotDotDamage : MonoBehaviour
     {
         time = 0f;
         lifeTime = 4f;
-        delayTime = 0f;
+        delayTime = 1f;
         isFirst = true;
 
-        SendDotDamage();
+        StartCoroutine(SendDotDamageCoroutine());
     }
 
     private void OnDisable()
@@ -44,18 +44,20 @@ public class Skill_NapalmShotDotDamage : MonoBehaviour
         }
     }
 
-    private void SendDotDamage()
+    private IEnumerator SendDotDamageCoroutine()
     {
         while (time < lifeTime)
         {
             time += Time.deltaTime;
             delayTime += Time.deltaTime;
 
-            if (meleeMonster.gameObject != null && delayTime > 0.5f)
+            if (meleeMonster.gameObject != null && delayTime > 1f)
             {
                 meleeMonster.Hit();
                 delayTime = 0;
             }
+
+            yield return null;
         }
 
         time = 0;
