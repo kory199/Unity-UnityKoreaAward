@@ -38,7 +38,6 @@ public class GameManager : MonoSingleton<GameManager>
 
     public int GetStageNum()
     {
-        Debug.Log($"StageNum : {StageNum}");
         return StageNum;
     }
 

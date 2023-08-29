@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class StageManager : MonoSingleton<StageManager>
 {
-    //[SerializeField] private int _stageNum = 1;
-    [SerializeField] private int _spawnMeleeNum = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
-    [SerializeField] private int _spawnRangedNum = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
-    [SerializeField] private int _score = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
-    [SerializeField] private int _deathMonsters = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
-    [SerializeField] private float _time = 0; //=>스크립터블 오브젝트에서 읽어오는 방식으로 변경예정
+    [SerializeField] private int _spawnMeleeNum = 0; 
+    [SerializeField] private int _spawnRangedNum = 0; 
+    [SerializeField] private int _deathMonsters = 0;
+    [SerializeField] private float _time = 0;
     [SerializeField] private SpawnManager _spawnManager;
     private UI_SceneGame _uI_SceneGame;
     private UI_Enhance _uI_Enhance;
 
     private int _stageNum;
+    private int _score;
+    private bool playGame;
 
     #region Uinity lifeCycle
     private void Awake()
@@ -24,11 +24,11 @@ public class StageManager : MonoSingleton<StageManager>
             _uI_SceneGame = UIManager.Instance.CreateObject<UI_SceneGame>("UI_SceneGame", EnumTypes.LayoutType.First);
         _uI_SceneGame.OnShow();
 
-        _stageNum = GameManager.Instance.GetStageNum();
-
-        CallCountDown();
         ChangedStatusToServer();
+        ServerDataSet();
+        CallCountDown();
         InitUI_Enhance();
+        playGame = true;
 
         //체인 등록
         InGameManager.Instance.RegisterParams(EnumTypes.InGameParamType.Stage, (int)EnumTypes.StageStateType.Max);
@@ -44,11 +44,12 @@ public class StageManager : MonoSingleton<StageManager>
 
         //End 체인
         //InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.End, SendStageData);
-        StartCoroutine(Co_GameStart());
 
         _uI_SceneGame.SetStageNum(_stageNum);
         _uI_SceneGame.SetLevel(_stageNum);
+        _uI_SceneGame.SetScore(_score);
 
+        StartCoroutine(Co_GameStart());
         PlayBGMForStage(_stageNum);
     }
     #endregion
@@ -60,6 +61,12 @@ public class StageManager : MonoSingleton<StageManager>
         {
             Debug.LogWarning($"Status Changed Fail");
         }    
+    }
+
+    private void ServerDataSet()
+    {
+        _stageNum = GameManager.Instance.GetStageNum();
+        _score = GameManager.Instance.playerData.score;
     }
 
     IEnumerator Co_GameStart()
@@ -88,15 +95,19 @@ public class StageManager : MonoSingleton<StageManager>
         }
 
         Debug.Log("Stage Up ...");
-        // _stageNum++;
         
         _uI_Enhance.GetSkillPoint(_stageNum);
         _uI_Enhance.OnShow();
 
-        _uI_SceneGame.SetStageNum(_stageNum);
-        _uI_SceneGame.SetLevel(_stageNum);
+        if(playGame)
+        {
+            SendStageData();
+        }
+
         PlayBGMForStage(_stageNum);
-        SendStageData();
+
+        //_uI_SceneGame.SetStageNum(_stageNum);
+        //_uI_SceneGame.SetLevel(_stageNum);
     }
 
     public int GetStageNum() => _stageNum;
@@ -120,25 +131,28 @@ public class StageManager : MonoSingleton<StageManager>
             Debug.LogWarning("StageClear to Server Fail");
         }
     }
+
     private async void SendStageData()
     {
         Debug.Log("Send StageEndData to Server ...");
 
         _score = GameManager.Instance.playerData.score;
-        Debug.Log($"_score {_score}, _stageNum {_stageNum}");
-        //bool result = await APIManager.Instance.StageUpToServer(_stageNum, _score);
-        //if(result)
-        //{
-            //Debug.Log($"");
-        //}
+        //Debug.Log($"_score {_score}, _stageNum {_stageNum}");
+        bool result = await APIManager.Instance.StageUpToServer(_stageNum, _score);
+
+        if(result)
+        {
+            _stageNum++;
+            _uI_SceneGame.SetStageNum(_stageNum);
+            _uI_SceneGame.SetLevel(_stageNum);
+            StartCoroutine(InitUI_LevelUp());
+        }
     }
 
     public void PlayerDeath()
     {
         //게임 오버 코루틴
         StartCoroutine(Co_GameOverUI());
-
-
     }
 
     public void MonsterDeath()
@@ -165,7 +179,9 @@ public class StageManager : MonoSingleton<StageManager>
 
     IEnumerator Co_GameOverUI()
     {
+        playGame = false;
         _uI_SceneGame.OnHide();
+
         Popup_StageClear popup_StageFail = UIManager.Instance.CreateObject<Popup_StageClear>("Popup_StageFail", EnumTypes.LayoutType.Middle);
         popup_StageFail.OnShow();
         SoundMgr.Instance.SFXPlay(EnumTypes.SFXType.StageFile);
@@ -175,14 +191,19 @@ public class StageManager : MonoSingleton<StageManager>
         //게임 오버시 띄울 창 켜거나 이펙트 만들기
 
         //서버 데이터 전달
-        SendStageData();
+        //SendStageData();
 
         MoveToLobby();
     }
 
     private async void MoveToLobby()
+    {   
+        await GameManager.Instance.MoveSceneWithAction(EnumTypes.ScenesType.SceneLobby, GetStageAPINum);
+    }
+
+    private async void GetStageAPINum()
     {
-        await GameManager.Instance.MoveSceneWithAction(EnumTypes.ScenesType.SceneLobby);
+        await APIManager.Instance.GetStageAPI();
     }
 
     IEnumerator Co_GameClearUI()
@@ -227,5 +248,13 @@ public class StageManager : MonoSingleton<StageManager>
     {
         _uI_Enhance = UIManager.Instance.CreateObject<UI_Enhance>("UI_Enhance", EnumTypes.LayoutType.Middle);
         _uI_Enhance.OnHide();
+    }
+
+    IEnumerator InitUI_LevelUp()
+    {
+        UI_LevelUp uI_LevelUp = UIManager.Instance.CreateObject<UI_LevelUp>("Popup_LevelUp", EnumTypes.LayoutType.Middle);
+        uI_LevelUp.OnShow();
+        yield return new WaitForSeconds(1f);
+        uI_LevelUp.OnHide();
     }
 }

@@ -7,7 +7,7 @@ public class UI_LodingBar : UIBase
 {
     [SerializeField] Slider slider = null;
 
-    bool result = true;
+    private bool result = true;
 
     IProcess.NextProcess _nextProcess = IProcess.NextProcess.Continue;
     public override IProcess.NextProcess ProcessInput()
@@ -15,7 +15,7 @@ public class UI_LodingBar : UIBase
         return _nextProcess;
     }
 
-    protected override void Start()
+    private void OnEnable()
     {
         StartCoroutine(LoadAsyncSceneCoroutine());
     }
@@ -75,5 +75,11 @@ public class UI_LodingBar : UIBase
     private async void MoveScene()
     {
         await GameManager.Instance.MoveSceneWithAction(EnumTypes.ScenesType.SceneLobby);
+    }
+
+    private void OnDisable()
+    {
+        StopCoroutine(LoadAsyncSceneCoroutine());
+        slider.value = 0;
     }
 }

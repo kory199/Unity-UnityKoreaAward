@@ -56,7 +56,6 @@ public class UI_Enhance : UIBase
     protected override void Start()
     {
         _stageNum = StageManager.Instance.GetStageNum();
-        //_stageNum = 5;
         StageButtonSet();
     }
 
@@ -84,7 +83,7 @@ public class UI_Enhance : UIBase
             Time.timeScale = 0;
         }
 
-        Debug.Log($"Enhance _stageNum : {_stageNum}");
+        //Debug.Log($"Enhance _stageNum : {_stageNum}");
         switch (_stageNum)
         {
             case 1:

@@ -251,7 +251,7 @@ public class APIManager : MonoSingleton<APIManager>
 
             if(apiResponse.Result != (int)successCode)
             {
-                Debug.LogError($"API Response Not Success. Body : {requestBody}");
+                Debug.LogWarning($"API Response Not Success. Body : {requestBody}");
                 return false;
             }
             

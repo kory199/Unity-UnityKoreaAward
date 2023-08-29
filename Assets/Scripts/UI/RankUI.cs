@@ -17,7 +17,7 @@ public class RankUI : UIBase
     [SerializeField] private GameObject _infinityScrollObj = null;
     [SerializeField] private InfinityScroll _InfinityScroll = null;
 
-    private float debounceTime = 0.5f;
+    private float debounceTime = 0.1f;
     private float lastAPICallTime;
 
     IProcess.NextProcess _nextProcess = IProcess.NextProcess.Continue;
@@ -27,10 +27,8 @@ public class RankUI : UIBase
     }
     protected override void Awake()
     {
-        //OnClickRank();
         r_infoText.gameObject.SetActive(true);
         r_infoText.text = "Please Wait ...";
-
     }
 
     private async void OnClickRank()
