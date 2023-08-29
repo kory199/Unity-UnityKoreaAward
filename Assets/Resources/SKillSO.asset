@@ -29,7 +29,7 @@ MonoBehaviour:
       \uAC70\uB9AC \uC21C\uAC04\uC774\uB3D9"
     bulletNum: 0
     SkillClassName: Skill_Flash
-  - skillImg: {fileID: 21300000, guid: 3384652b734e0084984f2782e4dcc738, type: 3}
+  - skillImg: {fileID: 21300000, guid: 932da304e34148247b446a0ac0c0142e, type: 3}
     infotext: "\uC801\uC911 \uC2DC \uCCB4\uB825 \uD68C\uBCF5"
     bulletNum: 50
     SkillClassName: Skill_HealingShot
@@ -37,31 +37,34 @@ MonoBehaviour:
     infotext: "\uB9E4\uD654 : 24\uBC29\uC704 \uACF5\uACA9"
     bulletNum: 0
     SkillClassName: Skill_PlumShot
-  - skillImg: {fileID: 21300000, guid: 1353e778b976bad4bbe54259fc08f592, type: 3}
-    infotext: "\uC801\uC911 \uC2DC \uCCB4\uB825 \uD68C\uBCF5"
+  - skillImg: {fileID: 21300000, guid: eed44235dcbd621438f7c0c4f05e2356, type: 3}
+    infotext: "\uC801\uC911 \uC2DC \uBE14\uB799\uD640\uC744 \uD1B5\uD574 \uC801\uC744
+      \uB04C\uC5B4\uB2F9\uAE30\uACE0 \uD729\uC4F8\uC5B4 \uBC84\uB9BD\uB2C8\uB2E4"
+    bulletNum: 0
+    SkillClassName: Skill_BlackHoleShot
+  - skillImg: {fileID: 21300000, guid: eed44235dcbd621438f7c0c4f05e2356, type: 3}
+    infotext: "\uC801\uC911 \uC2DC \uBE14\uB799\uD640\uC744 \uD1B5\uD574 \uC801\uC744
+      \uB04C\uC5B4\uB2F9\uAE30\uACE0 \uD729\uC4F8\uC5B4 \uBC84\uB9BD\uB2C8\uB2E4"
     bulletNum: 50
-    SkillClassName: Skill_HealingShot
+    SkillClassName: Skill_BlackHoleShot
+  - skillImg: {fileID: 21300000, guid: eed44235dcbd621438f7c0c4f05e2356, type: 3}
+    infotext: "\uC801\uC911 \uC2DC \uBE14\uB799\uD640\uC744 \uD1B5\uD574 \uC801\uC744
+      \uB04C\uC5B4\uB2F9\uAE30\uACE0 \uD729\uC4F8\uC5B4 \uBC84\uB9BD\uB2C8\uB2E4"
+    bulletNum: 50
+    SkillClassName: Skill_BlackHoleShot
   - skillImg: {fileID: 21300000, guid: eed44235dcbd621438f7c0c4f05e2356, type: 3}
     infotext: "\uC801\uC911 \uC2DC \uCCB4\uB825 \uD68C\uBCF5"
     bulletNum: 50
-    SkillClassName: Skill_HealingShot
-  - skillImg: {fileID: 21300000, guid: 08c71e4e0565fe4469d1e0a593047156, type: 3}
+    SkillClassName: Skill_BlackHoleShot
+  - skillImg: {fileID: 21300000, guid: eed44235dcbd621438f7c0c4f05e2356, type: 3}
     infotext: "\uC801\uC911 \uC2DC \uCCB4\uB825 \uD68C\uBCF5"
-    bulletNum: 50
-    SkillClassName: Skill_HealingShot
-  - skillImg: {fileID: 21300000, guid: 300abdf8cbdd5c742a05b6506767fd64, type: 3}
+    bulletNum: 0
+    SkillClassName: Skill_BlackHoleShot
+  - skillImg: {fileID: 21300000, guid: eed44235dcbd621438f7c0c4f05e2356, type: 3}
     infotext: "\uC801\uC911 \uC2DC \uCCB4\uB825 \uD68C\uBCF5"
-    bulletNum: 50
-    SkillClassName: Skill_HealingShot
-  - skillImg: {fileID: 21300000, guid: bbe833a9207e7fa41bbd3ce71ad09605, type: 3}
+    bulletNum: 0
+    SkillClassName: Skill_BlackHoleShot
+  - skillImg: {fileID: 21300000, guid: eed44235dcbd621438f7c0c4f05e2356, type: 3}
     infotext: "\uC801\uC911 \uC2DC \uCCB4\uB825 \uD68C\uBCF5"
-    bulletNum: 50
-    SkillClassName: Skill_HealingShot
-  - skillImg: {fileID: 21300000, guid: f6b8b85cbdc82ce439a41ae3d56d57ee, type: 3}
-    infotext: "\uC801\uC911 \uC2DC \uCCB4\uB825 \uD68C\uBCF5"
-    bulletNum: 50
-    SkillClassName: Skill_HealingShot
-  - skillImg: {fileID: 21300000, guid: 6960c6bd5088317429f7e0e033bee813, type: 3}
-    infotext: "\uC801\uC911 \uC2DC \uCCB4\uB825 \uD68C\uBCF5"
-    bulletNum: 50
-    SkillClassName: Skill_HealingShot
+    bulletNum: 0
+    SkillClassName: Skill_BlackHoleShot
