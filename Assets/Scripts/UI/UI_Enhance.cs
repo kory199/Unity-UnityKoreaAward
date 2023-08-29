@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -53,12 +54,6 @@ public class UI_Enhance : UIBase
         infoTextPos = infotextObj.GetComponent<RectTransform>();
     }
 
-    protected override void Start()
-    {
-        _stageNum = StageManager.Instance.GetStageNum();
-        StageButtonSet();
-    }
-
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -76,6 +71,8 @@ public class UI_Enhance : UIBase
 
     private void StageButtonSet()
     {
+        _stageNum = StageManager.Instance.GetStageNum();
+
         if (_stageNum == 0 || _stageNum > 5)
             return;
         else
@@ -200,6 +197,7 @@ public class UI_Enhance : UIBase
         }
 
         OnHide();
+        //InitUI_LevelUp();
         return bulletNum;
     }
 
@@ -265,6 +263,7 @@ public class UI_Enhance : UIBase
                 skillBtn[i].interactable = false;
             }
         }
+
         enhanceNum.text = "enhanceNum : " + skillPoint.ToString();
     }
 
@@ -284,5 +283,11 @@ public class UI_Enhance : UIBase
     private void OnDisable()
     {
         Time.timeScale = 1;
+    }
+
+    private void InitUI_LevelUp()
+    {
+        UI_LevelUp uI_LevelUp = UIManager.Instance.CreateObject<UI_LevelUp>("Popup_LevelUp", EnumTypes.LayoutType.Middle);
+        uI_LevelUp.OnShow();
     }
 }
