@@ -23,6 +23,8 @@ public class Skill_BlackHoleChild : MonoBehaviour
 
     public IEnumerator CreateBlackHole(Vector3 originScale, Vector3 maxScale, Vector3 increaseScale)
     {
+        gameObject.transform.localScale = originScale;
+
         while (originScale.x < maxScale.x)
         {
             gameObject.transform.localScale = originScale;
