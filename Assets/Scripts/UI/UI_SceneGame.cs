@@ -19,6 +19,11 @@ public class UI_SceneGame : UIBase
     [SerializeField] private Image[] _skillCool = null;
 
     [SerializeField] Button _pausebtn = null;
+    [SerializeField] private Sprite _skillBaseImg =null;
+
+    [SerializeField] private RawImage[] _dirKeys = null;
+    [SerializeField] private RawImage[] _attackKeys = null;
+
 
     IProcess.NextProcess _nextProcess = IProcess.NextProcess.Continue;
     public override IProcess.NextProcess ProcessInput()
@@ -34,6 +39,59 @@ public class UI_SceneGame : UIBase
         _player.uI_SceneGame = this;
         StartCoroutine(ActivatePauseButtonAfterDelay());
     }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.W))
+        {
+            _dirKeys[0].color = Color.blue;
+        }
+        if(Input.GetKeyDown(KeyCode.A))
+        {
+            _dirKeys[1].color = Color.blue;
+        }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            _dirKeys[2].color = Color.blue;
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            _dirKeys[3].color = Color.blue;
+        }
+        if (Input.GetKeyUp(KeyCode.W))
+        {
+            _dirKeys[0].color = Color.white;
+        }
+        if (Input.GetKeyUp(KeyCode.A))
+        {
+            _dirKeys[1].color = Color.white;
+        }
+        if (Input.GetKeyUp(KeyCode.S))
+        {
+            _dirKeys[2].color = Color.white;
+        }
+        if (Input.GetKeyUp(KeyCode.D))
+        {
+            _dirKeys[3].color = Color.white;
+        }
+        if (Input.GetMouseButtonDown(0))
+        {
+            _attackKeys[0].color = Color.blue;
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            _attackKeys[1].color = Color.blue;
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            _attackKeys[0].color = Color.white;
+        }
+        if (Input.GetMouseButtonUp(1))
+        {
+            _attackKeys[1].color = Color.white;
+        }
+    }
+
 
     private IEnumerator ActivatePauseButtonAfterDelay()
     {
@@ -210,7 +268,7 @@ public class UI_SceneGame : UIBase
         base.OnShow();
         foreach (var image in _skillImage)
         {
-            image.texture = null;
+            image.texture = _skillBaseImg.texture;
         }
         _skillKeyNum = 0;
     }

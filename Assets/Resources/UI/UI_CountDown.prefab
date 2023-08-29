@@ -251,12 +251,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   countNums:
-  - {fileID: 1774639310, guid: 8eeaf5c502666436ebe266f667c08288, type: 3}
-  - {fileID: -475302143, guid: 8eeaf5c502666436ebe266f667c08288, type: 3}
-  - {fileID: 1176943140, guid: 8eeaf5c502666436ebe266f667c08288, type: 3}
-  countDownImg: {fileID: 1324105803903158330}
-  countDownBG: {fileID: 2171107483899617948}
-  countDownBG2: {fileID: 0}
+  - {fileID: 579806876, guid: 461a95203cb714ee884eb0923b671800, type: 3}
+  - {fileID: 2111941277, guid: 461a95203cb714ee884eb0923b671800, type: 3}
+  - {fileID: 1321233644, guid: 461a95203cb714ee884eb0923b671800, type: 3}
+  countDownImg: {fileID: 2171107483899617948}
   PosXCurve:
     serializedVersion: 2
     m_Curve:
@@ -371,7 +369,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300004, guid: 56d84991286850f428b4e7df0cca7380, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
