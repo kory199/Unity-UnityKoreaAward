@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Skill_NapalmShotChild : MonoBehaviour
@@ -9,10 +10,10 @@ public class Skill_NapalmShotChild : MonoBehaviour
 
     private float rotationSpeed;
     private Vector3 origineScale;
-    private bool isHitMonsterRunning;
-    private bool isColliding;
-    private IEnumerator hitMonsterCoroutine;
-    private WaitForSeconds repeatTime;
+    // private bool isHitMonsterRunning;
+    // private bool isColliding;
+    // private IEnumerator hitMonsterCoroutine;
+    // private WaitForSeconds repeatTime;
 
 
 
@@ -31,17 +32,17 @@ public class Skill_NapalmShotChild : MonoBehaviour
     private void OnEnable()
     {
         MonsterRotate();
-        isHitMonsterRunning = false; // OnEnable에서 초기화
-        hitMonsterCoroutine = null; // 코루틴 초기화
+        // isHitMonsterRunning = false; // OnEnable에서 초기화
+        // hitMonsterCoroutine = null; // 코루틴 초기화
     }
 
     private void Start()
     {
         origineScale = Vector3.one;
-        rotationSpeed = 20f;
-        repeatTime = new WaitForSeconds(1f);
-        isHitMonsterRunning = false;
-        isColliding = false;
+        rotationSpeed = 40f;
+        // repeatTime = new WaitForSeconds(1f);
+        // isHitMonsterRunning = false;
+        // isColliding = false;
     }
 
     public void SetNapalmShotScale(Vector3 maxScale)
@@ -56,36 +57,31 @@ public class Skill_NapalmShotChild : MonoBehaviour
     {
         if (collision.gameObject.tag == "Monster")
         {
-            isColliding = true;
+            // isColliding = true;
 
             if (collision.gameObject.name == "BasicMeleeMonster")
             {
                 if (collision.gameObject.TryGetComponent<MeleeMonster>(out MeleeMonster meleeMonster))
                 {
                     this.meleeMonster = meleeMonster;
+                    this.meleeMonster.gameObject.AddComponent<Skill_NapalmShotDotDamage>();
                 }
                 else
                 {
                     this.meleeMonster = collision.gameObject.AddComponent<MeleeMonster>();
-                }
-
-                // HitMonster 코루틴 시작 여부 체크
-                if (!isHitMonsterRunning)
-                {
-                    hitMonsterCoroutine = HitMonster(collision.gameObject); // 코루틴 할당
-                    StartCoroutine(HitMonster(collision.gameObject));
+                    this.meleeMonster.gameObject.AddComponent<Skill_NapalmShotDotDamage>();
                 }
             }
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.tag == "Monster")
-        {
-            isColliding = false;
-        }
-    }
+    // private void OnTriggerExit2D(Collider2D other)
+    // {
+    //     if (other.gameObject.tag == "Monster")
+    //     {
+    //         isColliding = false;
+    //     }
+    // }
 
     private IEnumerator MonsterRotate()
     {
@@ -101,21 +97,21 @@ public class Skill_NapalmShotChild : MonoBehaviour
         }
     }
 
-    private IEnumerator HitMonster(GameObject monster)
-    {
-        isHitMonsterRunning = true;
-
-        while (monster != null)
-        {
-            if (meleeMonster != null)
-            {
-                meleeMonster.Hit();
-            }
-
-            yield return repeatTime;
-        }
-
-        isHitMonsterRunning = false; 
-        hitMonsterCoroutine = null; // 코루틴 종료 후 변수 초기화
-    }
+    // private IEnumerator HitMonster(GameObject monster)
+    // {
+    //     isHitMonsterRunning = true;
+    // 
+    //     while (monster != null)
+    //     {
+    //         if (meleeMonster != null)
+    //         {
+    //             meleeMonster.Hit();
+    //         }
+    // 
+    //         yield return repeatTime;
+    //     }
+    // 
+    //     isHitMonsterRunning = false; 
+    //     hitMonsterCoroutine = null; // 코루틴 종료 후 변수 초기화
+    // }
 }
