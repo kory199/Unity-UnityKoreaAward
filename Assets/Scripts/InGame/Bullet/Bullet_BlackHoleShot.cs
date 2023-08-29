@@ -63,7 +63,9 @@ public class Bullet_BlackHoleShot : MonoBehaviour
 
         originScale = new Vector3(0.1f, 0.1f, 0.1f);
         maxScale = Vector3.one;
-        increaseScale = new Vector3(0.05f, 0.05f, 0.05f);
+        increaseScale = new Vector3(0.0002f, 0.0002f, 0.0002f);
+
+        blackHole.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -85,7 +87,9 @@ public class Bullet_BlackHoleShot : MonoBehaviour
                     meleeMonster = collision.gameObject.AddComponent<MeleeMonster>();
                 }
 
-                meleeMonster.Hit();
+                // meleeMonster.Hit();
+                bulletRb.velocity = Vector3.zero;
+                blackHole.SetActive(true);
                 StartCoroutine(skill_BlackHoleChild.CreateBlackHole(originScale, maxScale, increaseScale));
                 Destroy(gameObject, lifeTime);
             }
@@ -106,6 +110,6 @@ public class Bullet_BlackHoleShot : MonoBehaviour
 
     public void SetBlackHoleScale(int skillLevel)
     {
-        maxScale *= skillLevel * 0.2f;
+        maxScale *= 1 + (skillLevel * 0.2f);
     }
 }

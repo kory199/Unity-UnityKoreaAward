@@ -10,8 +10,6 @@ public class Skill_BlackHoleShot : SkillBase
     // bullet Info
     GameObject bullet;
     Rigidbody2D bulletRb;
-    private float healingAmount;
-
 
     #region Unity Life Cycle
     private void Awake()

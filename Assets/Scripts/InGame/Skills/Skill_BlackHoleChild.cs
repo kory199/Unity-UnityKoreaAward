@@ -6,6 +6,7 @@ using UnityEngine;
 public class Skill_BlackHoleChild : MonoBehaviour
 {
     CircleCollider2D blackHoleCollider;
+    float gravity;
 
     private void Awake()
     {
@@ -17,6 +18,7 @@ public class Skill_BlackHoleChild : MonoBehaviour
         {
             blackHoleCollider = gameObject.AddComponent<CircleCollider2D>();
         }
+        gravity = 2f;
     }
 
     public IEnumerator CreateBlackHole(Vector3 originScale, Vector3 maxScale, Vector3 increaseScale)
@@ -35,21 +37,36 @@ public class Skill_BlackHoleChild : MonoBehaviour
     {
         if (collision.gameObject.tag == "Monster")
         {
+            // 몬스터 이동방향
+            Vector2 moveDirection = (transform.position - collision.transform.position).normalized;
+            
             if (collision.gameObject.name == "BasicMeleeMonster")
             {
-                Rigidbody2D monsterTransform = collision.gameObject.GetComponent<Rigidbody2D>();
-
+                if (collision.gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D monsterRb))
+                {
+                    monsterRb.gravityScale = 0f;
+                    StartCoroutine(BlackHoleEntry(monsterRb, moveDirection));
+                }
+                else
+                {
+                    Rigidbody2D newRb = collision.gameObject.AddComponent<Rigidbody2D>();
+                    newRb.gravityScale = 0f;
+                    StartCoroutine(BlackHoleEntry(newRb, moveDirection));
+                }
             }
         }
     }
 
-    // private IEnumerator BlackHoleEntry(Rigidbody2D monsterRb)
-    // {
-    //     while (true)
-    //     {
-    // 
-    // 
-    //         yield return null;
-    //     }
-    // }
+    private IEnumerator BlackHoleEntry(Rigidbody2D monsterRb, Vector2 moveDirection)
+    {
+        Vector2 tempDir = moveDirection;
+
+        while (true)
+        {
+            tempDir = gameObject.transform.position - monsterRb.transform.position;
+
+            monsterRb.velocity = tempDir * gravity;
+            yield return null;
+        }
+    }
 }
