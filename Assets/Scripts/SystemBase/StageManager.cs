@@ -95,7 +95,7 @@ public class StageManager : MonoSingleton<StageManager>
         }
 
         Debug.Log("Stage Up ...");
-        
+
         _uI_Enhance.GetSkillPoint(_stageNum);
         _uI_Enhance.OnShow();
 
@@ -145,7 +145,6 @@ public class StageManager : MonoSingleton<StageManager>
             _stageNum++;
             _uI_SceneGame.SetStageNum(_stageNum);
             _uI_SceneGame.SetLevel(_stageNum);
-            StartCoroutine(InitUI_LevelUp());
         }
     }
 
@@ -248,13 +247,5 @@ public class StageManager : MonoSingleton<StageManager>
     {
         _uI_Enhance = UIManager.Instance.CreateObject<UI_Enhance>("UI_Enhance", EnumTypes.LayoutType.Middle);
         _uI_Enhance.OnHide();
-    }
-
-    IEnumerator InitUI_LevelUp()
-    {
-        UI_LevelUp uI_LevelUp = UIManager.Instance.CreateObject<UI_LevelUp>("Popup_LevelUp", EnumTypes.LayoutType.Middle);
-        uI_LevelUp.OnShow();
-        yield return new WaitForSeconds(1f);
-        uI_LevelUp.OnHide();
     }
 }
