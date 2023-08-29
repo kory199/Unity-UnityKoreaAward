@@ -43,13 +43,13 @@ public class Skill_BlackHoleChild : MonoBehaviour
         }
     }
 
-    private IEnumerator BlackHoleEntry(Rigidbody2D monsterRb)
-    {
-        while (true)
-        {
-
-
-            yield return null;
-        }
-    }
+    // private IEnumerator BlackHoleEntry(Rigidbody2D monsterRb)
+    // {
+    //     while (true)
+    //     {
+    // 
+    // 
+    //         yield return null;
+    //     }
+    // }
 }
