@@ -32,14 +32,14 @@ public class UIManager : UIBase
     private int _sortingOrder = 0;
     private string _basePath = "UI/";
 
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+  /*  [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void InstUIManager()
     {
         JsonLoader.Instance.Load();
 
         var uiManager = new GameObject().AddComponent<UIManager>();
         uiManager.name = "UIManager";
-    }
+    }*/
 
     protected override void Awake()
     {
@@ -48,6 +48,7 @@ public class UIManager : UIBase
             Destroy(this.gameObject);
             return;
         }
+        gameObject.name = "UIManager";
 
         _instance = this;
         isExistence = true;

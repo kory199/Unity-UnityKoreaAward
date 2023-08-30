@@ -1,4 +1,5 @@
 using TMPro;
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -45,3 +46,4 @@ public class ChangeFont : EditorWindow
         EditorUtility.DisplayDialog("Success", "Font successfully changed!", "OK");
     }
 }
+#endif
