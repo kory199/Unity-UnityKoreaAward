@@ -137,10 +137,10 @@ public class StageManager : MonoSingleton<StageManager>
         Debug.Log("Send StageEndData to Server ...");
 
         _score = GameManager.Instance.playerData.score;
-        //Debug.Log($"_score {_score}, _stageNum {_stageNum}");
+        Debug.Log($"_score {_score}, _stageNum {_stageNum}");
         bool result = await APIManager.Instance.StageUpToServer(_stageNum, _score);
 
-        if(result)
+        if (result)
         {
             _stageNum++;
             _uI_SceneGame.SetStageNum(_stageNum);

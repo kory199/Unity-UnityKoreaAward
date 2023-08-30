@@ -6,6 +6,7 @@ public partial class Player : CharacterBase
 {
     [SerializeField] private float _spawnTime = 3f;
     [SerializeField] private Animator _animator = null;
+
     #region unity event func
     private void Awake()
     {
