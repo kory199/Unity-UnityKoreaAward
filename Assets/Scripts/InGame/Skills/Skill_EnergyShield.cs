@@ -95,8 +95,6 @@ public class Skill_EnergyShield : SkillBase
         {
             if (collision.gameObject.name == "BasicMeleeMonster")
             {
-                Debug.LogError("collision");
-
                 if (collision.gameObject.TryGetComponent<MeleeMonster>(out MeleeMonster monster))
                 {
                     meleeMonster = monster;
