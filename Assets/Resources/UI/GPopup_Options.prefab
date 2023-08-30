@@ -988,7 +988,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Korea
+  m_text: English
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ac8892c617f6944da9bd2226a720f811, type: 2}
   m_sharedMaterial: {fileID: -8044272006508775677, guid: ac8892c617f6944da9bd2226a720f811, type: 2}
@@ -3335,9 +3335,9 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: Korea
+    - m_Text: English
       m_Image: {fileID: 0}
-    - m_Text: Option C
+    - m_Text: Korea
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
