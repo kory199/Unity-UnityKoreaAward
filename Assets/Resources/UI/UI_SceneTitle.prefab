@@ -2938,7 +2938,7 @@ GameObject:
   - component: {fileID: 4094250476147409066}
   - component: {fileID: 1256757923886163226}
   - component: {fileID: 6960451625813580169}
-  - component: {fileID: 7355641365383067165}
+  - component: {fileID: 1073282995989454173}
   m_Layer: 5
   m_Name: Logo_RawImage
   m_TagString: Untagged
@@ -3001,7 +3001,7 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
---- !u!114 &7355641365383067165
+--- !u!114 &1073282995989454173
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
