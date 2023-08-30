@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
 using System.IO;
@@ -12,11 +13,14 @@ using System.Reflection;
 
 public class JsonToCSharp : EditorWindow
 {
+#if UNITY_EDITOR
+
     [MenuItem("Tools/Generate C# Classes from JSON Files")]
     public static void ShowWindow()
     {
         EditorWindow.GetWindow(typeof(JsonToCSharp));
     }
+#endif
     private void OnGUI()
     {
         GUILayout.Label("Generate C# Classes from JSON Files", EditorStyles.boldLabel);
@@ -142,3 +146,4 @@ public class {className}
         return classTemplate;
     }
 }
+#endif

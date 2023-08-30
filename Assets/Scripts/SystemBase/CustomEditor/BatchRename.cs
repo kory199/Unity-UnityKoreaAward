@@ -1,6 +1,6 @@
-using UnityEditor;
 using UnityEngine;
-
+#if UNITY_EDITOR
+using UnityEditor;
 public class BatchRename : ScriptableWizard
 {
     public string BaseName = "";
@@ -47,3 +47,4 @@ public class BatchRename : ScriptableWizard
         }
     }
 }
+#endif
