@@ -58,9 +58,11 @@ public partial class Player
     public void Reward(int exp, int score)
     {
         playerCurExp += exp;
-        GameManager.Instance.playerData.score += score;
+        // GameManager.Instance.playerData.score += score;
+        playerScore += score;
         InitPlayerUI();
-        uI_SceneGame.SetScore(GameManager.Instance.playerData.score);
+        uI_SceneGame.SetScore(playerScore);
+        GameManager.Instance.playerData.score = playerScore;
 
         if (playerCurExp >= playerMaxExp)
         {

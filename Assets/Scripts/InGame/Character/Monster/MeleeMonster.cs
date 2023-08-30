@@ -167,4 +167,10 @@ public class MeleeMonster : MonsterBase
             yield return null;
         }
     }
+
+    public void HitShield()
+    {
+        monsterSFX.MonsterStateSFX(gameObject.transform, EnumTypes.MonsterStateType.Attack);
+        MonsterDeath();
+    }
 }
