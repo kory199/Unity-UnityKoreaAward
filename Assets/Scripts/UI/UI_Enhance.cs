@@ -185,6 +185,7 @@ public class UI_Enhance : UIBase
 
     public int OnClick_Skill(Button clickedBtn, int bulletNum, SkillInfo skillInfo)
     {
+        Debug.LogError("OnClick_Skill : " + skillPoint);
         skillPoint--;
         SkillBtnControl();
 
@@ -195,7 +196,11 @@ public class UI_Enhance : UIBase
             _ui_SceneGame.AddSkill(skillInfo.SkillClassName, imagePath);
         }
 
-        OnHide();
+        if (skillPoint < 1)
+        {
+            Debug.LogError("OnHide");
+            OnHide();
+        }
         //InitUI_LevelUp();
         return bulletNum;
     }
@@ -239,6 +244,7 @@ public class UI_Enhance : UIBase
 
     public void GetSkillPoint(int playerSkillPoint)
     {
+        Debug.LogError("playerSkillPoint : " + playerSkillPoint);
         skillPoint += playerSkillPoint;
     }
 

@@ -40,7 +40,7 @@ public class StageManager : MonoSingleton<StageManager>
         InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Start, SetMonsterSpawn);
 
         //Next 체인
-        InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Next, SetStageNum);
+        // InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.Next, SetStageNum);
 
         //End 체인
         //InGameManager.Instance.AddActionType(EnumTypes.InGameParamType.Stage, EnumTypes.StageStateType.End, SendStageData);
@@ -96,9 +96,6 @@ public class StageManager : MonoSingleton<StageManager>
 
         Debug.Log("Stage Up ...");
 
-        _uI_Enhance.GetSkillPoint(_stageNum);
-        _uI_Enhance.OnShow();
-
         if(playGame)
         {
             SendStageData();
@@ -134,10 +131,10 @@ public class StageManager : MonoSingleton<StageManager>
 
     private async void SendStageData()
     {
-        Debug.Log("Send StageEndData to Server ...");
+        Debug.LogError("Send StageEndData to Server ...");
 
         _score = GameManager.Instance.playerData.score;
-        Debug.Log($"_score {_score}, _stageNum {_stageNum}");
+        Debug.LogError($"_score {_score}, _stageNum {_stageNum}");
         bool result = await APIManager.Instance.StageUpToServer(_stageNum, _score);
 
         if (result)
@@ -145,6 +142,8 @@ public class StageManager : MonoSingleton<StageManager>
             _stageNum++;
             _uI_SceneGame.SetStageNum(_stageNum);
             _uI_SceneGame.SetLevel(_stageNum);
+            _uI_Enhance.GetSkillPoint(_stageNum);
+            _uI_Enhance.OnShow();
         }
     }
 
