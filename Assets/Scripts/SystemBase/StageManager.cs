@@ -139,11 +139,12 @@ public class StageManager : MonoSingleton<StageManager>
 
         if (result)
         {
+            _uI_Enhance.GetSkillPoint(_stageNum);
+            _uI_Enhance.OnShow();
             _stageNum++;
             _uI_SceneGame.SetStageNum(_stageNum);
             _uI_SceneGame.SetLevel(_stageNum);
-            _uI_Enhance.GetSkillPoint(_stageNum);
-            _uI_Enhance.OnShow();
+
         }
     }
 
