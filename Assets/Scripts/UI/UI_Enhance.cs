@@ -133,6 +133,10 @@ public class UI_Enhance : UIBase
             MouseReachSkill(skillBtn[i], skillArray[index].infotext, index);
 
             Button currentBtn = skillBtn[i];
+            if (currentBtn.onClick != null)
+            {
+                currentBtn.onClick.RemoveAllListeners();
+            }
             currentBtn.onClick.AddListener(() => OnClick_Skill(currentBtn, currentBulletNum, skillArray[index]));
         }
     }
