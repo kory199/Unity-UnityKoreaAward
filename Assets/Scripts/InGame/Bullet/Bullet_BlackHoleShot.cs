@@ -110,6 +110,6 @@ public class Bullet_BlackHoleShot : MonoBehaviour
 
     public void SetBlackHoleScale(int skillLevel)
     {
-        maxScale *= 1 + (skillLevel * 0.2f);
+        maxScale *= 1 + (skillLevel * 0.05f);
     }
 }
