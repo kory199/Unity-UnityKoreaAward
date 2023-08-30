@@ -13,6 +13,7 @@ public class UI_SceneGame : UIBase
     [SerializeField] private TextMeshProUGUI _level = null;
     [SerializeField] private TextMeshProUGUI _attackPower = null;
     [SerializeField] private TextMeshProUGUI _score = null;
+    [SerializeField] private TextMeshProUGUI _levlUptext = null;
 
     [SerializeField] private RawImage[] _skillImage = null;
     [SerializeField] private RawImage[] _skillCover = null;

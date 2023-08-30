@@ -2387,6 +2387,7 @@ MonoBehaviour:
   _level: {fileID: 8855389990362683517}
   _attackPower: {fileID: 1029096445566641962}
   _score: {fileID: 2662067538806458273}
+  _levlUptext: {fileID: 0}
   _skillImage:
   - {fileID: 98606857946741042}
   - {fileID: 7317631974002617251}

@@ -19,6 +19,7 @@ public partial class Player
     public int playerLv;
     public int playerMaxExp;
     public int playerCurExp;
+    private int playerScore;
     public float playerMovementSpeed;
     public float playerProjectileSpeed;
     public float playerRateOfFire;
@@ -46,6 +47,7 @@ public partial class Player
     private void InitSetting()
     {
         playerSpeed = 3f;
+        playerScore = 0;
 
         // Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
@@ -80,6 +82,7 @@ public partial class Player
         uI_SceneGame.SetLevel(playerLv + 1);
         uI_SceneGame.SetMaxExp(playerMaxExp);
         uI_SceneGame.SetNowExp(playerCurExp);
+        uI_SceneGame.SetScore(playerScore);
     }
 
     private void InitUI_Enhance()
