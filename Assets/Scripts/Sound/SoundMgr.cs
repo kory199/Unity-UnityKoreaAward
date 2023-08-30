@@ -5,9 +5,8 @@ using UnityEngine.UI;
 
 public class SoundMgr : MonoSingleton<SoundMgr>
 {
-    private SoundSO soundSO = null;
-    private AudioMixer audioMixer = null;
-
+    [SerializeField] SoundSO soundSO = null;
+    [SerializeField] AudioMixer audioMixer = null;
     [SerializeField] AudioSource bgmSource = null;
     [SerializeField] AudioSource sfxSource = null;
 
@@ -28,27 +27,27 @@ public class SoundMgr : MonoSingleton<SoundMgr>
             audioMixer = Resources.Load<AudioMixer>("GameSound");
         }
 
-        if (bgmSource == null || sfxSource == null)
-        {
-            bgmSource = gameObject.AddComponent<AudioSource>();
-            sfxSource = gameObject.AddComponent<AudioSource>();
-
-            bgmSource.playOnAwake = true;
-            bgmSource.loop = true;
-            sfxSource.playOnAwake = false;
-
-            AudioMixerGroup[] bgmGroups = audioMixer.FindMatchingGroups("BGM");
-            AudioMixerGroup[] sfxGroups = audioMixer.FindMatchingGroups("SFX");
-
-            if (bgmGroups.Length > 0)
-            {
-                bgmSource.outputAudioMixerGroup = bgmGroups[0];
-            }
-            if (sfxGroups.Length > 0)
-            {
-                sfxSource.outputAudioMixerGroup = sfxGroups[0];
-            }
-        }
+        //if (bgmSource == null || sfxSource == null)
+        //{
+        //    bgmSource = gameObject.AddComponent<AudioSource>();
+        //    sfxSource = gameObject.AddComponent<AudioSource>();
+        //
+        //    bgmSource.playOnAwake = true;
+        //    bgmSource.loop = true;
+        //    sfxSource.playOnAwake = false;
+        //
+        //    AudioMixerGroup[] bgmGroups = audioMixer.FindMatchingGroups("BGM");
+        //    AudioMixerGroup[] sfxGroups = audioMixer.FindMatchingGroups("SFX");
+        //
+        //    if (bgmGroups.Length > 0)
+        //    {
+        //        bgmSource.outputAudioMixerGroup = bgmGroups[0];
+        //    }
+        //    if (sfxGroups.Length > 0)
+        //    {
+        //        sfxSource.outputAudioMixerGroup = sfxGroups[0];
+        //    }
+        //}
 
         SetSoundSourceToDic();
         BGMPlay(EnumTypes.StageBGMType.Title);

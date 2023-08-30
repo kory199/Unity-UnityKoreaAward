@@ -6,7 +6,6 @@ public class TitleCall : MonoBehaviour
 {
     AccountUI account;
  
-
     IEnumerator Start()
     {
         account = FindObjectOfType<AccountUI>();
