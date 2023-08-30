@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -9,7 +8,7 @@ public class UI_Enhance : UIBase
 {
     [SerializeField] TextMeshProUGUI enhanceNum = null;
     [SerializeField] TextMeshProUGUI infoText = null;
-
+    [Space]
     [SerializeField] GameObject infotextObj = null;
     [SerializeField] GameObject skillNodePrefab;
     [SerializeField] RectTransform skillTreePos = null;
