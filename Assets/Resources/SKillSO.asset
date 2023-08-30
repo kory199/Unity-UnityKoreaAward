@@ -52,23 +52,23 @@ MonoBehaviour:
       \uC0DD\uC131"
     bulletNum: 0
     SkillClassName: Skill_StellaExpellereShot
-  - skillImg: {fileID: 21300000, guid: 7b80fc09cfb86fe43ba38d33553d89fc, type: 3}
-    infotext: "\uC801\uC911 \uC2DC \uC801\uC744 \uBC00\uCCD0\uB0B4\uB294 \uC131\uC6B4
-      \uC0DD\uC131"
-    bulletNum: 50
-    SkillClassName: Skill_StellaExpellereShot
-  - skillImg: {fileID: 21300000, guid: 7b80fc09cfb86fe43ba38d33553d89fc, type: 3}
-    infotext: "\uC801\uC911 \uC2DC \uC801\uC744 \uBC00\uCCD0\uB0B4\uB294 \uC131\uC6B4
-      \uC0DD\uC131"
+  - skillImg: {fileID: 21300000, guid: 1353e778b976bad4bbe54259fc08f592, type: 3}
+    infotext: "\uC2A4\uD0AC \uC0AC\uC6A9 \uC2DC \uC801\uC758 \uACF5\uACA9\uC744 \uBB34\uB825\uD654
+      \uC2DC\uD0A4\uB294 \uC274\uB4DC \uC0DD\uC131"
     bulletNum: 0
-    SkillClassName: Skill_StellaExpellereShot
-  - skillImg: {fileID: 21300000, guid: 7b80fc09cfb86fe43ba38d33553d89fc, type: 3}
-    infotext: "\uC801\uC911 \uC2DC \uC801\uC744 \uBC00\uCCD0\uB0B4\uB294 \uC131\uC6B4
-      \uC0DD\uC131"
+    SkillClassName: Skill_EnergyShield
+  - skillImg: {fileID: 21300000, guid: 1353e778b976bad4bbe54259fc08f592, type: 3}
+    infotext: "\uC2A4\uD0AC \uC0AC\uC6A9 \uC2DC \uC801\uC758 \uACF5\uACA9\uC744 \uBB34\uB825\uD654
+      \uC2DC\uD0A4\uB294 \uC274\uB4DC \uC0DD\uC131"
     bulletNum: 0
-    SkillClassName: Skill_StellaExpellereShot
-  - skillImg: {fileID: 21300000, guid: 7b80fc09cfb86fe43ba38d33553d89fc, type: 3}
-    infotext: "\uC801\uC911 \uC2DC \uC801\uC744 \uBC00\uCCD0\uB0B4\uB294 \uC131\uC6B4
-      \uC0DD\uC131"
+    SkillClassName: Skill_EnergyShield
+  - skillImg: {fileID: 21300000, guid: 1353e778b976bad4bbe54259fc08f592, type: 3}
+    infotext: "\uC2A4\uD0AC \uC0AC\uC6A9 \uC2DC \uC801\uC758 \uACF5\uACA9\uC744 \uBB34\uB825\uD654
+      \uC2DC\uD0A4\uB294 \uC274\uB4DC \uC0DD\uC131"
     bulletNum: 0
-    SkillClassName: Skill_StellaExpellereShot
+    SkillClassName: Skill_EnergyShield
+  - skillImg: {fileID: 21300000, guid: 1353e778b976bad4bbe54259fc08f592, type: 3}
+    infotext: "\uC2A4\uD0AC \uC0AC\uC6A9 \uC2DC \uC801\uC758 \uACF5\uACA9\uC744 \uBB34\uB825\uD654
+      \uC2DC\uD0A4\uB294 \uC274\uB4DC \uC0DD\uC131"
+    bulletNum: 0
+    SkillClassName: Skill_EnergyShield
