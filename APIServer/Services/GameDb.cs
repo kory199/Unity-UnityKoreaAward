@@ -21,8 +21,8 @@ public class GameDb : BaseDb<GameData>, IGameDb
             {
                 player_uid = account_id,
                 id = _id,
-                exp = 1,
-                hp = 10,
+                exp = 0,
+                hp = 100,
                 score = 0,
                 status = (int)UserState.Login
             };
@@ -56,6 +56,7 @@ public class GameDb : BaseDb<GameData>, IGameDb
                 return (ResultCode.PlayerGameDataNotFound, null);
             }
 
+            gameData.score = 0;
             return (ResultCode.None, gameData);
         }
         catch (Exception e)

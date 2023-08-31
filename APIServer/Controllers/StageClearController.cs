@@ -20,19 +20,21 @@ public class StageClearController : BaseApiController
     }
 
     [HttpPost]
-    public async Task<PkResponse> Post(ScoreUpdateReq request)
+    public async Task<StageDataRes> Post(ScoreUpdateReq request)
     {
         var userInfo = (AuthUser)HttpContext.Items[nameof(AuthUser)]!;
         var (resultCode, gameData) = await _gameDb.UpdataScoreDataAsync(userInfo.AccountId, request.Score);
 
-        resultCode = await _stageDb.UpdataStageAsync(userInfo.AccountId, request.StageNum);
+        Int32? nextStageNum;
+        (resultCode, nextStageNum) = await _stageDb.UpdataStageAsync(userInfo.AccountId, request.StageNum);
 
-        if (gameData == null || resultCode != ResultCode.None)
+        if (gameData == null || resultCode != ResultCode.None || nextStageNum == 0)
         {
-            return CreateResponse<PkResponse>(resultCode);
+            return CreateResponse<StageDataRes>(resultCode);
         }
 
-        var response = CreateResponse<PkResponse>(ResultCode.UpdateScoreSuccess);
+        var response = CreateResponse<StageDataRes>(ResultCode.UpdateScoreSuccess);
+        response.StageNum = nextStageNum ?? 0;
         return response;
     }
 }

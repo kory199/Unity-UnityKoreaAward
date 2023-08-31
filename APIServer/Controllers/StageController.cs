@@ -41,7 +41,12 @@ public class StageController : BaseApiController
         resultCode = ResultCode.LoadStageSuccess;
 
         var response = CreateResponse<StageDataRes>(resultCode);
-        response.StageNum = stageNum ?? 0;
+
+        if(stageNum != null)
+        {
+            response.StageNum = 1;
+        }
+        //response.StageNum = stageNum ?? 0;
         return response;
     }
 }
