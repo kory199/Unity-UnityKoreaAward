@@ -65,8 +65,7 @@ public class StageManager : MonoSingleton<StageManager>
 
     private void ServerDataSet()
     {
-        //_stageNum = GameManager.Instance.GetStageNum();
-        _stageNum = 4;
+        _stageNum = GameManager.Instance.GetStageNum();
         _score = GameManager.Instance.playerData.score;
     }
 

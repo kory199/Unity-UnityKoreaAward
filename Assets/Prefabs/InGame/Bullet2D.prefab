@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 8885433462564445170}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300080, guid: f68941927ff4e60418e5a79ea6dac27a, type: 3}
+  m_Sprite: {fileID: -380302854, guid: 8694861daf49c485d86bbb22dfb87d67, type: 3}
   m_Color: {r: 0.9528302, g: 0.885413, b: 0.885413, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -103,6 +103,7 @@ MonoBehaviour:
   meleeBulletDamage: 0
   playerBulletDamage: 0
   hitCount: 0
+  bulletDamageReduction: 0
   playerObject: {fileID: 0}
   player: {fileID: 5329609039082644204, guid: 447dfd2202628a04a9c407b170214b88, type: 3}
   bossMonster: {fileID: 0}
@@ -110,3 +111,6 @@ MonoBehaviour:
   rangedMonster: {fileID: 739570210054639162, guid: 077f8cdf593ccab4a93bf37afcb4bc4b, type: 3}
   _bossOne: {fileID: 0}
   setShooter: 
+  dirBullet: {x: 0, y: 0}
+  bulletCollider: {fileID: 0}
+  bulletRb: {fileID: 0}
