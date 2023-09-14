@@ -12,5 +12,5 @@
 - 클라이언트 개발 : KingOneChance, kory199, MuveloperDev
 <br>
 
-## 다운로드 링크 : 
+## 빌드 다운로드 링크 : 
 - https://wally0822.github.io/BuildPI/
