@@ -27,28 +27,6 @@ public class SoundMgr : MonoSingleton<SoundMgr>
             audioMixer = Resources.Load<AudioMixer>("GameSound");
         }
 
-        //if (bgmSource == null || sfxSource == null)
-        //{
-        //    bgmSource = gameObject.AddComponent<AudioSource>();
-        //    sfxSource = gameObject.AddComponent<AudioSource>();
-        //
-        //    bgmSource.playOnAwake = true;
-        //    bgmSource.loop = true;
-        //    sfxSource.playOnAwake = false;
-        //
-        //    AudioMixerGroup[] bgmGroups = audioMixer.FindMatchingGroups("BGM");
-        //    AudioMixerGroup[] sfxGroups = audioMixer.FindMatchingGroups("SFX");
-        //
-        //    if (bgmGroups.Length > 0)
-        //    {
-        //        bgmSource.outputAudioMixerGroup = bgmGroups[0];
-        //    }
-        //    if (sfxGroups.Length > 0)
-        //    {
-        //        sfxSource.outputAudioMixerGroup = sfxGroups[0];
-        //    }
-        //}
-
         SetSoundSourceToDic();
         BGMPlay(EnumTypes.StageBGMType.Title);
     }
@@ -75,10 +53,16 @@ public class SoundMgr : MonoSingleton<SoundMgr>
     {
         float masterValue = masterSlider.value;
 
-        if (masterValue == -40f)
-            audioMixer.SetFloat("MasterSoundValue", -80);
+        if(masterValue == -40)
+        {
+            audioMixer.SetFloat("BGMSoundValue", -80);
+            audioMixer.SetFloat("SFXSoundValue", -80);
+        }
         else
-            audioMixer.SetFloat("MasterSoundValue", masterValue);
+        {
+            audioMixer.SetFloat("BGMSoundValue", masterValue);
+            audioMixer.SetFloat("SFXSoundValue", masterValue);
+        }
     }
 
     public void BGMControl(Slider BGMSlider)
@@ -93,13 +77,16 @@ public class SoundMgr : MonoSingleton<SoundMgr>
 
     public void SFXControl(Slider ButSfxSlider)
     {
-        SFXPlay(EnumTypes.SFXType.Button);
         float sfxValue = ButSfxSlider.value;
 
         if (sfxValue == -40f)
             audioMixer.SetFloat("SFXSoundValue", -80);
         else
+        {
             audioMixer.SetFloat("SFXSoundValue", sfxValue);
+        }
+
+        SFXPlay(EnumTypes.SFXType.Button);
     }
 
     public void BGMPlay(EnumTypes.StageBGMType stageBGM)

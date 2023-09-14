@@ -11,7 +11,7 @@ public class UI_GPopupOption : UIBase
     {
         masterSlider.onValueChanged.AddListener(OnChangedMasterControl);
         bgmSlider.onValueChanged.AddListener(OnChangedBGMControl);
-        sfxSlider.onValueChanged.AddListener(OnChangedSFXControl);
+        //sfxSlider.onValueChanged.AddListener(OnChangedSFXControl);
     }
 
     IProcess.NextProcess _nextProcess = IProcess.NextProcess.Continue;
@@ -32,7 +32,6 @@ public class UI_GPopupOption : UIBase
                 uI_SceneLobby.OnShow();
                 break;
             case SceneState.Game:
-
                 break;
         }
     }
@@ -40,6 +39,17 @@ public class UI_GPopupOption : UIBase
     private void OnChangedMasterControl(float sound)
     {
         SoundMgr.Instance.MasterControl(masterSlider);
+
+        if(masterSlider.value == 0)
+        {
+            bgmSlider.value = 0;
+            sfxSlider.value = 0;
+        }
+        else
+        {
+            bgmSlider.value = masterSlider.value;
+            sfxSlider.value = masterSlider.value;
+        }
     }
 
     private void OnChangedBGMControl(float sound)
@@ -47,7 +57,7 @@ public class UI_GPopupOption : UIBase
         SoundMgr.Instance.BGMControl(bgmSlider);
     }
 
-    private void OnChangedSFXControl(float sound)
+    public void OnChangedSFXControl(float sound)
     {
         SoundMgr.Instance.SFXControl(sfxSlider);
     }
