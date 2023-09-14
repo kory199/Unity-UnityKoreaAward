@@ -3,8 +3,8 @@
 <img src="https://capsule-render.vercel.app/api?type=waving&color=auto&height=200&section=header&text=GarbageofGalaxy&fontSize=40" />
 
 ## 버전 :
-- ASP.NET Core : 7.0 버전
 - Unity : 2021.3.7f1
+- ASP.NET Core : 7.0 버전
 <br>
 
 ## 팀원 : 
