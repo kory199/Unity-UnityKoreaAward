@@ -994,7 +994,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Acocunt
+  m_text: Account
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ac8892c617f6944da9bd2226a720f811, type: 2}
   m_sharedMaterial: {fileID: -8044272006508775677, guid: ac8892c617f6944da9bd2226a720f811, type: 2}
@@ -2651,7 +2651,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: GARBAGE GALAXY
+  m_text: GARBAGE of GALAXY
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ac8892c617f6944da9bd2226a720f811, type: 2}
   m_sharedMaterial: {fileID: -8044272006508775677, guid: ac8892c617f6944da9bd2226a720f811, type: 2}
