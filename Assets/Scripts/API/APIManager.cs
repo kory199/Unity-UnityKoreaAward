@@ -260,7 +260,7 @@ public class APIManager : MonoSingleton<APIManager>
         }
         catch (UnityWebRequestException e)
         {
-            Debug.LogError($"API request failed : {e.Message}");
+            Debug.LogWarning($"API request failed : {e.Message}");
             return false;
         }
     }

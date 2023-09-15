@@ -155,12 +155,12 @@ TextureImporter:
       name: CountDown_0
       rect:
         serializedVersion: 2
-        x: 76
-        y: 335
-        width: 363
-        height: 500
+        x: 62
+        y: 290
+        width: 377
+        height: 559
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -176,12 +176,12 @@ TextureImporter:
       name: CountDown_1
       rect:
         serializedVersion: 2
-        x: 562
-        y: 335
-        width: 380
-        height: 500
+        x: 553
+        y: 290
+        width: 389
+        height: 559
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -197,12 +197,12 @@ TextureImporter:
       name: CountDown_2
       rect:
         serializedVersion: 2
-        x: 1070
-        y: 335
-        width: 396
-        height: 500
+        x: 1050
+        y: 283
+        width: 416
+        height: 587
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
