@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 public class APIUrls
 {
-    private static readonly string url = "https://d2b0-101-235-202-157.ngrok-free.app/";
+    private static readonly string url = "https://garbageofgalaxy.loca.lt/";
     public static readonly string VersionApi = url + "Version";
     public static readonly string MasterDataApi = url + "MasterData";
     public static readonly string CreateAccountApi = url + "CreateAccount";
