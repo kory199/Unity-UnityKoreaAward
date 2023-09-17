@@ -14,8 +14,6 @@ public class RankUI : UIBase
     [SerializeField] TextMeshProUGUI userRank = null;
     [SerializeField] TextMeshProUGUI r_infoText = null;
     [Header("Scroll")]
-    //[SerializeField] private GameObject _infinityScrollObj = null;
-    //[SerializeField] private InfinityScroll _InfinityScroll = null;
     [SerializeField] private TextMeshProUGUI[] _rankNickName = null;
     [SerializeField] private TextMeshProUGUI[] _rankScore = null;
     [SerializeField] private TextMeshProUGUI[] _rankNumber = null;
@@ -35,6 +33,8 @@ public class RankUI : UIBase
     {
         r_infoText.gameObject.SetActive(true);
         r_infoText.text = "Please Wait ...";
+        foreach(var image in _rankImage)
+            image.texture = _baseImage.texture;
     }
 
     private async void OnClickRank()
@@ -61,24 +61,13 @@ public class RankUI : UIBase
             }
             else
             {
-                //
-              /*  if (_InfinityScroll == null)
-                {
-                    _InfinityScroll = Instantiate(_infinityScrollObj, gameObject.transform).GetComponent<InfinityScroll>();
-                }
-                _InfinityScroll.SetData(rankingDataList);*/
-
                 for (int i = 0; i < rankingDataList.Count; ++i)
                 {
                     _rankNickName[i].text = rankingDataList[i].id;
                     _rankScore[i].text = rankingDataList[i].score.ToString();
                     _rankNumber[i].text = rankingDataList[i].ranking.ToString();
-                    _rankImage[i].texture = _baseImage.texture;
+                 
                 }
-
-
-
-                //
                 ClearRankData();
                 for (int i = 0; i < rankTopThreeName.Length; ++i)
                 {
