@@ -8,7 +8,7 @@ namespace APIServer.Services;
 public class AttendanceDb : BaseDb<AttendanceDb>, IAttendanceDb
 {
     public AttendanceDb(ILogger<AttendanceDb> logger, IOptions<DbConfig> dbConfig)
-        : base(logger, dbConfig.Value.AccountDb, AttendanceTable.player_attendance)
+        : base(logger, dbConfig.Value.GameDb, AttendanceTable.player_attendance)
     {
     }
 
@@ -46,12 +46,12 @@ public class AttendanceDb : BaseDb<AttendanceDb>, IAttendanceDb
             DateTime firstDayOfMonth = new DateTime(today.Year, today.Month, 1);
             DateTime lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
 
-            if(day == firstDayOfMonth.Day)
-            {
-                await ResetAttendanceAsync(account_id);
-            }
+            //if(day == firstDayOfMonth.Day)
+            //{
+            //    await ResetAttendanceAsync(account_id);
+            //}
 
-            if (day == today.Day)
+            if (day == DateTime.Now.Day)
             {
                 var attendanceCheck = new Attendance
                 {
