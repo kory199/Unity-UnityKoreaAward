@@ -8,6 +8,11 @@ public class PlayerInfoReq
     [Required] public String AuthToken { get; set; } = "";
 }
 
+public class AttendanceCheckReq : PlayerInfoReq
+{
+    [Required] public Int32 Day { get; set; } 
+
+
 public class ScoreUpdateReq : PlayerInfoReq
 {
     [Required] public Int32 Score { get; set; }

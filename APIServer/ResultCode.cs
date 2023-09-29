@@ -93,6 +93,7 @@ public enum ResultCode
     AttendanceResetFailException = 353,
     VerifyAttendanceFail = 354,
     VerifyAttendanceFailException = 355,
+    AttendanceDataNodeFound = 356,
 
     // === Ranking Data 400 ~ ===
     LoadRankingDataFail = 400,

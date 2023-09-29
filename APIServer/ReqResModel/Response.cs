@@ -40,6 +40,11 @@ public class RankingDataRes : BaseResponse
     [Required] public List<Ranking> RankingData { get; set; } = new List<Ranking>();
 }
 
+public class AttendedDataRes : BaseResponse
+{
+    [Required] public List<Int32> AttendedData { get; set; } = new List<Int32>();
+}
+
 public class StageDataRes : BaseResponse
 {
     [Required] public Int32 StageNum { get; set; }
