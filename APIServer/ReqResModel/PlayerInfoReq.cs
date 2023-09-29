@@ -10,8 +10,8 @@ public class PlayerInfoReq
 
 public class AttendanceCheckReq : PlayerInfoReq
 {
-    [Required] public Int32 Day { get; set; } 
-
+    [Required] public Int32 Day { get; set; }
+}
 
 public class ScoreUpdateReq : PlayerInfoReq
 {
