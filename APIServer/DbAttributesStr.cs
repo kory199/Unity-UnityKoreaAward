@@ -31,6 +31,11 @@ public class GameDbTable
     public const String created_at = "created_at";
 }
 
+public class AttendanceTable
+{
+    public const String player_attendance = "player_attendance";
+}
+
 public class StageTable
 {
     public const String player_stage = "player_stage";

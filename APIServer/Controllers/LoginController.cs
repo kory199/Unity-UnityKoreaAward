@@ -31,8 +31,8 @@ public class LoginController : BaseApiController
 
             resultCode = await _memoryDb.RegistUserAsync(request.ID, authToken, account_id);
 
-            _logger.ZLogInformationWithPayload(LogManager.EventIdDic[EventType.Login],
-                    new { ID = request.ID, AuthToken = authToken }, "Login Success");
+            //_logger.ZLogInformationWithPayload(LogManager.EventIdDic[EventType.Login],
+                    //new { ID = request.ID, AuthToken = authToken }, "Login Success");
 
             var response = CreateResponse<LoginRes>(ResultCode.LoginSuccess);
             response.AuthToken = authToken;

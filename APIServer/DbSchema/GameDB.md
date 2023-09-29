@@ -51,3 +51,16 @@ CREATE TABLE IF NOT EXISTS gameDb.`player_stage`
 ) COMMENT '유저와 스테이지 정보 연결 테이블';
 
 ```
+
+## Attendance Table
+
+``` sql
+USE gameDb;
+
+DROP TABLE IF EXISTS gameDb.`player_attendance`;
+CREATE TABLE IF NOT EXISTS gameDb.`player_attendance`
+(
+    player_uid BIGINT NOT NULL COMMENT '고유 번호', 
+    attendance DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '출석 날짜'
+)COMMENT '유저 월별 출석 테이블';
+```

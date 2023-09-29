@@ -18,13 +18,15 @@ public enum ResultCode
     LoginSuccess = 54,
     CreateGameDataSuccess = 55,
     LoadGameDataSuccess = 56,
-    LoadRankingDataSuccess = 57,
-    UpdateScoreSuccess = 58,
-    LoadStageSuccess = 59,
-    GetNewStageSuccess = 60,
-    PingSuccess = 61,
-    LogOutSuccess = 62,
-    RedisUpdateStatusSuccess = 64,
+    VerifyAttendanceSuccess = 57,
+    AttendanceCheckSuccess = 58,
+    LoadRankingDataSuccess = 59,
+    UpdateScoreSuccess = 60,
+    LoadStageSuccess = 61,
+    GetNewStageSuccess = 62,
+    PingSuccess = 63,
+    LogOutSuccess = 64,
+    RedisUpdateStatusSuccess = 65,
 
     // === GameVersion 80~ ===
     LoadGameVersionFail = 80,
@@ -71,7 +73,6 @@ public enum ResultCode
     AuthTokenFailSetNx = 206,
     AuthTokenFailWrongKeyword = 207,
 
-
     // === User Game Data 300 ~ ===
     CreateDefaultGameDataFailInsert = 301,
     CreateGameDataFailInsert = 302,
@@ -84,6 +85,14 @@ public enum ResultCode
     ChangedStatusFailException = 309,
     CheckStatusFail = 310,
     CheckStatusFailException = 311,
+
+    // === Attendance 350~ ===
+    AttendanceCheckFail = 350,
+    AttendanceCheckFailException = 351,
+    AttendanceResetFail = 352,
+    AttendanceResetFailException = 353,
+    VerifyAttendanceFail = 354,
+    VerifyAttendanceFailException = 355,
 
     // === Ranking Data 400 ~ ===
     LoadRankingDataFail = 400,

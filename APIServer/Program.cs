@@ -3,6 +3,7 @@ using APIServer.Middleware;
 using APIServer.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
+using MySqlConnector;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,7 @@ builder.Services.Configure<DbConfig>(configuration.GetSection(nameof(DbConfig)))
 
 builder.Services.AddSingleton<IMasterDataDb, MasterDataDb>();
 builder.Services.AddTransient<IAccountDb, AccountDb>();
+builder.Services.AddTransient<IAttendanceDb,AttendanceDb>();
 builder.Services.AddTransient<IGameDb, GameDb>();
 builder.Services.AddTransient<IStageDb, StageDb>();
 builder.Services.AddSingleton<INextStage, NextStageDb>();
@@ -40,10 +42,10 @@ var loggerFactory = app.Services.GetRequiredService<ILoggerFactory>();
 LogManager.SetLoggerFactory(loggerFactory, "Global");
 
 var masterdata = app.Services.GetService<IMasterDataDb>();
-masterdata.LoadAllMasterDataAsync();
+await masterdata.LoadAllMasterDataAsync();
 
 var getStageInfo = app.Services.GetRequiredService<INextStage>();
-getStageInfo.LoadStageDataAsync();
+await getStageInfo.LoadStageDataAsync();
 
 app.UseRouting();
 

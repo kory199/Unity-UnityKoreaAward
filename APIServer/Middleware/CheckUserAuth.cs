@@ -28,7 +28,9 @@ public class CheckUserAuth
             string.Compare(formString, "/Account/GoogleResponse", StringComparison.OrdinalIgnoreCase) == 0 ||
             string.Compare(formString, "/Login", StringComparison.OrdinalIgnoreCase) == 0 ||
             string.Compare(formString, "/CreateAccount", StringComparison.OrdinalIgnoreCase) == 0 ||
-            string.Compare(formString, "/Message", StringComparison.OrdinalIgnoreCase) == 0)
+            string.Compare(formString, "/Message", StringComparison.OrdinalIgnoreCase) == 0 ||
+            string.Compare(formString, "/LogOut", StringComparison.OrdinalIgnoreCase) == 0
+            )
         {
             await _next(context);
             return;
