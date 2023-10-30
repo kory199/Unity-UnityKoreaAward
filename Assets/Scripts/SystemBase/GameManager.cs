@@ -1,4 +1,3 @@
-using APIModels;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,8 +14,9 @@ public class GameManager : MonoSingleton<GameManager>
 {
     public SceneState SceneState { get; set; }
 
-    public PlayerData playerData { get; set; }
+    //public PlayerData playerData { get; set; }
     public int StageNum { get; set; }
+    public int score { get; set; } 
 
     Texture2D _cursorImg;
 
@@ -36,10 +36,10 @@ public class GameManager : MonoSingleton<GameManager>
         Cursor.SetCursor(_cursorImg, Vector2.zero, CursorMode.Auto);
     }
 
-    public int GetStageNum()
-    {
-        return StageNum;
-    }
+    //public int GetStageNum()
+    //{
+    //    return StageNum;
+    //}
 
     public async void EndStage(int stageNum)
     {

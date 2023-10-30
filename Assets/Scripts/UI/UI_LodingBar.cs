@@ -39,8 +39,6 @@ public class UI_LodingBar : UIBase
             yield return null;
         }
 
-        yield return GetPlayerDataCoroutine();
-
         while (currentTime <= duration)
         {
             float value = currentTime / duration;
@@ -54,21 +52,6 @@ public class UI_LodingBar : UIBase
             slider.value = 1f;
             OnHide();
             MoveScene();
-        }
-    }
-
-    private IEnumerator GetPlayerDataCoroutine()
-    {
-        var task = GetPlayerData();
-        yield return task.ToCoroutine();
-    }
-
-    private async UniTask GetPlayerData()
-    {
-        result = await APIManager.Instance.GetStageAPI();
-        if (result == false)
-        {
-            Debug.LogWarning($"GetStageAPI Error");
         }
     }
 

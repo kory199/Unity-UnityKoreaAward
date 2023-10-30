@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using APIModels;
 using UnityEngine;
+using MasterDatasModel;
 using static EnumTypes;
 
 public class MeleeMonster : MonsterBase
@@ -61,7 +61,7 @@ public class MeleeMonster : MonsterBase
 
     protected override void GetInitMonsterStatus()
     {
-        meleeMonsterStatus = APIManager.Instance.GetValueByKey<MonsterData_res[]>(MasterDataDicKey.MeleeMonster.ToString());
+        //meleeMonsterStatus = APIManager.Instance.GetValueByKey<MonsterData_res[]>(MasterDataDicKey.MeleeMonster.ToString());
 
         if (meleeMonsterStatus == null)
         {

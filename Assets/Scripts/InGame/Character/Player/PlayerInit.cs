@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using APIModels;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
@@ -30,7 +29,7 @@ public partial class Player
     private WaitForSeconds moveAble;
     public UI_SceneGame uI_SceneGame;
     private UI_Enhance uI_Enhance;
-    private PlayerStatus_res[] playerStatus;
+    //private PlayerStatus_res[] playerStatus;
 
     public Vector3 targetDirection;
     public bool IsDeath;
@@ -63,13 +62,13 @@ public partial class Player
 
     private void retrunPlayerInfo(int inputPlayerLV)
     {
-        playerMaxHp = playerStatus[inputPlayerLV].hp;
+        //playerMaxHp = playerStatus[inputPlayerLV].hp;
         playerCurHp = playerMaxHp;
-        playerAttackPower = playerStatus[inputPlayerLV].attack_power;
-        playerMaxExp = playerStatus[inputPlayerLV].xp_requiredfor_levelup;
-        playerMovementSpeed = playerStatus[inputPlayerLV].movement_speed;
-        playerProjectileSpeed = playerStatus[inputPlayerLV].projectile_speed;
-        playerRateOfFire = playerStatus[inputPlayerLV].rate_of_fire;
+        //playerAttackPower = playerStatus[inputPlayerLV].attack_power;
+        //playerMaxExp = playerStatus[inputPlayerLV].xp_requiredfor_levelup;
+        //playerMovementSpeed = playerStatus[inputPlayerLV].movement_speed;
+        //playerProjectileSpeed = playerStatus[inputPlayerLV].projectile_speed;
+        //playerRateOfFire = playerStatus[inputPlayerLV].rate_of_fire;
 
         InitPlayerUI();
     }
@@ -94,7 +93,7 @@ public partial class Player
 
     private IEnumerator InitializationAfterDelay()
     {
-        playerStatus = APIManager.Instance.GetValueByKey<PlayerStatus_res[]>(MasterDataDicKey.PlayerStatus.ToString());
+        //playerStatus = APIManager.Instance.GetValueByKey<PlayerStatus_res[]>(MasterDataDicKey.PlayerStatus.ToString());
         
         yield return new WaitForSeconds(_spawnTime);
 

@@ -1,45 +1,9 @@
-namespace APIModels
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace MasterDatasModel
 {
-    // === Request === 
-    public class Version_req
-    {
-        public string Version = "GetVersion";
-    }
-
-    public class MasterData_req
-    {
-        public string MasterData = "GetMasterData";
-    }
-
-    public class User
-    {
-        public string ID;
-        public string Password;
-    }
-
-    public class GameData
-    {
-        public string ID { get; set; }
-        public string AuthToken { get; set; }
-    }
-
-    public class StageClear : GameData
-    {
-        public int Score { get; set; }
-        public int StageNum { get; set; }
-    }
-
-    // === MasterData ===
-    public enum MasterDataDicKey
-    {
-        MeleeMonster,
-        RangedMonster,
-        BOSS,
-        PlayerStatus,
-        StageSpawnMonster
-    }
-
-    // === Response ===
     public class MasterDataResponse
     {
         public MasterDataArray masterDataDic { get; set; }
@@ -52,28 +16,6 @@ namespace APIModels
         public MonsterData_res BOSS { get; set; }
         public PlayerStatus_res[] PlayerStatus { get; set; } = new PlayerStatus_res[4];
         public StageSpawnMonsterData_res[] StageSpawnMonster { get; set; } = new StageSpawnMonsterData_res[4];
-    }
-
-    public class PlayerData
-    {
-        public string id { get; set; }
-        public int exp { get; set; }
-        public int hp { get; set; }
-        public int score { get; set; }
-        public int status { get; set; }
-    }
-
-    public class RankingData
-    {
-        public string id { get; set; }
-        public int score { get; set; }
-        public int ranking { get; set; }
-    }
-
-    public class StageInfo
-    {
-        public int stage_id { get; set; }
-        public bool is_achieved { get; set; }
     }
 
     public class MonsterData_res

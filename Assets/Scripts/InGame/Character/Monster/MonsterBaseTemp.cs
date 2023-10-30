@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using static EnumTypes;
-using APIModels;
+using MasterDatasModel;
 
 public abstract class MonsterBase : MonoBehaviour
 {
@@ -81,8 +81,8 @@ public abstract class MonsterBase : MonoBehaviour
 
     protected virtual void GetInitMonsterStatus()
     {
-        rangedMonsterStatus = APIManager.Instance.GetValueByKey<MonsterData_res[]>(MasterDataDicKey.RangedMonster.ToString());
-        bossMonsterStatus = APIManager.Instance.GetValueByKey<MonsterData_res>(MasterDataDicKey.BOSS.ToString());
+        //rangedMonsterStatus = APIManager.Instance.GetValueByKey<MonsterData_res[]>(MasterDataDicKey.RangedMonster.ToString());
+        //bossMonsterStatus = APIManager.Instance.GetValueByKey<MonsterData_res>(MasterDataDicKey.BOSS.ToString());
 
         if (rangedMonsterStatus == null)
         {
@@ -101,7 +101,7 @@ public abstract class MonsterBase : MonoBehaviour
     private void MonsterSetting(int curStageNum, EnumTypes.MonsterType monsterType)
     {
         Debug.LogError("MonsterSetting Call");
-        monsterData_Res = APIManager.Instance.GetValueByKey<MonsterData_res[]>(monsterType.ToString());
+        //monsterData_Res = APIManager.Instance.GetValueByKey<MonsterData_res[]>(monsterType.ToString());
 
         if (monsterData_Res == null)
         {
@@ -116,7 +116,7 @@ public abstract class MonsterBase : MonoBehaviour
     {
         if (monsterType == EnumTypes.MonsterType.RangedMonster)
         {
-            rangedMonsterStatus = APIManager.Instance.GetValueByKey<MonsterData_res[]>(MasterDataDicKey.RangedMonster.ToString());
+            //rangedMonsterStatus = APIManager.Instance.GetValueByKey<MonsterData_res[]>(MasterDataDicKey.RangedMonster.ToString());
         }
         else
         {

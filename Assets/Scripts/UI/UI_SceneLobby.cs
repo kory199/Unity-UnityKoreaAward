@@ -26,10 +26,12 @@ public class UI_SceneLobby : UIBase
     {
         SoundMgr.Instance.SFXPlay(EnumTypes.SFXType.Button);
     }
+
     public void OnClick_UnlockList()
     {
         SoundMgr.Instance.SFXPlay(EnumTypes.SFXType.Button);
     }
+
     UI_GPopupOption _gPopupOption = null;
     public void OnClick_Options()
     {
@@ -43,6 +45,7 @@ public class UI_SceneLobby : UIBase
         }
         _gPopupOption.OnShow();
     }
+
     RankUI _rankUi = null;
     public void OnClick_RankingList()
     {
@@ -62,27 +65,16 @@ public class UI_SceneLobby : UIBase
         GameManager.Instance.SceneState = SceneState.Lobby;
     }
 
-    public async void OnClick_ApplicationQuit()
+    public void OnClick_ApplicationQuit()
     {
         SoundMgr.Instance.SFXPlay(EnumTypes.SFXType.Button);
-        bool result = await APIManager.Instance.LogOutAPI();
-        if(result)
-        {
+        //bool result = await APIManager.Instance.LogOutAPI();
+        //if(result)
+        //{
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
     Application.Quit();
 #endif
-        }
-    }
-
-    public async void OnClick_LogOut()
-    {
-        SoundMgr.Instance.SFXPlay(EnumTypes.SFXType.Button);
-        bool result = await APIManager.Instance.LogOutAPI();
-        if(result)
-        {
-            await GameManager.Instance.MoveSceneWithAction(EnumTypes.ScenesType.SceneTitle, OnHide);
-        }
     }
 }

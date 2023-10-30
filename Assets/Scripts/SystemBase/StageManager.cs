@@ -1,5 +1,4 @@
 using System.Collections;
-using APIModels;
 using UnityEngine;
 
 public class StageManager : MonoSingleton<StageManager>
@@ -24,7 +23,6 @@ public class StageManager : MonoSingleton<StageManager>
             _uI_SceneGame = UIManager.Instance.CreateObject<UI_SceneGame>("UI_SceneGame", EnumTypes.LayoutType.First);
         _uI_SceneGame.OnShow();
 
-        ChangedStatusToServer();
         ServerDataSet();
         CallCountDown();
         InitUI_Enhance();
@@ -54,19 +52,19 @@ public class StageManager : MonoSingleton<StageManager>
     }
     #endregion
 
-    private async void ChangedStatusToServer()
-    {
-        bool result = await APIManager.Instance.PlayGameAPI();
-        if(result == false)
-        {
-            Debug.LogWarning($"Status Changed Fail");
-        }    
-    }
+    //private async void ChangedStatusToServer()
+    //{
+    //    bool result = await APIManager.Instance.PlayGameAPI();
+    //    if(result == false)
+    //    {
+    //        Debug.LogWarning($"Status Changed Fail");
+    //    }    
+    //}
 
     private void ServerDataSet()
     {
-        _stageNum = GameManager.Instance.GetStageNum();
-        _score = GameManager.Instance.playerData.score;
+        _stageNum = 0;
+        _score = 0;
     }
 
     IEnumerator Co_GameStart()
@@ -118,34 +116,22 @@ public class StageManager : MonoSingleton<StageManager>
         else
             _spawnManager.SettingMonsterSpawnNum(_spawnMeleeNum, _spawnRangedNum, true, "BossOne");
     }
-    public async void StageClear()
+
+    public void StageClear()
     {
         UIManager.Instance.CreateObject<Popup_StageClear>("Popup_StageClear", EnumTypes.LayoutType.Middle);
-
-        bool result = await APIManager.Instance.LogOutAPI();
-        if (result == false)
-        {
-            Debug.LogWarning("StageClear to Server Fail");
-        }
     }
 
-    private async void SendStageData()
+    private void SendStageData()
     {
-        Debug.LogError("Send StageEndData to Server ...");
-
-        _score = GameManager.Instance.playerData.score;
+        _score = GameManager.Instance.score;
         Debug.LogError($"_score {_score}, _stageNum {_stageNum}");
-        bool result = await APIManager.Instance.StageUpToServer(_stageNum, _score);
 
-        if (result)
-        {
-            _uI_Enhance.GetSkillPoint(_stageNum);
-            _uI_Enhance.OnShow();
-            _stageNum++;
-            _uI_SceneGame.SetStageNum(_stageNum);
-            _uI_SceneGame.SetLevel(_stageNum);
-
-        }
+        _uI_Enhance.GetSkillPoint(_stageNum);
+        _uI_Enhance.OnShow();
+        _stageNum++;
+        _uI_SceneGame.SetStageNum(_stageNum);
+        _uI_SceneGame.SetLevel(_stageNum);
     }
 
     public void PlayerDeath()
@@ -197,12 +183,7 @@ public class StageManager : MonoSingleton<StageManager>
 
     private async void MoveToLobby()
     {   
-        await GameManager.Instance.MoveSceneWithAction(EnumTypes.ScenesType.SceneLobby, GetStageAPINum);
-    }
-
-    private async void GetStageAPINum()
-    {
-        await APIManager.Instance.GetStageAPI();
+        await GameManager.Instance.MoveSceneWithAction(EnumTypes.ScenesType.SceneLobby);
     }
 
     IEnumerator Co_GameClearUI()
@@ -214,15 +195,15 @@ public class StageManager : MonoSingleton<StageManager>
 
     public void GetMonsterInfo(int stageNum)
     {
-        StageSpawnMonsterData_res[] stageSpawnMonsterData_Res = APIManager.Instance.GetValueByKey<StageSpawnMonsterData_res[]>(MasterDataDicKey.StageSpawnMonster.ToString());
+        //StageSpawnMonsterData_res[] stageSpawnMonsterData_Res = APIManager.Instance.GetValueByKey<StageSpawnMonsterData_res[]>(MasterDataDicKey.StageSpawnMonster.ToString());
 
-        if (stageSpawnMonsterData_Res == null)
-        {
-            Debug.LogError("StageSpawnMonsterData_res is Null");
-        }
+        //if (stageSpawnMonsterData_Res == null)
+        //{
+            //Debug.LogError("StageSpawnMonsterData_res is Null");
+        //}
 
-        _spawnMeleeNum = stageSpawnMonsterData_Res[stageNum].meleemonster_spawn;
-        _spawnRangedNum = stageSpawnMonsterData_Res[stageNum].rangedmonster_spawn;
+        //_spawnMeleeNum = stageSpawnMonsterData_Res[stageNum].meleemonster_spawn;
+        //_spawnRangedNum = stageSpawnMonsterData_Res[stageNum].rangedmonster_spawn;
     }
 
     private void PlayBGMForStage(int stage)

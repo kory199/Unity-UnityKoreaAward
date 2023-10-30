@@ -1,5 +1,4 @@
 using System.Collections;
-using APIModels;
 using UnityEngine;
 
 public partial class Player : CharacterBase
@@ -41,6 +40,5 @@ public partial class Player : CharacterBase
             }
         }
     }
-
     #endregion
 }

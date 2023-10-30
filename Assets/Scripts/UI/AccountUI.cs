@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using APIModels;
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -23,7 +22,7 @@ public class AccountUI : UIBase
     protected override void Awake()
     {
         GetGameVersion();
-        GetMasterData();
+        GetMonsterData();
 
         SoundMgr.Instance.BGMPlay(EnumTypes.StageBGMType.Title);
     }
@@ -50,14 +49,15 @@ public class AccountUI : UIBase
     }
     #endregion
 
-    private async void GetGameVersion()
+    private void GetGameVersion()
     {
-        versionText.text = "Ver :  " + await APIManager.Instance.GetGameVersionAPI();
+        versionText.text = "Ver : 1.1.1 ";
+
     }
 
-    private async void GetMasterData()
+    private void GetMonsterData()
     {
-        await APIManager.Instance.GetMasterDataAPI();
+
     }
 
     private IEnumerator SetInitialFocus()
@@ -132,11 +132,9 @@ public class AccountUI : UIBase
     {
         SoundMgr.Instance.SFXPlay(EnumTypes.SFXType.Button);
 
-        if (TryProcessUserInput(out User user))
+        if (TryProcessUserInput(out UserData user))
         {
-            bool result = await APIManager.Instance.CreateAccountAPI(user);
-
-            if (result)
+            if(user.ID == null && user.Password == null)
             {
                 infoText.text = $"Created New Account Successful ! Please Login";
             }
@@ -151,26 +149,15 @@ public class AccountUI : UIBase
     {
         SoundMgr.Instance.SFXPlay(EnumTypes.SFXType.Button);
 
-        if (TryProcessUserInput(out User user))
+        if (TryProcessUserInput(out UserData user))
         {
-            bool loginResult = await APIManager.Instance.LoginAPI(user);
-
-            if (loginResult)
+            if(user.ID != null && user.Password != null)
             {
-                bool gameDataResult = await APIManager.Instance.GetGameDataAPI();
+                infoText.text = $"Login Successful !";
+                await UniTask.Delay(TimeSpan.FromSeconds(0.5));
 
-                if (gameDataResult)
-                {
-                    infoText.text = $"Login Successful !";
-                    await UniTask.Delay(TimeSpan.FromSeconds(0.5));
-
-                    OnHide();
-                    CreateLodingBar();
-                }
-                else
-                {
-                    infoText.text = $"Failed to load game data.";
-                }
+                OnHide();
+                CreateLodingBar();
             }
             else
             {
@@ -190,14 +177,14 @@ public class AccountUI : UIBase
         uI_lodingBar.OnShow();
     }
 
-    private bool TryProcessUserInput(out User user)
+    private bool TryProcessUserInput(out UserData user)
     {
         string id = inputFields[0].text;
         string password = inputFields[1].text;
 
         if (IsValidID(id) && IsValidPassword(password))
         {
-            user = new User
+            user = new UserData
             {
                 ID = id,
                 Password = password

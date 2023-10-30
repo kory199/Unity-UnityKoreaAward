@@ -62,7 +62,7 @@ public partial class Player
         playerScore += score;
         InitPlayerUI();
         uI_SceneGame.SetScore(playerScore);
-        GameManager.Instance.playerData.score = playerScore;
+        GameManager.Instance.score = playerScore;
 
         if (playerCurExp >= playerMaxExp)
         {
