@@ -150,14 +150,16 @@ public abstract class MonsterBase : MonoBehaviour
 
     // String형태로 코루틴 함수를 찾으므로 오타나지않게 주의
     // ex) NONE -> X,  None -> O
+    Coroutine _curCoroutine;
     protected void TransferState(MonsterStateType Nextstate)
     {
         // 현재 State의 코루틴을 중지시키고
-        StopCoroutine("State_" + state);
+        if (_curCoroutine != null)
+            StopCoroutine(_curCoroutine);
         // State를 변경해준뒤
         state = Nextstate;
         // 해당 State의 코루틴을 실행시킨다.
-        StartCoroutine("State_" + state);
+        _curCoroutine = StartCoroutine("State_" + state);
     }
 
     // 활성화(처음 생성 or 오브젝트풀에서 다시 반환되어 나올때)
