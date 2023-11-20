@@ -52,15 +52,6 @@ public class StageManager : MonoSingleton<StageManager>
     }
     #endregion
 
-    //private async void ChangedStatusToServer()
-    //{
-    //    bool result = await APIManager.Instance.PlayGameAPI();
-    //    if(result == false)
-    //    {
-    //        Debug.LogWarning($"Status Changed Fail");
-    //    }    
-    //}
-
     private void ServerDataSet()
     {
         _stageNum = 0;
@@ -195,6 +186,7 @@ public class StageManager : MonoSingleton<StageManager>
 
     public void GetMonsterInfo(int stageNum)
     {
+
         //StageSpawnMonsterData_res[] stageSpawnMonsterData_Res = APIManager.Instance.GetValueByKey<StageSpawnMonsterData_res[]>(MasterDataDicKey.StageSpawnMonster.ToString());
 
         //if (stageSpawnMonsterData_Res == null)

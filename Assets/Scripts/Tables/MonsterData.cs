@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[System.Serializable]
+using System;
+
+[Serializable]
 public class MonsterInfo 
 {
     public string type;
@@ -15,8 +17,4 @@ public class MonsterInfo
     public float collision_damage;
     public int score;
     public float ranged;
-    /// <summary>
-    /// 아래데이터 삭제예정
-    /// </summary>
-    /// 
 }
