@@ -1,12 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.IO;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 using Cysharp.Threading.Tasks;
-using Unity.VisualScripting;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using UnityEngine;
 
 public class JsonLoader
 {
@@ -60,12 +59,13 @@ public class JsonLoader
             _ = LoadJsonFile(file);
         }
     }
+
     private async UniTask LoadJsonFile(FileInfo file)
     {
         var jsonFileName = Path.GetFileNameWithoutExtension(file.Name);
         var jsonFileContentResource = await Resources.LoadAsync<TextAsset>(Path.Combine("ResourcesTable", jsonFileName)) as TextAsset;
         DeserializeAndAddToList(jsonFileName, jsonFileContentResource.text);
-        //Debug.Log($"Load Successed {jsonFileName}.json");
+        Debug.Log($"Load Successed {jsonFileName}.json");
     }
 
     private void DeserializeAndAddToList(string className, string jsonFileContent)

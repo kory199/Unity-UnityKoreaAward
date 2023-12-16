@@ -1,4 +1,3 @@
-using APIModels;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,22 +10,16 @@ public enum SceneState
     Lobby,
     Game,
 }
+
 public class GameManager : MonoSingleton<GameManager>
 {
     public SceneState SceneState { get; set; }
 
-    public PlayerData playerData { get; set; }
     public int StageNum { get; set; }
+    public int score { get; set; } 
 
     Texture2D _cursorImg;
 
-    // Runtume init Gamemanager 
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-    private static void InstSceneManager()
-    {
-        var sceneAndUIManager = new GameObject().AddComponent<GameManager>();
-        sceneAndUIManager.name = "GameManager";
-    }
 
     protected void Awake()
     {
@@ -34,11 +27,9 @@ public class GameManager : MonoSingleton<GameManager>
 
         _cursorImg = Resources.Load<Texture2D>("Sprites/cursor");
         Cursor.SetCursor(_cursorImg, Vector2.zero, CursorMode.Auto);
-    }
 
-    public int GetStageNum()
-    {
-        return StageNum;
+        // === Json data load ===
+        JsonLoader.Instance.Load();
     }
 
     public async void EndStage(int stageNum)

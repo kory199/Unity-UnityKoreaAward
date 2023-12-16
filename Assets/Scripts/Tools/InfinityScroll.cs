@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using APIModels;
+
 [System.Serializable]
 public class ContentsInfo
 {
@@ -73,7 +73,7 @@ public class InfinityScroll : MonoBehaviour
 
     private void Update()
     {
-        //ÇÏ´Ü ½ºÅ©·Ñ
+        //ï¿½Ï´ï¿½ ï¿½ï¿½Å©ï¿½ï¿½
         if (_nowTopIDX < _RankInfo.Count - _count)
         {
             if (_contents[0].position.y > _initPosY + _itemSizeY + _spacing)
@@ -103,7 +103,7 @@ public class InfinityScroll : MonoBehaviour
 
                 _nowTopIDX++;
 
-                //´ÙÀ½ ¹üÀ§ °¡Á®¿Ã µ¥ÀÌÅÍ °¡°øºÎºÐ
+                //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½
                 _contentsBG[_count - 1].texture = _RankInfo[_nowTopIDX + _count - 1].RankBacGround.texture;
                _contentsRanking[_count - 1].text = _RankInfo[_nowTopIDX + _count - 1].Ranking.ToString();
                _contentsScore[_count - 1].text = _RankInfo[_nowTopIDX + _count - 1].Score.ToString();
@@ -113,7 +113,7 @@ public class InfinityScroll : MonoBehaviour
 
         if (_nowTopIDX > 0)
         {
-            //»ó´Ü ½ºÅ©·Ñ
+            //ï¿½ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½
             if (_contents[_contents.Count - 1].position.y < _itemLastPosY)
             {
                 _contents[_contents.Count - 1].position = new Vector2(_contents[_contents.Count - 1].position.x, _contents[0].position.y + (_itemSizeY + _spacing));
@@ -150,7 +150,7 @@ public class InfinityScroll : MonoBehaviour
     }
 
     /// <summary>
-    /// ¿¹½Ã 
+    /// ï¿½ï¿½ï¿½ï¿½ 
     /// </summary>
     public void SetData()
     {
@@ -192,9 +192,9 @@ public class InfinityScroll : MonoBehaviour
     }
     public void SetScrollSize()
     {
-        // ContentÀÇ Å©±â¸¦ º¯°æ
+        // Contentï¿½ï¿½ Å©ï¿½â¸¦ ï¿½ï¿½ï¿½ï¿½
         _contentPivot.sizeDelta = new Vector2(_contentPivot.sizeDelta.x, (_RankInfo.Count) * (_itemSizeY + _spacing));
-        // ScrollViewÀÇ ³ôÀÌ¸¦ º¯°æµÈ Content¿¡ ¸Â°Ô Á¶Àý
-        _scrollRect.normalizedPosition = new Vector2(_scrollRect.normalizedPosition.x, 1); // ½ºÅ©·Ñ À§Ä¡¸¦ ¸Ç À§·Î Á¶Á¤
+        // ScrollViewï¿½ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ Contentï¿½ï¿½ ï¿½Â°ï¿½ ï¿½ï¿½ï¿½ï¿½
+        _scrollRect.normalizedPosition = new Vector2(_scrollRect.normalizedPosition.x, 1); // ï¿½ï¿½Å©ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
 }

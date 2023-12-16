@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using APIModels;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -48,7 +47,7 @@ public class RankUI : UIBase
 
         lastAPICallTime = currentTime;
 
-        (List<RankingData> rankingDataList, string _id) = await APIManager.Instance.GetRankingAPI();
+        List<RankingData> rankingDataList = new();
 
         r_infoText.gameObject.SetActive(false);
 
@@ -74,16 +73,16 @@ public class RankUI : UIBase
                     rankTopThreeName[i].text = rankingDataList[i].id;
                 }
 
-                RankingData userRankingData = rankingDataList.Find(r => r.id == _id);
+                //RankingData userRankingData = rankingDataList.Find(r => r.id == _id);
 
-                if (userRankingData != null)
-                {
-                    userRank.text = $"ID: {userRankingData.id}, Score: {userRankingData.score}, Rank: {userRankingData.ranking}";
-                }
-                else
-                {
-                    Debug.LogError("User's ranking data not found.");
-                }
+                //if (userRankingData != null)
+                //{
+                //    userRank.text = $"ID: {userRankingData.id}, Score: {userRankingData.score}, Rank: {userRankingData.ranking}";
+                //}
+                //else
+                //{
+                //    Debug.LogError("User's ranking data not found.");
+                //}
 
             }
         }
